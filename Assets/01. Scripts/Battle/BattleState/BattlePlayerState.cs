@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleStartState : IBattleState
+public class BattlePlayerState : IBattleState
 {
     private BattleSystem battleSystem;
 
-    public BattleStartState(BattleSystem battleSystem)
+    public BattlePlayerState(BattleSystem battleSystem)
     {
         this.battleSystem = battleSystem;
     }
 
     public void OnEnter()
     {
-        battleSystem.CurBattleState = BattleState.Start;
+        battleSystem.CurBattleState = BattleState.PlayerTurn;
     }
 
     public void OnExit()

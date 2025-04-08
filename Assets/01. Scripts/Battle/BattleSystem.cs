@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class BattleSystem : MonoBehaviour
 {
-
     [Header("UnitLocation")]
     [SerializeField] private List<Transform> playerLocations;
     [SerializeField] private List<Transform> enemyLocations;
     [SerializeField] private Transform playerParent;
     [SerializeField] private Transform enemyParent;
+
+    [Header("StateTiming")]
+    [SerializeField] private float timeBetweenStates;
 
     [Header("StateMachine")]
     public BattleState CurBattleState;
@@ -19,30 +21,23 @@ public class BattleSystem : MonoBehaviour
     private IBattleState[] stateArray;
 
     [Header("Units")]
-    public List<DummyUnit> players;
-    public List<DummyUnit> enemies;
-
+    public List<DummyUnit> players; //ìºë¦­í„° ì„ íƒì—ì„œ ê°€ì ¸ì˜¤ê³ 
+    public List<DummyUnit> enemies; //ìŠ¤í…Œì´ì§€ ë°ì´í„°ì—ì„œ ê°€ì ¸ì˜¤ê³ 
+    [SerializeField] private List<DummyUnit> activePlayers = new List<DummyUnit>();    //í˜„ì¬ ë°°ì¹˜ì¤‘ì¸ ìœ ë‹›ë“¤ ì •ë³´
+    [SerializeField] private List<DummyUnit> activeEnemies = new List<DummyUnit>();
+    public List<DummyUnit> GetActivePlayers() => activePlayers;
+    public List<DummyUnit> GetActiveEnemies() => activeEnemies;
 
     void Start()
     {
-        InitializeStateMachine();
-
-        
-        for(int i = 0; i < players.Count; i++)
-        {
-            players[i].Speed = i + 1;
-            enemies[i].Speed = i + 1;
-            Instantiate(players[i], playerLocations[i].position, Quaternion.identity, playerParent);
-            Instantiate(enemies[i], enemyLocations[i].position, Quaternion.identity, enemyParent);
-        }
+        InitializeStateMachine();   
     }
 
     void Update()
     {
-        
+        battleStateMachine.CurrentState.OnUpdate();
     }
 
-    //»óÅÂ¸Ó½Å ÃÊ±â ¼³Á¤
     void InitializeStateMachine()
     {
         battleStateMachine = new BattleStateMachine(this);
@@ -50,14 +45,36 @@ public class BattleSystem : MonoBehaviour
         stateArray = new IBattleState[Enum.GetValues(typeof(BattleState)).Length];
 
         stateArray[(int)BattleState.Start] = new BattleStartState(this);
+        stateArray[(int)BattleState.PlayerTurn] = new BattlePlayerState(this);
 
-        CurBattleState = BattleState.Start;
-        battleStateMachine.ChangeState(GetStateInterface(CurBattleState));
+        ChangeState(BattleState.Start);
     }
 
-    //»óÅÂ¸Ó½Å ChangeState ¸Å°³º¯¼ö(IBattleState)·Î return
     private IBattleState GetStateInterface(BattleState state)
     {
         return stateArray[(int)state];
+    }
+
+    public void ChangeState(BattleState state)
+    {
+        battleStateMachine.ChangeState(GetStateInterface(state));
+    }
+
+    public void SetBattle()
+    {
+        activePlayers.Clear();
+        activeEnemies.Clear();
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].Speed = i + 1;
+            enemies[i].Speed = i + 1;
+            
+            DummyUnit playerUnit = Instantiate(players[i], playerLocations[i].position, Quaternion.identity, playerParent);
+            DummyUnit enemyUnit = Instantiate(enemies[i], enemyLocations[i].position, Quaternion.identity, enemyParent);
+            
+            activePlayers.Add(playerUnit);
+            activeEnemies.Add(enemyUnit);
+        }
     }
 }
