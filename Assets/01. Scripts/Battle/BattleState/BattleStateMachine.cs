@@ -21,7 +21,7 @@ public interface IBattleState
 }
 
 //상태 머신
-public class BattleStateMachine
+public class BattleStateMachine 
 {
     private BattleSystem battleSystem;
     public IBattleState CurrentState;
@@ -38,7 +38,4 @@ public class BattleStateMachine
         CurrentState = newState;
         CurrentState?.OnEnter();
     }
-
-    
-
 }
