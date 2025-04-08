@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/04. Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/04. Scenes/KJH_UIScenes/KJH_LobbyUITestScene.unity
+    guid: 97fa766dbdd9c0447a6a29e0322bf2bf
+  - enabled: 1
+    path: Assets/04. Scenes/KJH_UIScenes/KJH_InventoryTestScene.unity
+    guid: dea7205dc4e342544b0de5505c992dca
   m_configObjects: {}
