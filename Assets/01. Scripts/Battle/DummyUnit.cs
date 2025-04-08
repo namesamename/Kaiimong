@@ -9,12 +9,16 @@ public class DummyUnit : MonoBehaviour
     private Animator animator;
     public Animator Animator {  get { return animator; } }
     
+    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
+    
     // 애니메이션 길이를 저장하는 변수
     public float AppearAnimationLength { get; private set; }
 
     private void Awake()
     {       
        animator = GetComponent<Animator>();
+       spriteRenderer = GetComponent<SpriteRenderer>();
        
        // 애니메이션 길이 계산
        if (animator != null)

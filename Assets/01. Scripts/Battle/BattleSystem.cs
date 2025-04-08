@@ -72,6 +72,8 @@ public class BattleSystem : MonoBehaviour
             
             DummyUnit playerUnit = Instantiate(players[i], playerLocations[i].position, Quaternion.identity, playerParent);
             DummyUnit enemyUnit = Instantiate(enemies[i], enemyLocations[i].position, Quaternion.identity, enemyParent);
+
+            enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
             
             activePlayers.Add(playerUnit);
             activeEnemies.Add(enemyUnit);
