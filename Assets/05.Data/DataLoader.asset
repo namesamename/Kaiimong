@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a39cf9ec78f1a4887fdcd4bb150834, type: 3}
   m_Name: DataLoader
   m_EditorClassIdentifier: 
-  outPath: {fileID: 102900000, guid: 8f385d7c44698fb459747e1bc33bcaf9, type: 3}
+  outPath: {fileID: 102900000, guid: ba0a2208e5dac5f41822d9d933c5a7e1, type: 3}
   url: https://docs.google.com/spreadsheets/d/1aigqbM53g4ELJZCU-ZSzMBsh1Hst3zmcdonKVAmvaTE
   datas:
   - className: CharacterSO

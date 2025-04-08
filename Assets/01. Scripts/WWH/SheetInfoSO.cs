@@ -10,7 +10,7 @@ public class SheetData
     public List<Dictionary<string, string>> datas;
 }
 
-[CreateAssetMenu(fileName = "dsad", menuName ="asdasd")]
+[CreateAssetMenu(fileName = "New DataLoad", menuName ="DataLoad")]
 public class SheetInfoSO : SOSingleton<SheetInfoSO>
 {
     public Object outPath;
