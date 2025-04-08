@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : BaseManager
+public class GameManager : MonoBehaviour
 {
-    public override void Initiallize()
-    {
-        
-    }
+
+
+ 
 }

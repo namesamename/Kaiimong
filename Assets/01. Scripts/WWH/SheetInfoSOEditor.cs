@@ -63,7 +63,7 @@ public class SheetInfoSOEditor : Editor
     {
             foreach (var data in datas)
             {
-                var path = instance.OutPath + "/" + Pathcheck(data["id"])+ data["Name"] + ".asset";
+                var path = instance.OutPath + "/" + Pathcheck(data["id"]) + data["Name"] + ".asset";
                 var dt = (ScriptableObject)AssetDatabase.LoadAssetAtPath(path, type);
                 if (dt == null)
                 {
@@ -91,7 +91,10 @@ public class SheetInfoSOEditor : Editor
     {
         string id = string.Empty;
         if (SheetId == "1")
-        { id = "Char/"; }
+        {
+            id = "Char/";
+        
+        }
         else if (SheetId == "2")
         { id = "Item/"; }
 
