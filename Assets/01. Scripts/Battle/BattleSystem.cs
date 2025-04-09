@@ -28,6 +28,16 @@ public class BattleSystem : MonoBehaviour
     public List<DummyUnit> GetActivePlayers() => activePlayers;
     public List<DummyUnit> GetActiveEnemies() => activeEnemies;
 
+    public CommandController CommandController { get; private set; }
+
+    public Action onPlayerTurn;
+    public Action onEnemyTurn;
+
+    private void Awake()
+    {
+        CommandController = GetComponent<CommandController>();
+    }
+
     void Start()
     {
         InitializeStateMachine();   

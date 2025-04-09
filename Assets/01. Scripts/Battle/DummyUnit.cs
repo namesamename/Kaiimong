@@ -11,6 +11,8 @@ public class DummyUnit : MonoBehaviour
     
     private SpriteRenderer spriteRenderer;
     public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
+
+    public Sprite icon;
     
     // 애니메이션 길이를 저장하는 변수
     public float AppearAnimationLength { get; private set; }
