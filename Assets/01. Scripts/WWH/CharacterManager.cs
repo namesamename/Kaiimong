@@ -3,43 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static CharacterManager;
+
 
 public class CharacterManager :Singleton<CharacterManager>
 {
 
-    CharacterListWrapper characterListWrapper;
 
-    public List<CharacterSO> characterSO = new List<CharacterSO>();
+
+    public CharacterInstance instance;
 
     string path = Path.Combine(Application.dataPath, "database.json");
 
     private void Awake()
     {
-        Initalize();
+        Save();
     }
     private void Start()
     {
 
-        Save();
+   
     }
     public void Initalize()
-    {
-        characterListWrapper = new CharacterListWrapper();
+    {       
        
-        CharacterSO[] characters = Resources.LoadAll<CharacterSO>("Char");
-        Debug.Log(characters.Length);
-        characterSO = characters.ToList();
-        characterListWrapper.characterList = characterSO;
+
+
     }
 
 
     public void Save()
     {
-        string Json = JsonUtility.ToJson(characterListWrapper);
+        string json = JsonUtility.ToJson(instance);
+ 
         try
         {
-            File.WriteAllText(path, Json);
+            File.WriteAllText(path, json);
             Debug.Log("파일 저장 완료!");
         }
         catch (Exception e)
@@ -49,11 +47,7 @@ public class CharacterManager :Singleton<CharacterManager>
     }
 
 
-    [System.Serializable]
-    public class CharacterListWrapper
-    {
-        public List<CharacterSO> characterList;
-    }
+  
 
 
 

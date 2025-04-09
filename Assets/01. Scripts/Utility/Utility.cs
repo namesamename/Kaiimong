@@ -30,6 +30,9 @@ public static class Utility
         return tcs.Task.GetAwaiter();
     }
 
+
+   
+
     public static string KoreanValueChanger(string data)
     {
         if (data == "캐릭터 명")
