@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
-using static CharacterDataBase;
+
 public enum SaveType
 {
     Character,
@@ -40,9 +39,17 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
         {
             Debug.LogError("Data Do not Exist");
         }
+        else if(!PlayerPrefs.HasKey(Key))
+        {
+            Debug.LogError("Data Do not Exist");
+        }
+
+        Debug.Log("Load");
+
 
         List<SaveInstance> saves = new List<SaveInstance>();
-        saves = JsonUtility.FromJson<List<SaveInstance>>(PlayerPrefs.GetString(Key));
+        SaveDataWrapper saveData = JsonUtility.FromJson<SaveDataWrapper>(PlayerPrefs.GetString(Key));
+        saves = saveData.Saves;
         return saves;
     }
 

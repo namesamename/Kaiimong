@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterDataBase : Singleton<CharacterDataBase>
 {
-    Dictionary<string , CharacterSO> characterDic = new Dictionary<string , CharacterSO>();  
+    public Dictionary<string , CharacterSO> characterDic = new Dictionary<string , CharacterSO>();  
 
     public List<CharacterSaveData> SaveDatas = new List<CharacterSaveData>();
 
