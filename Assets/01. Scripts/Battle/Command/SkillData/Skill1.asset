@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d2e183b1b23a34486332f6969f17c7, type: 3}
   m_Name: Skill1
   m_EditorClassIdentifier: 
+  isSingleAttack: 1
   attackCount: 1
   damage: 01000000
   hitTiming:
   - 1
+  icon: {fileID: 21300000, guid: ec80c213390c15247b9148eaa1331b3f, type: 3}

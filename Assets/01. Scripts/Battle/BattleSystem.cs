@@ -21,21 +21,30 @@ public class BattleSystem : MonoBehaviour
     private IBattleState[] stateArray;
 
     [Header("Units")]
-    public List<DummyUnit> players; //캐릭터 선택에서 가져오고
-    public List<DummyUnit> enemies; //스테이지 데이터에서 가져오고
+    public List<DummyUnit> Players; //캐릭터 선택에서 가져오고
+    public List<DummyUnit> Enemies; //스테이지 데이터에서 가져오고
     [SerializeField] private List<DummyUnit> activePlayers = new List<DummyUnit>();    //현재 배치중인 유닛들 정보
     [SerializeField] private List<DummyUnit> activeEnemies = new List<DummyUnit>();
     public List<DummyUnit> GetActivePlayers() => activePlayers;
     public List<DummyUnit> GetActiveEnemies() => activeEnemies;
 
-    public CommandController CommandController { get; private set; }
+    [Header("BattleInfo")]
+    public int TurnIndex = 0;
+    public SkillData selectedSkill;
+    public List<DummyUnit> Targets;
 
-    public Action onPlayerTurn;
-    public Action onEnemyTurn;
+    public CommandController CommandController { get; private set; }
+    public BattleUI BattleUI;
+
+
+    public Action OnPlayerTurn;
+    public Action OnEnemyTurn;
 
     private void Awake()
     {
         CommandController = GetComponent<CommandController>();
+        BattleUI.BattleSystem = this;
+        BattleUI.CharacterUI.BattleSystem = this;
     }
 
     void Start()
@@ -75,19 +84,27 @@ public class BattleSystem : MonoBehaviour
         activePlayers.Clear();
         activeEnemies.Clear();
 
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < Players.Count; i++)
         {
-            players[i].Speed = i + 1;
-            enemies[i].Speed = i + 1;
+            Players[i].Speed = i + 1;
+            Enemies[i].Speed = i + 1;
             
-            DummyUnit playerUnit = Instantiate(players[i], playerLocations[i].position, Quaternion.identity, playerParent);
-            DummyUnit enemyUnit = Instantiate(enemies[i], enemyLocations[i].position, Quaternion.identity, enemyParent);
+            DummyUnit playerUnit = Instantiate(Players[i], playerLocations[i].position, Quaternion.identity, playerParent);
+            DummyUnit enemyUnit = Instantiate(Enemies[i], enemyLocations[i].position, Quaternion.identity, enemyParent);
 
             enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
             
             activePlayers.Add(playerUnit);
             activeEnemies.Add(enemyUnit);
         }
+    }
+
+    public void SetTarget()
+    {
+        if (CurBattleState != BattleState.PlayerTurn) return;
+
+
+
     }
     
 }

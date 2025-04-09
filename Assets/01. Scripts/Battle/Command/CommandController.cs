@@ -6,7 +6,7 @@ using UnityEngine;
 public class CommandController : MonoBehaviour
 {
     [SerializeField] private List<DummySkill> skillCommands = new List<DummySkill>();
-    public int index = 0;
+    public int Index = 0;
 
     public Action newTurn;
 

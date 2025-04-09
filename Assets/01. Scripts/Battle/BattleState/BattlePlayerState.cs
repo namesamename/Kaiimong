@@ -14,8 +14,8 @@ public class BattlePlayerState : IBattleState
     public void OnEnter()
     {
         battleSystem.CurBattleState = BattleState.PlayerTurn;
-        battleSystem.GetActivePlayers().Sort((a,b) => b.Speed.CompareTo(a.Speed));
-        //UI세팅 (속도순 정렬 이후 행동대기 유닛 아이콘, 스킬 아이콘 세팅)
+        battleSystem.GetActivePlayers().Sort((a,b) => b.Speed.CompareTo(a.Speed));        
+        battleSystem.OnPlayerTurn?.Invoke();
     }
 
     public void OnExit()
@@ -38,4 +38,14 @@ public class BattlePlayerState : IBattleState
             }
         }
     }
+
+    void PlayerTurn()
+    {
+        bool pickSKill =false;
+        while (!pickSKill)
+        {
+
+        }
+    }
+
 }
