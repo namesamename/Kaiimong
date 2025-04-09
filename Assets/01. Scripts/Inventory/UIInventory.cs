@@ -9,17 +9,20 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }        // 다른 스크립트에서 쉽게 접근하기 위한 싱글톤
 
     [Header("Inventory Panels")]
-    [SerializeField] private GameObject itemInventoryPanel;        // 아이템 탭 UI 패널
-    [SerializeField] private GameObject consumableInventoryPanel;  // 소모품 탭 UI 패널
+    [SerializeField] private GameObject itemInventoryButton;        // 아이템 탭 UI 패널
+    [SerializeField] private GameObject consumableInventoryButton;  // 소모품 탭 UI 패널
 
     [Header("Inventory Info UI")]
-    [SerializeField] private TextMeshProUGUI itemCountText;        // 현재/최대 개수 표시 텍스트
-    [SerializeField] private GameObject inventoryUIRoot;           // 인벤토리에 있는 모든 UI (탭, 슬롯, 배경 등)을하나의 부모 오브젝트
+    [SerializeField] private TextMeshProUGUI itemslotCountText;        // 아이템 슬롯 현재/최대 개수 표시 텍스트
 
     [Header("Slot Generation")]
     [SerializeField] private GameObject slotPrefab;                // 슬롯 프리팹 (동적으로 생성될 슬롯 UI)
     [SerializeField] private Transform itemSlotPanel;              // 아이템 탭 안의 슬롯 Content 오브젝트
     [SerializeField] private Transform consumableSlotPanel;        // 소모품 탭 안의 슬롯 Content 오브젝트
+
+    [Header("Scroll Views")]
+    [SerializeField] private GameObject itemScrollView;            // 아이템 스크롤 뷰 오브젝트
+    [SerializeField] private GameObject consumableScrollView;      // 소모품 스크롤 뷰 오브젝트
 
     private List<GameObject> spawnedSlots = new List<GameObject>(); // 생성된 슬롯 오브젝트들을 추적하는 리스트
 
@@ -75,39 +78,32 @@ public class UIManager : MonoBehaviour
 
     public void OpenItemInventory()
     {
-        itemInventoryPanel.SetActive(true);                      // 아이템 탭 활성화
-        consumableInventoryPanel.SetActive(false);               // 소모품 탭 비활성화
-        SpawnSlots(itemList, itemSlotPanel);                     // 아이템 슬롯 생성
-        UpdateItemCount(itemList.Count);                         // 수량 텍스트 갱신
+        itemInventoryButton.SetActive(true);                      // 아이템 탭 활성화
+        consumableInventoryButton.SetActive(true);               
+
+        itemScrollView.SetActive(true);                           // 아이템 스크롤 뷰 켜기
+        consumableScrollView.SetActive(false);                    // 소모품 스크롤 뷰 끄기
+
+        SpawnSlots(itemList, itemSlotPanel);                      // 아이템 슬롯 생성
+        UpdateItemCount(itemList.Count);                          // 수량 텍스트 갱신
     }
 
 
     public void OpenConsumableInventory()
     {
-        itemInventoryPanel.SetActive(false);                     // 아이템 탭 비활성화
-        consumableInventoryPanel.SetActive(true);                // 소모품 탭 활성화
+        itemInventoryButton.SetActive(true);                     
+        consumableInventoryButton.SetActive(true);                // 소모품 탭 활성화
+
+        itemScrollView.SetActive(false);                         // 아이템 스크롤 뷰 끄기
+        consumableScrollView.SetActive(true);                    // 아이템 스크롤 뷰 켜기
+
         SpawnSlots(consumableList, consumableSlotPanel);         // 소모품 슬롯 생성
         UpdateItemCount(consumableList.Count);
-    }
-
- 
-    public void OpenInventory()
-    {
-        inventoryUIRoot.SetActive(true);                         // 인벤토리 UI 전체 활성화
-        OpenItemInventory();                                     // 기본 탭은 아이템인벤
-    }
-
-
-    public void CloseInventory()
-    {
-        inventoryUIRoot.SetActive(false);                        // 인벤토리 UI 비활성화
-    }
-
-
+    }   
     public void UpdateItemCount(int current)
     {
         int max = 100;                                           // 최대값
-        itemCountText.text = $"{current} / {max}";              // 텍스트: "현재 / 최대"
+        itemslotCountText.text = $"{current} / {max}";           // 텍스트: "현재 / 최대"
     }
 
 
@@ -124,7 +120,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //  기존 슬롯 삭제
     private void ClearSlots()
     {
         foreach (GameObject obj in spawnedSlots)

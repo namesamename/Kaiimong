@@ -12,7 +12,6 @@ public class ItemData : ScriptableObject
 
 public enum EItemType
 {
-    Equipment,                    // 장비 아이템
-    Consumable,                   // 소모품 아이템
-    Resource                      // 자원/재료 아이템
+    Item,                         // 아이템
+    Consumable,                   // 소모품 아이템   
 }
