@@ -37,16 +37,16 @@ public class CharacterDataBase : Singleton<CharacterDataBase>
 
     public GameObject CharacterInstanceSummon(CharacterSO character, Vector3 pos, Transform parent = null)
     {
-        GameObject Character = Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
+        GameObject CharacterObject = Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
 
-        if(character.GetComponent<Character>() == null) 
+        if(CharacterObject.GetComponent<Character>() == null) 
         {
-            character.AddComponent<Character>();
+            CharacterObject.AddComponent<Character>();
         }
 
-        character.GetComponent<Character>().Initailize(character.CharacterId);
+        CharacterObject.GetComponent<Character>().Initialize(character.CharacterId);
         //세이브 데이터 가져오기
-        return Character;
+        return CharacterObject;
 
     }
 

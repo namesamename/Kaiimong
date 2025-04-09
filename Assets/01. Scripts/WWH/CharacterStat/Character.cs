@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
     public int Recognition;
     public int Necessity;
 
-    public void Initailize(string Id)
+    public void Initialize(string Id)
     {
         characterId = Id;
         HaveData();
@@ -22,7 +22,7 @@ public class Character : MonoBehaviour
 
     public void SetVisual()
     {
-
+        //나중에 스프라이트 추가되면
     }
 
 

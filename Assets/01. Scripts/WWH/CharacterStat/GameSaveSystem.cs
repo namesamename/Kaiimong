@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public enum SaveType
 {
@@ -27,7 +28,8 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
     public void SaveDataToEnum(int index, List<SaveInstance> saves, string Key)
     {
         SaveDic[index] = saves;
-        string json = JsonUtility.ToJson(new SaveDataWrapper { Saves = SaveDic[index] });
+        string json = JsonConvert.SerializeObject(new SaveDataWrapper { Saves = SaveDic[index] }, Formatting.Indented
+            , new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
         PlayerPrefs.SetString(Key, json);
         PlayerPrefs.Save();
         
@@ -48,7 +50,11 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
 
 
         List<SaveInstance> saves = new List<SaveInstance>();
-        SaveDataWrapper saveData = JsonUtility.FromJson<SaveDataWrapper>(PlayerPrefs.GetString(Key));
+        SaveDataWrapper saveData = JsonConvert.DeserializeObject<SaveDataWrapper>
+            (PlayerPrefs.GetString(Key), new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.Auto
+        });
         saves = saveData.Saves;
         return saves;
     }

@@ -29,10 +29,6 @@ public static class Utility
         asyncOp.completed += _ => tcs.SetResult(asyncOp.webRequest); // 요청 완료 후 결과 반환
         return tcs.Task.GetAwaiter();
     }
-
-
-   
-
     public static string KoreanValueChanger(string data)
     {
         if (data == "캐릭터 명")
