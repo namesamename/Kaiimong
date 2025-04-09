@@ -29,4 +29,55 @@ public static class Utility
         asyncOp.completed += _ => tcs.SetResult(asyncOp.webRequest); // 요청 완료 후 결과 반환
         return tcs.Task.GetAwaiter();
     }
+
+    public static string KoreanValueChanger(string data)
+    {
+        if (data == "캐릭터 명")
+        {
+            return "Name";
+        }
+        else if (data == "등급")
+        {
+            return "Grade";
+        }
+        else if (data == "체력")
+        {
+            return "Health";
+        }
+        else if (data == "공격력")
+        {
+            return "Attack";
+        }
+        else if (data == "방어력")
+        {
+            return "Defense";
+        }
+        else if (data == "민첩도")
+        {
+            return "Speed";
+        }
+        else if (data == "치명타 확률")
+        {
+            return "CriticalPer";
+        }
+        else if (data == "치명타 피해")
+        {
+            return "CriticalAttack";
+        }
+        else
+        {
+            return data;
+        }
+    }
+    public static string KoreanClassChanger(string data)
+    {
+        if (data == "캐릭터 스탯")
+        {
+            return "CharacterSO";
+        }
+        else
+        {
+            return data;
+        }
+    }
 }

@@ -14,6 +14,8 @@ public class SheetInfoSOEditor : Editor
     //    SheetInfoSO.Edit();
     //}
 
+    string Directory;
+
     SheetInfoSO instance;
     public override void OnInspectorGUI()
     {
@@ -55,7 +57,8 @@ public class SheetInfoSOEditor : Editor
     protected void ImportData(SheetData sheet)
     {
         Assembly assembly = typeof(SO).Assembly;
-        var type = assembly.GetType(sheet.className);
+        var type = assembly.GetType(Utility.KoreanClassChanger(sheet.className));
+        Pathcheck(sheet.className);
         GetDatas(type, sheet.datas);
     }
 
@@ -63,7 +66,7 @@ public class SheetInfoSOEditor : Editor
     {
             foreach (var data in datas)
             {
-                var path = instance.OutPath + "/" + Pathcheck(data["id"]) + data["Name"] + ".asset";
+                var path = instance.OutPath + "/" + Directory + data["Name"] + ".asset";
                 var dt = (ScriptableObject)AssetDatabase.LoadAssetAtPath(path, type);
                 if (dt == null)
                 {
@@ -81,24 +84,20 @@ public class SheetInfoSOEditor : Editor
     public ScriptableObject DicToClass(Type type, Dictionary<string, string> data)
     {
         var dt = CreateInstance(type);
- 
-        AssetDatabase.CreateAsset(dt, instance.OutPath+"/"+ Pathcheck(data["id"]) + data["Name"] + ".asset");
+        AssetDatabase.CreateAsset(dt, instance.OutPath+"/"+ Directory+ data["Name"] + ".asset");
         return TSVParser.DicToSOData(type, dt, data);
     }
 
 
-    public string Pathcheck(string SheetId)
+    public void Pathcheck(string SheetId)
     {
-        string id = string.Empty;
-        if (SheetId == "1")
+  
+        if (SheetId == "Ä³¸¯ÅÍ ½ºÅÈ")
         {
-            id = "Char/";
-        
+            Directory = "Char/";
         }
-        else if (SheetId == "2")
-        { id = "Item/"; }
-
-        return id;
 
     }
+
+    
 }

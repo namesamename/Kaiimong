@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class CharacterInstance : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public CharacterSO character;
+    public int Level;
+    public int Recognition;
+    public int Necessity;
 }

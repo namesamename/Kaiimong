@@ -10,9 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67a77f04e01116b4f82385ed165b2c0e, type: 3}
-  m_Name: char1
+  m_Name: "\uB77C"
   m_EditorClassIdentifier: 
-  id: 1
-  Name: char1
-  Attack: 10
-  Speed: 20
+  id: 0
+  Name: "\uB77C"
+  Grade: S
+  Health: 1300
+  Attack: 265
+  Defense: 121
+  Speed: 101
+  CriticalPer: 6.30%
+  CriticalAttack: 147%

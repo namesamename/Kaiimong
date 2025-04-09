@@ -9,9 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19d82d643bbc2e64a97bb45a06541411, type: 3}
-  m_Name: item1
+  m_Script: {fileID: 11500000, guid: 67a77f04e01116b4f82385ed165b2c0e, type: 3}
+  m_Name: "\uC0AC"
   m_EditorClassIdentifier: 
-  id: 2
-  Name: item1
-  Des: item1
+  id: 0
+  Name: "\uC0AC"
+  Grade: A
+  Health: 1300
+  Attack: 235
+  Defense: 117
+  Speed: 101
+  CriticalPer: 6.20%
+  CriticalAttack: 140%
