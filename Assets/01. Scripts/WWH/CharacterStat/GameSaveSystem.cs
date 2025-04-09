@@ -46,9 +46,12 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
         if(File.Exists(path))
         {
             string json =  File.ReadAllText(path);
+
             List<SaveInstance> saves = new List<SaveInstance>();
+
             SaveDataWrapper saveData = JsonConvert.DeserializeObject<SaveDataWrapper>
             (json, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto});
+
             saves = saveData.Saves;
             return saves;
         }
