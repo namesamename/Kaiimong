@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class DummyUnit : MonoBehaviour
 {
-    public bool IsSelectable = false;
     public int Speed;
 
     private Animator animator;

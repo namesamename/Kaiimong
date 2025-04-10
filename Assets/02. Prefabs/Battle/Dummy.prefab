@@ -48,9 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a1a0936b184d048a0f4647cb6eef4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsConfirmed: 0
-  IsSelected: 0
-  IsSelectable: 0
   Speed: 4
   icon: {fileID: 21300000, guid: ec80c213390c15247b9148eaa1331b3f, type: 3}
   SelectEffect: {fileID: 8368687951067647028}

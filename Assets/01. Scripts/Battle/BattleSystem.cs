@@ -30,8 +30,10 @@ public class BattleSystem : MonoBehaviour
 
     [Header("BattleInfo")]
     public int TurnIndex = 0;
-    public SkillData selectedSkill;
+    public SkillData SelectedSkill;
     public List<DummyUnit> Targets;
+    public bool CanSelectTarget = false;
+    public bool SelectedTarget = false;
 
     public CommandController CommandController { get; private set; }
     public BattleUI BattleUI;
@@ -101,9 +103,11 @@ public class BattleSystem : MonoBehaviour
 
     public void SetTarget()
     {
+        SelectedTarget = false;
+
         if (CurBattleState != BattleState.PlayerTurn) return;
 
-
+        CanSelectTarget = true;
 
     }
     

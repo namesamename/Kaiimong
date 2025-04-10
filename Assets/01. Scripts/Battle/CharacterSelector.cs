@@ -16,7 +16,10 @@ public class CharacterSelector : MonoBehaviour
     }
     private void Update()
     {
-        MouseClick();
+        if (battleSystem.CanSelectTarget)
+        {
+            MouseClick();
+        }
     }
 
     private void MouseClick()
@@ -72,6 +75,8 @@ public class CharacterSelector : MonoBehaviour
         // 선택된 캐릭터를 Targets 리스트에 추가
         battleSystem.Targets.Add(selectedCharacter);
         //battleSystem.ProceedToNextStage();
+        battleSystem.SelectedTarget = true;
+        battleSystem.CanSelectTarget = false;
     }
 
     //캐릭터 선택 효과
