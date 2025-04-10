@@ -5,9 +5,6 @@ using static CharacterDataBase;
 
 public class SaveDataBase : Singleton<SaveDataBase>
 {
-
-
-
     public Dictionary<SaveType, List<SaveInstance>> SaveDatas = new Dictionary<SaveType, List<SaveInstance>>();
 
     private void Awake()

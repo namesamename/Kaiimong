@@ -4,9 +4,6 @@ using UnityEngine;
 public class CharacterDataBase : Singleton<CharacterDataBase>
 {
     public Dictionary<string , CharacterSO> characterDic = new Dictionary<string , CharacterSO>();  
-
-
-
     public GameObject CharacterPrefabs;
 
     private void Awake()
@@ -16,10 +13,7 @@ public class CharacterDataBase : Singleton<CharacterDataBase>
         {
             characterDic[character.CharacterId] = character;
         }
-
     }
-
-
     public CharacterSO GetCharSOToGUID(string characterId)
     {
         if (characterDic[characterId] != null)
