@@ -11,9 +11,6 @@ public enum SaveType
 }
 public class GameSaveSystem : Singleton<GameSaveSystem>
 {
-
-
-
     private void Awake()
     {
         if (_instance == null)
