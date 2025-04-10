@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
-using static CharacterDataBase;
+using System;
 
 public enum SaveType
 {
@@ -13,7 +13,24 @@ public enum SaveType
 public class GameSaveSystem : Singleton<GameSaveSystem>
 {
 
-    
+
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
 
     public Dictionary<SaveType, List<SaveInstance>> SaveDic = new Dictionary<SaveType, List<SaveInstance>>();
 
@@ -29,14 +46,28 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
 
     public void SaveDataToEnum( SaveType saveType ,List<SaveInstance> saves)
     {
-        SaveDic[saveType] = saves;
+        try
+        {
+            SaveDic[saveType] = saves;
 
-        string path = Path.Combine(Application.dataPath, $"JsonData/{saveType}/{saveType}Database.json");
+            string path = Path.Combine(Application.dataPath, $"JsonData/{saveType}/{saveType}Database.json");
 
-        string json = JsonConvert.SerializeObject(new SaveDataWrapper { Saves = SaveDic[SaveType.Character] }, Formatting.Indented
-            , new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
+            string directory = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+                Debug.Log($"Æú´õ »ý¼ºµÊ: {directory}");
+            }
 
-        File.WriteAllText(path, json);
+            string json = JsonConvert.SerializeObject(new SaveDataWrapper { Saves = SaveDic[saveType] }, Formatting.Indented
+                , new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
+
+            File.WriteAllText(path, json);
+        }
+        catch (Exception exception)
+        {
+            Debug.LogException(exception);
+        }
         
     }
 
@@ -59,7 +90,39 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
         {
            return new List<SaveInstance>();
         } 
+
+
+
     }
+
+   
+    public void SaveAll()
+    {
+        foreach(List<SaveInstance> saves in SaveDic.Values)
+        {
+            SaveData(saves);
+        }
+    }
+
+
+    public List<List<SaveInstance>> LoadAll()
+    {
+        List<List<SaveInstance>> SaveList = new List<List<SaveInstance>>();
+
+
+        foreach(SaveType saveType in Enum.GetValues(typeof(SaveType)))
+        {
+            List<SaveInstance> saves = Load(saveType);
+            if(saves.Count > 0)
+            {
+                SaveDic[saveType] = saves;
+            }
+            SaveList.Add(saves);
+        }
+     
+        return SaveList;
+    }
+
     [System.Serializable]
     public class SaveDataWrapper
     {
