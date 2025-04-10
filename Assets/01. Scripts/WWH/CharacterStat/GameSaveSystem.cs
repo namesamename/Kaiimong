@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
@@ -30,11 +29,7 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
             }
         }
     }
-
-
     public Dictionary<SaveType, List<SaveInstance>> SaveDic = new Dictionary<SaveType, List<SaveInstance>>();
-
-    
     public void SaveData(List<SaveInstance> saves)
     {
         if (saves[0].Savetype == SaveType.Character)
@@ -49,9 +44,7 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
         try
         {
             SaveDic[saveType] = saves;
-
             string path = Path.Combine(Application.dataPath, $"JsonData/{saveType}/{saveType}Database.json");
-
             string directory = Path.GetDirectoryName(path);
             if (!Directory.Exists(directory))
             {

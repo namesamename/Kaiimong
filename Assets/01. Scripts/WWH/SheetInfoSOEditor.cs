@@ -8,12 +8,6 @@ using UnityEngine.Networking;
 [CustomEditor(typeof(SheetInfoSO))]
 public class SheetInfoSOEditor : Editor
 {
-    //[MenuItem("Ironcow/DataTool")]
-    //public static void Edit()
-    //{
-    //    SheetInfoSO.Edit();
-    //}
-
     string Directory;
 
     SheetInfoSO instance;
