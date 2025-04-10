@@ -6,7 +6,7 @@ public class SilHumManager : MonoBehaviour
     void Start()
     {
         // Step 1: 테스트용 캐릭터 저장 데이터 생성
-        var testData = new CharacterDataBase.CharacterSaveData
+        var testData = new CharacterSaveData()
         {
             characterId = "Mika", // enum 값을 string으로 넣었다고 가정
             Level = 5,
@@ -16,8 +16,8 @@ public class SilHumManager : MonoBehaviour
         };
 
         // Step 2: CharacterDataBase에 추가
-        CharacterDataBase.Instance.SaveDatas.Clear();
-        CharacterDataBase.Instance.SaveDatas.Add(testData);
+        SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character).Clear();
+        SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character).Add(testData);
 
         // Step 3: SaveSystem으로 저장
         GameSaveSystem.Instance.SaveData(new List<SaveInstance> { testData });
@@ -31,7 +31,7 @@ public class SilHumManager : MonoBehaviour
         // Step 5: 불러온 데이터를 캐릭터 데이터로 캐스팅 후 출력
         foreach (var item in loaded)
         {
-            if (item is CharacterDataBase.CharacterSaveData character)
+            if (item is CharacterSaveData character)
             {
                 Debug.Log($"불러온 캐릭터: ID={character.characterId}, 레벨={character.Level}, 호감도={character.Recognition}, 필요도={character.Necessity}");
             }

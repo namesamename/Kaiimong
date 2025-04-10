@@ -5,7 +5,7 @@ public class CharacterDataBase : Singleton<CharacterDataBase>
 {
     public Dictionary<string , CharacterSO> characterDic = new Dictionary<string , CharacterSO>();  
 
-    public List<CharacterSaveData> SaveDatas = new List<CharacterSaveData>();
+
 
     public GameObject CharacterPrefabs;
 
@@ -56,13 +56,5 @@ public class CharacterDataBase : Singleton<CharacterDataBase>
 
 
 
-    [System.Serializable]
-    public class CharacterSaveData :SaveInstance
-    {
-        public string characterId;
-        public int Level;
-        public int Recognition;
-        public int Necessity;
 
-    }
 }

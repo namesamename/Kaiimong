@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using static CharacterDataBase;
+
 
 public class Character : MonoBehaviour
 {
@@ -37,7 +36,7 @@ public class Character : MonoBehaviour
             Necessity = this.Necessity,
             Savetype = SaveType.Character
         };
-        CharacterDataBase.Instance.SaveDatas.Add(data);
+        SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character).Add(data);
         return data;
 
 
@@ -53,7 +52,7 @@ public class Character : MonoBehaviour
 
     public void HaveData()
     {
-        var foundData = CharacterDataBase.Instance.SaveDatas.Find(i => i.characterId == characterId);
+        var foundData = SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character).Find(i => i.characterId == characterId);
         if (foundData != null) 
         {
             LoadData(foundData);
