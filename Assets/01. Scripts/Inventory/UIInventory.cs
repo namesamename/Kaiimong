@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+public class UIInventory : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }        // 다른 스크립트에서 쉽게 접근하기 위한 싱글톤
+    public static UIInventory Instance { get; private set; }        // 다른 스크립트에서 쉽게 접근하기 위한 싱글톤
 
     [Header("Inventory Panels")]
     [SerializeField] private GameObject itemInventoryButton;        // 아이템 탭 UI 패널

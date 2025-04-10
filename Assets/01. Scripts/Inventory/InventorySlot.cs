@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 //슬롯 하나 담당하는 스크립트
