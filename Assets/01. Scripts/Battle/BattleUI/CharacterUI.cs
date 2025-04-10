@@ -1,6 +1,5 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +12,15 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private GameObject icons;
 
     [Header("Icons & Buttons")]
-    [SerializeField] private List<Image> Icons = new List<Image>();
-    [SerializeField] private Button firstSkillButton;
-    [SerializeField] private Button secondSkillButton;
-    [SerializeField] private Button ultSkillButton;
+    [SerializeField] private List<Image> iconList = new List<Image>();
+    [SerializeField] private List<Button> buttonList = new List<Button>();
+    [SerializeField] private Button targetConfirmButton;
+    [SerializeField] private Button cancelButton;
+    [SerializeField] private Button actionButton;
+    public Action OnConfirmButton;
+    //[SerializeField] private Button firstSkillButton;
+    //[SerializeField] private Button secondSkillButton;
+    //[SerializeField] private Button ultSkillButton;
 
     [Header("Icon transform & Scale")]
     [SerializeField] private float[] iconScale;
@@ -39,9 +43,43 @@ public class CharacterUI : MonoBehaviour
 
     void AddListener()
     {
-        firstSkillButton.onClick.AddListener(battleSystem.SetTarget);
-        secondSkillButton.onClick.AddListener(battleSystem.SetTarget);
-        ultSkillButton.onClick.AddListener(battleSystem.SetTarget);
+
+        foreach(Button button in buttonList)
+        {
+            button.onClick.AddListener(() => OnClickSkillButton(button));
+        }
+        targetConfirmButton.onClick.AddListener(OnClickTargetConfirmButton);
+        cancelButton.onClick.AddListener(OnSkillCancelButton);
+        actionButton.onClick.AddListener(OnActionButton);
+    }
+
+    void OnActionButton()
+    {
+        DisableActionButton();
+        battleSystem.ChangeState(BattleState.Action);
+    }
+
+    void OnSkillCancelButton()
+    {
+        if(battleSystem.TurnIndex == battleSystem.GetActivePlayers().Count)
+        {
+            DisableActionButton();
+        }
+        battleSystem.CommandController.RemoveCommand(battleSystem.CommandController.SkillCommands[battleSystem.CommandController.SkillCommands.Count - 1]);
+        battleSystem.TurnIndex--;
+    }
+
+    void OnClickSkillButton(Button button)
+    {
+        int skillNum = buttonList.IndexOf(button);
+        battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillDatas[skillNum];
+        battleSystem.SkillChanged?.Invoke();
+        battleSystem.OnSkillSelected();        
+    }
+
+    void OnClickTargetConfirmButton()
+    {
+        OnConfirmButton?.Invoke();
     }
 
     public void GetActivePlayerUnit()
@@ -60,17 +98,17 @@ public class CharacterUI : MonoBehaviour
     {
         for (int i = 0; i < curUnits.Count; i++)
         {
-            Icons[i].sprite = curUnits[i].icon;
+            iconList[i].sprite = curUnits[i].icon;
         }
         SetSkillButton();
     }
 
     void SetSkillButton()
     {
-        int index = battleSystem.TurnIndex;
-        firstSkillButton.image.sprite = curUnits[index].skillDatas[0].icon;
-        secondSkillButton.image.sprite = curUnits[index].skillDatas[1].icon;
-        ultSkillButton.image.sprite = curUnits[index].skillDatas[2].icon;
+        for(int i = 0; i < curUnits[battleSystem.TurnIndex].skillDatas.Count; i++)
+        {
+            buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillDatas[i].icon;
+        }
     }
 
     void EnableUI()
@@ -79,9 +117,21 @@ public class CharacterUI : MonoBehaviour
         icons.SetActive(true);
     }
 
-    void DIsableUI()
+    public void DIsableUI()
     {
         skills.SetActive(false);
         icons.SetActive(false);
+    }
+
+    public void SetActionButton()
+    {
+        targetConfirmButton.gameObject.SetActive(false);
+        actionButton.gameObject.SetActive(true);
+    }
+
+    public void DisableActionButton()
+    {
+        targetConfirmButton.gameObject.SetActive(true);
+        actionButton.gameObject.SetActive(false);
     }
 }

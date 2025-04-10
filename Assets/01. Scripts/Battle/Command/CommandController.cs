@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +7,14 @@ public class CommandController : MonoBehaviour
     [SerializeField] private List<DummySkill> skillCommands = new List<DummySkill>();
     public int Index = 0;
 
+    public List<DummySkill> SkillCommands { get { return skillCommands; } }
+
     public Action newTurn;
 
     public void AddCommand(ICommand command)
     {
         skillCommands.Add(command as DummySkill);
+        Debug.Log($"Command added: {command}, Total commands: {skillCommands.Count}");
     }
 
     public void ExecuteCommand()
@@ -34,7 +36,7 @@ public class CommandController : MonoBehaviour
     }
 
     void Start()
-    {
+    {        
         newTurn += ClearList;
     }
 

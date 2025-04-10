@@ -7,8 +7,8 @@ using UnityEngine;
 public class BattleSystem : MonoBehaviour
 {
     [Header("UnitLocation")]
-    [SerializeField] private List<Transform> playerLocations;
-    [SerializeField] private List<Transform> enemyLocations;
+    [SerializeField] private List<UnitPlate> playerLocations;
+    [SerializeField] private List<UnitPlate> enemyLocations;
     [SerializeField] private Transform playerParent;
     [SerializeField] private Transform enemyParent;
 
@@ -34,6 +34,7 @@ public class BattleSystem : MonoBehaviour
     public List<DummyUnit> Targets;
     public bool CanSelectTarget = false;
     public bool SelectedTarget = false;
+    public bool CanPickSkill = false;
 
     public CommandController CommandController { get; private set; }
     public BattleUI BattleUI;
@@ -41,6 +42,7 @@ public class BattleSystem : MonoBehaviour
 
     public Action OnPlayerTurn;
     public Action OnEnemyTurn;
+    public Action SkillChanged;
 
     private void Awake()
     {
@@ -67,6 +69,7 @@ public class BattleSystem : MonoBehaviour
 
         stateArray[(int)BattleState.Start] = new BattleStartState(this);
         stateArray[(int)BattleState.PlayerTurn] = new BattlePlayerState(this);
+        stateArray[(int)BattleState.Action] = new BattleActionState(this);
 
         ChangeState(BattleState.Start);
     }
@@ -85,30 +88,72 @@ public class BattleSystem : MonoBehaviour
     {
         activePlayers.Clear();
         activeEnemies.Clear();
+        SetPlayer();
+        SetEnemy();
+    }
 
-        for (int i = 0; i < Players.Count; i++)
+    private void SetPlayer()
+    {
+        List<DummyUnit> playerCopy = new List<DummyUnit>(Players);
+        for (int i = 0; i < playerLocations.Count; i++)
         {
-            Players[i].Speed = i + 1;
-            Enemies[i].Speed = i + 1;
-            
-            DummyUnit playerUnit = Instantiate(Players[i], playerLocations[i].position, Quaternion.identity, playerParent);
-            DummyUnit enemyUnit = Instantiate(Enemies[i], enemyLocations[i].position, Quaternion.identity, enemyParent);
+            DummyUnit player = playerCopy[i];
+            player.Speed = i + 1;
 
-            enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
-            
+            if (playerLocations[i].isOccupied) continue;
+
+            DummyUnit playerUnit = Instantiate(player, playerLocations[i].transform);
+            playerLocations[i].isOccupied = true;
+            playerUnit.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
             activePlayers.Add(playerUnit);
-            activeEnemies.Add(enemyUnit);
+            Players.Remove(player);
         }
+    }
+
+    private void SetEnemy()
+    {
+        List<DummyUnit> enemiesCopy = new List<DummyUnit>(Enemies);
+        for (int i = 0; i < enemyLocations.Count; i++)
+        {
+            DummyUnit enemy = enemiesCopy[i];
+            enemy.Speed = i+ 1;
+
+            if (enemyLocations[i].isOccupied) continue;
+
+            DummyUnit enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
+            enemyLocations[i].isOccupied= true;
+            enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
+            enemyUnit.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
+            activeEnemies.Add(enemyUnit);
+            Enemies.Remove(enemy);
+        }
+    }
+
+    public void EmptyPlateOnUnitDeath(DummyUnit unit) //Unit OnDeath Action에 추가하기
+    {
+        unit.GetComponentInParent<UnitPlate>().isOccupied = false;
     }
 
     public void SetTarget()
     {
-        SelectedTarget = false;
+        if(SelectedTarget)
+        {
+            CommandController.AddCommand(new DummySkill(activePlayers[TurnIndex], Targets, SelectedSkill));
+            TurnIndex++;
+            Targets.Clear();
+        }
 
-        if (CurBattleState != BattleState.PlayerTurn) return;
-
-        CanSelectTarget = true;
-
+        if(TurnIndex == activePlayers.Count)
+        {
+            BattleUI.CharacterUI.SetActionButton();
+        }
     }
-    
+
+    public void OnSkillSelected()
+    {
+        SelectedTarget = false;
+        CanSelectTarget = true;
+    }
+
+
 }

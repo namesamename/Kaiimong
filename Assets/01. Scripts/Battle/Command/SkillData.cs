@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,4 +9,12 @@ public class SkillData : ScriptableObject
     public int[] damage;
     public float[] hitTiming;
     public Sprite icon;
+
+    public void Execute(DummyUnit unit, List<DummyUnit> target)
+    {
+        foreach(DummyUnit targets in target)
+        {
+            Debug.Log($"{unit.Speed}À¯´ÖÀÌ {targets.AppearAnimationLength}Å¸°Ù¿¡°Ô ¹«¾ð°¡¹º°¡¹¹°¡");
+        }
+    }
 }

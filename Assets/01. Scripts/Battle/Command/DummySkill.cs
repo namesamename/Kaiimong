@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DummySkill : ICommand //DummySkillCommand
 {
-    private SkillData skillData;
-    private DummyUnit unit;
-    private List<DummyUnit> targets;
+    public SkillData skillData;
+    public DummyUnit unit;
+    public List<DummyUnit> targets;
 
     public DummySkill(DummyUnit unit, List<DummyUnit> targets, SkillData skillData)
     {
@@ -16,7 +15,7 @@ public class DummySkill : ICommand //DummySkillCommand
     }
     public void Execute()
     {
-
+        skillData.Execute(unit, targets);
     }
 
     public void Undo()

@@ -16,36 +16,17 @@ public class BattlePlayerState : IBattleState
         battleSystem.CurBattleState = BattleState.PlayerTurn;
         battleSystem.GetActivePlayers().Sort((a,b) => b.Speed.CompareTo(a.Speed));        
         battleSystem.OnPlayerTurn?.Invoke();
+        battleSystem.CommandController.newTurn?.Invoke();
     }
 
     public void OnExit()
     {
+        //UI ²ô±â
+        battleSystem.BattleUI.CharacterUI.DIsableUI();
     }
 
     public void OnUpdate()
     {
 
     }
-
-    void PlayerCommand()
-    {
-        foreach (var player in battleSystem.GetActivePlayers())
-        {
-            bool pickSkill = false;
-            while (!pickSkill)
-            {
-
-            }
-        }
-    }
-
-    void PlayerTurn()
-    {
-        bool pickSKill =false;
-        while (!pickSKill)
-        {
-
-        }
-    }
-
 }

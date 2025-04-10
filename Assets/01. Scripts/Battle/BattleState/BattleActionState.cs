@@ -2,15 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleActionState : MonoBehaviour
+public class BattleActionState : IBattleState
 {
-    void Start()
+    private BattleSystem battleSystem;
+
+    public BattleActionState(BattleSystem battleSystem)
     {
-        
+        this.battleSystem = battleSystem;
     }
 
-    void Update()
+    public void OnEnter()
     {
-        
+        battleSystem.CurBattleState = BattleState.Action;
     }
+
+    public void OnExit()
+    {
+    }
+
+    public void OnUpdate()
+    {
+    }
+
 }
