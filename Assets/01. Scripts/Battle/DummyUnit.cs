@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DummyUnit : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class DummyUnit : MonoBehaviour
     
     private SpriteRenderer spriteRenderer;
     public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
+
+    public Sprite icon;
+    public GameObject SelectEffect;
+
+    public List<SkillData> skillDatas;
     
     // 애니메이션 길이를 저장하는 변수
     public float AppearAnimationLength { get; private set; }
@@ -23,7 +29,7 @@ public class DummyUnit : MonoBehaviour
        // 애니메이션 길이 계산
        if (animator != null)
        {
-           // 등장 애니메이션 길이 계산 (기본 상태인 Idle 애니메이션 사용)
+           // 등장 애니메이션 길이 계산 (Appear 애니메이션 사용)
            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
            AppearAnimationLength = stateInfo.length;
        }
@@ -38,4 +44,5 @@ public class DummyUnit : MonoBehaviour
     {
         
     }
+
 }

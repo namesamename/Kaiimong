@@ -14,6 +14,8 @@ public class BattlePlayerState : IBattleState
     public void OnEnter()
     {
         battleSystem.CurBattleState = BattleState.PlayerTurn;
+        battleSystem.GetActivePlayers().Sort((a,b) => b.Speed.CompareTo(a.Speed));        
+        battleSystem.OnPlayerTurn?.Invoke();
     }
 
     public void OnExit()
@@ -22,5 +24,28 @@ public class BattlePlayerState : IBattleState
 
     public void OnUpdate()
     {
+
     }
+
+    void PlayerCommand()
+    {
+        foreach (var player in battleSystem.GetActivePlayers())
+        {
+            bool pickSkill = false;
+            while (!pickSkill)
+            {
+
+            }
+        }
+    }
+
+    void PlayerTurn()
+    {
+        bool pickSKill =false;
+        while (!pickSKill)
+        {
+
+        }
+    }
+
 }
