@@ -18,8 +18,8 @@ public class CharacterVisual : MonoBehaviour
         if (animator != null)
         {
             // 등장 애니메이션 길이 계산 (Appear 애니메이션 사용)
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            AppearAnimationLength = stateInfo.length;
+            //AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            //AppearAnimationLength = stateInfo.length;
         }
     }
 

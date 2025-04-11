@@ -1,4 +1,6 @@
 
+using UnityEngine.TextCore.Text;
+
 public class GlobalDatabase : Singleton<GlobalDatabase>
 {
 
@@ -18,8 +20,8 @@ public class GlobalDatabase : Singleton<GlobalDatabase>
                 Destroy(gameObject);
             }
         }
-        character = GetComponentInChildren<CharacterDataBase>();
-        skill = GetComponentInChildren<SkillDataBase>();
+        character = new CharacterDataBase();
+        skill = new SkillDataBase();    
 
         character.Initialize();
         skill.Initialize();
