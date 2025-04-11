@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SO : ScriptableObject
+public class DebuffSkillSO : SO
 {
-    public int id;
+    public int Id;
 }

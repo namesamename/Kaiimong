@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class GlobalDatabase : Singleton<GlobalDatabase>
 {
@@ -9,8 +6,24 @@ public class GlobalDatabase : Singleton<GlobalDatabase>
     public SkillDataBase skill;
     private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
         character = GetComponentInChildren<CharacterDataBase>();
         skill = GetComponentInChildren<SkillDataBase>();
+
+        character.Initialize();
+        skill.Initialize();
+
     }
 
 

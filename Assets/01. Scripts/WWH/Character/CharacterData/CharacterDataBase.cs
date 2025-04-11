@@ -1,22 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterDataBase : Singleton<CharacterDataBase>
+public class CharacterDataBase 
 {
     public Dictionary<string , CharacterSO> characterDic = new Dictionary<string , CharacterSO>();  
     public GameObject CharacterPrefabs;
 
-    private void Awake()
+
+    public void Initialize()
     {
         CharacterSO[] characters = Resources.LoadAll<CharacterSO>("Char");
-        foreach (CharacterSO character in characters) 
+        foreach (CharacterSO character in characters)
         {
             characterDic[character.CharacterId] = character;
         }
     }
+   
     public CharacterSO GetCharSOToGUID(string characterId)
     {
-        if (characterDic[characterId] != null)
+        if (characterDic[characterId] != null && characterDic.ContainsKey(characterId))
         {
             return characterDic[characterId];
         }
@@ -29,7 +31,7 @@ public class CharacterDataBase : Singleton<CharacterDataBase>
 
     public GameObject CharacterInstanceSummon(CharacterSO character, Vector3 pos, Transform parent = null)
     {
-        GameObject CharacterObject = Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
+        GameObject CharacterObject = Object.Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
 
         if(CharacterObject.GetComponent<Character>() == null) 
         {

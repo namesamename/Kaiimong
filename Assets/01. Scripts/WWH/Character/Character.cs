@@ -65,7 +65,7 @@ public class Character : MonoBehaviour
 
     public void SetStat()
     {
-        GetComponentInChildren<CharacterStat>().SetCharacter(CharacterDataBase.Instance.GetCharSOToGUID(characterId));
+        GetComponentInChildren<CharacterStat>().SetCharacter(GlobalDatabase.Instance.character.GetCharSOToGUID(characterId));
     }
 
 }
