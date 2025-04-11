@@ -12,14 +12,6 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Transform playerParent;
     [SerializeField] private Transform enemyParent;
 
-    [Header("StateTiming")]
-    [SerializeField] private float timeBetweenStates;
-
-    [Header("StateMachine")]
-    public BattleState CurBattleState;
-    private BattleStateMachine battleStateMachine;
-    private IBattleState[] stateArray;
-
     [Header("Units")]
     public List<DummyUnit> Players; //캐릭터 선택에서 가져오고
     public List<DummyUnit> Enemies; //스테이지 데이터에서 가져오고
@@ -32,9 +24,19 @@ public class BattleSystem : MonoBehaviour
     public int TurnIndex = 0;
     public SkillData SelectedSkill;
     public List<DummyUnit> Targets;
+    private float betweenPhaseTime;
+
+    [Header("Appear")]
+    private bool appearAnimComplete = false;
+
+    [Header("Skill&TargetSelect")]
     public bool CanSelectTarget = false;
     public bool SelectedTarget = false;
-    public bool CanPickSkill = false;
+    public bool PlayerTurn = false;
+
+    [Header("AttackPhase")]
+    public bool CanAttack = false;
+    public bool AttackEnded = false;
 
     public CommandController CommandController { get; private set; }
     public BattleUI BattleUI;
@@ -53,35 +55,72 @@ public class BattleSystem : MonoBehaviour
 
     void Start()
     {
-        InitializeStateMachine();   
+        StartBattle();
     }
 
     void Update()
     {
-        battleStateMachine.CurrentState.OnUpdate();
+        if (appearAnimComplete)
+        {
+            appearAnimComplete = false;
+            StartCoroutine(ChangePhase(PlayerTurnPhase));
+        }
+
+        if (CanAttack)
+        {
+            CanAttack = false;
+            StartCoroutine(ChangePhase(AttackPhase));
+        }
     }
 
-    void InitializeStateMachine()
+    private void AttackPhase()
     {
-        battleStateMachine = new BattleStateMachine(this);
+        CommandController.ExecuteCommand();
 
-        stateArray = new IBattleState[Enum.GetValues(typeof(BattleState)).Length];
+        CheckGameOver();
 
-        stateArray[(int)BattleState.Start] = new BattleStartState(this);
-        stateArray[(int)BattleState.PlayerTurn] = new BattlePlayerState(this);
-        stateArray[(int)BattleState.Action] = new BattleActionState(this);
-
-        ChangeState(BattleState.Start);
+        if (PlayerTurn)
+        {
+            StartCoroutine(ChangePhase(EnemyTurnPhase));
+        }
+        else
+        {
+            StartCoroutine(ChangePhase(PlayerTurnPhase));
+        }
     }
 
-    private IBattleState GetStateInterface(BattleState state)
+    private void CheckGameOver()
     {
-        return stateArray[(int)state];
+        if(Players.Count == 0 && activePlayers.Count == 0) StartCoroutine(ChangePhase(WinPhase));
+        if(Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(LosePhase));
     }
 
-    public void ChangeState(BattleState state)
+    private void StartBattle()
     {
-        battleStateMachine.ChangeState(GetStateInterface(state));
+        SetBattle();
+        StartCoroutine(AppearAnimTime(GetMaxAnimationTime()));
+    }
+
+    private void EnemyTurnPhase()
+    {
+
+    }
+
+    private void PlayerTurnPhase()
+    {
+        activePlayers.Sort((a, b) => b.Speed.CompareTo(a.Speed));
+        OnPlayerTurn?.Invoke();
+        CommandController.ClearList();
+    }
+
+    private void WinPhase()
+    {
+
+    }
+
+    private void LosePhase()
+    {
+
     }
 
     public void SetBattle()
@@ -116,12 +155,12 @@ public class BattleSystem : MonoBehaviour
         for (int i = 0; i < enemyLocations.Count; i++)
         {
             DummyUnit enemy = enemiesCopy[i];
-            enemy.Speed = i+ 1;
+            enemy.Speed = i + 1;
 
             if (enemyLocations[i].isOccupied) continue;
 
             DummyUnit enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
-            enemyLocations[i].isOccupied= true;
+            enemyLocations[i].isOccupied = true;
             enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
             enemyUnit.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
             activeEnemies.Add(enemyUnit);
@@ -134,16 +173,45 @@ public class BattleSystem : MonoBehaviour
         unit.GetComponentInParent<UnitPlate>().isOccupied = false;
     }
 
+    private float GetMaxAnimationTime()
+    {
+        float enemyAnimation = CaluculateMaxAnimationTime(activeEnemies);
+        float playerAnimation = CaluculateMaxAnimationTime(activePlayers);
+
+        float maxAnimationTime = enemyAnimation > playerAnimation ? enemyAnimation : playerAnimation;
+        return maxAnimationTime;
+    }
+
+    private float CaluculateMaxAnimationTime(List<DummyUnit> unitList)
+    {
+        float maxAnimationTime = 0f;
+
+        for (int i = 0; i < unitList.Count; i++)
+        {
+            float animTime = unitList[i].AppearAnimationLength;
+            maxAnimationTime = maxAnimationTime > animTime ? maxAnimationTime : animTime;
+        }
+
+        return maxAnimationTime;
+    }
+
+    private IEnumerator AppearAnimTime(float animationTime)
+    {
+        yield return null;
+        yield return new WaitForSeconds(animationTime);
+        appearAnimComplete = true;
+    }
+
     public void SetTarget()
     {
-        if(SelectedTarget)
+        if (SelectedTarget)
         {
             CommandController.AddCommand(new DummySkill(activePlayers[TurnIndex], Targets, SelectedSkill));
             TurnIndex++;
             Targets.Clear();
         }
 
-        if(TurnIndex == activePlayers.Count)
+        if (TurnIndex == activePlayers.Count)
         {
             BattleUI.CharacterUI.SetActionButton();
         }
@@ -155,5 +223,10 @@ public class BattleSystem : MonoBehaviour
         CanSelectTarget = true;
     }
 
+    private IEnumerator ChangePhase(Action nextPhase)
+    {
+        yield return new WaitForSeconds(betweenPhaseTime);
 
+        nextPhase();
+    }
 }

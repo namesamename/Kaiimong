@@ -10,11 +10,11 @@ public class SkillData : ScriptableObject
     public float[] hitTiming;
     public Sprite icon;
 
-    public void Execute(DummyUnit unit, List<DummyUnit> target)
+    public void Execute(DummyUnit unit, List<DummyUnit> targets)
     {
-        foreach(DummyUnit targets in target)
+        foreach (DummyUnit target in targets)
         {
-            Debug.Log($"{unit.Speed}À¯´ÖÀÌ {targets.AppearAnimationLength}Å¸°Ù¿¡°Ô ¹«¾ð°¡¹º°¡¹¹°¡");
+            Debug.Log($"{unit.Speed}À¯´ÖÀÌ {target.Speed}Å¸°Ù¿¡°Ô ¹«¾ð°¡¹º°¡¹¹°¡");
         }
     }
 }

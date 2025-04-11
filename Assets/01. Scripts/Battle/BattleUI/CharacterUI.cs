@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterUI : MonoBehaviour
 {
-    private List<DummyUnit> curUnits = new List<DummyUnit>();
+    [SerializeField] private List<DummyUnit> curUnits = new List<DummyUnit>();
 
     [Header("Object for UIEnable")]
     [SerializeField] private GameObject skills;
@@ -56,17 +56,23 @@ public class CharacterUI : MonoBehaviour
     void OnActionButton()
     {
         DisableActionButton();
-        battleSystem.ChangeState(BattleState.Action);
+        DIsableUI();
+        battleSystem.CanAttack = true;
     }
 
     void OnSkillCancelButton()
     {
+        if (battleSystem.CommandController.SkillCommands.Count == 0) return;
         if(battleSystem.TurnIndex == battleSystem.GetActivePlayers().Count)
         {
             DisableActionButton();
         }
         battleSystem.CommandController.RemoveCommand(battleSystem.CommandController.SkillCommands[battleSystem.CommandController.SkillCommands.Count - 1]);
         battleSystem.TurnIndex--;
+        battleSystem.SkillChanged?.Invoke();
+        battleSystem.SelectedSkill = null;
+        battleSystem.CanSelectTarget = false;
+        battleSystem.SelectedTarget = false;
     }
 
     void OnClickSkillButton(Button button)
@@ -85,6 +91,7 @@ public class CharacterUI : MonoBehaviour
     public void GetActivePlayerUnit()
     {
         curUnits = battleSystem.GetActivePlayers();
+        battleSystem.PlayerTurn = true;
         SetUI();
         EnableUI();
     }
@@ -92,6 +99,7 @@ public class CharacterUI : MonoBehaviour
     public void GetActiveEnemyUnit()
     {
         curUnits = battleSystem.GetActiveEnemies();
+        battleSystem.PlayerTurn = false;
     }
 
     public void SetUI()

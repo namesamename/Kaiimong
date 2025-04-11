@@ -9,8 +9,6 @@ public class CommandController : MonoBehaviour
 
     public List<DummySkill> SkillCommands { get { return skillCommands; } }
 
-    public Action newTurn;
-
     public void AddCommand(ICommand command)
     {
         skillCommands.Add(command as DummySkill);
@@ -19,9 +17,12 @@ public class CommandController : MonoBehaviour
 
     public void ExecuteCommand()
     {
-        foreach (ICommand command in skillCommands)
+        List<DummySkill> commandsToExecute = new List<DummySkill>(skillCommands);
+
+        foreach (ICommand command in commandsToExecute)
         {
             command.Execute(); 
+            RemoveCommand(command);
         }
     }
 
@@ -30,18 +31,8 @@ public class CommandController : MonoBehaviour
         skillCommands.Remove(command as DummySkill);
     }
 
-    void ClearList()
+    public void ClearList()
     {
         skillCommands.Clear();
-    }
-
-    void Start()
-    {        
-        newTurn += ClearList;
-    }
-
-    void Update()
-    {
-        
     }
 }

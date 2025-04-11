@@ -17,6 +17,7 @@ public class CharacterSelector : MonoBehaviour
     {
         battleSystem.BattleUI.CharacterUI.OnConfirmButton += OnConfirmButtonClicked;
         battleSystem.SkillChanged += ResetEffect;
+        battleSystem.SkillChanged += ResetSelectedCharacter;
     }
 
     private void Update()
@@ -129,6 +130,11 @@ public class CharacterSelector : MonoBehaviour
         }
         selectedCharacter = null;
         battleSystem.SetTarget();
+    }
+
+    private void ResetSelectedCharacter()
+    {
+        selectedCharacter = null;
     }
 
     //캐릭터 선택 효과

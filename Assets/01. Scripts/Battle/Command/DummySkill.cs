@@ -9,7 +9,7 @@ public class DummySkill : ICommand //DummySkillCommand
 
     public DummySkill(DummyUnit unit, List<DummyUnit> targets, SkillData skillData)
     {
-        this.targets = targets;
+        this.targets = new List<DummyUnit>(targets);
         this.unit = unit;
         this.skillData = skillData;
     }
