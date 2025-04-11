@@ -5,6 +5,8 @@ using UnityEngine.TextCore.Text;
 
 public class SaveDataBase : Singleton<SaveDataBase>
 {
+
+    //세이브 데이타 있는 거 보관
     public Dictionary<SaveType, List<SaveInstance>> SaveDatas = new Dictionary<SaveType, List<SaveInstance>>();
 
     private void Awake()
@@ -24,7 +26,13 @@ public class SaveDataBase : Singleton<SaveDataBase>
 
 
     }
-
+    /// <summary>
+    /// 특정 하나만 가져오기
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="type"></param>
+    /// <param name="Id"></param>
+    /// <returns></returns>
     public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
     {
         if (!SaveDatas.ContainsKey(type))
@@ -34,6 +42,12 @@ public class SaveDataBase : Singleton<SaveDataBase>
 
         return (T)SaveDatas[type].Find(i => i.ID == Id);
     }
+    /// <summary>
+    ///한 종류의 세이브 데이터 가져오기
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public List<T> GetSaveInstances<T>(SaveType type) where T : SaveInstance
     {
         if (!SaveDatas.ContainsKey(type))
@@ -44,6 +58,11 @@ public class SaveDataBase : Singleton<SaveDataBase>
         return SaveDatas[type].ConvertAll(x => x as T);
     }
 
+    /// <summary>
+    /// 한 종류의 세이브 데이터 저장
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="saveType"></param>
     public void SetSaveInstances(SaveInstance data, SaveType saveType) 
     {
         if(!SaveDatas.ContainsKey(saveType)) 

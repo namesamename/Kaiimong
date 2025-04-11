@@ -146,7 +146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2516109690876170450, guid: ba404e965993c0e4aaffba316107f0ad, type: 3}
       propertyPath: m_Name
-      value: CharacterPrefabs (1)
+      value: Be_Loaded
       objectReference: {fileID: 0}
     - target: {fileID: 6336614877210501076, guid: ba404e965993c0e4aaffba316107f0ad, type: 3}
       propertyPath: characterId
@@ -407,7 +407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2516109690876170450, guid: ba404e965993c0e4aaffba316107f0ad, type: 3}
       propertyPath: m_Name
-      value: CharacterPrefabs
+      value: InitGameObject
       objectReference: {fileID: 0}
     - target: {fileID: 8392031930144181386, guid: ba404e965993c0e4aaffba316107f0ad, type: 3}
       propertyPath: m_Name
@@ -521,6 +521,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1207422833}
   - {fileID: 1832361708}
+  - {fileID: 1112266985}
   - {fileID: 6608846758014839027}
   - {fileID: 1631945264}
-  - {fileID: 1112266985}

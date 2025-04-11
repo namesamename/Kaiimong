@@ -10,6 +10,7 @@ public class CharacterDataBase
     public void Initialize()
     {
         CharacterSO[] characters = Resources.LoadAll<CharacterSO>("Char");
+
         foreach (CharacterSO character in characters)
         {
             characterDic[character.ID] = character;
@@ -29,6 +30,8 @@ public class CharacterDataBase
         }
     }
 
+
+    //캐릭터 아이디로 생성
     public GameObject CharacterInstanceSummon(CharacterSO character, Vector3 pos, Transform parent = null)
     {
         GameObject CharacterObject = Object.Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
@@ -39,7 +42,7 @@ public class CharacterDataBase
         return CharacterObject;
 
     }
-
+    //캐릭터 세이브 정보로 생성
     public GameObject CharacterInstanceSummonFromSaveData(CharacterSaveData saveData , Vector3 pos, Transform parent = null)
     {
         GameObject Character = CharacterInstanceSummon(GetCharSOToGUID(saveData.characterId), pos, parent);
