@@ -9,25 +9,11 @@ public enum SaveType
     Character,
     Item,
 }
-public class GameSaveSystem : Singleton<GameSaveSystem>
+public static class GameSaveSystem
 {
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-    public Dictionary<SaveType, List<SaveInstance>> SaveDic = new Dictionary<SaveType, List<SaveInstance>>();
-    public void SaveData(List<SaveInstance> saves)
+   
+    public static Dictionary<SaveType, List<SaveInstance>> SaveDic = new Dictionary<SaveType, List<SaveInstance>>();
+    public static void SaveData(List<SaveInstance> saves)
     {
         if (saves[0].Savetype == SaveType.Character)
         {
@@ -36,7 +22,7 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
       
     }
 
-    public void SaveDataToEnum( SaveType saveType ,List<SaveInstance> saves)
+    public static void SaveDataToEnum( SaveType saveType ,List<SaveInstance> saves)
     {
         try
         {
@@ -61,7 +47,7 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
         
     }
 
-    public List<SaveInstance> Load(SaveType saveType)
+    public static List<SaveInstance> Load(SaveType saveType)
     {
         string path = Path.Combine(Application.dataPath, $"JsonData/{saveType}/{saveType}Database.json");
         if(File.Exists(path))
@@ -84,7 +70,7 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
     }
 
    
-    public void SaveAll()
+    public static void SaveAll()
     {
         foreach(List<SaveInstance> saves in SaveDic.Values)
         {
@@ -93,7 +79,7 @@ public class GameSaveSystem : Singleton<GameSaveSystem>
     }
 
 
-    public List<List<SaveInstance>> LoadAll()
+    public static List<List<SaveInstance>> LoadAll()
     {
         List<List<SaveInstance>> SaveList = new List<List<SaveInstance>>();
 

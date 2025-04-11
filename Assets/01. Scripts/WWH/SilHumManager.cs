@@ -20,13 +20,13 @@ public class SilHumManager : MonoBehaviour
         SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character).Add(testData);
 
         // Step 3: SaveSystem으로 저장
-        GameSaveSystem.Instance.SaveData(new List<SaveInstance> { testData });
+        GameSaveSystem.SaveData(new List<SaveInstance> { testData });
 
         Debug.Log("저장 완료!");
 
         // Step 4: 저장된 데이터 불러오기
         List<SaveInstance> loaded = new List<SaveInstance>();   
-        loaded = GameSaveSystem.Instance.Load(SaveType.Character);
+        loaded = GameSaveSystem.Load(SaveType.Character);
 
         // Step 5: 불러온 데이터를 캐릭터 데이터로 캐스팅 후 출력
         foreach (var item in loaded)

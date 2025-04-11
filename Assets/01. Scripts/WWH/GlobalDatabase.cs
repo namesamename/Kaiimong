@@ -6,6 +6,7 @@ public class GlobalDatabase : Singleton<GlobalDatabase>
 
     public CharacterDataBase character;
     public SkillDataBase skill;
+    public SaveDataBase save;
     private void Awake()
     {
         if (_instance == null)
@@ -21,7 +22,8 @@ public class GlobalDatabase : Singleton<GlobalDatabase>
             }
         }
         character = new CharacterDataBase();
-        skill = new SkillDataBase();    
+        skill = new SkillDataBase();
+        save= GetComponentInChildren<SaveDataBase>();
 
         character.Initialize();
         skill.Initialize();
