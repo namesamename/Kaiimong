@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class SO : ScriptableObject
 {
+    public string ID;
 
 }

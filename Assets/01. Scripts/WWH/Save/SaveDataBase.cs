@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine.TextCore.Text;
 
 
 public class SaveDataBase : Singleton<SaveDataBase>
@@ -19,6 +21,18 @@ public class SaveDataBase : Singleton<SaveDataBase>
                 Destroy(gameObject);
             }
         }
+
+
+    }
+
+    public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
+    {
+        if (!SaveDatas.ContainsKey(type))
+        {
+            return null;
+        }
+
+        return (T)SaveDatas[type].Find(i => i.ID == Id);
     }
     public List<T> GetSaveInstances<T>(SaveType type) where T : SaveInstance
     {
@@ -39,13 +53,15 @@ public class SaveDataBase : Singleton<SaveDataBase>
         SaveDatas[saveType].Add(data);
     }
 
+
+
    
 
 }
 [System.Serializable]
 public class CharacterSaveData : SaveInstance
 {
-    public string characterId;
+    public string characterId { get => ID; }
     public int Level;
     public int Recognition;
     public int Necessity;

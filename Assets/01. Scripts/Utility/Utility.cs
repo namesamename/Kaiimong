@@ -74,6 +74,10 @@ public static class Utility
         {
             return "CharacterSO";
         }
+        else if (data == "½ºÅ³")
+        {
+            return "SkillSO";
+        }
         else
         {
             return data;

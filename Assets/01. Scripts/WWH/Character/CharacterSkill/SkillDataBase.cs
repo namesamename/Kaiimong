@@ -18,7 +18,7 @@ public class SkillDataBase
 
         foreach (SkillSO skill in skillSO)
         {
-            SkillDataDic[skill.SkillId] = skill;
+            SkillDataDic[skill.ID] = skill;
         }
         foreach (DebuffSkillSO skill in DebuffSO)
         {
@@ -38,7 +38,7 @@ public class SkillDataBase
         }
         else
         {
-            Debug.Log("That Id Dont Have Character");
+            Debug.Log("This ID is incorrect");
             return null;
         }
     }

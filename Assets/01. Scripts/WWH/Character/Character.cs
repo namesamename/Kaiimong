@@ -5,10 +5,24 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
 
+    [HideInInspector]
+    public CharacterSkillBook skillBook;
+    public CharacterStat stat;
+    public CharacterVisual visual;
+
+
+
     public string characterId;
     public int Level;
     public int Recognition;
     public int Necessity;
+
+    private void Awake()
+    {
+        skillBook =GetComponentInChildren<CharacterSkillBook>();
+        stat = GetComponentInChildren<CharacterStat>();
+        visual = GetComponentInChildren<CharacterVisual>();
+    }
 
     public void Initialize(string Id)
     {
@@ -16,12 +30,13 @@ public class Character : MonoBehaviour
         HaveData();
         SetStat();
         SetVisual();
+        skillBook.SkillSet(characterId);
     }
 
 
     public void SetVisual()
     {
-        //나중에 스프라이트 추가되면
+        //visual.ChangeAnimation();
     }
 
 
@@ -30,13 +45,13 @@ public class Character : MonoBehaviour
 
         CharacterSaveData data = new CharacterSaveData()
         {
-            characterId = this.characterId,
+            ID = this.characterId,
             Level = this.Level,
             Recognition = this.Recognition,
             Necessity = this.Necessity,
             Savetype = SaveType.Character
         };
-        SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character).Add(data);
+        SaveDataBase.Instance.SetSaveInstances(data, SaveType.Character);
         return data;
 
 
@@ -48,6 +63,8 @@ public class Character : MonoBehaviour
         Level = saveData.Level;
         Recognition = saveData.Recognition;
         Necessity = saveData.Necessity;
+        SetStat();
+        skillBook.SkillSet(characterId);
     }
 
     public void HaveData()
@@ -65,7 +82,7 @@ public class Character : MonoBehaviour
 
     public void SetStat()
     {
-        GetComponentInChildren<CharacterStat>().SetCharacter(GlobalDatabase.Instance.character.GetCharSOToGUID(characterId));
+       stat.SetCharacter(GlobalDatabase.Instance.character.GetCharSOToGUID(characterId));
     }
 
 }

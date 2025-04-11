@@ -17,23 +17,22 @@ public class SkillSO : SO
 
     public bool IsDebuff;
     public bool IsBuff;
-
-
+   
     public int Id;
 
-    public string SkillId;
 
-#if UNITY_EDITOR
-    public void OnValidate()
-    {
-        if (string.IsNullOrEmpty(SkillId) && !string.IsNullOrEmpty(Name))
-        {
-            string Chaguid = Guid.NewGuid().ToString().Substring(0, 8);
-            SkillId = Chaguid;
-            UnityEditor.EditorUtility.SetDirty(this);
-        }
-    }
-#endif
+
+//#if UNITY_EDITOR
+//    public void OnValidate()
+//    {
+//        if (string.IsNullOrEmpty(SkillId) && !string.IsNullOrEmpty(Name))
+//        {
+//            string Chaguid = Guid.NewGuid().ToString().Substring(0, 8);
+//            SkillId = Chaguid;
+//            UnityEditor.EditorUtility.SetDirty(this);
+//        }
+//    }
+//#endif
 }
 
 

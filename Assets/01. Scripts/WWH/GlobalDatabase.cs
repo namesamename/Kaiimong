@@ -1,11 +1,13 @@
 
-using UnityEngine.TextCore.Text;
+using UnityEngine;
+
 
 public class GlobalDatabase : Singleton<GlobalDatabase>
 {
 
     public CharacterDataBase character;
     public SkillDataBase skill;
+    [HideInInspector]
     public SaveDataBase save;
     private void Awake()
     {
@@ -23,7 +25,7 @@ public class GlobalDatabase : Singleton<GlobalDatabase>
         }
         character = new CharacterDataBase();
         skill = new SkillDataBase();
-        save= GetComponentInChildren<SaveDataBase>();
+        save = GetComponentInChildren<SaveDataBase>();
 
         character.Initialize();
         skill.Initialize();

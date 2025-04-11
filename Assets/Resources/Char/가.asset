@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a77f04e01116b4f82385ed165b2c0e, type: 3}
   m_Name: "\uAC00"
   m_EditorClassIdentifier: 
-  id: 0
+  ID: 001
   Name: "\uAC00"
   Grade: S
   Health: 1600

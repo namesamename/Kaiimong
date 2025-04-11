@@ -7,16 +7,24 @@ public class CharacterSkillBook : MonoBehaviour
 
     public SkillObject[] SkillList = new SkillObject[3];
 
+    public string[] SkillId = new string[3];
 
- 
-    private void Start()
+    private void Awake()
     {
         SkillList = GetComponentsInChildren<SkillObject>();
+    }
+   
+
+    public void SkillSet(string ID)
+    {
         for (int i = 0; i < SkillList.Length; i++)
         {
-            //SkillList[i].SetSkill();
+            SkillList[i].SetSkill($"{ID}_{i+1}");
         }
+
     }
+
+    
 
     public void SkillUsing(SkillObject skill)
     {

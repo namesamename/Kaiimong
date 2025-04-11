@@ -12,7 +12,7 @@ public class CharacterDataBase
         CharacterSO[] characters = Resources.LoadAll<CharacterSO>("Char");
         foreach (CharacterSO character in characters)
         {
-            characterDic[character.CharacterId] = character;
+            characterDic[character.ID] = character;
         }
     }
    
@@ -24,7 +24,7 @@ public class CharacterDataBase
         }
         else
         {
-            Debug.Log("That Id Dont Have Character");
+            Debug.Log("This ID is incorrect");
             return null;
         }
     }
@@ -34,12 +34,8 @@ public class CharacterDataBase
         GameObject CharacterObject = Object.Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
 
         if(CharacterObject.GetComponent<Character>() == null) 
-        {
-            CharacterObject.AddComponent<Character>();
-        }
-
-        CharacterObject.GetComponent<Character>().Initialize(character.CharacterId);
-        //세이브 데이터 가져오기
+        {   CharacterObject.AddComponent<Character>();}
+        CharacterObject.GetComponent<Character>().Initialize(character.ID);
         return CharacterObject;
 
     }
