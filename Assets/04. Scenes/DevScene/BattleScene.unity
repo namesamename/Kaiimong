@@ -1523,6 +1523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf756257da1dd647afc5aedd4fcf6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curUnits: []
   skills: {fileID: 32893428}
   icons: {fileID: 1646092532}
   iconList:
@@ -1530,6 +1531,8 @@ MonoBehaviour:
   - {fileID: 176217918}
   - {fileID: 1678714177}
   - {fileID: 1350251324}
+  iconPos: []
+  iconSize: []
   buttonList:
   - {fileID: 744287254}
   - {fileID: 559345354}
@@ -1537,16 +1540,6 @@ MonoBehaviour:
   targetConfirmButton: {fileID: 17296623}
   cancelButton: {fileID: 556666401}
   actionButton: {fileID: 598734156}
-  iconScale:
-  - 1
-  - 0.8
-  - 0.5
-  - 0.3
-  iconPosition:
-  - {x: 115, y: 100, z: 0}
-  - {x: 342, y: 100, z: 0}
-  - {x: 490, y: 100, z: 0}
-  - {x: 580, y: 100, z: 0}
 --- !u!224 &943819974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2244,8 +2237,6 @@ MonoBehaviour:
   - {fileID: 150643180}
   playerParent: {fileID: 1772803769}
   enemyParent: {fileID: 1053794323}
-  timeBetweenStates: 1
-  CurBattleState: 0
   Players:
   - {fileID: 6084717223537690192, guid: 6cb631f03edae1f40b190e1b4d0ea2d8, type: 3}
   - {fileID: 6084717223537690192, guid: 6cb631f03edae1f40b190e1b4d0ea2d8, type: 3}
@@ -2263,7 +2254,9 @@ MonoBehaviour:
   Targets: []
   CanSelectTarget: 0
   SelectedTarget: 0
-  CanPickSkill: 0
+  PlayerTurn: 0
+  CanAttack: 0
+  AttackEnded: 0
   BattleUI: {fileID: 1170399177}
 --- !u!4 &1285389818
 Transform:

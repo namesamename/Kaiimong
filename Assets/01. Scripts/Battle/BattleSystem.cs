@@ -207,6 +207,7 @@ public class BattleSystem : MonoBehaviour
         if (SelectedTarget)
         {
             CommandController.AddCommand(new DummySkill(activePlayers[TurnIndex], Targets, SelectedSkill));
+            BattleUI.CharacterUI.NextCharacterIcon();
             TurnIndex++;
             Targets.Clear();
         }

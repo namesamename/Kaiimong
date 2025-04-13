@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,18 +14,13 @@ public class CharacterUI : MonoBehaviour
 
     [Header("Icons & Buttons")]
     [SerializeField] private List<Image> iconList = new List<Image>();
+    [SerializeField] private List<Vector3> iconPos = new List<Vector3>();
+    [SerializeField] private List<Vector3> iconSize = new List<Vector3>();
     [SerializeField] private List<Button> buttonList = new List<Button>();
     [SerializeField] private Button targetConfirmButton;
     [SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
     public Action OnConfirmButton;
-    //[SerializeField] private Button firstSkillButton;
-    //[SerializeField] private Button secondSkillButton;
-    //[SerializeField] private Button ultSkillButton;
-
-    [Header("Icon transform & Scale")]
-    [SerializeField] private float[] iconScale;
-    [SerializeField] private Vector3[] iconPosition;
 
     private BattleSystem battleSystem;
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
@@ -38,13 +34,13 @@ public class CharacterUI : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     void AddListener()
     {
 
-        foreach(Button button in buttonList)
+        foreach (Button button in buttonList)
         {
             button.onClick.AddListener(() => OnClickSkillButton(button));
         }
@@ -63,12 +59,13 @@ public class CharacterUI : MonoBehaviour
     void OnSkillCancelButton()
     {
         if (battleSystem.CommandController.SkillCommands.Count == 0) return;
-        if(battleSystem.TurnIndex == battleSystem.GetActivePlayers().Count)
+        if (battleSystem.TurnIndex == battleSystem.GetActivePlayers().Count)
         {
             DisableActionButton();
         }
         battleSystem.CommandController.RemoveCommand(battleSystem.CommandController.SkillCommands[battleSystem.CommandController.SkillCommands.Count - 1]);
         battleSystem.TurnIndex--;
+        PreviousCharacterIcon();
         battleSystem.SkillChanged?.Invoke();
         battleSystem.SelectedSkill = null;
         battleSystem.CanSelectTarget = false;
@@ -80,7 +77,7 @@ public class CharacterUI : MonoBehaviour
         int skillNum = buttonList.IndexOf(button);
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillDatas[skillNum];
         battleSystem.SkillChanged?.Invoke();
-        battleSystem.OnSkillSelected();        
+        battleSystem.OnSkillSelected();
     }
 
     void OnClickTargetConfirmButton()
@@ -107,13 +104,46 @@ public class CharacterUI : MonoBehaviour
         for (int i = 0; i < curUnits.Count; i++)
         {
             iconList[i].sprite = curUnits[i].icon;
+            RectTransform iconRect = iconList[i].GetComponent<RectTransform>();
+            iconPos.Add(iconRect.anchoredPosition);
+            iconSize.Add(iconRect.localScale);
         }
         SetSkillButton();
     }
 
+    public void NextCharacterIcon()
+    {
+        for (int i = 0; i < iconList.Count; i++)
+        {
+            RectTransform curIconRect = iconList[i].GetComponent<RectTransform>();
+            if (i <= battleSystem.TurnIndex)
+            {
+                curIconRect.DOAnchorPosX(-500, 1).SetEase(Ease.Linear);
+            }
+            if (i > battleSystem.TurnIndex)
+            {
+                curIconRect.DOAnchorPos(iconPos[i - battleSystem.TurnIndex - 1], 1).SetEase(Ease.Linear);
+                curIconRect.DOScale(iconSize[i - battleSystem.TurnIndex - 1], 1).SetEase(Ease.Linear);
+            }
+        }
+    }
+
+    public void PreviousCharacterIcon()
+    {
+        for (int i = 0; i < iconList.Count; i++)
+        {
+            RectTransform curIconRect = iconList[i].GetComponent<RectTransform>();
+            if (i >= battleSystem.TurnIndex)
+            {
+                curIconRect.DOAnchorPos(iconPos[i - battleSystem.TurnIndex], 1).SetEase(Ease.Linear);
+                curIconRect.DOScale(iconSize[i - battleSystem.TurnIndex], 1).SetEase(Ease.Linear);
+            }
+        }
+    }
+
     void SetSkillButton()
     {
-        for(int i = 0; i < curUnits[battleSystem.TurnIndex].skillDatas.Count; i++)
+        for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillDatas.Count; i++)
         {
             buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillDatas[i].icon;
         }
