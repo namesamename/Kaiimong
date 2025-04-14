@@ -56,7 +56,7 @@ public class CharacterStat : MonoBehaviour
         attackStat.Value = character.Attack;
         defenseStat.Value = character.Defense;
         healthStat.Value = character.Health;
-        agilityStat.Value = character.Speed;
+        //agilityStat.Value = character.Speed;
         criticalPerStat.Value = float.Parse(character.CriticalPer.Substring(0, character.CriticalPer.Length - 1));
         criticalAttackStat.Value = float.Parse(character.CriticalAttack.Substring(0, character.CriticalAttack.Length - 1));
     }
