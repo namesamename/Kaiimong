@@ -21,12 +21,8 @@ public class CharacterSkillBook : MonoBehaviour
         {
             SkillList[i].SetSkill($"{ID}_{i+1}");
         }
-
     }
-
-    
-
-    public void SkillUsing(SkillObject skill)
+    public void SkillUsing(SkillObject skill, Character[] characters)
     {
 
         //여러가지 처리
@@ -36,7 +32,7 @@ public class CharacterSkillBook : MonoBehaviour
             return;
 
 
-        //skill.UseSkill();
+        skill.UseSkill(characters);
     }
 
     public bool IsCoolTime(SkillObject skill)
