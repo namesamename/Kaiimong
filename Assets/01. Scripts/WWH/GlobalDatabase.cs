@@ -1,16 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
+
 
 public class GlobalDatabase : Singleton<GlobalDatabase>
 {
 
     public CharacterDataBase character;
     public SkillDataBase skill;
+    [HideInInspector]
+    public SaveDataBase save;
     private void Awake()
     {
-        character = GetComponentInChildren<CharacterDataBase>();
-        skill = GetComponentInChildren<SkillDataBase>();
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+        character = new CharacterDataBase();
+        skill = new SkillDataBase();
+        save = GetComponentInChildren<SaveDataBase>();
+
+        character.Initialize();
+        skill.Initialize();
+
     }
 
 

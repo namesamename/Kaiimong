@@ -1,12 +1,13 @@
 {
   "Saves": [
     {
-      "$type": "CharacterDataBase+CharacterSaveData, Assembly-CSharp",
-      "characterId": "Mika",
-      "Level": 5,
-      "Recognition": 10,
-      "Necessity": 20,
-      "Savetype": 0
+      "$type": "CharacterSaveData, Assembly-CSharp",
+      "Level": 0,
+      "Recognition": 0,
+      "Necessity": 0,
+      "Savetype": 0,
+      "ID": "002",
+      "characterId": "002"
     }
   ]
 }

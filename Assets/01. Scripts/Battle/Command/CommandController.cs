@@ -1,25 +1,28 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CommandController : MonoBehaviour
 {
+    //ICommand 필요없을듯
     [SerializeField] private List<DummySkill> skillCommands = new List<DummySkill>();
     public int Index = 0;
 
-    public Action newTurn;
+    public List<DummySkill> SkillCommands { get { return skillCommands; } }
 
     public void AddCommand(ICommand command)
     {
         skillCommands.Add(command as DummySkill);
+        Debug.Log($"Command added: {command}, Total commands: {skillCommands.Count}");
     }
 
     public void ExecuteCommand()
     {
-        foreach (ICommand command in skillCommands)
+        List<DummySkill> commandsToExecute = new List<DummySkill>(skillCommands);
+
+        foreach (ICommand command in commandsToExecute)
         {
             command.Execute(); 
+            RemoveCommand(command);
         }
     }
 
@@ -28,18 +31,8 @@ public class CommandController : MonoBehaviour
         skillCommands.Remove(command as DummySkill);
     }
 
-    void ClearList()
+    public void ClearList()
     {
         skillCommands.Clear();
-    }
-
-    void Start()
-    {
-        newTurn += ClearList;
-    }
-
-    void Update()
-    {
-        
     }
 }

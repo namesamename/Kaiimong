@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 public class DummyUnit : MonoBehaviour
 {
@@ -16,7 +16,8 @@ public class DummyUnit : MonoBehaviour
     public GameObject SelectEffect;
 
     public List<SkillData> skillDatas;
-    
+
+    public Action OnDeath;
     // 애니메이션 길이를 저장하는 변수
     public float AppearAnimationLength { get; private set; }
 
@@ -32,6 +33,16 @@ public class DummyUnit : MonoBehaviour
            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
            AppearAnimationLength = stateInfo.length;
        }
+    }
+
+    void Start()
+    {
+        
+    }
+
+    void Update()
+    {
+        
     }
 
 }

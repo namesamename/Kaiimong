@@ -1,26 +1,26 @@
-using System.Collections;
+using DG.Tweening;
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterUI : MonoBehaviour
 {
-    private List<DummyUnit> curUnits = new List<DummyUnit>();
+    [SerializeField] private List<DummyUnit> curUnits = new List<DummyUnit>();
 
     [Header("Object for UIEnable")]
     [SerializeField] private GameObject skills;
     [SerializeField] private GameObject icons;
 
     [Header("Icons & Buttons")]
-    [SerializeField] private List<Image> Icons = new List<Image>();
-    [SerializeField] private Button firstSkillButton;
-    [SerializeField] private Button secondSkillButton;
-    [SerializeField] private Button ultSkillButton;
-
-    [Header("Icon transform & Scale")]
-    [SerializeField] private float[] iconScale;
-    [SerializeField] private Vector3[] iconPosition;
+    [SerializeField] private List<Image> iconList = new List<Image>();
+    [SerializeField] private List<Vector3> iconPos = new List<Vector3>();
+    [SerializeField] private List<Vector3> iconSize = new List<Vector3>();
+    [SerializeField] private List<Button> buttonList = new List<Button>();
+    [SerializeField] private Button targetConfirmButton;
+    [SerializeField] private Button cancelButton;
+    [SerializeField] private Button actionButton;
+    public Action OnConfirmButton;
 
     private BattleSystem battleSystem;
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
@@ -34,19 +34,63 @@ public class CharacterUI : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     void AddListener()
     {
-        firstSkillButton.onClick.AddListener(battleSystem.SetTarget);
-        secondSkillButton.onClick.AddListener(battleSystem.SetTarget);
-        ultSkillButton.onClick.AddListener(battleSystem.SetTarget);
+
+        foreach (Button button in buttonList)
+        {
+            button.onClick.AddListener(() => OnClickSkillButton(button));
+        }
+        targetConfirmButton.onClick.AddListener(OnClickTargetConfirmButton);
+        cancelButton.onClick.AddListener(OnSkillCancelButton);
+        actionButton.onClick.AddListener(OnActionButton);
+    }
+
+    void OnActionButton()
+    {
+        DisableActionButton();
+        DIsableUI();
+        battleSystem.TurnIndex = 0;
+        PreviousCharacterIcon();
+        battleSystem.CanAttack = true;
+    }
+
+    void OnSkillCancelButton()
+    {
+        if (battleSystem.CommandController.SkillCommands.Count == 0) return;
+        if (battleSystem.TurnIndex == battleSystem.GetActivePlayers().Count)
+        {
+            DisableActionButton();
+        }
+        battleSystem.CommandController.RemoveCommand(battleSystem.CommandController.SkillCommands[battleSystem.CommandController.SkillCommands.Count - 1]);
+        battleSystem.TurnIndex--;
+        PreviousCharacterIcon();
+        battleSystem.SkillChanged?.Invoke();
+        battleSystem.SelectedSkill = null;
+        battleSystem.CanSelectTarget = false;
+        battleSystem.SelectedTarget = false;
+    }
+
+    void OnClickSkillButton(Button button)
+    {
+        int skillNum = buttonList.IndexOf(button);
+        battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillDatas[skillNum];
+        battleSystem.SkillChanged?.Invoke();
+        battleSystem.OnSkillSelected();
+    }
+
+    void OnClickTargetConfirmButton()
+    {
+        OnConfirmButton?.Invoke();
     }
 
     public void GetActivePlayerUnit()
     {
         curUnits = battleSystem.GetActivePlayers();
+        battleSystem.PlayerTurn = true;
         SetUI();
         EnableUI();
     }
@@ -54,23 +98,57 @@ public class CharacterUI : MonoBehaviour
     public void GetActiveEnemyUnit()
     {
         curUnits = battleSystem.GetActiveEnemies();
+        battleSystem.PlayerTurn = false;
     }
 
     public void SetUI()
     {
         for (int i = 0; i < curUnits.Count; i++)
         {
-            Icons[i].sprite = curUnits[i].icon;
+            iconList[i].sprite = curUnits[i].icon;
+            RectTransform iconRect = iconList[i].GetComponent<RectTransform>();
+            iconPos.Add(iconRect.anchoredPosition);
+            iconSize.Add(iconRect.localScale);
         }
         SetSkillButton();
     }
 
+    public void NextCharacterIcon()
+    {
+        for (int i = 0; i < iconList.Count; i++)
+        {
+            RectTransform curIconRect = iconList[i].GetComponent<RectTransform>();
+            if (i <= battleSystem.TurnIndex)
+            {
+                curIconRect.DOAnchorPosX(-500, 1).SetEase(Ease.Linear);
+            }
+            if (i > battleSystem.TurnIndex)
+            {
+                curIconRect.DOAnchorPos(iconPos[i - battleSystem.TurnIndex - 1], 1).SetEase(Ease.Linear);
+                curIconRect.DOScale(iconSize[i - battleSystem.TurnIndex - 1], 1).SetEase(Ease.Linear);
+            }
+        }
+    }
+
+    public void PreviousCharacterIcon()
+    {
+        for (int i = 0; i < iconList.Count; i++)
+        {
+            RectTransform curIconRect = iconList[i].GetComponent<RectTransform>();
+            if (i >= battleSystem.TurnIndex)
+            {
+                curIconRect.DOAnchorPos(iconPos[i - battleSystem.TurnIndex], 1).SetEase(Ease.Linear);
+                curIconRect.DOScale(iconSize[i - battleSystem.TurnIndex], 1).SetEase(Ease.Linear);
+            }
+        }
+    }
+
     void SetSkillButton()
     {
-        int index = battleSystem.TurnIndex;
-        firstSkillButton.image.sprite = curUnits[index].skillDatas[0].icon;
-        secondSkillButton.image.sprite = curUnits[index].skillDatas[1].icon;
-        ultSkillButton.image.sprite = curUnits[index].skillDatas[2].icon;
+        for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillDatas.Count; i++)
+        {
+            buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillDatas[i].icon;
+        }
     }
 
     void EnableUI()
@@ -79,9 +157,21 @@ public class CharacterUI : MonoBehaviour
         icons.SetActive(true);
     }
 
-    void DIsableUI()
+    public void DIsableUI()
     {
         skills.SetActive(false);
         icons.SetActive(false);
+    }
+
+    public void SetActionButton()
+    {
+        targetConfirmButton.gameObject.SetActive(false);
+        actionButton.gameObject.SetActive(true);
+    }
+
+    public void DisableActionButton()
+    {
+        targetConfirmButton.gameObject.SetActive(true);
+        actionButton.gameObject.SetActive(false);
     }
 }

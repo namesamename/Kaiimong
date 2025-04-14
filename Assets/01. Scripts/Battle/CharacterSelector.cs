@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,32 +6,88 @@ public class CharacterSelector : MonoBehaviour
     private DummyUnit selectedCharacter = null;
     private BattleSystem battleSystem;
 
-    private Camera camera;
+    private Camera _camera;
 
     private void Awake()
     {
         battleSystem = GetComponent<BattleSystem>();
-        camera = Camera.main;
+        _camera = Camera.main;
     }
+
+    private void Start()
+    {
+        battleSystem.BattleUI.CharacterUI.OnConfirmButton += OnConfirmButtonClicked;
+        battleSystem.SkillChanged += ResetEffect;
+        battleSystem.SkillChanged += ResetSelectedCharacter;
+    }
+
     private void Update()
     {
         if (battleSystem.CanSelectTarget)
         {
-            MouseClick();
+            if(!battleSystem.SelectedSkill.isBuff)
+            {
+                if (!battleSystem.SelectedSkill.isSingleAttack)
+                {
+                    SelectAll(battleSystem.GetActiveEnemies());
+                }
+                else
+                {
+                    MouseClick(battleSystem.GetActiveEnemies());
+                }
+            }
+            else
+            {
+                if (!battleSystem.SelectedSkill.isSingleAttack)
+                {
+                    SelectAll(battleSystem.GetActivePlayers());
+                }
+                else
+                {
+                    MouseClick(battleSystem.GetActivePlayers());
+                }
+            }
         }
     }
 
-    private void MouseClick()
+    private void SelectAll(List<DummyUnit> units)
     {
-        if (Input.GetMouseButtonDown(0)) // øﬁ¬  ∏∂øÏΩ∫ πˆ∆∞ ≈¨∏Ø
+        if (!battleSystem.SelectedSkill.isSingleAttack)
         {
-            Vector2 mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
+            foreach (DummyUnit unit in units)
+            {
+                SelectedEffect(unit, true);
+                selectedCharacter = unit;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
             if (hit.collider != null)
             {
                 DummyUnit unit = hit.collider.GetComponent<DummyUnit>();
                 if (unit != null && battleSystem.GetActiveEnemies().Contains(unit))
+                {
+                    OnConfirm();
+                }
+            }
+        }
+    }
+
+    private void MouseClick(List<DummyUnit> units)
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+            if (hit.collider != null)
+            {
+                DummyUnit unit = hit.collider.GetComponent<DummyUnit>();
+                if (unit != null && units.Contains(unit))
                 {
                     OnCharacterClicked(unit);
                 }
@@ -42,7 +97,7 @@ public class CharacterSelector : MonoBehaviour
 
     public void OnCharacterClicked(DummyUnit character)
     {
-        //√π ≈¨∏Ø,º±≈√
+        //Ï≤´ ÌÅ¥Î¶≠,ÏÑ†ÌÉù
         if (selectedCharacter == null)
         {
             selectedCharacter = character;
@@ -50,12 +105,12 @@ public class CharacterSelector : MonoBehaviour
         }
         else if (selectedCharacter == character)
         {
-            // ∞∞¿∫ ƒ≥∏Ø≈Õ µŒ π¯¬∞ ≈¨∏Ø
+            // Í∞ôÏùÄ Ï∫êÎ¶≠ÌÑ∞ Îëê Î≤àÏß∏ ÌÅ¥Î¶≠
             OnConfirm();
         }
         else
         {
-            // ¥Ÿ∏• ƒ≥∏Ø≈Õ ≈¨∏Ø, º±≈√ ∫Ø∞Ê
+            // Îã§Î•∏ Ï∫êÎ¶≠ÌÑ∞ ÌÅ¥Î¶≠, ÏÑ†ÌÉù Î≥ÄÍ≤Ω
             SelectedEffect(selectedCharacter, false);
             selectedCharacter = character;
             SelectedEffect(character, true);
@@ -72,18 +127,43 @@ public class CharacterSelector : MonoBehaviour
 
     private void OnConfirm()
     {
-        // º±≈√µ» ƒ≥∏Ø≈Õ∏¶ Targets ∏ÆΩ∫∆Æø° √ﬂ∞°
-        battleSystem.Targets.Add(selectedCharacter);
-        //battleSystem.ProceedToNextStage();
         battleSystem.SelectedTarget = true;
         battleSystem.CanSelectTarget = false;
+        // ÏÑ†ÌÉùÎêú Ï∫êÎ¶≠ÌÑ∞Î•º Targets Î¶¨Ïä§Ìä∏Ïóê Ï∂îÍ∞Ä
+        if (!battleSystem.SelectedSkill.isSingleAttack)
+        {
+            foreach (DummyUnit units in battleSystem.GetActiveEnemies())
+            {
+                battleSystem.Targets.Add(units);
+                SelectedEffect(units, false);
+            }
+        }
+        if (battleSystem.SelectedSkill.isSingleAttack)
+        {
+            battleSystem.Targets.Add(selectedCharacter);
+            SelectedEffect(selectedCharacter, false);
+        }
+        selectedCharacter = null;
+        battleSystem.SetTarget();
     }
 
-    //ƒ≥∏Ø≈Õ º±≈√ »ø∞˙
+    private void ResetSelectedCharacter()
+    {
+        selectedCharacter = null;
+    }
+
+    //Ï∫êÎ¶≠ÌÑ∞ ÏÑ†ÌÉù Ìö®Í≥º
     private void SelectedEffect(DummyUnit character, bool set)
     {
         character.SelectEffect.SetActive(set);
     }
 
+    private void ResetEffect()
+    {
+        foreach (DummyUnit units in battleSystem.GetActiveEnemies())
+        {
+            SelectedEffect(units, false);
+        }
+    }
 
 }

@@ -90,8 +90,22 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "Char/";
         }
+        else if (SheetId == "스킬")
+        {
+            Directory = "Skil/";
+        }
+        else if (SheetId == "버프")
+        {
+            Directory = "Debu/";
+        }
+        else if (SheetId == "디버프")
+        {
+            Directory = "Buff/";
+        }
+
+
 
     }
 
-    
+
 }

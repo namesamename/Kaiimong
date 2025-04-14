@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,6 @@ public static class Utility
     {
         return new List<T>(obj);
     }
-
     public static Vector3 ToVector3(this string str)
     {
         if (str[0] == '(' && str.Last() == ')')
@@ -73,6 +73,10 @@ public static class Utility
         if (data == "캐릭터 스탯")
         {
             return "CharacterSO";
+        }
+        else if (data == "스킬")
+        {
+            return "SkillSO";
         }
         else
         {

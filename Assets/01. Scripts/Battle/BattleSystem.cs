@@ -7,18 +7,10 @@ using UnityEngine;
 public class BattleSystem : MonoBehaviour
 {
     [Header("UnitLocation")]
-    [SerializeField] private List<Transform> playerLocations;
-    [SerializeField] private List<Transform> enemyLocations;
+    [SerializeField] private List<UnitPlate> playerLocations;
+    [SerializeField] private List<UnitPlate> enemyLocations;
     [SerializeField] private Transform playerParent;
     [SerializeField] private Transform enemyParent;
-
-    [Header("StateTiming")]
-    [SerializeField] private float timeBetweenStates;
-
-    [Header("StateMachine")]
-    public BattleState CurBattleState;
-    private BattleStateMachine battleStateMachine;
-    private IBattleState[] stateArray;
 
     [Header("Units")]
     public List<DummyUnit> Players; //캐릭터 선택에서 가져오고
@@ -32,8 +24,19 @@ public class BattleSystem : MonoBehaviour
     public int TurnIndex = 0;
     public SkillData SelectedSkill;
     public List<DummyUnit> Targets;
+    private float betweenPhaseTime;
+
+    [Header("Appear")]
+    private bool appearAnimComplete = false;
+
+    [Header("Skill&TargetSelect")]
     public bool CanSelectTarget = false;
     public bool SelectedTarget = false;
+    public bool PlayerTurn = true;
+
+    [Header("AttackPhase")]
+    public bool CanAttack = false;
+    public bool AttackEnded = false;
 
     public CommandController CommandController { get; private set; }
     public BattleUI BattleUI;
@@ -41,6 +44,7 @@ public class BattleSystem : MonoBehaviour
 
     public Action OnPlayerTurn;
     public Action OnEnemyTurn;
+    public Action SkillChanged;
 
     private void Awake()
     {
@@ -51,64 +55,240 @@ public class BattleSystem : MonoBehaviour
 
     void Start()
     {
-        InitializeStateMachine();   
+        StartBattle();
     }
 
     void Update()
     {
-        battleStateMachine.CurrentState.OnUpdate();
+        if (appearAnimComplete)
+        {
+            appearAnimComplete = false;
+            StartCoroutine(ChangePhase(PlayerTurnPhase));
+        }
+
+        if (CanAttack)
+        {
+            CanAttack = false;
+            StartCoroutine(ChangePhase(AttackPhase));
+        }
     }
 
-    void InitializeStateMachine()
+    private void AttackPhase()
     {
-        battleStateMachine = new BattleStateMachine(this);
+        CommandController.ExecuteCommand();
 
-        stateArray = new IBattleState[Enum.GetValues(typeof(BattleState)).Length];
+        CheckGameOver();
 
-        stateArray[(int)BattleState.Start] = new BattleStartState(this);
-        stateArray[(int)BattleState.PlayerTurn] = new BattlePlayerState(this);
-
-        ChangeState(BattleState.Start);
+        if (PlayerTurn)
+        {
+            StartCoroutine(ChangePhase(EnemyTurnPhase));
+        }
+        else
+        {
+            SetBattle();
+            if (appearAnimComplete)
+            {
+                StartCoroutine(ChangePhase(PlayerTurnPhase));
+            }
+        }
     }
 
-    private IBattleState GetStateInterface(BattleState state)
+    private void CheckGameOver()
     {
-        return stateArray[(int)state];
+        if (Players.Count == 0 && activePlayers.Count == 0) StartCoroutine(ChangePhase(WinPhase));
+        if (Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(LosePhase));
     }
 
-    public void ChangeState(BattleState state)
+    private void StartBattle()
     {
-        battleStateMachine.ChangeState(GetStateInterface(state));
+        activePlayers.Clear();
+        activeEnemies.Clear();
+        SetBattle();
+    }
+
+    private void EnemyTurnPhase()
+    {
+        PlayerTurn = false;
+        Debug.Log("enemyturn");
+        activeEnemies.Sort((a, b) => b.Speed.CompareTo(a.Speed));
+        CommandController.ClearList();
+        EnemyRandomCommand();
+    }
+
+    private void PlayerTurnPhase()
+    {
+        PlayerTurn = true;
+        Debug.Log("playerturn");
+        activePlayers.Sort((a, b) => b.Speed.CompareTo(a.Speed));
+        OnPlayerTurn?.Invoke();
+        CommandController.ClearList();
+    }
+
+    private void WinPhase()
+    {
+
+    }
+
+    private void LosePhase()
+    {
+
     }
 
     public void SetBattle()
     {
-        activePlayers.Clear();
-        activeEnemies.Clear();
+        SetPlayer();
+        SetEnemy();
+        StartCoroutine(AppearAnimTime(GetMaxAnimationTime()));
+    }
 
-        for (int i = 0; i < Players.Count; i++)
+    private void SetPlayer()
+    {
+        List<DummyUnit> playerCopy = new List<DummyUnit>(Players);
+        if (playerCopy.Count > 0)
         {
-            Players[i].Speed = i + 1;
-            Enemies[i].Speed = i + 1;
-            
-            DummyUnit playerUnit = Instantiate(Players[i], playerLocations[i].position, Quaternion.identity, playerParent);
-            DummyUnit enemyUnit = Instantiate(Enemies[i], enemyLocations[i].position, Quaternion.identity, enemyParent);
+            for (int i = 0; i < playerLocations.Count; i++)
+            {
+                DummyUnit player = playerCopy[i];
+                player.Speed = i + 1;
 
-            enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
-            
-            activePlayers.Add(playerUnit);
-            activeEnemies.Add(enemyUnit);
+                if (playerLocations[i].isOccupied) continue;
+
+                DummyUnit playerUnit = Instantiate(player, playerLocations[i].transform);
+                playerLocations[i].isOccupied = true;
+                playerUnit.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
+                activePlayers.Add(playerUnit);
+                Players.Remove(player);
+            }
         }
+    }
+
+    private void SetEnemy()
+    {
+        List<DummyUnit> enemiesCopy = new List<DummyUnit>(Enemies);
+        if (enemiesCopy.Count > 0)
+        {
+            for (int i = 0; i < enemyLocations.Count; i++)
+            {
+                DummyUnit enemy = enemiesCopy[i];
+                enemy.Speed = i + 1;
+
+                if (enemyLocations[i].isOccupied) continue;
+
+                DummyUnit enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
+                enemyLocations[i].isOccupied = true;
+                enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
+                enemyUnit.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
+                activeEnemies.Add(enemyUnit);
+                Enemies.Remove(enemy);
+            }
+        }
+    }
+
+    public void EmptyPlateOnUnitDeath(DummyUnit unit) //Unit OnDeath Action에 추가하기
+    {
+        unit.GetComponentInParent<UnitPlate>().isOccupied = false;
+    }
+
+    private float GetMaxAnimationTime()
+    {
+        float enemyAnimation = CaluculateMaxAnimationTime(activeEnemies);
+        float playerAnimation = CaluculateMaxAnimationTime(activePlayers);
+
+        float maxAnimationTime = enemyAnimation > playerAnimation ? enemyAnimation : playerAnimation;
+        return maxAnimationTime;
+    }
+
+    private float CaluculateMaxAnimationTime(List<DummyUnit> unitList)
+    {
+        float maxAnimationTime = 0f;
+
+        for (int i = 0; i < unitList.Count; i++)
+        {
+            float animTime = unitList[i].AppearAnimationLength;
+            maxAnimationTime = maxAnimationTime > animTime ? maxAnimationTime : animTime;
+        }
+
+        return maxAnimationTime;
+    }
+
+    private IEnumerator AppearAnimTime(float animationTime)
+    {
+        yield return null;
+        yield return new WaitForSeconds(animationTime);
+        appearAnimComplete = true;
     }
 
     public void SetTarget()
     {
-        SelectedTarget = false;
+        if (SelectedTarget)
+        {
+            CommandController.AddCommand(new DummySkill(activePlayers[TurnIndex], Targets, SelectedSkill));
+            BattleUI.CharacterUI.NextCharacterIcon();
+            TurnIndex++;
+            Targets.Clear();
+        }
 
-        if (CurBattleState != BattleState.PlayerTurn) return;
-
-        CanSelectTarget = true;
-
+        if (TurnIndex == activePlayers.Count)
+        {
+            BattleUI.CharacterUI.SetActionButton();
+        }
     }
-    
+
+    void EnemyRandomCommand()
+    {
+        for (int i = 0; i < activeEnemies.Count; i++)
+        {
+            int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillDatas.Count);
+            SelectedSkill = activeEnemies[i].skillDatas[randomSkill];
+            if (SelectedSkill.isBuff)
+            {
+                if (SelectedSkill.isSingleAttack)
+                {
+                    int randomTarget = UnityEngine.Random.Range(0, activePlayers.Count);
+                    Targets.Add(activePlayers[i]);
+                }
+                else
+                {
+                    foreach (DummyUnit units in activePlayers)
+                    {
+                        Targets.Add(units);
+                    }
+                }
+            }
+            else
+            {
+                if (SelectedSkill.isSingleAttack)
+                {
+                    int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
+                    Targets.Add(activeEnemies[i]);
+                }
+                else
+                {
+                    foreach (DummyUnit units in activeEnemies)
+                    {
+                        Targets.Add(units);
+                    }
+                }
+            }
+
+            CommandController.AddCommand(new DummySkill(activeEnemies[i], Targets, SelectedSkill));
+            Targets.Clear();
+        }
+
+        CanAttack = true;
+    }
+
+    public void OnSkillSelected()
+    {
+        SelectedTarget = false;
+        CanSelectTarget = true;
+    }
+
+    private IEnumerator ChangePhase(Action nextPhase)
+    {
+        yield return new WaitForSeconds(betweenPhaseTime);
+
+        nextPhase();
+    }
+
 }

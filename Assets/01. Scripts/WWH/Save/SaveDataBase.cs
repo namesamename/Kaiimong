@@ -1,45 +1,75 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using static CharacterDataBase;
+using UnityEngine.TextCore.Text;
+
 
 public class SaveDataBase : Singleton<SaveDataBase>
 {
-    public Dictionary<SaveType, List<SaveInstance>> SaveDatas = new Dictionary<SaveType, List<SaveInstance>>();
 
-    private void Awake()
+    //세이브 데이타 있는 거 보관
+    public Dictionary<SaveType, List<SaveInstance>> SaveDatas = new Dictionary<SaveType, List<SaveInstance>>();
+    /// <summary>
+    /// 특정 하나만 가져오기
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="type"></param>
+    /// <param name="Id"></param>
+    /// <returns></returns>
+    public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
     {
-        if (_instance == null)
+
+        if (SaveDatas[type].Count > 0 && SaveDatas.TryGetValue(type, out List<SaveInstance> Sava))
         {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
+            SaveInstance save = Sava.Find(x => x.ID == Id);
+            if (save is T Instance)
+            {return Instance;}
+        }
+
+        Debug.Log("dd");
+        return null;
+
+    }
+    /// <summary>
+    ///한 종류의 세이브 데이터 가져오기
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public List<T> GetSaveInstances<T>(SaveType type) where T : SaveInstance
+    {
+        if (SaveDatas.TryGetValue(type , out List<SaveInstance> Save))
+        {
+            return Save.OfType<T>().ToList();
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// 한 종류의 세이브 데이터 저장
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="saveType"></param>
+    public void SetSaveInstances(SaveInstance data, SaveType saveType) 
+    {
+
+        if(SaveDatas.TryGetValue(saveType, out List<SaveInstance> Sava))
+        {
+            Sava.Add(data);
         }
         else
         {
-            if (_instance != this)
+            SaveDatas[saveType] = new List<SaveInstance>
             {
-                Destroy(gameObject);
-            }
+                data
+            };
         }
-    }
-    public List<T> GetSaveInstances<T>(SaveType type) where T : SaveInstance
-    {
-        if (!SaveDatas.ContainsKey(type))
-        {
-            return new List<T>();
-        }
-
-        return SaveDatas[type].ConvertAll(x => x as T);
+    
     }
 
-    public void SetSaveInstances(SaveInstance data, SaveType saveType) 
-    {
-        if(!SaveDatas.ContainsKey(saveType)) 
-        {
-            SaveDatas[saveType] = new List<SaveInstance>();
-        }
-        SaveDatas[saveType].Add(data);
-    }
+
 
    
 
@@ -47,7 +77,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
 [System.Serializable]
 public class CharacterSaveData : SaveInstance
 {
-    public string characterId;
+    public string characterId { get => ID; }
     public int Level;
     public int Recognition;
     public int Necessity;
