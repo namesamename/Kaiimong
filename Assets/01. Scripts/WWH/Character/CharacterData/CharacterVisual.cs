@@ -31,7 +31,7 @@ public class CharacterVisual : MonoBehaviour
             //AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             //AppearAnimationLength = stateInfo.length;
 
-            animationClips = Resources.LoadAll<AnimationClip>("Character/SilHum");
+            animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
             StartCoroutine(PlayAni());
         }
 
@@ -41,11 +41,8 @@ public class CharacterVisual : MonoBehaviour
 
     public IEnumerator PlayAni()
     {
-  
-        yield return new WaitForSeconds(1f);
         ChangeAnimation();
         yield return new WaitForEndOfFrame();
-        var clips = animator.runtimeAnimatorController.animationClips;
     }
 
     public void ChangeAnimation()
