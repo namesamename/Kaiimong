@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.TextCore.Text;
 
 
@@ -9,24 +10,6 @@ public class SaveDataBase : Singleton<SaveDataBase>
 
     //세이브 데이타 있는 거 보관
     public Dictionary<SaveType, List<SaveInstance>> SaveDatas = new Dictionary<SaveType, List<SaveInstance>>();
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-
-
-    }
     /// <summary>
     /// 특정 하나만 가져오기
     /// </summary>
@@ -43,7 +26,8 @@ public class SaveDataBase : Singleton<SaveDataBase>
             if (save is T Instance)
             {return Instance;}
         }
-      
+
+        Debug.Log("dd");
         return null;
 
     }

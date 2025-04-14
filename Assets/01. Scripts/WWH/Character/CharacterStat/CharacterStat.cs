@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -6,12 +7,12 @@ using UnityEngine;
 
 public enum StatType
 {
-    attack,
-    defense,
-    agility,
-    health,
-    criticalPer,
-    criticalAttack
+    Attack,
+    Defense,
+    Agility,
+    Health,
+    CriticalPer,
+    CriticalAttack
 }
 
 
@@ -38,12 +39,12 @@ public class CharacterStat : MonoBehaviour
 
         statDict = new Dictionary<StatType, BaseStat>()
         {
-            {StatType.attack, attackStat},
-            {StatType.defense, defenseStat},
-            {StatType.agility, agilityStat},
-            {StatType.health, healthStat},
-            {StatType.criticalPer, criticalPerStat},
-            {StatType.criticalAttack, criticalAttackStat},
+            {StatType.Attack, attackStat},
+            {StatType.Defense, defenseStat},
+            {StatType.Agility, agilityStat},
+            {StatType.Health, healthStat},
+            {StatType.CriticalPer, criticalPerStat},
+            {StatType.CriticalAttack, criticalAttackStat},
         };
 
 
@@ -74,116 +75,80 @@ public class CharacterStat : MonoBehaviour
     }
     
 
-
-    public void Buff(BuffSkillSO buffSkill, SkillSO skill)
+    public BaseStat EnumChanger(StatType statType)
     {
-       
-        string s = Utility.KoreanValueChanger(buffSkill.Name);
-        //아군 적군 가리는 것이 아직 불가능
-        //리팩토링도 해야 함
-
-        if(s == "Health")
+        switch(statType) 
         {
-            StartCoroutine(BuffStart(healthStat, buffSkill, skill));
-        }
-        else if(s == "Attack")
-        {
-            StartCoroutine(BuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "Defense")
-        {
-            StartCoroutine(BuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "Speed")
-        {
-            StartCoroutine(BuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "CriticalPer")
-        {
-            StartCoroutine(BuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "CriticalAttack")
-        {
-            StartCoroutine(BuffStart(healthStat, buffSkill, skill));
-        }
-
-
-    }
-    public void DeBuff(DebuffSkillSO buffSkill, SkillSO skill)
-    {
-
-        string s = Utility.KoreanValueChanger(buffSkill.Name);
-        //아군 적군 가리는 것이 아직 불가능
-
-        if (s == "Health")
-        {
-            StartCoroutine(DebuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "Attack")
-        {
-            StartCoroutine(DebuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "Defense")
-        {
-            StartCoroutine(DebuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "Speed")
-        {
-            StartCoroutine(DebuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "CriticalPer")
-        {
-            StartCoroutine(DebuffStart(healthStat, buffSkill, skill));
-        }
-        else if (s == "CriticalAttack")
-        {
-            StartCoroutine(DebuffStart(healthStat, buffSkill, skill));
-        }
-
-
-    }
-
-    public IEnumerator DebuffStart(BaseStat stat, DebuffSkillSO buffSkill, SkillSO skill)
-    {
-        if (skill.damage[0].GetType() == typeof(float))
-        {
-            stat.AddMultiples(skill.damage[0]);
-        }
-        else
-        {
-            stat.AddStat(skill.damage[0]);
-        }
-        yield return buffSkill.Duration <= 0;
-        if (skill.damage[0].GetType() == typeof(float))
-        {
-            stat.AddMultiples(-skill.damage[0]);
-        }
-        else
-        {
-            stat.AddStat(-skill.damage[0]);
+            case StatType.Agility:
+                return agilityStat;
+            case StatType.Health:
+                return healthStat;
+            case StatType.CriticalPer:
+                return criticalPerStat;
+            case StatType.CriticalAttack:
+                return criticalAttackStat;
+            case StatType.Defense:
+                return defenseStat;
+            case StatType.Attack:
+                return attackStat;
+            default:
+                return null;
         }
     }
 
-    public IEnumerator BuffStart(BaseStat stat, BuffSkillSO buffSkill , SkillSO skill)
+
+    public void Buff(SkillSO Skill)
     {
-        if (skill.damage[0].GetType() ==  typeof(float)) 
+        string effectName;
+        int duration;
+
+        if (Skill.buffSkillId == "1")
         {
-            stat.AddMultiples(skill.damage[0]);
+            effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
+            duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
         }
         else
         {
-            stat.AddStat(skill.damage[0]);
+            effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Name);
+            duration = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Duration;
         }
-        yield return buffSkill.Duration <= 0;
-        if (skill.damage[0].GetType() == typeof(float))
+
+        if (Enum.TryParse(effectName, out StatType statType)) 
         {
-            stat.AddMultiples(-skill.damage[0]);
+            BaseStat stat = EnumChanger(statType);
+
+            StartCoroutine(buffStart(stat, Skill, duration));
         }
         else
         {
-            stat.AddStat(-skill.damage[0]);
+            Debug.Log("Can't Exist StatType");
         }
     }
+   
+
+    public IEnumerator buffStart(BaseStat stat, SkillSO skill, int Duration)
+    {
+        int[] Damage = skill.damage;
+
+        if (skill.buffSkillId == "2")//디버프 아이디면
+        {
+            for(int i = 0; skill.damage.Length < i;  i++)
+            {
+                Damage[i] = -skill.damage[i];
+            }
+        }
+        if (skill.IsMuti)
+        {stat.AddMultiples(Damage[0]);}
+        else
+        {stat.AddStat(Damage[0]);}
+        yield return Duration <= 0; //나중에 턴수로 판단
+        if (skill.IsMuti)
+        {stat.AddMultiples(-Damage[0]);}
+        else
+        {stat.AddStat(-Damage[0]);}
+    }
+
+   
 
    
 

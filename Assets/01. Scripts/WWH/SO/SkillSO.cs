@@ -15,9 +15,11 @@ public class SkillSO : SO
     public float[] hitTiming;
     public Sprite icon;
 
-    public bool IsDebuff;
-    public bool IsBuff;
-   
+    public string buffSkillId;
+    public bool IsMuti;
+    public bool IsHeal;
+
+
     public int Id;
 
 

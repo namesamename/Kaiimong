@@ -10,8 +10,6 @@ public class Character : MonoBehaviour
     public CharacterStat stat;
     public CharacterVisual visual;
 
-
-
     public string characterId;
     public int Level;
     public int Recognition;
@@ -27,7 +25,6 @@ public class Character : MonoBehaviour
 
     public void Initialize(string Id)
     {
-
         //캐릭터 초기화
         characterId = Id;
         HaveData();
@@ -51,7 +48,6 @@ public class Character : MonoBehaviour
     /// <returns></returns>
     public CharacterSaveData CreatNewData()
     {
-
         CharacterSaveData data = new CharacterSaveData()
         {
             ID = this.characterId,
@@ -62,9 +58,6 @@ public class Character : MonoBehaviour
         };
         SaveDataBase.Instance.SetSaveInstances(data, SaveType.Character);
         return data;
-
-
-
     }
     /// <summary>
     /// 저장 데이터를 불러오기
@@ -86,10 +79,11 @@ public class Character : MonoBehaviour
     /// </summary>
     public void HaveData()
     {
-        var foundData = SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character).Find(i => i.characterId == characterId);
+        var foundData = SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character);
+      
         if (foundData != null) 
         {
-            LoadData(foundData);
+            LoadData(foundData.Find(x => x.characterId == characterId));
         }
         else
         {

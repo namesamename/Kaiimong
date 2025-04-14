@@ -14,37 +14,39 @@ public class SkillObject : MonoBehaviour
     public void SetSkill(string id)
     {
         skillSO=  GlobalDatabase.Instance.skill.GetSkillSOToID(id);
-        if(skillSO.IsBuff)
-        {buffSkillSO = GlobalDatabase.Instance.skill.GetBuffToID(skillSO.Id);}
-        else if(skillSO.IsDebuff)
-        {debuffSkillSO = GlobalDatabase.Instance.skill.GetDebuffToID(skillSO.Id);}
+
+        if (skillSO.buffSkillId != null)
+        {
+            if(skillSO.buffSkillId == "1")
+            {
+                buffSkillSO = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(skillSO.buffSkillId));
+            }
+            if (skillSO.buffSkillId == "2")
+            {
+                debuffSkillSO = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(skillSO.buffSkillId));
+            }
+        }
+
     }
 
 
-    public void UseSkill(Character[] character)
+    public void UseSkill(Character[] targetcharacter)
     {
         //추후 추가
-
-        if(skillSO.IsBuff && buffSkillSO != null)
+        if(buffSkillSO != null || debuffSkillSO != null)
         {
-            foreach(Character c in character) 
-            {
-                c.stat.Buff(buffSkillSO, skillSO);
-            }
+            foreach(Character c in targetcharacter) 
+            {c.stat.Buff(skillSO);}
         }
-        else if(skillSO.IsDebuff && debuffSkillSO != null)
+        else if(skillSO.IsHeal)
         {
-            foreach (Character c in character)
-            {
-                c.stat.DeBuff(debuffSkillSO, skillSO);
-            }
+            foreach (Character c in targetcharacter)
+            { c.stat.healthStat.Heal(skillSO.damage[0]);}
         }
         else
         {
-            foreach (Character c in character)
-            {
-                c.stat.TakeDamage(skillSO.damage[0]);
-            }
+            foreach (Character c in targetcharacter)
+            {c.stat.TakeDamage(skillSO.damage[0]);}
         }
         
     }
