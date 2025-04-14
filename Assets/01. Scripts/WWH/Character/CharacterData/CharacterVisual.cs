@@ -15,11 +15,11 @@ public class CharacterVisual : MonoBehaviour
 
     public Sprite icon;
     public GameObject SelectEffect;
-    public float AppearAnimationLength { get; private set; }
+    public float AppearAnimationLength;
 
     public void Initialize()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInParent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
   
 
@@ -28,9 +28,9 @@ public class CharacterVisual : MonoBehaviour
         {
             runtimeController = animator.runtimeAnimatorController;
             // 등장 애니메이션 길이 계산 (Appear 애니메이션 사용)
-            //AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            //AppearAnimationLength = stateInfo.length;
-
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            AppearAnimationLength = stateInfo.length;
+            //Debug.Log(AppearAnimationLength);
             animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
             //StartCoroutine(PlayAni());
         }

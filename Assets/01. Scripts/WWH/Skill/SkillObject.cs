@@ -30,12 +30,13 @@ public class SkillObject : MonoBehaviour
     }
 
 
-    public void UseSkill(Character[] targetcharacter)
+    public void UseSkill(List<Character> targetcharacter)
     {
         //추후 추가
         if(skillSO.IsBuff)
         {
-            foreach(Character c in targetcharacter) 
+            Debug.Log("Use Buff");
+            foreach (Character c in targetcharacter) 
             {c.stat.Buff(skillSO);}
         }
         else if(skillSO.IsHeal)
@@ -45,6 +46,7 @@ public class SkillObject : MonoBehaviour
         }
         else
         {
+            Debug.Log("TakeDamage");
             foreach (Character c in targetcharacter)
             {c.stat.TakeDamage(skillSO.damage[0]);}
         }

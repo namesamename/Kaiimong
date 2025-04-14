@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     public CharacterStat stat;
     public CharacterVisual visual;
 
+    public GameObject SelectEffect;
     public string characterId;
     public int Level;
     public int Recognition;

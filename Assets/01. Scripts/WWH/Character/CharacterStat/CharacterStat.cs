@@ -27,6 +27,8 @@ public class CharacterStat : MonoBehaviour
     public CriticalAttackStat criticalAttackStat;
     public Dictionary<StatType, BaseStat> statDict;
 
+    public Action OnDeath;
+
 
     private void Awake()
     {
@@ -63,7 +65,6 @@ public class CharacterStat : MonoBehaviour
 
     public void TakeDamage(float Amount)
     {
-        Debug.Log("TakeDamage");
         //healthStat.AddStat(Amount);
         //if(healthStat.Value == 0)
         //{
@@ -73,6 +74,7 @@ public class CharacterStat : MonoBehaviour
     public void OnDie()
     {
         gameObject.SetActive(false);
+        OnDeath?.Invoke();
     }
     
 
@@ -107,7 +109,6 @@ public class CharacterStat : MonoBehaviour
         {
             //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
             //duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
-            Debug.Log("Use Buff");
         }
         else
         {
