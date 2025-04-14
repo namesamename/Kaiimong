@@ -7,6 +7,7 @@ public class GlobalDatabase : Singleton<GlobalDatabase>
 
     public CharacterDataBase character;
     public SkillDataBase skill;
+    public CurrencyDatabase currency;
     [HideInInspector]
     public SaveDataBase save;
     private void Awake()
@@ -25,10 +26,12 @@ public class GlobalDatabase : Singleton<GlobalDatabase>
         }
         character = new CharacterDataBase();
         skill = new SkillDataBase();
+        currency = new CurrencyDatabase();
         save = GetComponentInChildren<SaveDataBase>();
 
         character.Initialize();
         skill.Initialize();
+        currency.Initialize();
 
     }
 

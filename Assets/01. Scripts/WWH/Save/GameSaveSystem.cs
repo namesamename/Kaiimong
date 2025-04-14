@@ -9,6 +9,7 @@ public enum SaveType
 {
     Character,
     Item,
+    Currency,
 }
 public static class GameSaveSystem
 {
@@ -17,18 +18,12 @@ public static class GameSaveSystem
 
     public static void SaveData(SaveInstance instance)
     {
-        if (instance.Savetype == SaveType.Character)
-        {
-            SaveDic[SaveType.Character].Add(instance);
-        }   
+        SaveDic[instance.Savetype].Add( instance);
+     
     }
     public static void SaveDatas(List<SaveInstance> saves)
     {
-        if (saves[0].Savetype == SaveType.Character)
-        {
-            SaveDataToEnum( SaveType.Character ,saves);
-        }
-      
+        SaveDataToEnum(saves[0].Savetype, saves);
     }
 
     public static void SaveDataToEnum( SaveType saveType ,List<SaveInstance> saves)

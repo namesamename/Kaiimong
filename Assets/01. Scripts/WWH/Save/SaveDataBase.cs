@@ -74,12 +74,4 @@ public class SaveDataBase : Singleton<SaveDataBase>
    
 
 }
-[System.Serializable]
-public class CharacterSaveData : SaveInstance
-{
-    public string characterId { get => ID; }
-    public int Level;
-    public int Recognition;
-    public int Necessity;
 
-}
