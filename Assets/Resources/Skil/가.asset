@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 001_1
   Name: "\uAC00"
-  isSingleAttack: 0
+  isSingleAttack: 1
   attackCount: 0
-  damage: 
-  hitTiming: []
-  icon: {fileID: 0}
-  IsDebuff: 0
+  damage: 01000000
+  hitTiming:
+  - 1
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  buffSkillId: 
+  IsMuti: 0
+  IsHeal: 0
   IsBuff: 0
   Id: 0
-  SkillId: 99f45a93

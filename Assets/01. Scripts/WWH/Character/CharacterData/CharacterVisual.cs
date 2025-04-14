@@ -32,7 +32,7 @@ public class CharacterVisual : MonoBehaviour
             //AppearAnimationLength = stateInfo.length;
 
             animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
-            StartCoroutine(PlayAni());
+            //StartCoroutine(PlayAni());
         }
 
 

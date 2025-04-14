@@ -21,6 +21,11 @@ public class Character : MonoBehaviour
         skillBook =GetComponentInChildren<CharacterSkillBook>();
         stat = GetComponentInChildren<CharacterStat>();
         visual = GetComponentInChildren<CharacterVisual>();
+
+    }
+    private void Start()
+    {
+        Initialize("001");
     }
 
     public void Initialize(string Id)
@@ -80,15 +85,24 @@ public class Character : MonoBehaviour
     public void HaveData()
     {
         var foundData = SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character);
-      
-        if (foundData != null) 
+
+
+        if (foundData != null)
         {
-            LoadData(foundData.Find(x => x.characterId == characterId));
+            if (foundData.Find(x => x.characterId == characterId) != null)
+            {
+                Debug.Log(foundData.ToString());
+                LoadData(foundData.Find(x => x.characterId == characterId));
+            }else
+            {
+                CreatNewData();
+            }
         }
         else
         {
             CreatNewData();
         }
+
     }
 
     /// <summary>

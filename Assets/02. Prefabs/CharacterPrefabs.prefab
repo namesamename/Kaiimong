@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3586c7d1d0d85454fb2b0e0a29710998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillSO: {fileID: 0}
+  buffSkillSO: {fileID: 0}
 --- !u!1 &966315046957382935
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3586c7d1d0d85454fb2b0e0a29710998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillSO: {fileID: 0}
+  buffSkillSO: {fileID: 0}
 --- !u!1 &2380636551559904517
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +211,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15564afba552f54c994be9e26909b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runtimeController: {fileID: 0}
+  animationClips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   icon: {fileID: 0}
   SelectEffect: {fileID: 0}
 --- !u!1 &2516109690876170450
@@ -256,7 +269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890e943dac025914c94cfb59925c859e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterId: 
+  skillBook: {fileID: 0}
+  stat: {fileID: 0}
+  visual: {fileID: 0}
+  characterId: 001
   Level: 0
   Recognition: 0
   Necessity: 0
@@ -311,6 +327,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  SkillId:
+  - 
+  - 
+  - 
 --- !u!1 &7443109489990372284
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,6 +471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 0
   ValueMultiples: 1
+  CurHealth: 0
 --- !u!1 &8392031930144181386
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,3 +516,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3586c7d1d0d85454fb2b0e0a29710998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillSO: {fileID: 0}
+  buffSkillSO: {fileID: 0}

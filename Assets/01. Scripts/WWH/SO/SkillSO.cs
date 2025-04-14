@@ -18,6 +18,7 @@ public class SkillSO : SO
     public string buffSkillId;
     public bool IsMuti;
     public bool IsHeal;
+    public bool IsBuff;
     public int Id;
 
 }

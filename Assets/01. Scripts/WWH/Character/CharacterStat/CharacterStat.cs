@@ -63,11 +63,12 @@ public class CharacterStat : MonoBehaviour
 
     public void TakeDamage(float Amount)
     {
-        healthStat.AddStat(Amount);
-        if(healthStat.Value == 0)
-        {
-            OnDie();
-        }
+        Debug.Log("TakeDamage");
+        //healthStat.AddStat(Amount);
+        //if(healthStat.Value == 0)
+        //{
+        //    OnDie();
+        //}
     }
     public void OnDie()
     {
@@ -102,27 +103,28 @@ public class CharacterStat : MonoBehaviour
         string effectName;
         int duration;
 
-        if (Skill.buffSkillId == "1")
+        if (Skill.IsBuff)
         {
-            effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
-            duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
+            //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
+            //duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
+            Debug.Log("Use Buff");
         }
         else
         {
-            effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Name);
-            duration = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Duration;
+            //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Name);
+            //duration = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Duration;
         }
 
-        if (Enum.TryParse(effectName, out StatType statType)) 
-        {
-            BaseStat stat = EnumChanger(statType);
+        //if (Enum.TryParse(effectName, out StatType statType))
+        //{
+        //    BaseStat stat = EnumChanger(statType);
 
-            StartCoroutine(buffStart(stat, Skill, duration));
-        }
-        else
-        {
-            Debug.Log("Can't Exist StatType");
-        }
+        //    StartCoroutine(buffStart(stat, Skill, duration));
+        //}
+        //else
+        //{
+        //    Debug.Log("Can't Exist StatType");
+        //}
     }
    
 
