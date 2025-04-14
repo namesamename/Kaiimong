@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Skill1
   m_EditorClassIdentifier: 
   isSingleAttack: 1
+  isBuff: 1
   attackCount: 1
   damage: 01000000
   hitTiming:

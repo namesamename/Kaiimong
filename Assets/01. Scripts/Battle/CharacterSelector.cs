@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterSelector : MonoBehaviour
@@ -24,25 +25,39 @@ public class CharacterSelector : MonoBehaviour
     {
         if (battleSystem.CanSelectTarget)
         {
-            if (!battleSystem.SelectedSkill.isSingleAttack)
+            if(!battleSystem.SelectedSkill.isBuff)
             {
-                SelectAll();
+                if (!battleSystem.SelectedSkill.isSingleAttack)
+                {
+                    SelectAll(battleSystem.GetActiveEnemies());
+                }
+                else
+                {
+                    MouseClick(battleSystem.GetActiveEnemies());
+                }
             }
             else
             {
-                MouseClick();
+                if (!battleSystem.SelectedSkill.isSingleAttack)
+                {
+                    SelectAll(battleSystem.GetActivePlayers());
+                }
+                else
+                {
+                    MouseClick(battleSystem.GetActivePlayers());
+                }
             }
         }
     }
 
-    private void SelectAll()
+    private void SelectAll(List<DummyUnit> units)
     {
         if (!battleSystem.SelectedSkill.isSingleAttack)
         {
-            foreach (DummyUnit units in battleSystem.GetActiveEnemies())
+            foreach (DummyUnit unit in units)
             {
-                SelectedEffect(units, true);
-                selectedCharacter = units;
+                SelectedEffect(unit, true);
+                selectedCharacter = unit;
             }
         }
 
@@ -62,7 +77,7 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    private void MouseClick()
+    private void MouseClick(List<DummyUnit> units)
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -72,7 +87,7 @@ public class CharacterSelector : MonoBehaviour
             if (hit.collider != null)
             {
                 DummyUnit unit = hit.collider.GetComponent<DummyUnit>();
-                if (unit != null && battleSystem.GetActiveEnemies().Contains(unit))
+                if (unit != null && units.Contains(unit))
                 {
                     OnCharacterClicked(unit);
                 }

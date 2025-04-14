@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CommandController : MonoBehaviour
 {
+    //ICommand 필요없을듯
     [SerializeField] private List<DummySkill> skillCommands = new List<DummySkill>();
     public int Index = 0;
 

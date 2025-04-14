@@ -53,6 +53,8 @@ public class CharacterUI : MonoBehaviour
     {
         DisableActionButton();
         DIsableUI();
+        battleSystem.TurnIndex = 0;
+        PreviousCharacterIcon();
         battleSystem.CanAttack = true;
     }
 

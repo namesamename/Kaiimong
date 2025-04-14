@@ -32,7 +32,7 @@ public class BattleSystem : MonoBehaviour
     [Header("Skill&TargetSelect")]
     public bool CanSelectTarget = false;
     public bool SelectedTarget = false;
-    public bool PlayerTurn = false;
+    public bool PlayerTurn = true;
 
     [Header("AttackPhase")]
     public bool CanAttack = false;
@@ -85,29 +85,40 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ChangePhase(PlayerTurnPhase));
+            SetBattle();
+            if (appearAnimComplete)
+            {
+                StartCoroutine(ChangePhase(PlayerTurnPhase));
+            }
         }
     }
 
     private void CheckGameOver()
     {
-        if(Players.Count == 0 && activePlayers.Count == 0) StartCoroutine(ChangePhase(WinPhase));
-        if(Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(LosePhase));
+        if (Players.Count == 0 && activePlayers.Count == 0) StartCoroutine(ChangePhase(WinPhase));
+        if (Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(LosePhase));
     }
 
     private void StartBattle()
     {
+        activePlayers.Clear();
+        activeEnemies.Clear();
         SetBattle();
-        StartCoroutine(AppearAnimTime(GetMaxAnimationTime()));
     }
 
     private void EnemyTurnPhase()
     {
-
+        PlayerTurn = false;
+        Debug.Log("enemyturn");
+        activeEnemies.Sort((a, b) => b.Speed.CompareTo(a.Speed));
+        CommandController.ClearList();
+        EnemyRandomCommand();
     }
 
     private void PlayerTurnPhase()
     {
+        PlayerTurn = true;
+        Debug.Log("playerturn");
         activePlayers.Sort((a, b) => b.Speed.CompareTo(a.Speed));
         OnPlayerTurn?.Invoke();
         CommandController.ClearList();
@@ -125,46 +136,51 @@ public class BattleSystem : MonoBehaviour
 
     public void SetBattle()
     {
-        activePlayers.Clear();
-        activeEnemies.Clear();
         SetPlayer();
         SetEnemy();
+        StartCoroutine(AppearAnimTime(GetMaxAnimationTime()));
     }
 
     private void SetPlayer()
     {
         List<DummyUnit> playerCopy = new List<DummyUnit>(Players);
-        for (int i = 0; i < playerLocations.Count; i++)
+        if (playerCopy.Count > 0)
         {
-            DummyUnit player = playerCopy[i];
-            player.Speed = i + 1;
+            for (int i = 0; i < playerLocations.Count; i++)
+            {
+                DummyUnit player = playerCopy[i];
+                player.Speed = i + 1;
 
-            if (playerLocations[i].isOccupied) continue;
+                if (playerLocations[i].isOccupied) continue;
 
-            DummyUnit playerUnit = Instantiate(player, playerLocations[i].transform);
-            playerLocations[i].isOccupied = true;
-            playerUnit.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
-            activePlayers.Add(playerUnit);
-            Players.Remove(player);
+                DummyUnit playerUnit = Instantiate(player, playerLocations[i].transform);
+                playerLocations[i].isOccupied = true;
+                playerUnit.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
+                activePlayers.Add(playerUnit);
+                Players.Remove(player);
+            }
         }
     }
 
     private void SetEnemy()
     {
         List<DummyUnit> enemiesCopy = new List<DummyUnit>(Enemies);
-        for (int i = 0; i < enemyLocations.Count; i++)
+        if (enemiesCopy.Count > 0)
         {
-            DummyUnit enemy = enemiesCopy[i];
-            enemy.Speed = i + 1;
+            for (int i = 0; i < enemyLocations.Count; i++)
+            {
+                DummyUnit enemy = enemiesCopy[i];
+                enemy.Speed = i + 1;
 
-            if (enemyLocations[i].isOccupied) continue;
+                if (enemyLocations[i].isOccupied) continue;
 
-            DummyUnit enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
-            enemyLocations[i].isOccupied = true;
-            enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
-            enemyUnit.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
-            activeEnemies.Add(enemyUnit);
-            Enemies.Remove(enemy);
+                DummyUnit enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
+                enemyLocations[i].isOccupied = true;
+                enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
+                enemyUnit.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
+                activeEnemies.Add(enemyUnit);
+                Enemies.Remove(enemy);
+            }
         }
     }
 
@@ -218,6 +234,50 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    void EnemyRandomCommand()
+    {
+        for (int i = 0; i < activeEnemies.Count; i++)
+        {
+            int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillDatas.Count);
+            SelectedSkill = activeEnemies[i].skillDatas[randomSkill];
+            if (SelectedSkill.isBuff)
+            {
+                if (SelectedSkill.isSingleAttack)
+                {
+                    int randomTarget = UnityEngine.Random.Range(0, activePlayers.Count);
+                    Targets.Add(activePlayers[i]);
+                }
+                else
+                {
+                    foreach (DummyUnit units in activePlayers)
+                    {
+                        Targets.Add(units);
+                    }
+                }
+            }
+            else
+            {
+                if (SelectedSkill.isSingleAttack)
+                {
+                    int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
+                    Targets.Add(activeEnemies[i]);
+                }
+                else
+                {
+                    foreach (DummyUnit units in activeEnemies)
+                    {
+                        Targets.Add(units);
+                    }
+                }
+            }
+
+            CommandController.AddCommand(new DummySkill(activeEnemies[i], Targets, SelectedSkill));
+            Targets.Clear();
+        }
+
+        CanAttack = true;
+    }
+
     public void OnSkillSelected()
     {
         SelectedTarget = false;
@@ -230,4 +290,5 @@ public class BattleSystem : MonoBehaviour
 
         nextPhase();
     }
+
 }

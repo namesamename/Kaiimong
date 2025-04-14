@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkillData : ScriptableObject
 {
     public bool isSingleAttack;
+    public bool isBuff;
     public int attackCount;
     public int[] damage;
     public float[] hitTiming;
