@@ -3,6 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
 using System;
+using System.Linq;
 
 public enum SaveType
 {
@@ -77,7 +78,6 @@ public static class GameSaveSystem
             string json =  File.ReadAllText(path);
             //새로운 세이브 인스턴스 리스트 만들기
             List<SaveInstance> saves = new List<SaveInstance>();
-
             //정보를 가져온다
             SaveDataWrapper saveData = JsonConvert.DeserializeObject<SaveDataWrapper>
             (json, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto});

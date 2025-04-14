@@ -102,7 +102,7 @@ public class Character : MonoBehaviour
     /// </summary>
     public void SetStat()
     {
-       stat.SetCharacter(GlobalDatabase.Instance.character.GetCharSOToGUID(characterId));
+       stat.SetCharacter(GlobalDatabase.Instance.character.GetCharSOToID(characterId));
     }
 
 }

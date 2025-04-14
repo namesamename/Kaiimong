@@ -30,7 +30,7 @@ public class SkillDataBase
         }
     }
 
-    public SkillSO GetSkillSOToGUID(string SkillId)
+    public SkillSO GetSkillSOToID(string SkillId)
     {
         if (SkillDataDic[SkillId] != null && SkillDataDic.ContainsKey(SkillId))
         {

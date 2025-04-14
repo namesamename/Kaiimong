@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.TextCore.Text;
 
@@ -35,12 +36,16 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// <returns></returns>
     public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
     {
-        if (!SaveDatas.ContainsKey(type))
-        {
-            return null;
-        }
 
-        return (T)SaveDatas[type].Find(i => i.ID == Id);
+        if (SaveDatas[type].Count > 0 && SaveDatas.TryGetValue(type, out List<SaveInstance> Sava))
+        {
+            SaveInstance save = Sava.Find(x => x.ID == Id);
+            if (save is T Instance)
+            {return Instance;}
+        }
+      
+        return null;
+
     }
     /// <summary>
     ///한 종류의 세이브 데이터 가져오기
@@ -50,12 +55,12 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// <returns></returns>
     public List<T> GetSaveInstances<T>(SaveType type) where T : SaveInstance
     {
-        if (!SaveDatas.ContainsKey(type))
+        if (SaveDatas.TryGetValue(type , out List<SaveInstance> Save))
         {
-            return new List<T>();
+            return Save.OfType<T>().ToList();
         }
 
-        return SaveDatas[type].ConvertAll(x => x as T);
+        return null;
     }
 
     /// <summary>
@@ -65,11 +70,19 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// <param name="saveType"></param>
     public void SetSaveInstances(SaveInstance data, SaveType saveType) 
     {
-        if(!SaveDatas.ContainsKey(saveType)) 
+
+        if(SaveDatas.TryGetValue(saveType, out List<SaveInstance> Sava))
         {
-            SaveDatas[saveType] = new List<SaveInstance>();
+            Sava.Add(data);
         }
-        SaveDatas[saveType].Add(data);
+        else
+        {
+            SaveDatas[saveType] = new List<SaveInstance>
+            {
+                data
+            };
+        }
+    
     }
 
 

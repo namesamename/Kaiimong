@@ -17,7 +17,7 @@ public class CharacterDataBase
         }
     }
    
-    public CharacterSO GetCharSOToGUID(string characterId)
+    public CharacterSO GetCharSOToID(string characterId)
     {
         if (characterDic[characterId] != null && characterDic.ContainsKey(characterId))
         {
@@ -45,7 +45,7 @@ public class CharacterDataBase
     //캐릭터 세이브 정보로 생성
     public GameObject CharacterInstanceSummonFromSaveData(CharacterSaveData saveData , Vector3 pos, Transform parent = null)
     {
-        GameObject Character = CharacterInstanceSummon(GetCharSOToGUID(saveData.characterId), pos, parent);
+        GameObject Character = CharacterInstanceSummon(GetCharSOToID(saveData.characterId), pos, parent);
         return Character;
     }
 
