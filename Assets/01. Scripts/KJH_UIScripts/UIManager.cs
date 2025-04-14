@@ -4,43 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using JetBrains.Annotations;
 
 public class UIManager : Singleton<UIManager>
 {
-    // 싱글턴 초기화 및 DontDestroyOnLoad 처리
     protected void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (_instance == null)
         {
-            Destroy(this.gameObject);
-            return;
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        _instance = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
-    public void ShowPopupPrefab(GameObject prefab)
-    {
-        Transform canvas = GameObject.Find("Canvas")?.transform;
-        GameObject obj = Instantiate(prefab, canvas);
-        RectTransform rect = obj.GetComponent<RectTransform>();
-        CanvasGroup canvasGroup = obj.GetComponent<CanvasGroup>();
-
-        if (canvasGroup == null)
+        else
         {
-            canvasGroup = obj.AddComponent<CanvasGroup>();
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
         }
-
-        // 초기 상태 설정 (아래 + 투명)
-        rect.anchoredPosition = new Vector2(0, -200f);
-        canvasGroup.alpha = 0f;
-
-        // 애니메이션: 올라오면서 나타나기
-        rect.DOAnchorPos(Vector2.zero, 0.7f).SetEase(Ease.OutBack);
-        canvasGroup.DOFade(1f, 0.7f).SetEase(Ease.InOutSine);
     }
 
-    public void SceneLoader(string scenename)
+    public GameObject ShowPopup(string popupName)
     {
-        SceneManager.LoadScene(scenename);
+        var obj = Resources.Load($"Popups/{popupName}", typeof(GameObject)) as GameObject;
+        if (!obj)
+        {
+            Debug.LogWarning($"Failed to ShowPopup({popupName})");
+            return null;
+        }
+        return Instantiate(obj, GameObject.Find("Canvas").transform);
     }
 }

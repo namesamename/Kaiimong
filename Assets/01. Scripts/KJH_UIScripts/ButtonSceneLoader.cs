@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonSceneLoader : MonoBehaviour
-{
-    public string scenename;
-    public void SceneLoad()
+{ 
+    public void SceneLoad(string scenename)
     {
-        UIManager.Instance.SceneLoader(scenename);
+        SceneManager.LoadScene(scenename);
     }
 }
