@@ -222,7 +222,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (SelectedTarget)
         {
-            CommandController.AddCommand(new DummySkill(activePlayers[TurnIndex], Targets, SelectedSkill));
+            CommandController.AddCommand(new SkillCommand(activePlayers[TurnIndex], Targets, SelectedSkill));
             BattleUI.CharacterUI.NextCharacterIcon();
             TurnIndex++;
             Targets.Clear();
@@ -271,7 +271,7 @@ public class BattleSystem : MonoBehaviour
                 }
             }
 
-            CommandController.AddCommand(new DummySkill(activeEnemies[i], Targets, SelectedSkill));
+            CommandController.AddCommand(new SkillCommand(activeEnemies[i], Targets, SelectedSkill));
             Targets.Clear();
         }
 
