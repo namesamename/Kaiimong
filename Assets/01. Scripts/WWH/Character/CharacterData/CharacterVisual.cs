@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class CharacterVisual : MonoBehaviour
 {
@@ -6,53 +9,56 @@ public class CharacterVisual : MonoBehaviour
     public Animator Animator { get { return animator; } }
     private SpriteRenderer spriteRenderer;
 
-    private RuntimeAnimatorController runtimeController;
-    private AnimationClip[] animationClips = new AnimationClip[7];
+    public RuntimeAnimatorController runtimeController;
+    public AnimationClip[] animationClips = new AnimationClip[7];
     public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
 
     public Sprite icon;
     public GameObject SelectEffect;
     public float AppearAnimationLength { get; private set; }
-    private void Awake()
-    {
-
-
-    }
 
     public void Initialize()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        runtimeController = animator.runtimeAnimatorController;
+  
 
         // 애니메이션 길이 계산
         if (animator != null)
         {
+            runtimeController = animator.runtimeAnimatorController;
             // 등장 애니메이션 길이 계산 (Appear 애니메이션 사용)
             //AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             //AppearAnimationLength = stateInfo.length;
 
-            //animationClips = Resources.LoadAll<AnimationClip>("Character/이름");
-            //ChangeAnimation();
+            animationClips = Resources.LoadAll<AnimationClip>("Character/SilHum");
+            StartCoroutine(PlayAni());
         }
 
 
     }
 
 
+    public IEnumerator PlayAni()
+    {
+  
+        yield return new WaitForSeconds(1f);
+        ChangeAnimation();
+        yield return new WaitForEndOfFrame();
+        var clips = animator.runtimeAnimatorController.animationClips;
+    }
+
     public void ChangeAnimation()
     {
         AnimatorOverrideController controller = new AnimatorOverrideController(runtimeController);
-        controller["Appear"] = animationClips[0];
+        controller["Appeared"] = animationClips[0];
         controller["Idle"] = animationClips[1];
         controller["FirstSkill"] = animationClips[2];
         controller["SecondSkill"] = animationClips[3];
-        controller["ThridSkill"] = animationClips[4];
-        controller["hit"] = animationClips[5];
+        controller["ThirdSkill"] = animationClips[4];
+        controller["Hit"] = animationClips[5];
         controller["Death"] = animationClips[6];
-
         animator.runtimeAnimatorController = controller;
-
     }
 
 
