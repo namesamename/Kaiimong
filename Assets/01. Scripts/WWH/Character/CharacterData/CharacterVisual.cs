@@ -15,8 +15,15 @@ public class CharacterVisual : MonoBehaviour
     public float AppearAnimationLength { get; private set; }
     private void Awake()
     {
+
+
+    }
+
+    public void Initialize()
+    {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        runtimeController = animator.runtimeAnimatorController;
 
         // 애니메이션 길이 계산
         if (animator != null)
@@ -29,8 +36,9 @@ public class CharacterVisual : MonoBehaviour
             //ChangeAnimation();
         }
 
-       
+
     }
+
 
     public void ChangeAnimation()
     {

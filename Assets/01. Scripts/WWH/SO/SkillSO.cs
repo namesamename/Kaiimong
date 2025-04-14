@@ -18,23 +18,8 @@ public class SkillSO : SO
     public string buffSkillId;
     public bool IsMuti;
     public bool IsHeal;
-
-
     public int Id;
 
-
-
-//#if UNITY_EDITOR
-//    public void OnValidate()
-//    {
-//        if (string.IsNullOrEmpty(SkillId) && !string.IsNullOrEmpty(Name))
-//        {
-//            string Chaguid = Guid.NewGuid().ToString().Substring(0, 8);
-//            SkillId = Chaguid;
-//            UnityEditor.EditorUtility.SetDirty(this);
-//        }
-//    }
-//#endif
 }
 
 

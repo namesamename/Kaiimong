@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
     /// </summary>
     public void SetVisual()
     {
-        //visual.ChangeAnimation();
+        //visual.Initialize();
     }
 
     /// <summary>
