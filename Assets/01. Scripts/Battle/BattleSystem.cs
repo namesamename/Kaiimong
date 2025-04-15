@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -73,11 +74,15 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    public void SetUI()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+        GameObject uiPrefab = Instantiate(Resources.Load("Battle/BattleUI")) as GameObject;
+        StageManager.Instance.StageUISet();
+    }
     private void AttackPhase()
     {
         CommandController.ExecuteCommand();
-
-        CheckGameOver();
 
         if (PlayerTurn)
         {
@@ -110,7 +115,8 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerTurn = false;
         Debug.Log("enemyturn");
-        activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+        activeEnemies = activeEnemies.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+        //activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
         CommandController.ClearList();
         EnemyRandomCommand();
     }
@@ -119,7 +125,8 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerTurn = true;
         Debug.Log("playerturn");
-        activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+        activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+        //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
         OnPlayerTurn?.Invoke();
         CommandController.ClearList();
     }
@@ -156,6 +163,8 @@ public class BattleSystem : MonoBehaviour
                 Character playerUnit = Instantiate(player, playerLocations[i].transform);
                 playerLocations[i].isOccupied = true;
                 playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
+                playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
+                playerUnit.stat.OnDeath += CheckGameOver;
                 activePlayers.Add(playerUnit);
                 Players.Remove(player);
             }
@@ -178,6 +187,8 @@ public class BattleSystem : MonoBehaviour
                 enemyLocations[i].isOccupied = true;
                 enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
                 enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
+                enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
+                enemyUnit.stat.OnDeath += CheckGameOver;
                 activeEnemies.Add(enemyUnit);
                 Enemies.Remove(enemy);
             }
@@ -231,6 +242,53 @@ public class BattleSystem : MonoBehaviour
         if (TurnIndex == activePlayers.Count)
         {
             BattleUI.CharacterUI.SetActionButton();
+        }
+    }
+
+    public void RemoveTarget(Character target)
+    {
+        foreach (SkillCommand command in CommandController.SkillCommands)
+        {
+            command.targets.Remove(target);
+            if (command.skillData.skillSO.isSingleAttack)
+            {
+                if (command.skillData.skillSO.IsBuff)
+                {
+                    command.targets.Add(FindNewBuffTarget());
+                }
+                else
+                {
+                    command.targets.Add(FindNewAttackTarget());
+                }
+            }
+            if (command.targets.Count == 0)
+            {
+                CommandController.RemoveCommand(command);
+            }
+        }
+    }
+
+    private Character FindNewAttackTarget()
+    {
+        if (PlayerTurn)
+        {
+            return activeEnemies[activeEnemies.Count - 1];
+        }
+        else
+        {
+            return activePlayers[activePlayers.Count - 1];
+        }
+    }
+
+    private Character FindNewBuffTarget()
+    {
+        if (!PlayerTurn)
+        {
+            return activeEnemies[activeEnemies.Count - 1];
+        }
+        else
+        {
+            return activePlayers[activePlayers.Count - 1];
         }
     }
 

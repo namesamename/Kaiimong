@@ -6,7 +6,7 @@ public class CommandController : MonoBehaviour
     [SerializeField] private List<SkillCommand> skillCommands = new List<SkillCommand>();
     public int Index = 0;
 
-    public List<SkillCommand> SkillCommands { get { return skillCommands; } }
+    public List<SkillCommand> SkillCommands { get { return skillCommands; } set { skillCommands = value; } }
 
     public void AddCommand(SkillCommand command)
     {
