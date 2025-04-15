@@ -12,25 +12,22 @@ public enum SaveType
 }
 public static class GameSaveSystem
 {
-    public static void SaveDataToEnum( SaveType saveType ,List<SaveInstance> saves)
+    public static void Save( SaveType saveType ,List<SaveInstance> saves)
     {
         try
         {
             //경로를 계산 /폴더 이름을 가져옴
             string path = Path.Combine(Application.dataPath, $"JsonData/{saveType}/{saveType}Database.json");
             string directory = Path.GetDirectoryName(path);
-            
             //경로에 폴더가 존재하지않는 경우 생성을 해줌
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
                 Debug.Log($"폴더 생성됨: {directory}");
             }
-
             //저장
             string json = JsonConvert.SerializeObject(new SaveDataWrapper { Saves = saves }, Formatting.Indented
                 , new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
-
             //파일을 만든다.
             File.WriteAllText(path, json);
         }

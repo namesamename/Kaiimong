@@ -13,6 +13,7 @@ using UnityEngine;
 public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 {
     CurrencySaveData data;
+
     ActivityCurrencySO ActSO;
     float offTime;
     float Interval;
@@ -42,6 +43,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         ActSO = GlobalDatabase.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
         var SaveData = SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, "Currency");
+
         if (SaveData != null && SaveData is CurrencySaveData instance)
         {
             data = instance;

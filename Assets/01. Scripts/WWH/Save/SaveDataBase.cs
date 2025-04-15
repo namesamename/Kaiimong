@@ -19,18 +19,14 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// <param name="Id"></param>
     /// <returns></returns>
     /// 
-
-
     private void Awake()
     {
         List<List<SaveInstance>> saveInstances = new List<List<SaveInstance>>();
         saveInstances = LoadAll();
-
         foreach (SaveType type in Enum.GetValues(typeof(SaveType)))
         {
             SaveDic[type] = new List<SaveInstance>();
         }
-
         foreach (List<SaveInstance> instanceList in saveInstances)
         {
             foreach (SaveInstance instance in instanceList)
@@ -103,7 +99,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
     }
     public  void SavingList(List<SaveInstance> SaveList, SaveType SaveType)
     {
-        GameSaveSystem.SaveDataToEnum(SaveType, SaveList);
+        GameSaveSystem.Save(SaveType, SaveList);
     }
     public  void SaveAll()
     {
@@ -154,7 +150,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
             {
                 SaveDic[instance.Savetype].Add(instance);
             }
-            GameSaveSystem.SaveDataToEnum(instance.Savetype, SaveDic[instance.Savetype]);
+            GameSaveSystem.Save(instance.Savetype, SaveDic[instance.Savetype]);
         }
         else
         {
@@ -162,7 +158,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
             {
                 instance
             };
-            GameSaveSystem.SaveDataToEnum(instance.Savetype, SaveDic[instance.Savetype]);
+            GameSaveSystem.Save(instance.Savetype, SaveDic[instance.Savetype]);
         }
     }
 
