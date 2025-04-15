@@ -6,10 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-public interface ISavable
-{
-    public void Save();
-}
+
 
 
 
@@ -22,10 +19,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public float TimeWhenNextCharge;
     string LastTimeExitKey = "Timekey";
 
-
-
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
-
     private void Update()
     {
         if (CurrencySaveDic[CurrencyType.Activity] < ActSO.MaxCount)
@@ -45,8 +39,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     private void HaveData()
     {
         ActSO = GlobalDatabase.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
-        var SaveDAta = SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, "Currency");
-        if (SaveDAta != null && SaveDAta is CurrencySaveData instance)
+        var SaveData = SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, "Currency");
+        if (SaveData != null && SaveData is CurrencySaveData instance)
         {
             data = instance;
         }
@@ -129,7 +123,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public CurrencySaveData DicToSaveData()
     {
-
         CurrencySaveData data = new CurrencySaveData()
         {
             GachaValue = CurrencySaveDic[CurrencyType.Gacha],
@@ -137,14 +130,12 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             DIAValue = CurrencySaveDic[CurrencyType.Dia],
             ActivityValue = CurrencySaveDic[CurrencyType.Activity],
         };
-
         return data;
     }
 
 
     public void Save()
     {
-
         SaveDataBase.Instance.SetSaveInstances(DicToSaveData(), SaveType.Currency);
     }
 }

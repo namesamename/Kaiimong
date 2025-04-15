@@ -1,5 +1,8 @@
 using System.Collections;
-
+public interface ISavable
+{
+    public void Save();
+}
 [System.Serializable]
 public class SaveInstance 
 {
@@ -12,9 +15,7 @@ public class CharacterSaveData : SaveInstance
     public int Level;
     public int Recognition;
     public int Necessity;
-
 }
-
 [System.Serializable]
 public class CurrencySaveData : SaveInstance
 {

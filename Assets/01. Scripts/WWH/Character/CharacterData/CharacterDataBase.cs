@@ -45,7 +45,7 @@ public class CharacterDataBase
     //캐릭터 세이브 정보로 생성
     public GameObject CharacterInstanceSummonFromSaveData(CharacterSaveData saveData , Vector3 pos, Transform parent = null)
     {
-        GameObject Character = CharacterInstanceSummon(GetCharSOToID(saveData.characterId), pos, parent);
+        GameObject Character = CharacterInstanceSummon(GetCharSOToID(saveData.ID), pos, parent);
         return Character;
     }
 

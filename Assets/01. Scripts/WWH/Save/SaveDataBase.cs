@@ -17,19 +17,29 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// <param name="type"></param>
     /// <param name="Id"></param>
     /// <returns></returns>
+    /// 
+
+    private void Awake()
+    {
+        List<List<SaveInstance>> saveInstances = new List<List<SaveInstance>>();
+        saveInstances = GameSaveSystem.LoadAll();
+        foreach (List<SaveInstance> instance in saveInstances)
+        {
+            SaveDatas[instance[0].Savetype] = instance;
+        }
+
+    }
+
+
     public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
     {
-
         if (SaveDatas[type].Count > 0 && SaveDatas.TryGetValue(type, out List<SaveInstance> Sava))
         {
             SaveInstance save = Sava.Find(x => x.ID == Id);
             if (save is T Instance)
             {return Instance;}
         }
-
-        Debug.Log("dd");
         return null;
-
     }
     /// <summary>
     ///한 종류의 세이브 데이터 가져오기
