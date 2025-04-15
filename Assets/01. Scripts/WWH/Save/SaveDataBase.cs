@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -17,19 +18,47 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// <param name="type"></param>
     /// <param name="Id"></param>
     /// <returns></returns>
+    /// 
+
+
+    private void Awake()
+    {
+        List<List<SaveInstance>> saveInstances = new List<List<SaveInstance>>();
+        saveInstances = GameSaveSystem.LoadAll();
+
+        // Enum 키를 미리 초기화 (선택사항)
+        foreach (SaveType type in Enum.GetValues(typeof(SaveType)))
+        {
+            SaveDatas[type] = new List<SaveInstance>();
+        }
+
+        // 분류 및 삽입
+        foreach (List<SaveInstance> instanceList in saveInstances)
+        {
+            foreach (SaveInstance instance in instanceList)
+            {
+                SaveType type = instance.Savetype;
+
+                if (!SaveDatas.ContainsKey(type))
+                {
+                    SaveDatas[type] = new List<SaveInstance>();
+                }
+
+                SaveDatas[type].Add(instance);
+            }
+        }
+    }
+
+
     public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
     {
-
         if (SaveDatas[type].Count > 0 && SaveDatas.TryGetValue(type, out List<SaveInstance> Sava))
         {
             SaveInstance save = Sava.Find(x => x.ID == Id);
             if (save is T Instance)
             {return Instance;}
         }
-
-        Debug.Log("dd");
         return null;
-
     }
     /// <summary>
     ///한 종류의 세이브 데이터 가져오기
@@ -74,12 +103,4 @@ public class SaveDataBase : Singleton<SaveDataBase>
    
 
 }
-[System.Serializable]
-public class CharacterSaveData : SaveInstance
-{
-    public string characterId { get => ID; }
-    public int Level;
-    public int Recognition;
-    public int Necessity;
 
-}

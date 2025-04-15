@@ -1,0 +1,13 @@
+{
+  "Saves": [
+    {
+      "$type": "CurrencySaveData, Assembly-CSharp",
+      "GoldValue": 600,
+      "DIAValue": 0,
+      "GachaValue": 0,
+      "ActivityValue": 301,
+      "Savetype": 2,
+      "ID": null
+    }
+  ]
+}

@@ -22,7 +22,7 @@ public class CharacterSkillBook : MonoBehaviour
             SkillList[i].SetSkill($"{ID}_{i+1}");
         }
     }
-    public void SkillUsing(SkillObject skill, Character[] characters)
+    public void SkillUsing(SkillObject skill, List<Character> characters)
     {
         //여러가지 처리
         //마나, 쿨타임, 사용 가능한가 불가능 한가

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour , ISavable
 {
 
     [HideInInspector]
@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     public CharacterStat stat;
     public CharacterVisual visual;
 
+    public GameObject SelectEffect;
     public string characterId;
     public int Level;
     public int Recognition;
@@ -21,6 +22,11 @@ public class Character : MonoBehaviour
         skillBook =GetComponentInChildren<CharacterSkillBook>();
         stat = GetComponentInChildren<CharacterStat>();
         visual = GetComponentInChildren<CharacterVisual>();
+
+    }
+    private void Start()
+    {
+        Initialize("001");
     }
 
     public void Initialize(string Id)
@@ -65,7 +71,7 @@ public class Character : MonoBehaviour
     /// <param name="saveData"></param>
     public void LoadData(CharacterSaveData saveData)
     {
-        characterId = saveData.characterId;
+        characterId = saveData.ID;
         Level = saveData.Level;
         Recognition = saveData.Recognition;
         Necessity = saveData.Necessity;
@@ -80,15 +86,23 @@ public class Character : MonoBehaviour
     public void HaveData()
     {
         var foundData = SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character);
-      
-        if (foundData != null) 
+
+
+        if (foundData != null)
         {
-            LoadData(foundData.Find(x => x.characterId == characterId));
+            if (foundData.Find(x => x.ID == characterId) != null)
+            {
+                LoadData(foundData.Find(x => x.ID == characterId));
+            }else
+            {
+                CreatNewData();
+            }
         }
         else
         {
             CreatNewData();
         }
+
     }
 
     /// <summary>
@@ -99,4 +113,17 @@ public class Character : MonoBehaviour
        stat.SetCharacter(GlobalDatabase.Instance.character.GetCharSOToID(characterId));
     }
 
+    public void Save()
+    {
+        CharacterSaveData saveData = new CharacterSaveData()
+        {
+            ID = characterId,
+            Recognition = this.Recognition,
+            Necessity = this.Necessity,
+            Savetype = SaveType.Character,
+            Level = this.Level,
+        };
+        SaveDataBase.Instance.SetSaveInstances(saveData, SaveType.Character);
+       
+    }
 }

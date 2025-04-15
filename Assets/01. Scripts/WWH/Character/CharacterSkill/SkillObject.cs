@@ -6,7 +6,7 @@ public class SkillObject : MonoBehaviour
 {
     public SkillSO skillSO;
     DebuffSkillSO debuffSkillSO;
-    BuffSkillSO buffSkillSO;
+    public BuffSkillSO buffSkillSO;
 
 
     private float CurCooltime;
@@ -17,25 +17,26 @@ public class SkillObject : MonoBehaviour
 
         if (skillSO.buffSkillId != null)
         {
-            if(skillSO.buffSkillId == "1")
+            if(skillSO.IsBuff)
             {
-                buffSkillSO = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(skillSO.buffSkillId));
+                //buffSkillSO = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(skillSO.buffSkillId));
             }
-            if (skillSO.buffSkillId == "2")
+            if (skillSO.IsBuff)
             {
-                debuffSkillSO = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(skillSO.buffSkillId));
+                //debuffSkillSO = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(skillSO.buffSkillId));
             }
         }
 
     }
 
 
-    public void UseSkill(Character[] targetcharacter)
+    public void UseSkill(List<Character> targetcharacter)
     {
         //추후 추가
-        if(buffSkillSO != null || debuffSkillSO != null)
+        if(skillSO.IsBuff)
         {
-            foreach(Character c in targetcharacter) 
+            Debug.Log("Use Buff");
+            foreach (Character c in targetcharacter) 
             {c.stat.Buff(skillSO);}
         }
         else if(skillSO.IsHeal)
@@ -45,6 +46,7 @@ public class SkillObject : MonoBehaviour
         }
         else
         {
+            Debug.Log("TakeDamage");
             foreach (Character c in targetcharacter)
             {c.stat.TakeDamage(skillSO.damage[0]);}
         }
