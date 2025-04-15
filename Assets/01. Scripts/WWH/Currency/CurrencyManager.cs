@@ -27,6 +27,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             Interval += Time.deltaTime;
             if (Interval > ActSO.AutoRecoveryPerMinute)
             {
+                TimeWhenNextCharge = ActSO.AutoRecoveryPerMinute - Interval;
                 Interval -= ActSO.AutoRecoveryPerMinute;
                 CurrencySaveDic[CurrencyType.Activity] += 1;
                 Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
@@ -50,6 +51,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             data = new CurrencySaveData()
             {
                 Savetype = SaveType.Currency,
+                UserLevel = 1,
+                UserEXP = 0,
                 ActivityValue = 100,
                 GachaValue = 0,
                 GoldValue = 0,
@@ -86,7 +89,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     public void DisableAutoCharge(float offTime)
     {
-        TimeWhenNextCharge = (offTime % ActSO.AutoRecoveryPerMinute);
         CurrencySaveDic[CurrencyType.Activity] += (int)(offTime / ActSO.AutoRecoveryPerMinute);
         Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
         if (CurrencySaveDic[CurrencyType.Activity] >= ActSO.MaxCount)
@@ -103,7 +105,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         if (CurrencySaveDic[currency] + amount > GlobalDatabase.Instance.currency.CurrencyDic[currency].MaxCount || CurrencySaveDic[currency] + amount < 0)
         {
-            Debug.Log("not Added");
             return;
         }
         else
@@ -118,6 +119,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void DicSet()
     {
+        CurrencySaveDic[CurrencyType.UserLevel] = data.UserLevel;
+        CurrencySaveDic[CurrencyType.UserEXP] = data.UserEXP;
         CurrencySaveDic[CurrencyType.Gacha] = data.GachaValue;
         CurrencySaveDic[CurrencyType.Gold] = data.GoldValue;
         CurrencySaveDic[CurrencyType.Dia] = data.DIAValue;
@@ -128,6 +131,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         CurrencySaveData data = new CurrencySaveData()
         {
+            UserLevel = 1,
+            UserEXP = 0,
             GachaValue = CurrencySaveDic[CurrencyType.Gacha],
             GoldValue = CurrencySaveDic[CurrencyType.Gold],
             DIAValue = CurrencySaveDic[CurrencyType.Dia],
