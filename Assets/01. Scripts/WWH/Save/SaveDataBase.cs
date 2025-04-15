@@ -42,8 +42,6 @@ public class SaveDataBase : Singleton<SaveDataBase>
             }
         }
     }
-
-
     public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
     {
         if (SaveDic[type].Count > 0 && SaveDic.TryGetValue(type, out List<SaveInstance> Sava))
@@ -71,7 +69,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
     }
 
     /// <summary>
-    /// 한 종류의 세이브 데이터 저장
+    /// 한 종류의 세이브 저장이 아님
     /// </summary>
     /// <param name="Data"></param>
     /// <param name="SaveType"></param>
@@ -107,9 +105,10 @@ public class SaveDataBase : Singleton<SaveDataBase>
         {
             SavingList(characterDatas,SaveType.Character);
         }
-        else if (SaveDic.TryGetValue(SaveType.Currency, out List<SaveInstance> CurrencyDatas))
+
+        if (SaveDic.TryGetValue(SaveType.Currency, out List<SaveInstance> CurrencyDatas))
         {
-            SavingList(CurrencyDatas, SaveType.Character);
+            SavingList(CurrencyDatas, SaveType.Currency);
         }
 
 

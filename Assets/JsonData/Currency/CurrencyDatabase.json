@@ -2,7 +2,42 @@
   "Saves": [
     {
       "$type": "CurrencySaveData, Assembly-CSharp",
-      "GoldValue": 200,
+      "UserLevel": 1,
+      "UserEXP": 0,
+      "GoldValue": 0,
+      "DIAValue": 0,
+      "GachaValue": 0,
+      "ActivityValue": 100,
+      "Savetype": 1,
+      "ID": "Currency"
+    },
+    {
+      "$type": "CurrencySaveData, Assembly-CSharp",
+      "UserLevel": 1,
+      "UserEXP": 0,
+      "GoldValue": 100,
+      "DIAValue": 0,
+      "GachaValue": 0,
+      "ActivityValue": 100,
+      "Savetype": 1,
+      "ID": "Currency"
+    },
+    {
+      "$type": "CurrencySaveData, Assembly-CSharp",
+      "UserLevel": 1,
+      "UserEXP": 0,
+      "GoldValue": 100,
+      "DIAValue": 0,
+      "GachaValue": 0,
+      "ActivityValue": 100,
+      "Savetype": 1,
+      "ID": "Currency"
+    },
+    {
+      "$type": "CurrencySaveData, Assembly-CSharp",
+      "UserLevel": 1,
+      "UserEXP": 0,
+      "GoldValue": 100,
       "DIAValue": 0,
       "GachaValue": 0,
       "ActivityValue": 100,

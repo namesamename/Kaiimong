@@ -7,6 +7,8 @@ using System.Linq;
 
 public enum SaveType
 {
+
+    //저장목록들
     Character,
     Currency,
 }

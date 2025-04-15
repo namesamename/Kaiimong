@@ -18,5 +18,5 @@ MonoBehaviour:
   IconPath: 
   MaxCount: 9999
   Value: 0
-  CurrencyType: 1
+  CurrencyType: 3
   exchangeInfos: []
