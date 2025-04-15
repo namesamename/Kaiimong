@@ -17,7 +17,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 {
     CurrencySaveData data;
     ActivityCurrencySO ActSO;
-
     float offTime;
     float Interval;
     public float TimeWhenNextCharge;
@@ -38,8 +37,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 CurrencySaveDic[CurrencyType.Activity] += 1;
             }
         }
-
-
     }
     public void InitialIze()
     {
@@ -66,8 +63,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             };
         }
         DicSet();
-
-
     }
 
 
@@ -87,7 +82,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         {
             Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
             DateTime last = DateTime.Parse(PlayerPrefs.GetString(LastTimeExitKey));
-
             DateTime Utc = last.ToUniversalTime();
             TimeSpan span = DateTime.UtcNow - Utc;
             Debug.Log($"{DateTime.UtcNow} - {Utc} = {span}");
@@ -97,15 +91,12 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     public void DisableAutoCharge(float offTime)
     {
-
         TimeWhenNextCharge = (offTime % ActSO.AutoRecoveryPerMinute);
         CurrencySaveDic[CurrencyType.Activity] += (int)(offTime / ActSO.AutoRecoveryPerMinute);
         if (CurrencySaveDic[CurrencyType.Activity] >= ActSO.MaxCount)
         {
             CurrencySaveDic[CurrencyType.Activity] = ActSO.MaxCount;
         }
-
-
     }
 
     public CurrencySaveData GetAllCurrencyInfo()
