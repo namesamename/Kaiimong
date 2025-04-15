@@ -8,55 +8,14 @@ using System.Linq;
 public enum SaveType
 {
     Character,
-    Item,
     Currency,
 }
 public static class GameSaveSystem
 {
-   
-    public static Dictionary<SaveType, List<SaveInstance>> SaveDic = new Dictionary<SaveType, List<SaveInstance>>();
-
-    public static void SaveData(SaveInstance instance)
-    {
-        if (SaveDic.ContainsKey(instance.Savetype) )
-        {
-            var MultiSave = SaveDic[instance.Savetype].Find(x => x.ID == instance.ID);
-            if(MultiSave != null)
-            {
-                MultiSave = instance;
-            }
-            else
-            {
-                SaveDic[instance.Savetype].Add(instance);
-            }
-            SaveDataToEnum(instance.Savetype, SaveDic[instance.Savetype]);
-        }
-        else
-        {
-            SaveDic[instance.Savetype] = new List<SaveInstance>
-            {
-                instance
-            };
-            SaveDataToEnum(instance.Savetype, SaveDic[instance.Savetype]);
-        }
-
-     
-    }
-    public static void SaveDatas(List<SaveInstance> saves)
-    {
-        SaveDataToEnum(saves[0].Savetype, saves);
-    }
-
     public static void SaveDataToEnum( SaveType saveType ,List<SaveInstance> saves)
     {
         try
         {
-            if (!SaveDic.TryGetValue(saveType, out var list) || list == null)
-            {
-                SaveDic[saveType] = new List<SaveInstance>();
-            }
-            SaveDic[saveType] = saves;
-
             //경로를 계산 /폴더 이름을 가져옴
             string path = Path.Combine(Application.dataPath, $"JsonData/{saveType}/{saveType}Database.json");
             string directory = Path.GetDirectoryName(path);
@@ -69,7 +28,7 @@ public static class GameSaveSystem
             }
 
             //저장
-            string json = JsonConvert.SerializeObject(new SaveDataWrapper { Saves = SaveDic[saveType] }, Formatting.Indented
+            string json = JsonConvert.SerializeObject(new SaveDataWrapper { Saves = saves }, Formatting.Indented
                 , new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
 
             //파일을 만든다.
@@ -86,7 +45,6 @@ public static class GameSaveSystem
     {
         //경로를 찾아옴
         string path = Path.Combine(Application.dataPath, $"JsonData/{saveType}/{saveType}Database.json");
-
         //파일이 있다면
         if(File.Exists(path))
         {
@@ -110,38 +68,7 @@ public static class GameSaveSystem
     }
 
    
-    public static void SaveAll()
-    {
-        //딕셔너리에 있는 것들 모두 저장
-        foreach(List<SaveInstance> saves in SaveDic.Values)
-        {
-            SaveDatas(saves);
-        }
-    }
-
-
-    public static List<List<SaveInstance>> LoadAll()
-    {
-        //세이브리스트를 담은 리스트를 만듬
-        List<List<SaveInstance>> SaveList = new List<List<SaveInstance>>();
-
-        //이넘 타입에 따라서 풀게
-        foreach(SaveType saveType in Enum.GetValues(typeof(SaveType)))
-        {
-            //각 타입마다 먼저 로드를 함
-            List<SaveInstance> saves = Load(saveType);
-
-            //1개 이상일 경우 딕셔너리에 데이터를 추가함
-            if(saves.Count > 0)
-            {
-                SaveDic[saveType] = saves;
-            }
-            //그리고 다시 묶음
-            SaveList.Add(saves);
-        }
-        //리스트를 풀어요
-        return SaveList;
-    }
+  
 
     [System.Serializable]
     public class SaveDataWrapper

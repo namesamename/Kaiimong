@@ -62,7 +62,7 @@ public class Character : MonoBehaviour , ISavable
             Necessity = this.Necessity,
             Savetype = SaveType.Character
         };
-        SaveDataBase.Instance.SetSaveInstances(data, SaveType.Character);
+        SaveDataBase.Instance.SetSingleSaveInstance(data, SaveType.Character);
         return data;
     }
     /// <summary>
@@ -85,7 +85,7 @@ public class Character : MonoBehaviour , ISavable
     /// </summary>
     public void HaveData()
     {
-        var foundData = SaveDataBase.Instance.GetSaveInstances<CharacterSaveData>(SaveType.Character);
+        var foundData = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
 
 
         if (foundData != null)
@@ -123,7 +123,7 @@ public class Character : MonoBehaviour , ISavable
             Savetype = SaveType.Character,
             Level = this.Level,
         };
-        SaveDataBase.Instance.SetSaveInstances(saveData, SaveType.Character);
+        SaveDataBase.Instance.SetSingleSaveInstance(saveData, SaveType.Character);
        
     }
 }

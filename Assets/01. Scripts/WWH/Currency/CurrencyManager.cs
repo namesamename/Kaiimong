@@ -29,6 +29,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             {
                 Interval -= ActSO.AutoRecoveryPerMinute;
                 CurrencySaveDic[CurrencyType.Activity] += 1;
+                Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
             }
         }
     }
@@ -55,6 +56,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 DIAValue = 0,
                 ID = "Currency"
             };
+            SaveDataBase.Instance.SetSingleSaveInstance(data, SaveType.Currency);
         }
         DicSet();
     }
@@ -62,7 +64,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void OnApplicationQuit()
     {
-        if (GameSaveSystem.SaveDic.ContainsKey(SaveType.Currency))
+        if (SaveDataBase.Instance.SaveDic.ContainsKey(SaveType.Currency))
         {
             PlayerPrefs.SetString(LastTimeExitKey, DateTime.UtcNow.ToString("o"));
             Debug.Log(DateTime.UtcNow.ToString("o"));
@@ -78,7 +80,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             DateTime last = DateTime.Parse(PlayerPrefs.GetString(LastTimeExitKey));
             DateTime Utc = last.ToUniversalTime();
             TimeSpan span = DateTime.UtcNow - Utc;
-            Debug.Log($"{DateTime.UtcNow} - {Utc} = {span}");
             offTime = (float)span.TotalSeconds;
             DisableAutoCharge(offTime);
         }
@@ -87,6 +88,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         TimeWhenNextCharge = (offTime % ActSO.AutoRecoveryPerMinute);
         CurrencySaveDic[CurrencyType.Activity] += (int)(offTime / ActSO.AutoRecoveryPerMinute);
+        Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
         if (CurrencySaveDic[CurrencyType.Activity] >= ActSO.MaxCount)
         {
             CurrencySaveDic[CurrencyType.Activity] = ActSO.MaxCount;
@@ -101,6 +103,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         if (CurrencySaveDic[currency] + amount > GlobalDatabase.Instance.currency.CurrencyDic[currency].MaxCount || CurrencySaveDic[currency] + amount < 0)
         {
+            Debug.Log("not Added");
             return;
         }
         else
@@ -129,6 +132,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             GoldValue = CurrencySaveDic[CurrencyType.Gold],
             DIAValue = CurrencySaveDic[CurrencyType.Dia],
             ActivityValue = CurrencySaveDic[CurrencyType.Activity],
+            Savetype = SaveType.Currency,
+            ID = "Currency"
         };
         return data;
     }
@@ -136,6 +141,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void Save()
     {
-        SaveDataBase.Instance.SetSaveInstances(DicToSaveData(), SaveType.Currency);
+        SaveDataBase.Instance.SetSingleSaveInstance(DicToSaveData(), SaveType.Currency);
     }
 }
