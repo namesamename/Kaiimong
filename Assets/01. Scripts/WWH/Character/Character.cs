@@ -92,7 +92,6 @@ public class Character : MonoBehaviour
         {
             if (foundData.Find(x => x.characterId == characterId) != null)
             {
-                Debug.Log(foundData.ToString());
                 LoadData(foundData.Find(x => x.characterId == characterId));
             }else
             {

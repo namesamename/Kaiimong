@@ -22,6 +22,5 @@ public class CurrencySaveData : SaveInstance
     public int GoldValue;
     public int DIAValue;
     public int GachaValue;
-    public int EXPValue;
     public int ActivityValue;
 }

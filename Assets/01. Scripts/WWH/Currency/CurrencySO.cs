@@ -4,7 +4,6 @@ using UnityEngine;
 public enum CurrencyType
 {
     Gold,
-    Exp,
     Gacha,
     Activity,
     Dia

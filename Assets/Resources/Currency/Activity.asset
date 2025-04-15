@@ -16,7 +16,8 @@ MonoBehaviour:
   Name: 
   Description: 
   IconPath: 
-  MaxCount: 0
+  MaxCount: 300
   Value: 0
+  CurrencyType: 2
   exchangeInfos: []
   AutoRecoveryPerMinute: 3

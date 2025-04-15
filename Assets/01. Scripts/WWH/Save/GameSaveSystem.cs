@@ -18,7 +18,28 @@ public static class GameSaveSystem
 
     public static void SaveData(SaveInstance instance)
     {
-        SaveDic[instance.Savetype].Add( instance);
+        if (SaveDic.ContainsKey(instance.Savetype) )
+        {
+            var MultiSave = SaveDic[instance.Savetype].Find(x => x.ID == instance.ID);
+            if(MultiSave != null)
+            {
+                MultiSave = instance;
+            }
+            else
+            {
+                SaveDic[instance.Savetype].Add(instance);
+            }
+            SaveDataToEnum(instance.Savetype, SaveDic[instance.Savetype]);
+        }
+        else
+        {
+            SaveDic[instance.Savetype] = new List<SaveInstance>
+            {
+                instance
+            };
+            SaveDataToEnum(instance.Savetype, SaveDic[instance.Savetype]);
+        }
+
      
     }
     public static void SaveDatas(List<SaveInstance> saves)

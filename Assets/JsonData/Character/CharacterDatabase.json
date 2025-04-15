@@ -6,15 +6,6 @@
       "Recognition": 0,
       "Necessity": 0,
       "Savetype": 0,
-      "ID": "001",
-      "characterId": "001"
-    },
-    {
-      "$type": "CharacterSaveData, Assembly-CSharp",
-      "Level": 0,
-      "Recognition": 0,
-      "Necessity": 0,
-      "Savetype": 0,
       "ID": "002",
       "characterId": "002"
     }
