@@ -16,10 +16,11 @@ MonoBehaviour:
   Name: "\uB098"
   isSingleAttack: 0
   attackCount: 0
-  damage: 
+  damage: 01000000
   hitTiming: []
-  icon: {fileID: 0}
-  IsDebuff: 0
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  buffSkillId: 
+  IsMuti: 0
+  IsHeal: 0
   IsBuff: 0
   Id: 0
-  SkillId: 5c59073d

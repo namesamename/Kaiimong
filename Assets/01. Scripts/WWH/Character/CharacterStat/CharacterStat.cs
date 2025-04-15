@@ -27,6 +27,8 @@ public class CharacterStat : MonoBehaviour
     public CriticalAttackStat criticalAttackStat;
     public Dictionary<StatType, BaseStat> statDict;
 
+    public Action OnDeath;
+
 
     private void Awake()
     {
@@ -56,22 +58,23 @@ public class CharacterStat : MonoBehaviour
         attackStat.Value = character.Attack;
         defenseStat.Value = character.Defense;
         healthStat.Value = character.Health;
-        agilityStat.Value = character.Speed;
+        //agilityStat.Value = character.Speed;
         criticalPerStat.Value = float.Parse(character.CriticalPer.Substring(0, character.CriticalPer.Length - 1));
         criticalAttackStat.Value = float.Parse(character.CriticalAttack.Substring(0, character.CriticalAttack.Length - 1));
     }
 
     public void TakeDamage(float Amount)
     {
-        healthStat.AddStat(Amount);
-        if(healthStat.Value == 0)
-        {
-            OnDie();
-        }
+        //healthStat.AddStat(Amount);
+        //if(healthStat.Value == 0)
+        //{
+        //    OnDie();
+        //}
     }
     public void OnDie()
     {
         gameObject.SetActive(false);
+        OnDeath?.Invoke();
     }
     
 
@@ -102,27 +105,26 @@ public class CharacterStat : MonoBehaviour
         string effectName;
         int duration;
 
-        if (Skill.buffSkillId == "1")
+        if (Skill.IsBuff)
         {
-            effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
-            duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
+            //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
+            //duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
         }
         else
         {
-            effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Name);
-            duration = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Duration;
+            //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Name);
+            //duration = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Duration;
         }
 
-        if (Enum.TryParse(effectName, out StatType statType)) 
-        {
-            BaseStat stat = EnumChanger(statType);
-
-            StartCoroutine(buffStart(stat, Skill, duration));
-        }
-        else
-        {
-            Debug.Log("Can't Exist StatType");
-        }
+        //if (Enum.TryParse(effectName, out StatType statType))
+        //{
+        //    BaseStat stat = EnumChanger(statType);
+        //    StartCoroutine(buffStart(stat, Skill, duration));
+        //}
+        //else
+        //{
+        //    Debug.Log("Can't Exist StatType");
+        //}
     }
    
 

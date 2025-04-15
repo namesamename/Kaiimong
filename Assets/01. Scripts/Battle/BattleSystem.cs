@@ -13,17 +13,17 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Transform enemyParent;
 
     [Header("Units")]
-    public List<DummyUnit> Players; //캐릭터 선택에서 가져오고
-    public List<DummyUnit> Enemies; //스테이지 데이터에서 가져오고
-    [SerializeField] private List<DummyUnit> activePlayers = new List<DummyUnit>();    //현재 배치중인 유닛들 정보
-    [SerializeField] private List<DummyUnit> activeEnemies = new List<DummyUnit>();
-    public List<DummyUnit> GetActivePlayers() => activePlayers;
-    public List<DummyUnit> GetActiveEnemies() => activeEnemies;
+    public List<Character> Players; //캐릭터 선택에서 가져오고
+    public List<Character> Enemies; //스테이지 데이터에서 가져오고
+    [SerializeField] private List<Character> activePlayers = new List<Character>();    //현재 배치중인 유닛들 정보
+    [SerializeField] private List<Character> activeEnemies = new List<Character>();
+    public List<Character> GetActivePlayers() => activePlayers;
+    public List<Character> GetActiveEnemies() => activeEnemies;
 
     [Header("BattleInfo")]
     public int TurnIndex = 0;
-    public SkillData SelectedSkill;
-    public List<DummyUnit> Targets;
+    public SkillObject SelectedSkill;
+    public List<Character> Targets;
     private float betweenPhaseTime;
 
     [Header("Appear")]
@@ -110,7 +110,7 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerTurn = false;
         Debug.Log("enemyturn");
-        activeEnemies.Sort((a, b) => b.Speed.CompareTo(a.Speed));
+        activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
         CommandController.ClearList();
         EnemyRandomCommand();
     }
@@ -119,7 +119,7 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerTurn = true;
         Debug.Log("playerturn");
-        activePlayers.Sort((a, b) => b.Speed.CompareTo(a.Speed));
+        activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
         OnPlayerTurn?.Invoke();
         CommandController.ClearList();
     }
@@ -143,19 +143,19 @@ public class BattleSystem : MonoBehaviour
 
     private void SetPlayer()
     {
-        List<DummyUnit> playerCopy = new List<DummyUnit>(Players);
+        List<Character> playerCopy = new List<Character>(Players);
         if (playerCopy.Count > 0)
         {
             for (int i = 0; i < playerLocations.Count; i++)
             {
-                DummyUnit player = playerCopy[i];
-                player.Speed = i + 1;
+                Character player = playerCopy[i];
+                //player.stat.agilityStat.Value = i + 1;
 
                 if (playerLocations[i].isOccupied) continue;
 
-                DummyUnit playerUnit = Instantiate(player, playerLocations[i].transform);
+                Character playerUnit = Instantiate(player, playerLocations[i].transform);
                 playerLocations[i].isOccupied = true;
-                playerUnit.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
+                playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
                 activePlayers.Add(playerUnit);
                 Players.Remove(player);
             }
@@ -164,27 +164,27 @@ public class BattleSystem : MonoBehaviour
 
     private void SetEnemy()
     {
-        List<DummyUnit> enemiesCopy = new List<DummyUnit>(Enemies);
+        List<Character> enemiesCopy = new List<Character>(Enemies);
         if (enemiesCopy.Count > 0)
         {
             for (int i = 0; i < enemyLocations.Count; i++)
             {
-                DummyUnit enemy = enemiesCopy[i];
-                enemy.Speed = i + 1;
+                Character enemy = enemiesCopy[i];
+                //enemy.stat.agilityStat.Value = i + 1;
 
                 if (enemyLocations[i].isOccupied) continue;
 
-                DummyUnit enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
+                Character enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
                 enemyLocations[i].isOccupied = true;
                 enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
-                enemyUnit.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
+                enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                 activeEnemies.Add(enemyUnit);
                 Enemies.Remove(enemy);
             }
         }
     }
 
-    public void EmptyPlateOnUnitDeath(DummyUnit unit) //Unit OnDeath Action에 추가하기
+    public void EmptyPlateOnUnitDeath(Character unit) //Unit OnDeath Action에 추가하기
     {
         unit.GetComponentInParent<UnitPlate>().isOccupied = false;
     }
@@ -198,13 +198,13 @@ public class BattleSystem : MonoBehaviour
         return maxAnimationTime;
     }
 
-    private float CaluculateMaxAnimationTime(List<DummyUnit> unitList)
+    private float CaluculateMaxAnimationTime(List<Character> unitList)
     {
         float maxAnimationTime = 0f;
 
         for (int i = 0; i < unitList.Count; i++)
         {
-            float animTime = unitList[i].AppearAnimationLength;
+            float animTime = unitList[i].visual.AppearAnimationLength;
             maxAnimationTime = maxAnimationTime > animTime ? maxAnimationTime : animTime;
         }
 
@@ -238,18 +238,18 @@ public class BattleSystem : MonoBehaviour
     {
         for (int i = 0; i < activeEnemies.Count; i++)
         {
-            int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillDatas.Count);
-            SelectedSkill = activeEnemies[i].skillDatas[randomSkill];
-            if (SelectedSkill.isBuff)
+            int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillBook.SkillList.Length);
+            SelectedSkill = activeEnemies[i].skillBook.SkillList[randomSkill];
+            if (SelectedSkill.skillSO.IsBuff)
             {
-                if (SelectedSkill.isSingleAttack)
+                if (SelectedSkill.skillSO.isSingleAttack)
                 {
                     int randomTarget = UnityEngine.Random.Range(0, activePlayers.Count);
                     Targets.Add(activePlayers[i]);
                 }
                 else
                 {
-                    foreach (DummyUnit units in activePlayers)
+                    foreach (Character units in activePlayers)
                     {
                         Targets.Add(units);
                     }
@@ -257,14 +257,14 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
-                if (SelectedSkill.isSingleAttack)
+                if (SelectedSkill.skillSO.isSingleAttack)
                 {
                     int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
                     Targets.Add(activeEnemies[i]);
                 }
                 else
                 {
-                    foreach (DummyUnit units in activeEnemies)
+                    foreach (Character units in activeEnemies)
                     {
                         Targets.Add(units);
                     }

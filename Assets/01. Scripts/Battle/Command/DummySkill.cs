@@ -2,19 +2,19 @@ using System.Collections.Generic;
 
 public class DummySkill : ICommand //DummySkillCommand
 {
-    public SkillData skillData;
-    public DummyUnit unit;
-    public List<DummyUnit> targets;
+    public SkillObject skillData;
+    public Character unit;
+    public List<Character> targets;
 
-    public DummySkill(DummyUnit unit, List<DummyUnit> targets, SkillData skillData)
+    public DummySkill(Character unit, List<Character> targets, SkillObject skillData)
     {
-        this.targets = new List<DummyUnit>(targets);
+        this.targets = new List<Character>(targets);
         this.unit = unit;
         this.skillData = skillData;
     }
     public void Execute()
     {
-        skillData.Execute(unit, targets);
+        unit.skillBook.SkillUsing(skillData, targets);
     }
 
     public void Undo()

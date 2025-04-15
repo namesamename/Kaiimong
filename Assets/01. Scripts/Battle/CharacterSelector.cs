@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterSelector : MonoBehaviour
 {
-    private DummyUnit selectedCharacter = null;
+    private Character selectedCharacter = null;
     private BattleSystem battleSystem;
 
     private Camera _camera;
@@ -25,9 +25,9 @@ public class CharacterSelector : MonoBehaviour
     {
         if (battleSystem.CanSelectTarget)
         {
-            if(!battleSystem.SelectedSkill.isBuff)
+            if(!battleSystem.SelectedSkill.skillSO.IsBuff)
             {
-                if (!battleSystem.SelectedSkill.isSingleAttack)
+                if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
                 {
                     SelectAll(battleSystem.GetActiveEnemies());
                 }
@@ -38,7 +38,7 @@ public class CharacterSelector : MonoBehaviour
             }
             else
             {
-                if (!battleSystem.SelectedSkill.isSingleAttack)
+                if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
                 {
                     SelectAll(battleSystem.GetActivePlayers());
                 }
@@ -50,11 +50,11 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    private void SelectAll(List<DummyUnit> units)
+    private void SelectAll(List<Character> units)
     {
-        if (!battleSystem.SelectedSkill.isSingleAttack)
+        if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
         {
-            foreach (DummyUnit unit in units)
+            foreach (Character unit in units)
             {
                 SelectedEffect(unit, true);
                 selectedCharacter = unit;
@@ -68,7 +68,7 @@ public class CharacterSelector : MonoBehaviour
 
             if (hit.collider != null)
             {
-                DummyUnit unit = hit.collider.GetComponent<DummyUnit>();
+                Character unit = hit.collider.GetComponent<Character>();
                 if (unit != null && battleSystem.GetActiveEnemies().Contains(unit))
                 {
                     OnConfirm();
@@ -77,7 +77,7 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    private void MouseClick(List<DummyUnit> units)
+    private void MouseClick(List<Character> units)
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -86,7 +86,7 @@ public class CharacterSelector : MonoBehaviour
 
             if (hit.collider != null)
             {
-                DummyUnit unit = hit.collider.GetComponent<DummyUnit>();
+                Character unit = hit.collider.GetComponent<Character>();
                 if (unit != null && units.Contains(unit))
                 {
                     OnCharacterClicked(unit);
@@ -95,7 +95,7 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    public void OnCharacterClicked(DummyUnit character)
+    public void OnCharacterClicked(Character character)
     {
         //첫 클릭,선택
         if (selectedCharacter == null)
@@ -130,15 +130,15 @@ public class CharacterSelector : MonoBehaviour
         battleSystem.SelectedTarget = true;
         battleSystem.CanSelectTarget = false;
         // 선택된 캐릭터를 Targets 리스트에 추가
-        if (!battleSystem.SelectedSkill.isSingleAttack)
+        if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
         {
-            foreach (DummyUnit units in battleSystem.GetActiveEnemies())
+            foreach (Character units in battleSystem.GetActiveEnemies())
             {
                 battleSystem.Targets.Add(units);
                 SelectedEffect(units, false);
             }
         }
-        if (battleSystem.SelectedSkill.isSingleAttack)
+        if (battleSystem.SelectedSkill.skillSO.isSingleAttack)
         {
             battleSystem.Targets.Add(selectedCharacter);
             SelectedEffect(selectedCharacter, false);
@@ -153,14 +153,18 @@ public class CharacterSelector : MonoBehaviour
     }
 
     //캐릭터 선택 효과
-    private void SelectedEffect(DummyUnit character, bool set)
+    private void SelectedEffect(Character character, bool set)
     {
         character.SelectEffect.SetActive(set);
     }
 
     private void ResetEffect()
     {
-        foreach (DummyUnit units in battleSystem.GetActiveEnemies())
+        foreach (Character units in battleSystem.GetActiveEnemies())
+        {
+            SelectedEffect(units, false);
+        }
+        foreach (Character units in battleSystem.GetActivePlayers())
         {
             SelectedEffect(units, false);
         }
