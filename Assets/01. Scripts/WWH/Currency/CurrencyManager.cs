@@ -20,6 +20,11 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     string LastTimeExitKey = "Timekey";
 
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
+
+    private void Awake()
+    {
+        InitialIze();
+    }
     private void Update()
     {
         if (CurrencySaveDic[CurrencyType.Activity] < ActSO.MaxCount)
