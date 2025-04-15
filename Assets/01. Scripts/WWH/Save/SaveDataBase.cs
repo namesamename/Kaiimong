@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -19,15 +20,33 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// <returns></returns>
     /// 
 
+
     private void Awake()
     {
         List<List<SaveInstance>> saveInstances = new List<List<SaveInstance>>();
         saveInstances = GameSaveSystem.LoadAll();
-        foreach (List<SaveInstance> instance in saveInstances)
+
+        // Enum 키를 미리 초기화 (선택사항)
+        foreach (SaveType type in Enum.GetValues(typeof(SaveType)))
         {
-            SaveDatas[instance[0].Savetype] = instance;
+            SaveDatas[type] = new List<SaveInstance>();
         }
 
+        // 분류 및 삽입
+        foreach (List<SaveInstance> instanceList in saveInstances)
+        {
+            foreach (SaveInstance instance in instanceList)
+            {
+                SaveType type = instance.Savetype;
+
+                if (!SaveDatas.ContainsKey(type))
+                {
+                    SaveDatas[type] = new List<SaveInstance>();
+                }
+
+                SaveDatas[type].Add(instance);
+            }
+        }
     }
 
 
