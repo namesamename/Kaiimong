@@ -11,7 +11,7 @@ public class SkillObject : MonoBehaviour
 
     private float CurCooltime;
 
-    public void SetSkill(string id)
+    public void SetSkill(int id)
     {
         skillSO=  GlobalDataTable.Instance.skill.GetSkillSOToID(id);
 
@@ -30,24 +30,24 @@ public class SkillObject : MonoBehaviour
     }
 
 
-    public void UseSkill(List<Character> targetcharacter)
+    public void UseSkill(List<CharacterCarrier> targetcharacter)
     {
         //추후 추가
         if(skillSO.IsBuff)
         {
             Debug.Log("Use Buff");
-            foreach (Character c in targetcharacter) 
+            foreach (CharacterCarrier c in targetcharacter) 
             {c.stat.Buff(skillSO);}
         }
         else if(skillSO.IsHeal)
         {
-            foreach (Character c in targetcharacter)
+            foreach (CharacterCarrier c in targetcharacter)
             { c.stat.healthStat.Heal(skillSO.damage[0]);}
         }
         else
         {
             Debug.Log("TakeDamage");
-            foreach (Character c in targetcharacter)
+            foreach (CharacterCarrier c in targetcharacter)
             {c.stat.TakeDamage(skillSO.damage[0]);}
         }
         

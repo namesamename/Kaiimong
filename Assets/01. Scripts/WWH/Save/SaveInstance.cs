@@ -7,7 +7,7 @@ public interface ISavable
 public class SaveInstance 
 {
     public SaveType Savetype;
-    public string ID;
+    public int ID;
 }
 [System.Serializable]
 public class CharacterSaveData : SaveInstance

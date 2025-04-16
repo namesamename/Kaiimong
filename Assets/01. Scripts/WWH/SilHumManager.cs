@@ -9,11 +9,11 @@ public class SilHumManager : MonoBehaviour
   
     void Awake()
     {
-        InitialSil.GetComponent<Character>().Initialize("002");
+        InitialSil.GetComponent<CharacterCarrier>().Initialize(2);
         SaveDataBase.Instance.SavingList(SaveDataBase.Instance.SaveDic[SaveType.Character],SaveType.Character);
-        LoadSil.GetComponent<Character>().LoadData(
+        LoadSil.GetComponent<CharacterCarrier>().LoadData(
             SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character,
-            InitialSil.GetComponent<Character>().CharacterSaveData.ID));
+            InitialSil.GetComponent<CharacterCarrier>().CharacterSaveData.ID));
 
         CurrencyManager.Instance.InitialIze();
         Debug.Log("°ñµå" + CurrencyManager.Instance.GetCurrency(CurrencyType.Gold));

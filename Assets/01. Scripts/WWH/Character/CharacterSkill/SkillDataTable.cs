@@ -6,7 +6,7 @@ using UnityEngine.TextCore.Text;
 
 public class SkillDataTable
 {
-   public Dictionary<string, SkillSO> SkillDataDic = new Dictionary<string, SkillSO>();
+   public Dictionary<int, SkillSO> SkillDataDic = new Dictionary<int, SkillSO>();
 
     public Dictionary<int, BuffSkillSO> BuffskillDic = new Dictionary<int, BuffSkillSO>();
     public Dictionary<int, DebuffSkillSO> DebuffskillDic = new Dictionary<int, DebuffSkillSO>();
@@ -30,7 +30,7 @@ public class SkillDataTable
         }
     }
 
-    public SkillSO GetSkillSOToID(string SkillId)
+    public SkillSO GetSkillSOToID(int SkillId)
     {
         if (SkillDataDic[SkillId] != null && SkillDataDic.ContainsKey(SkillId))
         {
