@@ -119,7 +119,6 @@ public class CharacterStat : MonoBehaviour
         //if (Enum.TryParse(effectName, out StatType statType))
         //{
         //    BaseStat stat = EnumChanger(statType);
-
         //    StartCoroutine(buffStart(stat, Skill, duration));
         //}
         //else

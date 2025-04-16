@@ -34,8 +34,6 @@ public class CharacterVisual : MonoBehaviour
             animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
             //StartCoroutine(PlayAni());
         }
-
-
     }
 
 

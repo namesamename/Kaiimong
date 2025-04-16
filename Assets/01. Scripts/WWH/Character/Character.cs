@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour , ISavable
 {
 
     [HideInInspector]
@@ -71,7 +71,7 @@ public class Character : MonoBehaviour
     /// <param name="saveData"></param>
     public void LoadData(CharacterSaveData saveData)
     {
-        characterId = saveData.characterId;
+        characterId = saveData.ID;
         Level = saveData.Level;
         Recognition = saveData.Recognition;
         Necessity = saveData.Necessity;
@@ -90,10 +90,9 @@ public class Character : MonoBehaviour
 
         if (foundData != null)
         {
-            if (foundData.Find(x => x.characterId == characterId) != null)
+            if (foundData.Find(x => x.ID == characterId) != null)
             {
-                Debug.Log(foundData.ToString());
-                LoadData(foundData.Find(x => x.characterId == characterId));
+                LoadData(foundData.Find(x => x.ID == characterId));
             }else
             {
                 CreatNewData();
@@ -114,4 +113,17 @@ public class Character : MonoBehaviour
        stat.SetCharacter(GlobalDatabase.Instance.character.GetCharSOToID(characterId));
     }
 
+    public void Save()
+    {
+        CharacterSaveData saveData = new CharacterSaveData()
+        {
+            ID = characterId,
+            Recognition = this.Recognition,
+            Necessity = this.Necessity,
+            Savetype = SaveType.Character,
+            Level = this.Level,
+        };
+        SaveDataBase.Instance.SetSaveInstances(saveData, SaveType.Character);
+       
+    }
 }

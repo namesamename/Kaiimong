@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class UIInventory : MonoBehaviour
 {
-    private  UIManager uiManager;                                   //UIManager 호출
+    public static UIInventory Instance { get; private set; }          // 싱글톤 접근용
 
     [Header("Inventory Panels")]
     [SerializeField] private GameObject itemInventoryButton;        // 아이템 탭 UI 패널
@@ -31,41 +31,77 @@ public class UIInventory : MonoBehaviour
     private List<ItemData> itemList = new List<ItemData>();        // 일반 아이템 저장용 리스트
     private List<ItemData> consumableList = new List<ItemData>();  // 소모품 아이템 저장용 리스트
 
-    private InventorySlot selectedSlot;                            // 현재 선택된 슬롯 (Outline 효과용)
-
 
 
     private void Awake()
     {
-        //uiManager = UIManager._instance;                            // UIManager의 싱글톤 인스턴스
-        if 
-            (uiManager != null)
+        if (Instance != null && Instance != this)
         {
-            Debug.Log("UIManager 싱글톤");
+            Destroy(this.gameObject); // 중복 방지
+            return;
         }
-        else
-        {
-            Debug.Log("UIManager 인스턴스가 없는데?");
-        }
+
+        Instance = this;
     }
 
     private void Start()                            
     {
+        // 테스트용 아이템 생성
+        ItemData testItemS = ScriptableObject.CreateInstance<ItemData>();
+        testItemS.ItemName = "전설 아이템";
+        testItemS.Rarity = ERarity.S;
+        testItemS.Type = EItemType.Item;
+
+        ItemData testItemA = ScriptableObject.CreateInstance<ItemData>();
+        testItemA.ItemName = "엄청 좋은 아이템";
+        testItemA.Rarity = ERarity.A;
+        testItemA.Type = EItemType.Item;
+
+        ItemData testItemB = ScriptableObject.CreateInstance<ItemData>();
+        testItemB.ItemName = "좋은 아이템";
+        testItemB.Rarity = ERarity.B;
+        testItemB.Type = EItemType.Item;
+
+        ItemData testItemC = ScriptableObject.CreateInstance<ItemData>();
+        testItemC.ItemName = "조금 좋은 아이템";
+        testItemC.Rarity = ERarity.C;
+        testItemC.Type = EItemType.Item;
+
+        ItemData testItemD = ScriptableObject.CreateInstance<ItemData>();
+        testItemD.ItemName = "그냥 아이템";
+        testItemD.Rarity = ERarity.D;
+        testItemD.Type = EItemType.Item;
+
+        // 인벤토리에 추가
+        AddItem(testItemS);
+        AddItem(testItemA);
+        AddItem(testItemB);
+        AddItem(testItemC);
+        AddItem(testItemD);
+
         OpenItemInventory();                         // 시작 시 기본으로 아이템 탭 열기
     }
 
+    private List<ItemData> SortByRarity(List<ItemData> list)           // 희귀도 순 정렬 (S → D 순)
+    {
+        return list.OrderBy(item => item.Rarity).ToList();
+    }
 
     public void AddItem(ItemData item)
     {
+        Debug.Log($"[AddItem 호출됨] {item.ItemName} / 타입: {item.Type}");
+
         if (item.Type == EItemType.Consumable)       // 소모품일 경우
         {
             consumableList.Add(item);                            // 소모품 리스트 추가
+            consumableList = SortByRarity(consumableList);       // 소모품 회귀도 정렬
             SpawnSlots(consumableList, consumableSlotPanel);     // 소모품 슬롯 생성
             UpdateItemCount(consumableList.Count);               // 수량 표시 갱신
         }
         else                                          // 일반 아이템일 경우
         {
             itemList.Add(item);                                  // 아이템 리스트 추가
+            itemList = SortByRarity(itemList);                   // 아이템 회귀도 정렬
             SpawnSlots(itemList, itemSlotPanel);                 // 아이템 슬롯 생성
             UpdateItemCount(itemList.Count);                     // 수량 표시 갱신
         }
@@ -130,11 +166,13 @@ public class UIInventory : MonoBehaviour
         List<ItemData> sortedList = SortByRarity(dataList);                     // 정렬된 리스트 사용
         Debug.Log($"[슬롯 생성] 총 {sortedList.Count}개의 슬롯 생성 시작");
 
-        foreach (ItemData item in dataList)                                     // 전달받은 아이템 리스트를 순회
+        foreach (ItemData item in sortedList)                                     // 전달받은 아이템 리스트를 순회
 
         {
             GameObject prefab = GetSlotPrefabByRarity(item.Rarity);      // 희귀도에 맞는 슬롯 프리팹 선택
             GameObject slotObj = Instantiate(prefab, parentPanel);       // 슬롯 프리팹 생성 및 부모 설정
+
+            Debug.Log($"[슬롯 생성] {item.ItemName} / {item.Rarity}");
 
             InventorySlot slot = slotObj.GetComponent<InventorySlot>();  // 생성된 슬롯 오브젝트에서 InventorySlot 컴포넌트를 가져옴
             slot.SetSlot(item);                                          // 슬롯에 아이템 데이터 적용
@@ -148,17 +186,14 @@ public class UIInventory : MonoBehaviour
         {
             Destroy(obj);                                               // 슬롯 오브젝트 제거
         }
+        Debug.Log($"[슬롯 초기화] 이전 슬롯 {spawnedSlots.Count}개 제거");
         spawnedSlots.Clear();            
         
-    }
-    private List<ItemData> SortByRarity(List<ItemData> list)           // 희귀도 순 정렬 (S → D 순)
-    {
-        return list.OrderBy(item => item.Rarity).ToList(); 
     }
 
     private GameObject GetSlotPrefabByRarity(ERarity rarity)           // 희귀도에 따라 슬롯 프리팹 반환
     {
-        int index = (int)rarity;                                       // enum을 정수로 변환해 인덱스로 사용
+        int index = EnumToIndex(rarity);                                      // enum을 정수(int) 인덱스로 사용
 
 
         if (index < 0 || index >= slotPrefabs.Length)
@@ -174,5 +209,10 @@ public class UIInventory : MonoBehaviour
         }
 
         return slotPrefabs[index];                                     // 정상 범위면 해당 프리팹 반환
+    }
+
+    private int EnumToIndex(ERarity rarity)                         // ERarity → int 인덱스로 안전하게 변환
+    {
+        return (int)rarity;
     }
 }
