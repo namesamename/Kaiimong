@@ -6,6 +6,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public SkillDataTable skill;
     public CurrencyDataTable currency;
     public DataCarrier PartyID;
+    public StageDataTable Stage;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         skill = new SkillDataTable();
         currency = new CurrencyDataTable();
         PartyID = new DataCarrier();
+        Stage = new StageDataTable();
         character.Initialize();
         skill.Initialize();
         currency.Initialize();
