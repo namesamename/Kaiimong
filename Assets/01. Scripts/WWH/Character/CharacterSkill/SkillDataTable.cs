@@ -6,17 +6,17 @@ using UnityEngine.TextCore.Text;
 
 public class SkillDataTable
 {
-   public Dictionary<int, SkillSO> SkillDataDic = new Dictionary<int, SkillSO>();
+   public Dictionary<int, Skill> SkillDataDic = new Dictionary<int, Skill>();
 
     public Dictionary<int, BuffSkillSO> BuffskillDic = new Dictionary<int, BuffSkillSO>();
     public Dictionary<int, DebuffSkillSO> DebuffskillDic = new Dictionary<int, DebuffSkillSO>();
     public void Initialize()
     {
-        SkillSO[] skillSO = Resources.LoadAll<SkillSO>("Skil");
+        Skill[] skillSO = Resources.LoadAll<Skill>("Skil");
         DebuffSkillSO[] DebuffSO = Resources.LoadAll<DebuffSkillSO>("Debu");
         BuffSkillSO[] BuffSO = Resources.LoadAll<BuffSkillSO>("Buff");
 
-        foreach (SkillSO skill in skillSO)
+        foreach (Skill skill in skillSO)
         {
             SkillDataDic[skill.ID] = skill;
         }
@@ -30,7 +30,7 @@ public class SkillDataTable
         }
     }
 
-    public SkillSO GetSkillSOToID(int SkillId)
+    public Skill GetSkillSOToID(int SkillId)
     {
         if (SkillDataDic[SkillId] != null && SkillDataDic.ContainsKey(SkillId))
         {

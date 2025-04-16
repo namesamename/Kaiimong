@@ -15,7 +15,7 @@ MonoBehaviour:
   outPath: {fileID: 102900000, guid: 84bd538ae16f96646b6ee2e691e32c08, type: 3}
   url: https://docs.google.com/spreadsheets/d/1aGp1NC1OXe1BS4HZ2Zem7ve51GHMwn28xygY9tiS0_Y
   datas:
-  - className: "\uCE90\uB9AD\uD130 \uC2A4\uD0EF"
+  - className: Character
     sheetId: 0
-  - className: "\uC2A4\uD0AC"
+  - className: Skill
     sheetId: 65023910

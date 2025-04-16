@@ -100,12 +100,12 @@ public class CharacterStat : MonoBehaviour
     }
 
 
-    public void Buff(SkillSO Skill)
+    public void Buff(Skill Skill)
     {
         string effectName;
         int duration;
 
-        if (Skill.IsBuff)
+        if (Skill.Type == SkillType.buff)
         {
             //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
             //duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
@@ -128,26 +128,26 @@ public class CharacterStat : MonoBehaviour
     }
    
 
-    public IEnumerator buffStart(BaseStat stat, SkillSO skill, int Duration)
+    public IEnumerator buffStart(BaseStat stat, Skill skill, int Duration)
     {
-        int[] Damage = skill.damage;
+        float Damage = skill.Attack * this.attackStat.Value;
 
-        if (skill.buffSkillId == "2")//디버프 아이디면
+        if (skill.Type == SkillType.debuff)//디버프 아이디면
         {
             for(int i = 0; skill.damage.Length < i;  i++)
             {
-                Damage[i] = -skill.damage[i];
+                Damage = -Damage;
             }
         }
         if (skill.IsMuti)
-        {stat.AddMultiples(Damage[0]);}
+        {stat.AddMultiples(Damage);}
         else
-        {stat.AddStat(Damage[0]);}
+        {stat.AddStat(Damage);}
         yield return Duration <= 0; //나중에 턴수로 판단
         if (skill.IsMuti)
-        {stat.AddMultiples(-Damage[0]);}
+        {stat.AddMultiples(-Damage);}
         else
-        {stat.AddStat(-Damage[0]);}
+        {stat.AddStat(-Damage);}
     }
 
    

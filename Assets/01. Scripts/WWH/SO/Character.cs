@@ -1,4 +1,4 @@
-using System;
+
 public class Character : SO
 {
     public string Name;
@@ -9,8 +9,4 @@ public class Character : SO
     public int Speed;
     public float CriticalPer;
     public float CriticalAttack;
-
-  
-
-
 }

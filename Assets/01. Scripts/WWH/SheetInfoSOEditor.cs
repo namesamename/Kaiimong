@@ -60,7 +60,7 @@ public class SheetInfoSOEditor : Editor
     {
             foreach (var data in datas)
             {
-                var path = instance.OutPath + "/" + Directory + data["Name"] + ".asset";
+                var path = instance.OutPath + "/" + Directory + data["ID"] + ".asset";
                 var dt = (ScriptableObject)AssetDatabase.LoadAssetAtPath(path, type);
                 if (dt == null)
                 {
@@ -78,7 +78,7 @@ public class SheetInfoSOEditor : Editor
     public ScriptableObject DicToClass(Type type, Dictionary<string, string> data)
     {
         var dt = CreateInstance(type);
-        AssetDatabase.CreateAsset(dt, instance.OutPath+"/"+ Directory+ data["Name"] + ".asset");
+        AssetDatabase.CreateAsset(dt, instance.OutPath+"/"+ Directory+ data["ID"] + ".asset");
         return TSVParser.DicToSOData(type, dt, data);
     }
 
@@ -86,11 +86,11 @@ public class SheetInfoSOEditor : Editor
     public void Pathcheck(string SheetId)
     {
   
-        if (SheetId == "캐릭터 스탯")
+        if (SheetId == "Character")
         {
             Directory = "Char/";
         }
-        else if (SheetId == "스킬")
+        else if (SheetId == "Skill")
         {
             Directory = "Skil/";
         }
@@ -102,6 +102,7 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "Buff/";
         }
+ 
     }
 
 
