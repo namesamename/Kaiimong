@@ -15,14 +15,14 @@ public class CharacterSkillBook : MonoBehaviour
     }
    
 
-    public void SkillSet(string ID)
+    public void SkillSet(int ID)
     {
         for (int i = 0; i < SkillList.Length; i++)
         {
-            SkillList[i].SetSkill($"{ID}_{i+1}");
+            //SkillList[i].SetSkill();
         }
     }
-    public void SkillUsing(SkillObject skill, List<Character> characters)
+    public void SkillUsing(SkillObject skill, List<CharacterCarrier> characters)
     {
         //여러가지 처리
         //마나, 쿨타임, 사용 가능한가 불가능 한가

@@ -44,7 +44,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     private void HaveData()
     {
-        var SaveData = SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, "Currency");
+        var SaveData = SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0);
         if (SaveData != null && SaveData is CurrencySaveData instance)
         {
             data = instance;
@@ -60,7 +60,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 GachaValue = 0,
                 GoldValue = 0,
                 DIAValue = 0,
-                ID = "Currency"
+                ID = 0
             };
         }
         DicSet();
@@ -140,7 +140,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             DIAValue = CurrencySaveDic[CurrencyType.Dia],
             ActivityValue = CurrencySaveDic[CurrencyType.Activity],
             Savetype = SaveType.Currency,
-            ID = "Currency"
+            ID = 0
         };
         return data;
     }

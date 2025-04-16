@@ -42,7 +42,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
             }
         }
     }
-    public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
+    public T GetSaveDataToID<T>(SaveType type, int Id ) where T :SaveInstance
     {
         if (SaveDic[type].Count > 0 && SaveDic.TryGetValue(type, out List<SaveInstance> Sava))
         {
@@ -158,11 +158,11 @@ public class SaveDataBase : Singleton<SaveDataBase>
 
     private List<SaveInstance> RemoveDuplicates(List<SaveInstance> saveList)
     {
-        Dictionary<string, SaveInstance> uniqueItems = new Dictionary<string, SaveInstance>();
+        Dictionary<int, SaveInstance> uniqueItems = new Dictionary<int, SaveInstance>();
 
         foreach (var item in saveList)
         {
-            string key = item.ID; 
+            int key = item.ID; 
             uniqueItems[key] = item;
         }
         return uniqueItems.Values.ToList();

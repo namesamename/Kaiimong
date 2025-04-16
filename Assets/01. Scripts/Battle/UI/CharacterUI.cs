@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterUI : MonoBehaviour
 {
-    [SerializeField] private List<Character> curUnits = new List<Character>();
+    [SerializeField] private List<CharacterCarrier> curUnits = new List<CharacterCarrier>();
 
     [Header("Object for UIEnable")]
     [SerializeField] private GameObject skills;

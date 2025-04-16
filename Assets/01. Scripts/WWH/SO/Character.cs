@@ -1,5 +1,5 @@
 using System;
-public class CharacterSO : SO
+public class Character : SO
 {
     public string Name;
     public string Grade;
@@ -7,8 +7,8 @@ public class CharacterSO : SO
     public int Attack;
     public int Defense;
     public int Speed;
-    public string CriticalPer;
-    public string CriticalAttack;
+    public float CriticalPer;
+    public float CriticalAttack;
 
   
 
