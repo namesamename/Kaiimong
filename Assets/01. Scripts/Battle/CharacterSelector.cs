@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterSelector : MonoBehaviour
 {
-    private Character selectedCharacter = null;
+    private CharacterCarrier selectedCharacter = null;
     private BattleSystem battleSystem;
 
     private Camera _camera;
@@ -50,11 +50,11 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    private void SelectAll(List<Character> units)
+    private void SelectAll(List<CharacterCarrier> units)
     {
         if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
         {
-            foreach (Character unit in units)
+            foreach (CharacterCarrier unit in units)
             {
                 SelectedEffect(unit, true);
                 selectedCharacter = unit;
@@ -68,7 +68,7 @@ public class CharacterSelector : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Character unit = hit.collider.GetComponent<Character>();
+                CharacterCarrier unit = hit.collider.GetComponent<CharacterCarrier>();
                 if (unit != null && battleSystem.GetActiveEnemies().Contains(unit))
                 {
                     OnConfirm();
@@ -77,7 +77,7 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    private void MouseClick(List<Character> units)
+    private void MouseClick(List<CharacterCarrier> units)
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -86,7 +86,7 @@ public class CharacterSelector : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Character unit = hit.collider.GetComponent<Character>();
+                CharacterCarrier unit = hit.collider.GetComponent<CharacterCarrier>();
                 if (unit != null && units.Contains(unit))
                 {
                     OnCharacterClicked(unit);
@@ -95,7 +95,7 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
-    public void OnCharacterClicked(Character character)
+    public void OnCharacterClicked(CharacterCarrier character)
     {
         //첫 클릭,선택
         if (selectedCharacter == null)
@@ -132,7 +132,7 @@ public class CharacterSelector : MonoBehaviour
         // 선택된 캐릭터를 Targets 리스트에 추가
         if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
         {
-            foreach (Character units in battleSystem.GetActiveEnemies())
+            foreach (CharacterCarrier units in battleSystem.GetActiveEnemies())
             {
                 battleSystem.Targets.Add(units);
                 SelectedEffect(units, false);
@@ -153,18 +153,18 @@ public class CharacterSelector : MonoBehaviour
     }
 
     //캐릭터 선택 효과
-    private void SelectedEffect(Character character, bool set)
+    private void SelectedEffect(CharacterCarrier character, bool set)
     {
         character.SelectEffect.SetActive(set);
     }
 
     private void ResetEffect()
     {
-        foreach (Character units in battleSystem.GetActiveEnemies())
+        foreach (CharacterCarrier units in battleSystem.GetActiveEnemies())
         {
             SelectedEffect(units, false);
         }
-        foreach (Character units in battleSystem.GetActivePlayers())
+        foreach (CharacterCarrier units in battleSystem.GetActivePlayers())
         {
             SelectedEffect(units, false);
         }

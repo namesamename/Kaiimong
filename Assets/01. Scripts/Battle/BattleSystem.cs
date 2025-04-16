@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -13,17 +14,17 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Transform enemyParent;
 
     [Header("Units")]
-    public List<Character> Players; //캐릭터 선택에서 가져오고
-    public List<Character> Enemies; //스테이지 데이터에서 가져오고
-    [SerializeField] private List<Character> activePlayers = new List<Character>();    //현재 배치중인 유닛들 정보
-    [SerializeField] private List<Character> activeEnemies = new List<Character>();
-    public List<Character> GetActivePlayers() => activePlayers;
-    public List<Character> GetActiveEnemies() => activeEnemies;
+    public List<CharacterCarrier> Players; //캐릭터 선택에서 가져오고
+    public List<CharacterCarrier> Enemies; //스테이지 데이터에서 가져오고
+    [SerializeField] private List<CharacterCarrier> activePlayers = new List<CharacterCarrier>();    //현재 배치중인 유닛들 정보
+    [SerializeField] private List<CharacterCarrier> activeEnemies = new List<CharacterCarrier>();
+    public List<CharacterCarrier> GetActivePlayers() => activePlayers;
+    public List<CharacterCarrier> GetActiveEnemies() => activeEnemies;
 
     [Header("BattleInfo")]
     public int TurnIndex = 0;
     public SkillObject SelectedSkill;
-    public List<Character> Targets;
+    public List<CharacterCarrier> Targets;
     private float betweenPhaseTime;
 
     [Header("Appear")]
@@ -39,6 +40,7 @@ public class BattleSystem : MonoBehaviour
     public bool AttackEnded = false;
 
     public CommandController CommandController { get; private set; }
+    public EndUI EndUI;
     public BattleUI BattleUI;
 
 
@@ -73,11 +75,15 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    public void SetUI()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+        GameObject uiPrefab = Instantiate(Resources.Load("Battle/BattleUI")) as GameObject;
+        EndUISet();
+    }
     private void AttackPhase()
     {
         CommandController.ExecuteCommand();
-
-        CheckGameOver();
 
         if (PlayerTurn)
         {
@@ -110,7 +116,8 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerTurn = false;
         Debug.Log("enemyturn");
-        activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+        activeEnemies = activeEnemies.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+        //activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
         CommandController.ClearList();
         EnemyRandomCommand();
     }
@@ -119,7 +126,8 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerTurn = true;
         Debug.Log("playerturn");
-        activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+        activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+        //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
         OnPlayerTurn?.Invoke();
         CommandController.ClearList();
     }
@@ -143,19 +151,21 @@ public class BattleSystem : MonoBehaviour
 
     private void SetPlayer()
     {
-        List<Character> playerCopy = new List<Character>(Players);
+        List<CharacterCarrier> playerCopy = new List<CharacterCarrier>(Players);
         if (playerCopy.Count > 0)
         {
             for (int i = 0; i < playerLocations.Count; i++)
             {
-                Character player = playerCopy[i];
+                CharacterCarrier player = playerCopy[i];
                 //player.stat.agilityStat.Value = i + 1;
 
                 if (playerLocations[i].isOccupied) continue;
 
-                Character playerUnit = Instantiate(player, playerLocations[i].transform);
+                CharacterCarrier playerUnit = Instantiate(player, playerLocations[i].transform);
                 playerLocations[i].isOccupied = true;
                 playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
+                playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
+                playerUnit.stat.OnDeath += CheckGameOver;
                 activePlayers.Add(playerUnit);
                 Players.Remove(player);
             }
@@ -164,27 +174,29 @@ public class BattleSystem : MonoBehaviour
 
     private void SetEnemy()
     {
-        List<Character> enemiesCopy = new List<Character>(Enemies);
+        List<CharacterCarrier> enemiesCopy = new List<CharacterCarrier>(Enemies);
         if (enemiesCopy.Count > 0)
         {
             for (int i = 0; i < enemyLocations.Count; i++)
             {
-                Character enemy = enemiesCopy[i];
+                CharacterCarrier enemy = enemiesCopy[i];
                 //enemy.stat.agilityStat.Value = i + 1;
 
                 if (enemyLocations[i].isOccupied) continue;
 
-                Character enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
+                CharacterCarrier enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
                 enemyLocations[i].isOccupied = true;
                 enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
                 enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
+                enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
+                enemyUnit.stat.OnDeath += CheckGameOver;
                 activeEnemies.Add(enemyUnit);
                 Enemies.Remove(enemy);
             }
         }
     }
 
-    public void EmptyPlateOnUnitDeath(Character unit) //Unit OnDeath Action에 추가하기
+    public void EmptyPlateOnUnitDeath(CharacterCarrier unit) //Unit OnDeath Action에 추가하기
     {
         unit.GetComponentInParent<UnitPlate>().isOccupied = false;
     }
@@ -198,7 +210,7 @@ public class BattleSystem : MonoBehaviour
         return maxAnimationTime;
     }
 
-    private float CaluculateMaxAnimationTime(List<Character> unitList)
+    private float CaluculateMaxAnimationTime(List<CharacterCarrier> unitList)
     {
         float maxAnimationTime = 0f;
 
@@ -222,7 +234,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (SelectedTarget)
         {
-            CommandController.AddCommand(new DummySkill(activePlayers[TurnIndex], Targets, SelectedSkill));
+            CommandController.AddCommand(new SkillCommand(activePlayers[TurnIndex], Targets, SelectedSkill));
             BattleUI.CharacterUI.NextCharacterIcon();
             TurnIndex++;
             Targets.Clear();
@@ -231,6 +243,57 @@ public class BattleSystem : MonoBehaviour
         if (TurnIndex == activePlayers.Count)
         {
             BattleUI.CharacterUI.SetActionButton();
+        }
+    }
+
+    public void RemoveTarget(CharacterCarrier target)
+    {
+        foreach (SkillCommand command in CommandController.SkillCommands)
+        {
+            command.targets.Remove(target);
+            if (command.skillData.skillSO.isSingleAttack)
+            {
+                if (command.skillData.skillSO.IsBuff)
+                {
+                    command.targets.Add(FindNewBuffTarget());
+                }
+                else
+                {
+                    command.targets.Add(FindNewAttackTarget());
+                }
+            }
+            if (command.targets.Count == 0)
+            {
+                CommandController.RemoveCommand(command);
+            }
+        }
+    }
+
+    private CharacterCarrier FindNewAttackTarget()
+    {
+        if (PlayerTurn)
+        {
+            if (activeEnemies.Count == 0) return null;
+            return activeEnemies[activeEnemies.Count - 1];
+        }
+        else
+        {
+            if (activePlayers.Count == 0) return null;
+            return activePlayers[activePlayers.Count - 1];
+        }
+    }
+
+    private CharacterCarrier FindNewBuffTarget()
+    {
+        if (!PlayerTurn)
+        {
+            if (activeEnemies.Count == 0) return null;
+            return activeEnemies[activeEnemies.Count - 1];
+        }
+        else
+        {
+            if (activePlayers.Count == 0) return null;
+            return activePlayers[activePlayers.Count - 1];
         }
     }
 
@@ -249,7 +312,7 @@ public class BattleSystem : MonoBehaviour
                 }
                 else
                 {
-                    foreach (Character units in activePlayers)
+                    foreach (CharacterCarrier units in activePlayers)
                     {
                         Targets.Add(units);
                     }
@@ -264,14 +327,14 @@ public class BattleSystem : MonoBehaviour
                 }
                 else
                 {
-                    foreach (Character units in activeEnemies)
+                    foreach (CharacterCarrier units in activeEnemies)
                     {
                         Targets.Add(units);
                     }
                 }
             }
 
-            CommandController.AddCommand(new DummySkill(activeEnemies[i], Targets, SelectedSkill));
+            CommandController.AddCommand(new SkillCommand(activeEnemies[i], Targets, SelectedSkill));
             Targets.Clear();
         }
 
@@ -291,4 +354,10 @@ public class BattleSystem : MonoBehaviour
         nextPhase();
     }
 
+    public void EndUISet()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+        GameObject uiPrefab = Instantiate(Resources.Load("Battle/StageUI")) as GameObject;
+        EndUI = uiPrefab.GetComponent<EndUI>();
+    }
 }

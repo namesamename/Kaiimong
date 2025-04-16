@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class SkillObject : MonoBehaviour
 {
-    public SkillSO skillSO;
-    DebuffSkillSO debuffSkillSO;
-    public BuffSkillSO buffSkillSO;
-
-
+    public Skill skillSO;
     private float CurCooltime;
 
-    public void SetSkill(string id)
+    public void SetSkill(int id)
     {
-        skillSO=  GlobalDatabase.Instance.skill.GetSkillSOToID(id);
+        skillSO=  GlobalDataTable.Instance.skill.GetSkillSOToID(id);
 
         if (skillSO.buffSkillId != null)
         {
-            if(skillSO.IsBuff)
+            if(skillSO.Type == SkillType.buff)
             {
                 //buffSkillSO = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(skillSO.buffSkillId));
             }
-            if (skillSO.IsBuff)
+            if (skillSO.Type == SkillType.debuff)
             {
                 //debuffSkillSO = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(skillSO.buffSkillId));
             }
@@ -30,25 +26,38 @@ public class SkillObject : MonoBehaviour
     }
 
 
-    public void UseSkill(List<Character> targetcharacter)
+    public void UseSkill(List<CharacterCarrier> targetcharacter)
     {
         //추후 추가
-        if(skillSO.IsBuff)
+        if(skillSO.Type == SkillType.debuff || skillSO.Type == SkillType.buff)
         {
             Debug.Log("Use Buff");
-            foreach (Character c in targetcharacter) 
+            foreach (CharacterCarrier c in targetcharacter) 
             {c.stat.Buff(skillSO);}
         }
-        else if(skillSO.IsHeal)
+        else if(skillSO.Type == SkillType.heal)
         {
-            foreach (Character c in targetcharacter)
+            foreach (CharacterCarrier c in targetcharacter)
             { c.stat.healthStat.Heal(skillSO.damage[0]);}
         }
         else
         {
             Debug.Log("TakeDamage");
-            foreach (Character c in targetcharacter)
-            {c.stat.TakeDamage(skillSO.damage[0]);}
+            foreach (CharacterCarrier c in targetcharacter)
+            {
+                CharacterStat stat = GetComponentInParent<CharacterStat>();
+                float AllDamage = skillSO.Attack;
+                if (stat.criticalPerStat.Value < Random.Range(0.0f, 100.0f))
+                {
+                    AllDamage = stat.attackStat.Value * stat.criticalAttackStat.Value;
+                }
+
+                c.stat.TakeDamage( AllDamage);
+            
+            
+            
+            
+            }
         }
         
     }
