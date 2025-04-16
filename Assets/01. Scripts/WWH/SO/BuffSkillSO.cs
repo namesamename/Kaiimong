@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuffSkillSO : SO
 {
-    public int Id;
+
     public int Duration;
     public string Name;
 

@@ -27,7 +27,7 @@ public class Skill : SO
     public SkillTargetType Target;
     public int TargetCount;
     public float Attack;
-
+    public int BuffID = 0;
     public string Name;
     public bool isSingleAttack;
     public int attackCount;

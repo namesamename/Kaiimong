@@ -22,11 +22,11 @@ public class SkillDataTable
         }
         foreach (DebuffSkillSO skill in DebuffSO)
         {
-            DebuffskillDic[skill.Id] = skill;
+            DebuffskillDic[skill.ID] = skill;
         }
         foreach (BuffSkillSO skill in BuffSO)
         {
-            BuffskillDic[skill.Id] = skill;
+            BuffskillDic[skill.ID] = skill;
         }
     }
 

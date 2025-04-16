@@ -64,12 +64,15 @@ public class CharacterStat : MonoBehaviour
     }
 
     public void TakeDamage(float Amount)
-    {
-        //healthStat.AddStat(Amount);
-        //if(healthStat.Value == 0)
-        //{
-        //    OnDie();
-        //}
+    { 
+        if(defenseStat.Value - Amount <= 0)
+        {
+            healthStat.CurHealth -= 1;
+        }
+        else
+        {
+            healthStat.CurHealth -= (defenseStat.Value - Amount);
+        }
     }
     public void OnDie()
     {
@@ -107,6 +110,7 @@ public class CharacterStat : MonoBehaviour
 
         if (Skill.Type == SkillType.buff)
         {
+            
             //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
             //duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
         }
