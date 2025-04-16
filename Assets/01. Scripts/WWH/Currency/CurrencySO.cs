@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum CurrencyType
 {
+    UserLevel,
+    UserEXP,
     Gold,
     Gacha,
     Activity,
