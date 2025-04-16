@@ -11,7 +11,7 @@ public class Stage : SO
     public int EnemyCount;
     public string BackgroundPath;
     public int ActivityPoint;
-    public int Exp;
     public int[] ItemID;
     public int Gold;
+    //호감도 & 경험치는 사용된 행동력에 비례하게 주기
 }

@@ -9,8 +9,9 @@ public class StageManager : Singleton<StageManager>
 
     [Header("Stage Info")] // 선택창에서 받아온 데이터
     public Stage CurrentStage;
-    public List<Character> Players;
-
+    public int Rounds;
+    public List<CharacterCarrier> Players;
+    public List<CharacterCarrier> Enemies;
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class StageManager : Singleton<StageManager>
                 Destroy(gameObject);
             }
         }
+
+        SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, SetBattleScene);
     }
 
     void Start()
@@ -44,6 +47,10 @@ public class StageManager : Singleton<StageManager>
     {
         GameObject background = Instantiate(Resources.Load(CurrentStage.BackgroundPath)) as GameObject;
         background.GetComponent<SpriteRenderer>().sprite = null;
+        battleSystem.Players = new List<CharacterCarrier>(Players);
+        //CurrentStage.EnemiesID 롤 적 객체 생성 후 리스트업하기
+        Rounds = CurrentStage.Rounds;
+
     }
 
     void Update()
