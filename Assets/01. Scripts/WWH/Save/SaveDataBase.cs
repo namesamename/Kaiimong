@@ -77,11 +77,10 @@ public class SaveDataBase : Singleton<SaveDataBase>
     {
         if(SaveDic.TryGetValue(SaveType, out List<SaveInstance> SaveList))
         {
-            var SaveData = SaveDic[SaveType].Find(x => x.ID == Data.ID);
-            if (SaveData != null)
+            int Index = SaveList.FindIndex(x => x.ID == Data.ID);
+            if (Index != -1)
             {
-                SaveData = Data;
-                SaveList.Add(SaveData);
+                SaveList[Index] = Data;
             }
             else
             {
@@ -97,6 +96,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
     }
     public  void SavingList(List<SaveInstance> SaveList, SaveType SaveType)
     {
+        RemoveDuplicates(SaveList);
         GameSaveSystem.Save(SaveType, SaveList);
     }
     public  void SaveAll()
@@ -140,10 +140,10 @@ public class SaveDataBase : Singleton<SaveDataBase>
     {
         if (SaveDic.ContainsKey(instance.Savetype))
         {
-            var MultiSave = SaveDic[instance.Savetype].Find(x => x.ID == instance.ID);
-            if (MultiSave != null)
+            int Index = SaveDic[instance.Savetype].FindIndex(x => x.ID == instance.ID);
+            if (Index != -1)
             {
-                MultiSave = instance;
+                SaveDic[instance.Savetype][Index] = instance;
             }
             else
             {
@@ -159,6 +159,18 @@ public class SaveDataBase : Singleton<SaveDataBase>
             };
             GameSaveSystem.Save(instance.Savetype, SaveDic[instance.Savetype]);
         }
+    }
+
+    private List<SaveInstance> RemoveDuplicates(List<SaveInstance> saveList)
+    {
+        Dictionary<string, SaveInstance> uniqueItems = new Dictionary<string, SaveInstance>();
+
+        foreach (var item in saveList)
+        {
+            string key = item.ID; 
+            uniqueItems[key] = item;
+        }
+        return uniqueItems.Values.ToList();
     }
 
 

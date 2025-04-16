@@ -54,7 +54,6 @@ public static class GameSaveSystem
             //정보를 가져온다
             SaveDataWrapper saveData = JsonConvert.DeserializeObject<SaveDataWrapper>
             (json, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto});
-
             //정보를 덮어씌운다.
             saves = saveData.Saves;
             return saves;

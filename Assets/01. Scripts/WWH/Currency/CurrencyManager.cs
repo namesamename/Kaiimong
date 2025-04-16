@@ -64,7 +64,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 DIAValue = 0,
                 ID = "Currency"
             };
-            SaveDataBase.Instance.SetSingleSaveInstance(data, SaveType.Currency);
         }
         DicSet();
     }
