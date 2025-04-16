@@ -272,10 +272,12 @@ public class BattleSystem : MonoBehaviour
     {
         if (PlayerTurn)
         {
+            if (activeEnemies.Count == 0) return null;
             return activeEnemies[activeEnemies.Count - 1];
         }
         else
         {
+            if (activePlayers.Count == 0) return null;
             return activePlayers[activePlayers.Count - 1];
         }
     }
@@ -284,10 +286,12 @@ public class BattleSystem : MonoBehaviour
     {
         if (!PlayerTurn)
         {
+            if (activeEnemies.Count == 0) return null;
             return activeEnemies[activeEnemies.Count - 1];
         }
         else
         {
+            if (activePlayers.Count == 0) return null;
             return activePlayers[activePlayers.Count - 1];
         }
     }
