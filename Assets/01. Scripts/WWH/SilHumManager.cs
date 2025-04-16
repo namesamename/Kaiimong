@@ -13,7 +13,7 @@ public class SilHumManager : MonoBehaviour
         SaveDataBase.Instance.SavingList(SaveDataBase.Instance.SaveDic[SaveType.Character],SaveType.Character);
         LoadSil.GetComponent<Character>().LoadData(
             SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character,
-            InitialSil.GetComponent<Character>().characterId));
+            InitialSil.GetComponent<Character>().CharacterSaveData.ID));
 
         CurrencyManager.Instance.InitialIze();
         Debug.Log("°ñµå" + CurrencyManager.Instance.GetCurrency(CurrencyType.Gold));

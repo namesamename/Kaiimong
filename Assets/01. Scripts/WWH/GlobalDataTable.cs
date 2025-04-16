@@ -2,14 +2,13 @@
 using UnityEngine;
 
 
-public class GlobalDatabase : Singleton<GlobalDatabase>
+public class GlobalDataTable : Singleton<GlobalDataTable>
 {
 
-    public CharacterDataBase character;
-    public SkillDataBase skill;
-    public CurrencyDatabase currency;
-    [HideInInspector]
-    public SaveDataBase save;
+    public CharacterDataTable character; //데이터베이스 이름 바꾸기 데이터/테이블
+    public SkillDataTable skill;
+    public CurrencyDataTable currency;
+
     private void Awake()
     {
         if (_instance == null)
@@ -24,10 +23,9 @@ public class GlobalDatabase : Singleton<GlobalDatabase>
                 Destroy(gameObject);
             }
         }
-        character = new CharacterDataBase();
-        skill = new SkillDataBase();
-        currency = new CurrencyDatabase();
-        save = GetComponentInChildren<SaveDataBase>();
+        character = new CharacterDataTable();
+        skill = new SkillDataTable();
+        currency = new CurrencyDataTable();
 
         character.Initialize();
         skill.Initialize();

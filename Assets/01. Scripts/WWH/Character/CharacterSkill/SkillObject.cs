@@ -13,7 +13,7 @@ public class SkillObject : MonoBehaviour
 
     public void SetSkill(string id)
     {
-        skillSO=  GlobalDatabase.Instance.skill.GetSkillSOToID(id);
+        skillSO=  GlobalDataTable.Instance.skill.GetSkillSOToID(id);
 
         if (skillSO.buffSkillId != null)
         {

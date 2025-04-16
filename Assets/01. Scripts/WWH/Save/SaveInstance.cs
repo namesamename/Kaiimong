@@ -15,6 +15,8 @@ public class CharacterSaveData : SaveInstance
     public int Level;
     public int Recognition;
     public int Necessity;
+    public float CurHp;
+    public int SpecialMoveGauge;
 }
 [System.Serializable]
 public class CurrencySaveData : SaveInstance

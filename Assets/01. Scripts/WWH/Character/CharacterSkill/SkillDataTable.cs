@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class SkillDataBase
+public class SkillDataTable
 {
    public Dictionary<string, SkillSO> SkillDataDic = new Dictionary<string, SkillSO>();
 
