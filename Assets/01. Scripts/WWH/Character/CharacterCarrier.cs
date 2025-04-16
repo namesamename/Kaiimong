@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class Character : MonoBehaviour , ISavable
+public class CharacterCarrier : MonoBehaviour , ISavable
 {
 
     [HideInInspector]
@@ -25,10 +25,10 @@ public class Character : MonoBehaviour , ISavable
     }
     private void Start()
     {
-        Initialize("001");
+        Initialize(1);
     }
 
-    public void Initialize(string Id)
+    public void Initialize(int Id)
     {
         //캐릭터 초기화
         CharacterSaveData.ID = Id;

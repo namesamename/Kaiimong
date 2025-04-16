@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class CharacterDataTable 
 {
-    public Dictionary<string , CharacterSO> characterDic = new Dictionary<string , CharacterSO>();  
+    public Dictionary<int , Character> characterDic = new Dictionary<int , Character>();  
     public GameObject CharacterPrefabs;
 
 
     public void Initialize()
     {
-        CharacterSO[] characters = Resources.LoadAll<CharacterSO>("Char");
+        Character[] characters = Resources.LoadAll<Character>("Char");
 
-        foreach (CharacterSO character in characters)
+        foreach (Character character in characters)
         {
             characterDic[character.ID] = character;
         }
     }
    
-    public CharacterSO GetCharToID(string characterId)
+    public Character GetCharToID(int characterId)
     {
         if (characterDic[characterId] != null && characterDic.ContainsKey(characterId))
         {
@@ -32,13 +32,13 @@ public class CharacterDataTable
 
 
     //캐릭터 아이디로 생성
-    public GameObject CharacterInstanceSummon(CharacterSO character, Vector3 pos, Transform parent = null)
+    public GameObject CharacterInstanceSummon(Character character, Vector3 pos, Transform parent = null)
     {
         GameObject CharacterObject = Object.Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
 
-        if(CharacterObject.GetComponent<Character>() == null) 
-        {   CharacterObject.AddComponent<Character>();}
-        CharacterObject.GetComponent<Character>().Initialize(character.ID);
+        if(CharacterObject.GetComponent<CharacterCarrier>() == null) 
+        {   CharacterObject.AddComponent<CharacterCarrier>();}
+        CharacterObject.GetComponent<CharacterCarrier>().Initialize(character.ID);
         return CharacterObject;
 
     }
