@@ -86,7 +86,6 @@ public class SaveDataBase : Singleton<SaveDataBase>
             {
                 SaveList.Add(Data);
             }
-
         }
         else
         {
@@ -105,19 +104,15 @@ public class SaveDataBase : Singleton<SaveDataBase>
         {
             SavingList(characterDatas,SaveType.Character);
         }
-
         if (SaveDic.TryGetValue(SaveType.Currency, out List<SaveInstance> CurrencyDatas))
         {
             SavingList(CurrencyDatas, SaveType.Currency);
         }
-
-
     }
     public List<List<SaveInstance>> LoadAll()
     {
         //세이브리스트를 담은 리스트를 만듬
         List<List<SaveInstance>> SaveList = new List<List<SaveInstance>>();
-
         //이넘 타입에 따라서 풀게
         foreach (SaveType saveType in Enum.GetValues(typeof(SaveType)))
         {

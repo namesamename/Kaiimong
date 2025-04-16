@@ -11,10 +11,7 @@ public class Character : MonoBehaviour , ISavable
     public CharacterVisual visual;
 
     public GameObject SelectEffect;
-    public string characterId;
-    public int Level;
-    public int Recognition;
-    public int Necessity;
+    public CharacterSaveData CharacterSaveData;
 
     private void Awake()
     {
@@ -22,6 +19,8 @@ public class Character : MonoBehaviour , ISavable
         skillBook =GetComponentInChildren<CharacterSkillBook>();
         stat = GetComponentInChildren<CharacterStat>();
         visual = GetComponentInChildren<CharacterVisual>();
+
+        CharacterSaveData = new CharacterSaveData();
 
     }
     private void Start()
@@ -32,12 +31,12 @@ public class Character : MonoBehaviour , ISavable
     public void Initialize(string Id)
     {
         //캐릭터 초기화
-        characterId = Id;
+        CharacterSaveData.ID = Id;
         HaveData();
         SetStat();
         SetVisual();
         //스킬 초기화
-        skillBook.SkillSet(characterId);
+        skillBook.SkillSet(CharacterSaveData.ID);
     }
 
     /// <summary>
@@ -54,16 +53,8 @@ public class Character : MonoBehaviour , ISavable
     /// <returns></returns>
     public CharacterSaveData CreatNewData()
     {
-        CharacterSaveData data = new CharacterSaveData()
-        {
-            ID = this.characterId,
-            Level = this.Level,
-            Recognition = this.Recognition,
-            Necessity = this.Necessity,
-            Savetype = SaveType.Character
-        };
-        SaveDataBase.Instance.SetSingleSaveInstance(data, SaveType.Character);
-        return data;
+        SaveDataBase.Instance.SetSingleSaveInstance(CharacterSaveData, SaveType.Character);
+        return CharacterSaveData;
     }
     /// <summary>
     /// 저장 데이터를 불러오기
@@ -71,13 +62,14 @@ public class Character : MonoBehaviour , ISavable
     /// <param name="saveData"></param>
     public void LoadData(CharacterSaveData saveData)
     {
-        characterId = saveData.ID;
-        Level = saveData.Level;
-        Recognition = saveData.Recognition;
-        Necessity = saveData.Necessity;
+        CharacterSaveData.ID = saveData.ID;
+        CharacterSaveData.Level = saveData.Level;
+        CharacterSaveData.Recognition = saveData.Recognition;
+        CharacterSaveData.Necessity = saveData.Necessity;
+        CharacterSaveData.CurHp = stat.healthStat.Value;
         SetStat();
         SetVisual();
-        skillBook.SkillSet(characterId);
+        skillBook.SkillSet(CharacterSaveData.ID);
     }
 
     /// <summary>
@@ -86,14 +78,13 @@ public class Character : MonoBehaviour , ISavable
     public void HaveData()
     {
         var foundData = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
-
-
         if (foundData != null)
         {
-            if (foundData.Find(x => x.ID == characterId) != null)
+            if (foundData.Find(x => x.ID == CharacterSaveData.ID) != null)
             {
-                LoadData(foundData.Find(x => x.ID == characterId));
-            }else
+                LoadData(foundData.Find(x => x.ID == CharacterSaveData.ID));
+            }
+            else
             {
                 CreatNewData();
             }
@@ -110,20 +101,11 @@ public class Character : MonoBehaviour , ISavable
     /// </summary>
     public void SetStat()
     {
-       stat.SetCharacter(GlobalDatabase.Instance.character.GetCharSOToID(characterId));
+       stat.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(CharacterSaveData.ID));
     }
 
     public void Save()
     {
-        CharacterSaveData saveData = new CharacterSaveData()
-        {
-            ID = characterId,
-            Recognition = this.Recognition,
-            Necessity = this.Necessity,
-            Savetype = SaveType.Character,
-            Level = this.Level,
-        };
-        SaveDataBase.Instance.SetSingleSaveInstance(saveData, SaveType.Character);
-       
+        SaveDataBase.Instance.SetSingleSaveInstance(CharacterSaveData, SaveType.Character);  
     }
 }

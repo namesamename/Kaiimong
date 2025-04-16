@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterDataBase 
+public class CharacterDataTable 
 {
     public Dictionary<string , CharacterSO> characterDic = new Dictionary<string , CharacterSO>();  
     public GameObject CharacterPrefabs;
@@ -17,7 +17,7 @@ public class CharacterDataBase
         }
     }
    
-    public CharacterSO GetCharSOToID(string characterId)
+    public CharacterSO GetCharToID(string characterId)
     {
         if (characterDic[characterId] != null && characterDic.ContainsKey(characterId))
         {
@@ -45,7 +45,7 @@ public class CharacterDataBase
     //캐릭터 세이브 정보로 생성
     public GameObject CharacterInstanceSummonFromSaveData(CharacterSaveData saveData , Vector3 pos, Transform parent = null)
     {
-        GameObject Character = CharacterInstanceSummon(GetCharSOToID(saveData.ID), pos, parent);
+        GameObject Character = CharacterInstanceSummon(GetCharToID(saveData.ID), pos, parent);
         return Character;
     }
 

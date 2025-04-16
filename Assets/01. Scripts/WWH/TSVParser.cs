@@ -17,7 +17,7 @@ public class TSVParser
             var columns = rows[i].Trim().Split('\t');
             for (int j = 0; j < columns.Length; j++)
             {
-                dic.Add(Utility.KoreanValueChanger(keys[j]), columns[j]);
+                dic.Add(keys[j], columns[j]);
             }
             list.Add(dic);
         }
