@@ -31,6 +31,8 @@ public class UIInventory : MonoBehaviour
     private List<ItemData> itemList = new List<ItemData>();        // 일반 아이템 저장용 리스트
     private List<ItemData> consumableList = new List<ItemData>();  // 소모품 아이템 저장용 리스트
 
+    [SerializeField] private List<ItemData> defaultItems;         // 일반 아이템 목록
+    [SerializeField] private List<ItemData> defaultConsumables;   // 소모품 목록
 
 
     private void Awake()
@@ -48,28 +50,28 @@ public class UIInventory : MonoBehaviour
     {
         // 테스트용 아이템 생성
         ItemData testItemS = ScriptableObject.CreateInstance<ItemData>();
-        testItemS.ItemName = "전설 아이템";
-        testItemS.Rarity = ERarity.S;
+        testItemS.Name = "전설 아이템";
+        testItemS.Grade = ERarity.S;
         testItemS.Type = EItemType.Item;
 
         ItemData testItemA = ScriptableObject.CreateInstance<ItemData>();
-        testItemA.ItemName = "엄청 좋은 아이템";
-        testItemA.Rarity = ERarity.A;
+        testItemA.Name = "엄청 좋은 아이템";
+        testItemA.Grade = ERarity.A;
         testItemA.Type = EItemType.Item;
 
         ItemData testItemB = ScriptableObject.CreateInstance<ItemData>();
-        testItemB.ItemName = "좋은 아이템";
-        testItemB.Rarity = ERarity.B;
+        testItemB.Name = "좋은 아이템";
+        testItemB.Grade = ERarity.B;
         testItemB.Type = EItemType.Item;
 
         ItemData testItemC = ScriptableObject.CreateInstance<ItemData>();
-        testItemC.ItemName = "조금 좋은 아이템";
-        testItemC.Rarity = ERarity.C;
+        testItemC.Name = "조금 좋은 아이템";
+        testItemC.Grade = ERarity.C;
         testItemC.Type = EItemType.Item;
 
         ItemData testItemD = ScriptableObject.CreateInstance<ItemData>();
-        testItemD.ItemName = "그냥 아이템";
-        testItemD.Rarity = ERarity.D;
+        testItemD.Name = "그냥 아이템";
+        testItemD.Grade = ERarity.D;
         testItemD.Type = EItemType.Item;
 
         // 인벤토리에 추가
@@ -84,12 +86,12 @@ public class UIInventory : MonoBehaviour
 
     private List<ItemData> SortByRarity(List<ItemData> list)           // 희귀도 순 정렬 (S → D 순)
     {
-        return list.OrderBy(item => item.Rarity).ToList();
+        return list.OrderBy(item => item.Grade).ToList();
     }
 
     public void AddItem(ItemData item)
     {
-        Debug.Log($"[AddItem 호출됨] {item.ItemName} / 타입: {item.Type}");
+        Debug.Log($"[AddItem 호출됨] {item.Name} / 타입: {item.Type}");
 
         if (item.Type == EItemType.Consumable)       // 소모품일 경우
         {
@@ -169,10 +171,10 @@ public class UIInventory : MonoBehaviour
         foreach (ItemData item in sortedList)                                     // 전달받은 아이템 리스트를 순회
 
         {
-            GameObject prefab = GetSlotPrefabByRarity(item.Rarity);      // 희귀도에 맞는 슬롯 프리팹 선택
+            GameObject prefab = GetSlotPrefabByRarity(item.Grade);      // 희귀도에 맞는 슬롯 프리팹 선택
             GameObject slotObj = Instantiate(prefab, parentPanel);       // 슬롯 프리팹 생성 및 부모 설정
 
-            Debug.Log($"[슬롯 생성] {item.ItemName} / {item.Rarity}");
+            Debug.Log($"[슬롯 생성] {item.Name} / {item.Grade}");
 
             InventorySlot slot = slotObj.GetComponent<InventorySlot>();  // 생성된 슬롯 오브젝트에서 InventorySlot 컴포넌트를 가져옴
             slot.SetSlot(item);                                          // 슬롯에 아이템 데이터 적용
