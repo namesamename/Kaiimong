@@ -45,8 +45,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     private void HaveData()
     {
         var SaveData = SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, "Currency");
-        
-
         if (SaveData != null && SaveData is CurrencySaveData instance)
         {
             data = instance;
@@ -81,7 +79,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     private void Start()
     {
-        ActSO = GlobalDatabase.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
+        ActSO = GlobalDataTable.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
         if (PlayerPrefs.HasKey(LastTimeExitKey))
         {
             Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
@@ -107,7 +105,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     public void SetCurrency(CurrencyType currency, int amount)
     {
-        if (CurrencySaveDic[currency] + amount > GlobalDatabase.Instance.currency.CurrencyDic[currency].MaxCount || CurrencySaveDic[currency] + amount < 0)
+        if (CurrencySaveDic[currency] + amount > GlobalDataTable.Instance.currency.CurrencyDic[currency].MaxCount || CurrencySaveDic[currency] + amount < 0)
         {
             return;
         }

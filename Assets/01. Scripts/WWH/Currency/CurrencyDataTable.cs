@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrencyDatabase 
+public class CurrencyDataTable 
 {
 
     public Dictionary<CurrencyType, CurrencySO> CurrencyDic = new Dictionary<CurrencyType, CurrencySO>();
