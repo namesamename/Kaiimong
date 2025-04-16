@@ -12,17 +12,17 @@ public class GatchaTypeChanger : MonoBehaviour
     void Start()
     {
         _gatchaManager = GatchaManager.Instance;
-        UpdateBannerColor(_gatchaManager.currentGachaType); // 초기 색 설정
+        UpdateBannerImage(_gatchaManager.currentGachaType); //가챠 매니저에서 타입을 받아 배너의 
     }
 
     public void GatchaTypeChangeByIndex(int index)
     {
         GatchaType type = (GatchaType)index; // 0: Pickup, 1: Standard
         _gatchaManager.SetGachaType(type);
-        UpdateBannerColor(type); // 버튼 누를 때마다 색 변경
+        UpdateBannerImage(type); // 버튼 누를 때마다 색 변경
     }
 
-    private void UpdateBannerColor(GatchaType type)
+    private void UpdateBannerImage(GatchaType type)
     {
         switch (type)
         {   //케이스에 배너.이미지를 통해 교체할 수 있도록 수정하기

@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 8810509941564058672}
   - component: {fileID: -8207009393037094569}
   m_Layer: 5
-  m_Name: GatchaConfirmPopup
+  m_Name: PopupGatchaConfirm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

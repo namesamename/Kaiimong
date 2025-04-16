@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class GatchaConfirmPopup : MonoBehaviour
+public class PopupGatchaConfirm : UIPopup
 {
     [SerializeField] private TMP_Text messageText;
     [SerializeField] private Button confirmButton;
@@ -20,14 +20,9 @@ public class GatchaConfirmPopup : MonoBehaviour
 
         confirmButton.onClick.AddListener(() => {
             onConfirmAction?.Invoke();
-            Close();
+            Hide();
         });
 
-        cancelButton.onClick.AddListener(Close);
-    }
-
-    private void Close()
-    {
-        Destroy(gameObject);
+        cancelButton.onClick.AddListener(Hide);
     }
 }

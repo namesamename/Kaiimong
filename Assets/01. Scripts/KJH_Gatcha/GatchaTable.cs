@@ -53,9 +53,9 @@ public class GatchaTable : MonoBehaviour
 
         Grade chosenGrade;
 
-        if (rand < 3f)
+        if (rand < 3f)  // È®·ü
             chosenGrade = Grade.S;
-        else if (rand < 17f)
+        else if (rand < 20f)
             chosenGrade = Grade.A;
         else
             chosenGrade = Grade.B;

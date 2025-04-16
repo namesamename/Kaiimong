@@ -7,13 +7,13 @@ public class GatchaExecutor : MonoBehaviour
     public void TryDrawOnce()
     {
         string message = GetConfirmMessage(1);
-        ShowConfirmPopup("GatchaConfirmPopup", message, () => Draw(1));
+        ShowConfirmPopup<PopupGatchaConfirm>(message, () => Draw(1));
     }
 
     public void TryDrawTen()
     {
         string message = GetConfirmMessage(10);
-        ShowConfirmPopup("GatchaConfirmPopup", message, () => Draw(10));
+        ShowConfirmPopup<PopupGatchaConfirm>(message, () => Draw(10));
     }
 
     private string GetConfirmMessage(int count)
@@ -27,10 +27,9 @@ public class GatchaExecutor : MonoBehaviour
                $"ticket {useTicket} + crystal {needCrystal} use \nDo it?";
     }
 
-    private void ShowConfirmPopup(string popupName, string message, System.Action confirmAction)
+    private void ShowConfirmPopup<T>(string message, System.Action confirmAction) where T : PopupGatchaConfirm
     {
-        GameObject popupObj = UIManager.Instance.ShowPopup(popupName);
-        var popup = popupObj.GetComponent<GatchaConfirmPopup>();
+        var popup = UIManager.Instance.ShowPopup<T>();
         if (popup != null)
         {
             popup.Setup(message, confirmAction);

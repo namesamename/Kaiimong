@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GatchaManager;
 
-public class GatchaManager : MonoBehaviour
+public class GatchaManager : MonoBehaviour //화면에서 가챠 타입을 구분해 주는 매니저 
 {
     public int crystal;
     public int ticket;
@@ -24,16 +24,15 @@ public class GatchaManager : MonoBehaviour
             Instance = this;
         }
 
-        SetGachaType(GatchaType.Pickup); //기본 타입을 픽업으로 설정
+        SetGachaType(GatchaType.Pickup);
         Setting();
     }
-
-    public void SetGachaType(GatchaType type)
+    public void SetGachaType(GatchaType type) //기본 타입을 픽업으로 설정
     {
         currentGachaType = type;
         Debug.Log($"GachaType 변경됨: {type}");
     }
-    public void Setting()
+    public void Setting()//티켓,보석 재화를 
     {
         ticket = CurrencyManager.Instance.GetCurrency(CurrencyType.Gacha);
         crystal = CurrencyManager.Instance.GetCurrency(CurrencyType.Dia);
