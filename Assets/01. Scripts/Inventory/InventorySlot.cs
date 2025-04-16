@@ -1,10 +1,11 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 //슬롯 하나 담당하는 스크립트
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Image iconImage;                 // 슬롯 안의 아이콘 이미지
     [SerializeField] private TextMeshProUGUI countText;       //아이템 수량 텍스트
@@ -75,9 +76,12 @@ public class InventorySlot : MonoBehaviour
 
 
 
-     public void OnPointerClick()    // 슬롯 클릭 시 팝업 호출
-     {        
-       //UIManager.Instance.ShowPopupPrefab (GameObject prefab);  // 팝업 띄우기
+    public void OnPointerClick(PointerEventData eventData)    // 슬롯 클릭 시 팝업 호출
+    {
+        if (item == null) return;                             // 아이템이 비어있으면 무시
+
+        GameObject popupObj = UIManager.Instance.ShowPopup("ItemInfoPopup");    // UIManager의 ShowPopup 함수 호출
+
     }
 }
 
