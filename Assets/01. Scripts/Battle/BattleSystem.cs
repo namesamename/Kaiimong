@@ -40,6 +40,7 @@ public class BattleSystem : MonoBehaviour
     public bool AttackEnded = false;
 
     public CommandController CommandController { get; private set; }
+    public EndUI EndUI;
     public BattleUI BattleUI;
 
 
@@ -78,7 +79,7 @@ public class BattleSystem : MonoBehaviour
     {
         GameObject canvas = GameObject.Find("Canvas");
         GameObject uiPrefab = Instantiate(Resources.Load("Battle/BattleUI")) as GameObject;
-        StageManager.Instance.StageUISet();
+        EndUISet();
     }
     private void AttackPhase()
     {
@@ -245,7 +246,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    public void RemoveTarget(Character target)
+    public void RemoveTarget(CharacterCarrier target)
     {
         foreach (SkillCommand command in CommandController.SkillCommands)
         {
@@ -268,7 +269,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    private Character FindNewAttackTarget()
+    private CharacterCarrier FindNewAttackTarget()
     {
         if (PlayerTurn)
         {
@@ -282,7 +283,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    private Character FindNewBuffTarget()
+    private CharacterCarrier FindNewBuffTarget()
     {
         if (!PlayerTurn)
         {
@@ -353,4 +354,10 @@ public class BattleSystem : MonoBehaviour
         nextPhase();
     }
 
+    public void EndUISet()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+        GameObject uiPrefab = Instantiate(Resources.Load("Battle/StageUI")) as GameObject;
+        EndUI = uiPrefab.GetComponent<EndUI>();
+    }
 }

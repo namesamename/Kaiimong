@@ -6,13 +6,11 @@ public class StageManager : Singleton<StageManager>
 {
     [Header("Stage Base")]
     [SerializeField] private BattleSystem battleSystem;
-    [SerializeField] private StageUI stageUI;
 
-    [Header("Stage Info")]
-    public int StageID;
-    public int StageCount;
+    [Header("Stage Info")] // 선택창에서 받아온 데이터
+    public Stage CurrentStage;
     public List<Character> Players;
-    public List<Character> Enemies;
+
 
     private void Awake()
     {
@@ -32,27 +30,21 @@ public class StageManager : Singleton<StageManager>
 
     void Start()
     {
-        SetBattleScene();
+
     }
 
-    void SetBattleScene()
+    void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
     {
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
         battleSystem = obj.GetComponent<BattleSystem>();
-    }
+        SetStageInfo();
 
+    }
     void SetStageInfo()
     {
-        GameObject background = Instantiate(Resources.Load("Battle/BackGround")) as GameObject;
+        GameObject background = Instantiate(Resources.Load(CurrentStage.BackgroundPath)) as GameObject;
         background.GetComponent<SpriteRenderer>().sprite = null;
     }
-
-    public void StageUISet()
-    {
-        GameObject canvas = GameObject.Find("Canvas");
-        GameObject uiPrefab = Instantiate(Resources.Load("Battle/StageUI")) as GameObject;
-    }
-
 
     void Update()
     {

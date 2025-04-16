@@ -6,7 +6,6 @@ public class StageDataTable
 {
     public Dictionary<int, Stage> CurrencyDic = new Dictionary<int, Stage>();
 
-
     public void Initialize()
     {
         Stage[] stageSO = Resources.LoadAll<Stage>("Stage");
@@ -15,5 +14,4 @@ public class StageDataTable
             CurrencyDic[stageSO[i].ID] = stageSO[i];
         }
     }
-
 }
