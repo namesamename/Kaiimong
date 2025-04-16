@@ -150,7 +150,7 @@ public class UIInventory : MonoBehaviour
 
         consumableList = SortByRarity(consumableList);           // 소모품 리스트 정렬
         SpawnSlots(consumableList, consumableSlotPanel);         // 소모품 슬롯 생성
-        UpdateItemCount(consumableList.Count);
+        UpdateItemCount(consumableList.Count);                   // 수량 텍스트 갱신
     }   
     public void UpdateItemCount(int current)
     {
@@ -194,7 +194,6 @@ public class UIInventory : MonoBehaviour
     private GameObject GetSlotPrefabByRarity(ERarity rarity)           // 희귀도에 따라 슬롯 프리팹 반환
     {
         int index = EnumToIndex(rarity);                                      // enum을 정수(int) 인덱스로 사용
-
 
         if (index < 0 || index >= slotPrefabs.Length)
         {
