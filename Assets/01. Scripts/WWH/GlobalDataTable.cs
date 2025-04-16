@@ -1,13 +1,11 @@
 
-using UnityEngine;
-
-
 public class GlobalDataTable : Singleton<GlobalDataTable>
 {
 
-    public CharacterDataTable character; //데이터베이스 이름 바꾸기 데이터/테이블
+    public CharacterDataTable character; 
     public SkillDataTable skill;
     public CurrencyDataTable currency;
+    public DataCarrier PartyID;
 
     private void Awake()
     {
@@ -26,7 +24,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         character = new CharacterDataTable();
         skill = new SkillDataTable();
         currency = new CurrencyDataTable();
-
+        PartyID = new DataCarrier();
         character.Initialize();
         skill.Initialize();
         currency.Initialize();

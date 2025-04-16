@@ -53,7 +53,6 @@ public class Character : MonoBehaviour , ISavable
     /// <returns></returns>
     public CharacterSaveData CreatNewData()
     {
-       
         SaveDataBase.Instance.SetSingleSaveInstance(CharacterSaveData, SaveType.Character);
         return CharacterSaveData;
     }
@@ -84,7 +83,8 @@ public class Character : MonoBehaviour , ISavable
             if (foundData.Find(x => x.ID == CharacterSaveData.ID) != null)
             {
                 LoadData(foundData.Find(x => x.ID == CharacterSaveData.ID));
-            }else
+            }
+            else
             {
                 CreatNewData();
             }
@@ -106,8 +106,6 @@ public class Character : MonoBehaviour , ISavable
 
     public void Save()
     {
-      
-        SaveDataBase.Instance.SetSingleSaveInstance(CharacterSaveData, SaveType.Character);
-       
+        SaveDataBase.Instance.SetSingleSaveInstance(CharacterSaveData, SaveType.Character);  
     }
 }

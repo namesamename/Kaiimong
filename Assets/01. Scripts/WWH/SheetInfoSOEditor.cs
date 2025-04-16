@@ -51,7 +51,7 @@ public class SheetInfoSOEditor : Editor
     protected void ImportData(SheetData sheet)
     {
         Assembly assembly = typeof(SO).Assembly;
-        var type = assembly.GetType(Utility.KoreanClassChanger(sheet.className));
+        var type = assembly.GetType(sheet.className);
         Pathcheck(sheet.className);
         GetDatas(type, sheet.datas);
     }
@@ -102,9 +102,6 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "Buff/";
         }
-
-
-
     }
 
 
