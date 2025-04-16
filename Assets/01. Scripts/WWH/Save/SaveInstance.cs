@@ -28,3 +28,8 @@ public class CurrencySaveData : SaveInstance
     public int GachaValue;
     public int ActivityValue;
 }
+
+public class StageSaveData : SaveInstance
+{
+    public bool StageCleared;
+}

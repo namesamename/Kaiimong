@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -39,6 +40,7 @@ public class BattleSystem : MonoBehaviour
     public bool AttackEnded = false;
 
     public CommandController CommandController { get; private set; }
+    public EndUI EndUI;
     public BattleUI BattleUI;
 
 
@@ -73,11 +75,15 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    public void SetUI()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+        GameObject uiPrefab = Instantiate(Resources.Load("Battle/BattleUI")) as GameObject;
+        EndUISet();
+    }
     private void AttackPhase()
     {
         CommandController.ExecuteCommand();
-
-        CheckGameOver();
 
         if (PlayerTurn)
         {
@@ -110,7 +116,8 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerTurn = false;
         Debug.Log("enemyturn");
-        activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+        activeEnemies = activeEnemies.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+        //activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
         CommandController.ClearList();
         EnemyRandomCommand();
     }
@@ -119,7 +126,8 @@ public class BattleSystem : MonoBehaviour
     {
         PlayerTurn = true;
         Debug.Log("playerturn");
-        activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+        activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+        //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
         OnPlayerTurn?.Invoke();
         CommandController.ClearList();
     }
@@ -156,6 +164,8 @@ public class BattleSystem : MonoBehaviour
                 CharacterCarrier playerUnit = Instantiate(player, playerLocations[i].transform);
                 playerLocations[i].isOccupied = true;
                 playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
+                playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
+                playerUnit.stat.OnDeath += CheckGameOver;
                 activePlayers.Add(playerUnit);
                 Players.Remove(player);
             }
@@ -178,6 +188,8 @@ public class BattleSystem : MonoBehaviour
                 enemyLocations[i].isOccupied = true;
                 enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
                 enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
+                enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
+                enemyUnit.stat.OnDeath += CheckGameOver;
                 activeEnemies.Add(enemyUnit);
                 Enemies.Remove(enemy);
             }
@@ -222,7 +234,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (SelectedTarget)
         {
-            CommandController.AddCommand(new DummySkill(activePlayers[TurnIndex], Targets, SelectedSkill));
+            CommandController.AddCommand(new SkillCommand(activePlayers[TurnIndex], Targets, SelectedSkill));
             BattleUI.CharacterUI.NextCharacterIcon();
             TurnIndex++;
             Targets.Clear();
@@ -231,6 +243,57 @@ public class BattleSystem : MonoBehaviour
         if (TurnIndex == activePlayers.Count)
         {
             BattleUI.CharacterUI.SetActionButton();
+        }
+    }
+
+    public void RemoveTarget(CharacterCarrier target)
+    {
+        foreach (SkillCommand command in CommandController.SkillCommands)
+        {
+            command.targets.Remove(target);
+            if (command.skillData.skillSO.isSingleAttack)
+            {
+                if (command.skillData.skillSO.IsBuff)
+                {
+                    command.targets.Add(FindNewBuffTarget());
+                }
+                else
+                {
+                    command.targets.Add(FindNewAttackTarget());
+                }
+            }
+            if (command.targets.Count == 0)
+            {
+                CommandController.RemoveCommand(command);
+            }
+        }
+    }
+
+    private CharacterCarrier FindNewAttackTarget()
+    {
+        if (PlayerTurn)
+        {
+            if (activeEnemies.Count == 0) return null;
+            return activeEnemies[activeEnemies.Count - 1];
+        }
+        else
+        {
+            if (activePlayers.Count == 0) return null;
+            return activePlayers[activePlayers.Count - 1];
+        }
+    }
+
+    private CharacterCarrier FindNewBuffTarget()
+    {
+        if (!PlayerTurn)
+        {
+            if (activeEnemies.Count == 0) return null;
+            return activeEnemies[activeEnemies.Count - 1];
+        }
+        else
+        {
+            if (activePlayers.Count == 0) return null;
+            return activePlayers[activePlayers.Count - 1];
         }
     }
 
@@ -271,7 +334,7 @@ public class BattleSystem : MonoBehaviour
                 }
             }
 
-            CommandController.AddCommand(new DummySkill(activeEnemies[i], Targets, SelectedSkill));
+            CommandController.AddCommand(new SkillCommand(activeEnemies[i], Targets, SelectedSkill));
             Targets.Clear();
         }
 
@@ -291,4 +354,10 @@ public class BattleSystem : MonoBehaviour
         nextPhase();
     }
 
+    public void EndUISet()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+        GameObject uiPrefab = Instantiate(Resources.Load("Battle/StageUI")) as GameObject;
+        EndUI = uiPrefab.GetComponent<EndUI>();
+    }
 }
