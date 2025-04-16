@@ -13,6 +13,7 @@ using UnityEngine;
 public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 {
     CurrencySaveData data;
+
     ActivityCurrencySO ActSO;
     float offTime;
     float Interval;
@@ -27,13 +28,18 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     private void Update()
     {
-        if (CurrencySaveDic[CurrencyType.Activity] < ActSO.MaxCount)
+        if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
         {
-            Interval += Time.deltaTime;
-            if (Interval > ActSO.AutoRecoveryPerMinute)
+            if (CurrencySaveDic[CurrencyType.Activity] < ActSO.MaxCount)
             {
-                Interval -= ActSO.AutoRecoveryPerMinute;
-                CurrencySaveDic[CurrencyType.Activity] += 1;
+                Interval += Time.deltaTime;
+                if (Interval > ActSO.AutoRecoveryPerMinute)
+                {
+                    TimeWhenNextCharge = ActSO.AutoRecoveryPerMinute - Interval;
+                    Interval -= ActSO.AutoRecoveryPerMinute;
+                    CurrencySaveDic[CurrencyType.Activity] += 1;
+                    Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
+                }
             }
         }
     }
@@ -43,8 +49,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     private void HaveData()
     {
-        ActSO = GlobalDatabase.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
         var SaveData = SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, "Currency");
+        
+
         if (SaveData != null && SaveData is CurrencySaveData instance)
         {
             data = instance;
@@ -54,6 +61,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             data = new CurrencySaveData()
             {
                 Savetype = SaveType.Currency,
+                UserLevel = 1,
+                UserEXP = 0,
                 ActivityValue = 100,
                 GachaValue = 0,
                 GoldValue = 0,
@@ -67,7 +76,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void OnApplicationQuit()
     {
-        if (GameSaveSystem.SaveDic.ContainsKey(SaveType.Currency))
+        if (SaveDataBase.Instance.SaveDic.ContainsKey(SaveType.Currency))
         {
             PlayerPrefs.SetString(LastTimeExitKey, DateTime.UtcNow.ToString("o"));
             Debug.Log(DateTime.UtcNow.ToString("o"));
@@ -77,20 +86,19 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     private void Start()
     {
+        ActSO = GlobalDatabase.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
         if (PlayerPrefs.HasKey(LastTimeExitKey))
         {
             Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
             DateTime last = DateTime.Parse(PlayerPrefs.GetString(LastTimeExitKey));
             DateTime Utc = last.ToUniversalTime();
             TimeSpan span = DateTime.UtcNow - Utc;
-            Debug.Log($"{DateTime.UtcNow} - {Utc} = {span}");
             offTime = (float)span.TotalSeconds;
             DisableAutoCharge(offTime);
         }
     }
     public void DisableAutoCharge(float offTime)
     {
-        TimeWhenNextCharge = (offTime % ActSO.AutoRecoveryPerMinute);
         CurrencySaveDic[CurrencyType.Activity] += (int)(offTime / ActSO.AutoRecoveryPerMinute);
         if (CurrencySaveDic[CurrencyType.Activity] >= ActSO.MaxCount)
         {
@@ -120,6 +128,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void DicSet()
     {
+        CurrencySaveDic[CurrencyType.UserLevel] = data.UserLevel;
+        CurrencySaveDic[CurrencyType.UserEXP] = data.UserEXP;
         CurrencySaveDic[CurrencyType.Gacha] = data.GachaValue;
         CurrencySaveDic[CurrencyType.Gold] = data.GoldValue;
         CurrencySaveDic[CurrencyType.Dia] = data.DIAValue;
@@ -130,10 +140,14 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         CurrencySaveData data = new CurrencySaveData()
         {
+            UserLevel = 1,
+            UserEXP = 0,
             GachaValue = CurrencySaveDic[CurrencyType.Gacha],
             GoldValue = CurrencySaveDic[CurrencyType.Gold],
             DIAValue = CurrencySaveDic[CurrencyType.Dia],
             ActivityValue = CurrencySaveDic[CurrencyType.Activity],
+            Savetype = SaveType.Currency,
+            ID = "Currency"
         };
         return data;
     }
@@ -141,6 +155,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void Save()
     {
-        SaveDataBase.Instance.SetSaveInstances(DicToSaveData(), SaveType.Currency);
+        SaveDataBase.Instance.SetSingleSaveInstance(DicToSaveData(), SaveType.Currency);
     }
 }

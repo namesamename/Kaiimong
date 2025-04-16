@@ -19,6 +19,8 @@ public class CharacterSaveData : SaveInstance
 [System.Serializable]
 public class CurrencySaveData : SaveInstance
 {
+    public int UserLevel;
+    public int UserEXP;
     public int GoldValue;
     public int DIAValue;
     public int GachaValue;
