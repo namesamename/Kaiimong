@@ -3,32 +3,31 @@ using UnityEngine;
 
 public class CommandController : MonoBehaviour
 {
-    //ICommand 필요없을듯
-    [SerializeField] private List<DummySkill> skillCommands = new List<DummySkill>();
+    [SerializeField] private List<SkillCommand> skillCommands = new List<SkillCommand>();
     public int Index = 0;
 
-    public List<DummySkill> SkillCommands { get { return skillCommands; } }
+    public List<SkillCommand> SkillCommands { get { return skillCommands; } set { skillCommands = value; } }
 
-    public void AddCommand(ICommand command)
+    public void AddCommand(SkillCommand command)
     {
-        skillCommands.Add(command as DummySkill);
+        skillCommands.Add(command);
         Debug.Log($"Command added: {command}, Total commands: {skillCommands.Count}");
     }
 
     public void ExecuteCommand()
     {
-        List<DummySkill> commandsToExecute = new List<DummySkill>(skillCommands);
+        List<SkillCommand> commandsToExecute = new List<SkillCommand>(skillCommands);
 
-        foreach (ICommand command in commandsToExecute)
+        foreach (SkillCommand command in commandsToExecute)
         {
             command.Execute(); 
             RemoveCommand(command);
         }
     }
 
-    public void RemoveCommand(ICommand command)
+    public void RemoveCommand(SkillCommand command)
     {
-        skillCommands.Remove(command as DummySkill);
+        skillCommands.Remove(command);
     }
 
     public void ClearList()

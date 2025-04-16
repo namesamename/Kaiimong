@@ -18,6 +18,9 @@ public class ItemData : ScriptableObject
 
     [Header("°ÔÀÓ ³» ¼öÄ¡")]
     public int MaxStackCount = 999;  // ÃÖ´ë ÁßÃ¸ ¼ö·®
+
+    [Header("È¹µæ °æ·Î")]
+    public string ObtainLocation;     // È¹µæ °æ·Î
 }
 
 public enum EItemType 

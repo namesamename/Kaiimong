@@ -42,7 +42,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
             }
         }
     }
-    public T GetSaveDataToID<T>(SaveType type, string Id ) where T :SaveInstance
+    public T GetSaveDataToID<T>(SaveType type, int Id ) where T :SaveInstance
     {
         if (SaveDic[type].Count > 0 && SaveDic.TryGetValue(type, out List<SaveInstance> Sava))
         {
@@ -86,7 +86,6 @@ public class SaveDataBase : Singleton<SaveDataBase>
             {
                 SaveList.Add(Data);
             }
-
         }
         else
         {
@@ -105,19 +104,15 @@ public class SaveDataBase : Singleton<SaveDataBase>
         {
             SavingList(characterDatas,SaveType.Character);
         }
-
         if (SaveDic.TryGetValue(SaveType.Currency, out List<SaveInstance> CurrencyDatas))
         {
             SavingList(CurrencyDatas, SaveType.Currency);
         }
-
-
     }
     public List<List<SaveInstance>> LoadAll()
     {
         //세이브리스트를 담은 리스트를 만듬
         List<List<SaveInstance>> SaveList = new List<List<SaveInstance>>();
-
         //이넘 타입에 따라서 풀게
         foreach (SaveType saveType in Enum.GetValues(typeof(SaveType)))
         {
@@ -163,11 +158,11 @@ public class SaveDataBase : Singleton<SaveDataBase>
 
     private List<SaveInstance> RemoveDuplicates(List<SaveInstance> saveList)
     {
-        Dictionary<string, SaveInstance> uniqueItems = new Dictionary<string, SaveInstance>();
+        Dictionary<int, SaveInstance> uniqueItems = new Dictionary<int, SaveInstance>();
 
         foreach (var item in saveList)
         {
-            string key = item.ID; 
+            int key = item.ID; 
             uniqueItems[key] = item;
         }
         return uniqueItems.Values.ToList();

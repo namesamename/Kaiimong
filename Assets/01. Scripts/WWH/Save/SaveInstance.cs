@@ -7,7 +7,7 @@ public interface ISavable
 public class SaveInstance 
 {
     public SaveType Savetype;
-    public string ID;
+    public int ID;
 }
 [System.Serializable]
 public class CharacterSaveData : SaveInstance
@@ -15,6 +15,8 @@ public class CharacterSaveData : SaveInstance
     public int Level;
     public int Recognition;
     public int Necessity;
+    public float CurHp;
+    public int SpecialMoveGauge;
 }
 [System.Serializable]
 public class CurrencySaveData : SaveInstance
@@ -25,4 +27,9 @@ public class CurrencySaveData : SaveInstance
     public int DIAValue;
     public int GachaValue;
     public int ActivityValue;
+}
+
+public class StageSaveData : SaveInstance
+{
+    public bool StageCleared;
 }

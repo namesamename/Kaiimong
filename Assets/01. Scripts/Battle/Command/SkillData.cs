@@ -11,9 +11,9 @@ public class SkillData : ScriptableObject
     public float[] hitTiming;
     public Sprite icon;
 
-    public void Execute(Character unit, List<Character> targets)
+    public void Execute(CharacterCarrier unit, List<CharacterCarrier> targets)
     {
-        foreach (Character target in targets)
+        foreach (CharacterCarrier target in targets)
         {
             Debug.Log($"{unit.stat.agilityStat}À¯´ÖÀÌ {target.stat.agilityStat}Å¸°Ù¿¡°Ô ¹«¾ð°¡¹º°¡¹¹°¡");
         }

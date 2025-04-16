@@ -11,6 +11,8 @@ public enum SaveType
     //저장목록들
     Character,
     Currency,
+    Stage,
+
 }
 public static class GameSaveSystem
 {
