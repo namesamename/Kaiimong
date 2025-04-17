@@ -68,31 +68,31 @@ public class SaveDataBase : Singleton<SaveDataBase>
         return null;
     }
 
-    /// <summary>
-    /// 한 종류의 세이브 저장이 아님
-    /// </summary>
-    /// <param name="Data"></param>
-    /// <param name="SaveType"></param>
-    public void SetSingleSaveInstance(SaveInstance Data, SaveType SaveType) 
-    {
-        if(SaveDic.TryGetValue(SaveType, out List<SaveInstance> SaveList))
-        {
-            int Index = SaveList.FindIndex(x => x.ID == Data.ID);
-            if (Index != -1)
-            {
-                SaveList[Index] = Data;
-            }
-            else
-            {
-                SaveList.Add(Data);
-            }
-        }
-        else
-        {
-            SaveDic[SaveType] = new List<SaveInstance>
-            {Data};
-        }
-    }
+    ///// <summary>
+    ///// 한 종류의 세이브 저장이 아님
+    ///// </summary>
+    ///// <param name="Data"></param>
+    ///// <param name="SaveType"></param>
+    //public void SetSingleSaveInstance(SaveInstance Data, SaveType SaveType) 
+    //{
+    //    if(SaveDic.TryGetValue(SaveType, out List<SaveInstance> SaveList))
+    //    {
+    //        int Index = SaveList.FindIndex(x => x.ID == Data.ID);
+    //        if (Index != -1)
+    //        {
+    //            SaveList[Index] = Data;
+    //        }
+    //        else
+    //        {
+    //            SaveList.Add(Data);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        SaveDic[SaveType] = new List<SaveInstance>
+    //        {Data};
+    //    }
+    //}
     public  void SavingList(List<SaveInstance> SaveList, SaveType SaveType)
     {
         RemoveDuplicates(SaveList);

@@ -110,6 +110,6 @@ public class CharacterCarrier : MonoBehaviour , ISavable
 
     public void Save()
     {
-        SaveDataBase.Instance.SetSingleSaveInstance(CharacterSaveData, SaveType.Character);  
+        SaveDataBase.Instance.SaveSingleData(CharacterSaveData);  
     }
 }
