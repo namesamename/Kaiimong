@@ -30,6 +30,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         character.Initialize();
         skill.Initialize();
         currency.Initialize();
+        Stage.Initialize();
 
     }
 

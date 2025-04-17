@@ -44,7 +44,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
     }
     public T GetSaveDataToID<T>(SaveType type, int Id ) where T :SaveInstance
     {
-        if (SaveDic[type].Count > 0 && SaveDic.TryGetValue(type, out List<SaveInstance> Sava))
+        if (SaveDic.TryGetValue(type, out List<SaveInstance> Sava)&& SaveDic[type].Count > 0 )
         {
             SaveInstance save = Sava.Find(x => x.ID == Id);
             if (save is T Instance)

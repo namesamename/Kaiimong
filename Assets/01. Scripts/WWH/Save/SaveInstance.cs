@@ -23,6 +23,7 @@ public class CurrencySaveData : SaveInstance
 {
     public int UserLevel;
     public int UserEXP;
+    public int CharacterEXP;
     public int GoldValue;
     public int DIAValue;
     public int GachaValue;
