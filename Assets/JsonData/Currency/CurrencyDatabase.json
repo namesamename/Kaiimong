@@ -4,12 +4,12 @@
       "$type": "CurrencySaveData, Assembly-CSharp",
       "UserLevel": 1,
       "UserEXP": 0,
-      "GoldValue": 400,
+      "GoldValue": 200,
       "DIAValue": 0,
       "GachaValue": 0,
       "ActivityValue": 100,
       "Savetype": 1,
-      "ID": "Currency"
+      "ID": 0
     }
   ]
 }

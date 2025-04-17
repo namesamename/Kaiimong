@@ -8,7 +8,8 @@ public enum CurrencyType
     Gold,
     Gacha,
     Activity,
-    Dia
+    Dia,
+    CharacterEXP,
 }
 
 public class CurrencySO : SO
