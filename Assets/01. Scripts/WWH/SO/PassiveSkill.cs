@@ -10,13 +10,6 @@ public enum PassiveType
     Other
 }
 
-public interface IPassivable
-{
-    public bool IsOk();
-    public void PassiveOn();
-}
-
-
 public class PassiveSkill : SO
 {
     public PassiveType PassiveType;

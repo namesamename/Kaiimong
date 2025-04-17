@@ -103,7 +103,6 @@ public class CharacterCarrier : MonoBehaviour , ISavable
     public void SetstatToLevel(int ID, int Level )
     {
         stat.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(ID), Level);
-
     }
 
 

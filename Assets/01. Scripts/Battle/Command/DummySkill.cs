@@ -14,7 +14,7 @@ public class DummySkill : ICommand //DummySkillCommand
     }
     public void Execute()
     {
-        unit.skillBook.SkillUsing(skillData, targets);
+        unit.skillBook.ActiveSkillUsing(skillData, targets);
     }
 
     public void Undo()
