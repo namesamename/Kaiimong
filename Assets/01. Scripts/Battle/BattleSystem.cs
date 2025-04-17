@@ -23,7 +23,7 @@ public class BattleSystem : MonoBehaviour
 
     [Header("BattleInfo")]
     public int TurnIndex = 0;
-    public SkillObject SelectedSkill;
+    public ActiveSkillObject SelectedSkill;
     public List<CharacterCarrier> Targets;
     private float betweenPhaseTime;
 
@@ -301,8 +301,8 @@ public class BattleSystem : MonoBehaviour
     {
         for (int i = 0; i < activeEnemies.Count; i++)
         {
-            int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillBook.SkillList.Length);
-            SelectedSkill = activeEnemies[i].skillBook.SkillList[randomSkill];
+            int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillBook.ActiveSkillList.Length);
+            SelectedSkill = activeEnemies[i].skillBook.ActiveSkillList[randomSkill];
             if (SelectedSkill.skillSO.IsBuff)
             {
                 if (SelectedSkill.skillSO.isSingleAttack)

@@ -90,15 +90,15 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "Char/";
         }
-        else if (SheetId == "Skill")
+        else if (SheetId == "ActiveSkill")
         {
             Directory = "Skil/";
         }
-        else if (SheetId == "버프")
+        else if (SheetId == "Debuff")
         {
             Directory = "Debu/";
         }
-        else if (SheetId == "디버프")
+        else if (SheetId == "Buff")
         {
             Directory = "Buff/";
         }

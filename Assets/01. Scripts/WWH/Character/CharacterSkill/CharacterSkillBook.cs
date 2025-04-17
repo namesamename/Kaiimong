@@ -5,24 +5,24 @@ using UnityEngine;
 public class CharacterSkillBook : MonoBehaviour
 {
 
-    public SkillObject[] SkillList = new SkillObject[3];
-
-    public string[] SkillId = new string[3];
-
+    public ActiveSkillObject[] ActiveSkillList = new ActiveSkillObject[3];
+   // public PassiveSkillObject[] PassiveSkillList = new PassiveSkillObject[3];
     private void Awake()
     {
-        SkillList = GetComponentsInChildren<SkillObject>();
+        ActiveSkillList = GetComponentsInChildren<ActiveSkillObject>();
+       // PassiveSkillList =GetComponentsInChildren<PassiveSkillObject>();
     }
    
 
     public void SkillSet(int ID)
     {
-        for (int i = 0; i < SkillList.Length; i++)
+        for (int i = 0; i < ActiveSkillList.Length; i++)
         {
-            //SkillList[i].SetSkill();
+            ActiveSkillList[i].SetSkill(ID + i);
+
         }
     }
-    public void SkillUsing(SkillObject skill, List<CharacterCarrier> characters)
+    public void SkillUsing(ActiveSkillObject skill, List<CharacterCarrier> characters)
     {
         //여러가지 처리
         //마나, 쿨타임, 사용 가능한가 불가능 한가
@@ -31,7 +31,7 @@ public class CharacterSkillBook : MonoBehaviour
         skill.UseSkill(characters);
     }
 
-    public bool IsCoolTime(SkillObject skill)
+    public bool IsCoolTime(ActiveSkillObject skill)
     {
         if (skill.GetCoolTime() == 0)
         { 
@@ -47,9 +47,9 @@ public class CharacterSkillBook : MonoBehaviour
 
     public void SetCoolTimeDown()
     {
-        for (int i = 0; i < SkillList.Length; i++)
+        for (int i = 0; i < ActiveSkillList.Length; i++)
         {
-            SkillList[i].CoolTimeDown();
+            ActiveSkillList[i].CoolTimeDown();
         }
     }
 
