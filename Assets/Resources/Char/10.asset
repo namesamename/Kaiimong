@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 10
   Name: "\uCC28"
-  Grade: B
+  Grade: 2
   Health: 1200
   Attack: 220
   Defense: 0
   Speed: 98
   CriticalPer: 0.05
   CriticalAttack: 1.38
+  IsEquiped: 0

@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 11
   Name: "\uCE74"
-  Grade: B
+  Grade: 2
   Health: 1100
   Attack: 230
   Defense: 0
   Speed: 104
   CriticalPer: 0.052
   CriticalAttack: 1.37
+  IsEquiped: 0
