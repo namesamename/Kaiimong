@@ -16,6 +16,8 @@ public class Character : SO
     public int Speed;
     public float CriticalPer;
     public float CriticalAttack;
+
+    
     public bool IsEquiped = false;
 
 }

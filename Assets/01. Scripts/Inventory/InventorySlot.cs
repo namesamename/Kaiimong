@@ -81,7 +81,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         if (item == null) return;                             // 아이템이 비어있으면 무시
 
-        GameObject popupObj = UIManager.Instance.ShowPopup("ItemInfoPopup");    // UIManager의 ShowPopup 함수 호출
+        //GameObject popupObj = UIManager.Instance.ShowPopup<Itemi>("ItemInfoPopup");    // UIManager의 ShowPopup 함수 호출
 
     }
 }

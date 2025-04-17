@@ -1,6 +1,6 @@
 using UnityEngine;
-using TMPro;
-using static GatchaManager;
+
+
 
 public class GatchaExecutor : MonoBehaviour
 {
@@ -39,8 +39,10 @@ public class GatchaExecutor : MonoBehaviour
     private void Draw(int count)
     {
         var mgr = GatchaManager.Instance;
+        var CurManager = CurrencyManager.Instance;
 
-        int useTicket = Mathf.Min(count, mgr.ticket);
+
+        int useTicket = Mathf.Min(count, CurManager.GetCurrency(CurrencyType.Gacha));
         int needCrystal = (count - useTicket) * 160;
 
         if (mgr.crystal < needCrystal)
@@ -52,7 +54,9 @@ public class GatchaExecutor : MonoBehaviour
         mgr.ticket -= useTicket;
         mgr.crystal -= needCrystal;
 
-
+        CurManager.SetCurrency(CurrencyType.Gacha, -useTicket);
+        CurManager.SetCurrency(CurrencyType.Dia, -needCrystal);
+  
         Debug.Log($"{mgr.currentGachaType} Gatcha {count}time sucess!");
         Debug.Log($"¼ÒºñµÈ Æ¼ÄÏ: {useTicket}, Å©¸®½ºÅ»: {needCrystal}");
 
@@ -62,6 +66,7 @@ public class GatchaExecutor : MonoBehaviour
             Debug.Log($" [{result.grade}] {result.name} È¹µæ!");
         }
 
+        CurManager.Save();
         // TODO: ½ÇÁ¦ »Ì±â °á°ú ·ÎÁ÷ ¿¬°á
     }
 }

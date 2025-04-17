@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1832c52913bcd3444b37dd78e7475ba7, type: 3}
-  m_Name: GachaTicket
+  m_Script: {fileID: 11500000, guid: 6ff6089cd330dcb4fbbc92b98530619d, type: 3}
+  m_Name: CharEXP
   m_EditorClassIdentifier: 
   ID: 0
   Name: 
   Description: 
   IconPath: 
-  MaxCount: 9999999
+  MaxCount: 999
   Value: 0
-  CurrencyType: 3
+  CurrencyType: 0
   exchangeInfos: []

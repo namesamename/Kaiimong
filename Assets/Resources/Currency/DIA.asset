@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb77704aaa4ee8f4e8ed2614340b2f42, type: 3}
   m_Name: DIA
   m_EditorClassIdentifier: 
-  ID: 
+  ID: 0
   Name: 
   Description: 
   IconPath: 
-  MaxCount: 9999
+  MaxCount: 9999999
   Value: 0
   CurrencyType: 5
   exchangeInfos: []
