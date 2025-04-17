@@ -9,15 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a77f04e01116b4f82385ed165b2c0e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c274796e258ba9449b5ed9cb714647d, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: 
   ID: 3
-  Name: "\uB2E4"
-  Grade: S
-  Health: 1400
-  Attack: 260
-  Defense: 0
-  Speed: 102
-  CriticalPer: 0.06
-  CriticalAttack: 1.45
+  Type: 4
+  Value: 2
+  Turn: 2

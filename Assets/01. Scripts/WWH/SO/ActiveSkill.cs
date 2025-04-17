@@ -21,12 +21,14 @@ public enum SkillTargetType
 
 
 
-public class Skill : SO
+public class ActiveSkill : SO
 {
     public SkillType Type;
     public SkillTargetType Target;
     public int TargetCount;
     public float Attack;
+    public int BuffID;
+
 
     public string Name;
     public bool isSingleAttack;
@@ -35,7 +37,7 @@ public class Skill : SO
     public float[] hitTiming;
     public Sprite icon;
 
-    public string buffSkillId;
+
     public bool IsMuti;
     public bool IsHeal;
     public bool IsBuff;

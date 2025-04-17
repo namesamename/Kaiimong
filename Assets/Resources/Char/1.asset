@@ -19,5 +19,5 @@ MonoBehaviour:
   Attack: 250
   Defense: 0
   Speed: 100
-  CriticalPer: 6.7
+  CriticalPer: 0.067
   CriticalAttack: 1.46

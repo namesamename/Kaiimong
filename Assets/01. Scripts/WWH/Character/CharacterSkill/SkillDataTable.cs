@@ -6,31 +6,31 @@ using UnityEngine.TextCore.Text;
 
 public class SkillDataTable
 {
-   public Dictionary<int, Skill> SkillDataDic = new Dictionary<int, Skill>();
+   public Dictionary<int, ActiveSkill> SkillDataDic = new Dictionary<int, ActiveSkill>();
 
-    public Dictionary<int, BuffSkillSO> BuffskillDic = new Dictionary<int, BuffSkillSO>();
-    public Dictionary<int, DebuffSkillSO> DebuffskillDic = new Dictionary<int, DebuffSkillSO>();
+    public Dictionary<int, Buff> BuffskillDic = new Dictionary<int, Buff>();
+    public Dictionary<int, Debuff> DebuffskillDic = new Dictionary<int, Debuff>();
     public void Initialize()
     {
-        Skill[] skillSO = Resources.LoadAll<Skill>("Skil");
-        DebuffSkillSO[] DebuffSO = Resources.LoadAll<DebuffSkillSO>("Debu");
-        BuffSkillSO[] BuffSO = Resources.LoadAll<BuffSkillSO>("Buff");
+        ActiveSkill[] skillSO = Resources.LoadAll<ActiveSkill>("Skil");
+        Debuff[] DebuffSO = Resources.LoadAll<Debuff>("Debu");
+        Buff[] BuffSO = Resources.LoadAll<Buff>("Buff");
 
-        foreach (Skill skill in skillSO)
+        foreach (ActiveSkill skill in skillSO)
         {
             SkillDataDic[skill.ID] = skill;
         }
-        foreach (DebuffSkillSO skill in DebuffSO)
+        foreach (Debuff skill in DebuffSO)
         {
-            DebuffskillDic[skill.Id] = skill;
+            DebuffskillDic[skill.ID] = skill;
         }
-        foreach (BuffSkillSO skill in BuffSO)
+        foreach (Buff skill in BuffSO)
         {
-            BuffskillDic[skill.Id] = skill;
+            BuffskillDic[skill.ID] = skill;
         }
     }
 
-    public Skill GetSkillSOToID(int SkillId)
+    public ActiveSkill GetSkillSOToID(int SkillId)
     {
         if (SkillDataDic[SkillId] != null && SkillDataDic.ContainsKey(SkillId))
         {
@@ -42,7 +42,7 @@ public class SkillDataTable
             return null;
         }
     }
-    public DebuffSkillSO GetDebuffToID(int id)
+    public Debuff GetDebuffToID(int id)
     {
         if (DebuffskillDic[id] != null && DebuffskillDic.ContainsKey(id))
         {
@@ -54,7 +54,7 @@ public class SkillDataTable
             return null;
         }
     }
-    public BuffSkillSO GetBuffToID(int id)
+    public Buff GetBuffToID(int id)
     {
         if (BuffskillDic[id] != null && BuffskillDic.ContainsKey(id))
         {

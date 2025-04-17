@@ -17,13 +17,13 @@ MonoBehaviour:
   Target: 1
   TargetCount: 1
   Attack: 1
+  BuffID: 0
   Name: 
   isSingleAttack: 0
   attackCount: 0
   damage: 
   hitTiming: []
   icon: {fileID: 0}
-  buffSkillId: 
   IsMuti: 0
   IsHeal: 0
   IsBuff: 0

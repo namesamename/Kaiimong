@@ -4,25 +4,12 @@ using UnityEngine;
 
 public class SkillObject : MonoBehaviour
 {
-    public Skill skillSO;
+    public ActiveSkill skillSO;
     private float CurCooltime;
 
     public void SetSkill(int id)
     {
         skillSO=  GlobalDataTable.Instance.skill.GetSkillSOToID(id);
-
-        if (skillSO.buffSkillId != null)
-        {
-            if(skillSO.Type == SkillType.buff)
-            {
-                //buffSkillSO = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(skillSO.buffSkillId));
-            }
-            if (skillSO.Type == SkillType.debuff)
-            {
-                //debuffSkillSO = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(skillSO.buffSkillId));
-            }
-        }
-
     }
 
 
@@ -46,16 +33,14 @@ public class SkillObject : MonoBehaviour
             foreach (CharacterCarrier c in targetcharacter)
             {
                 CharacterStat stat = GetComponentInParent<CharacterStat>();
-                float AllDamage = skillSO.Attack;
-                if (stat.criticalPerStat.Value < Random.Range(0.0f, 100.0f))
+                float AllDamage = skillSO.Attack * stat.attackStat.GetStat();
+                if (stat.criticalPerStat.Value < Random.Range(0.000f, 1f))
                 {
-                    AllDamage = stat.attackStat.Value * stat.criticalAttackStat.Value;
+                    AllDamage = AllDamage * stat.criticalAttackStat.Value;
+                    Debug.Log("Å©¸®Æ¼ÄÃ ¶ä¤§¤§");
                 }
 
                 c.stat.TakeDamage( AllDamage);
-            
-            
-            
             
             }
         }
