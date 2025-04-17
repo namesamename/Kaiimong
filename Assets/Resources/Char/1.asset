@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1
   Name: "\uAC00"
-  Grade: S
+  Grade: 0
   Health: 1600
   Attack: 250
   Defense: 0
   Speed: 100
-  CriticalPer: 6.7
+  CriticalPer: 0.067
   CriticalAttack: 1.46
+  IsEquiped: 0

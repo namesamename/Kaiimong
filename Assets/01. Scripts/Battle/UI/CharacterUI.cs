@@ -77,7 +77,7 @@ public class CharacterUI : MonoBehaviour
     void OnClickSkillButton(Button button)
     {
         int skillNum = buttonList.IndexOf(button);
-        battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.SkillList[skillNum];
+        battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
         battleSystem.SkillChanged?.Invoke();
         battleSystem.OnSkillSelected();
     }
@@ -145,9 +145,9 @@ public class CharacterUI : MonoBehaviour
 
     void SetSkillButton()
     {
-        for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillBook.SkillList.Length; i++)
+        for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList.Length; i++)
         {
-            buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillBook.SkillList[i].skillSO.icon;
+            buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
         }
     }
 

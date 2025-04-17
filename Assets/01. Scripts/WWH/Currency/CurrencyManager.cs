@@ -62,9 +62,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 UserLevel = 1,
                 UserEXP = 0,
                 ActivityValue = 100,
-                GachaValue = 0,
+                GachaValue = 10000,
                 GoldValue = 0,
-                DIAValue = 0,
+                DIAValue = 99999,
                 CharacterEXP = 0,
                 ID = 0
             };
@@ -156,6 +156,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void Save()
     {
-        SaveDataBase.Instance.SetSingleSaveInstance(DicToSaveData(), SaveType.Currency);
+        SaveDataBase.Instance.SaveSingleData(DicToSaveData());
     }
 }

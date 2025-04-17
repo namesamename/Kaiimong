@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 8
   Name: "\uC544"
-  Grade: A
+  Grade: 1
   Health: 1200
   Attack: 245
   Defense: 0
   Speed: 97
-  CriticalPer: 5.4
+  CriticalPer: 0.054
   CriticalAttack: 1.48
+  IsEquiped: 0

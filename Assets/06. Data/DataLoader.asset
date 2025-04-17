@@ -17,5 +17,9 @@ MonoBehaviour:
   datas:
   - className: Character
     sheetId: 0
-  - className: Skill
+  - className: ActiveSkill
     sheetId: 65023910
+  - className: Buff
+    sheetId: 1160731269
+  - className: Debuff
+    sheetId: 1386035039

@@ -7,11 +7,14 @@ public class CharacterCarrier : MonoBehaviour , ISavable
 
     [HideInInspector]
     public CharacterSkillBook skillBook;
+    [HideInInspector]
     public CharacterStat stat;
+    [HideInInspector]
     public CharacterVisual visual;
-
-    public GameObject SelectEffect;
+    [HideInInspector]
     public CharacterSaveData CharacterSaveData;
+    public GameObject SelectEffect;
+
 
     private void Awake()
     {
@@ -19,7 +22,6 @@ public class CharacterCarrier : MonoBehaviour , ISavable
         skillBook =GetComponentInChildren<CharacterSkillBook>();
         stat = GetComponentInChildren<CharacterStat>();
         visual = GetComponentInChildren<CharacterVisual>();
-
         CharacterSaveData = new CharacterSaveData();
 
     }
@@ -67,6 +69,7 @@ public class CharacterCarrier : MonoBehaviour , ISavable
         CharacterSaveData.Recognition = saveData.Recognition;
         CharacterSaveData.Necessity = saveData.Necessity;
         CharacterSaveData.CurHp = stat.healthStat.Value;
+        CharacterSaveData.SpecialMoveGauge  = saveData.SpecialMoveGauge;
         SetStat();
         SetVisual();
         skillBook.SkillSet(CharacterSaveData.ID);

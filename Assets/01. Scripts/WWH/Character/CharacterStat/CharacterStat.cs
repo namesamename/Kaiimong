@@ -12,7 +12,8 @@ public enum StatType
     Agility,
     Health,
     CriticalPer,
-    CriticalAttack
+    CriticalAttack,
+    invincible,
 }
 
 
@@ -28,6 +29,8 @@ public class CharacterStat : MonoBehaviour
     public Dictionary<StatType, BaseStat> statDict;
 
     public Action OnDeath;
+
+    private int BuffTurn = 0;
 
 
     private void Awake()
@@ -65,11 +68,20 @@ public class CharacterStat : MonoBehaviour
 
     public void TakeDamage(float Amount)
     {
-        //healthStat.AddStat(Amount);
-        //if(healthStat.Value == 0)
-        //{
-        //    OnDie();
-        //}
+        if(defenseStat.GetStat() - Amount <=0)
+        {
+            healthStat.CurHealth -= 1f;
+        }
+        else
+        {
+            healthStat.CurHealth -= defenseStat.GetStat() - Amount;
+        }
+        
+        if(healthStat.CurHealth<=0)
+        {
+            OnDie();
+        }
+     
     }
     public void OnDie()
     {
@@ -77,6 +89,14 @@ public class CharacterStat : MonoBehaviour
         OnDeath?.Invoke();
     }
     
+
+    public void SetBufftimeDown()
+    {
+        if(BuffTurn != 0)
+        {
+            BuffTurn--;
+        }
+    }
 
     public BaseStat EnumChanger(StatType statType)
     {
@@ -100,54 +120,35 @@ public class CharacterStat : MonoBehaviour
     }
 
 
-    public void Buff(Skill Skill)
+    public void Buff(ActiveSkill Skill)
     {
-        string effectName;
-        int duration;
-
-        if (Skill.Type == SkillType.buff)
+        float Attack;
+        if (Skill.Type == SkillType.buff && Skill.BuffID != 0)
         {
-            //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Name);
-            //duration = GlobalDatabase.Instance.skill.GetBuffToID(int.Parse(Skill.buffSkillId)).Duration;
+            BuffTurn = GlobalDataTable.Instance.skill.GetBuffToID(Skill.BuffID).Turn;
+            Attack = GlobalDataTable.Instance.skill.GetBuffToID(Skill.BuffID).Value;
+            BaseStat stat = EnumChanger(GlobalDataTable.Instance.skill.GetBuffToID(Skill.BuffID).Type);
+            buffStart(stat,Attack,BuffTurn,SkillType.buff);
         }
-        else
+        else if(Skill.Type == SkillType.debuff && Skill.BuffID != 0)
         {
-            //effectName = Utility.KoreanValueChanger(GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Name);
-            //duration = GlobalDatabase.Instance.skill.GetDebuffToID(int.Parse(Skill.buffSkillId)).Duration;
+            BuffTurn = GlobalDataTable.Instance.skill.GetDebuffToID(Skill.BuffID).Turn;
+            Attack = GlobalDataTable.Instance.skill.GetDebuffToID(Skill.BuffID).Value;
+            BaseStat stat = EnumChanger(GlobalDataTable.Instance.skill.GetDebuffToID(Skill.BuffID).Type);
+            buffStart(stat, Attack, BuffTurn, SkillType.debuff);
         }
+    
 
-        //if (Enum.TryParse(effectName, out StatType statType))
-        //{
-        //    BaseStat stat = EnumChanger(statType);
-        //    StartCoroutine(buffStart(stat, Skill, duration));
-        //}
-        //else
-        //{
-        //    Debug.Log("Can't Exist StatType");
-        //}
     }
-   
-
-    public IEnumerator buffStart(BaseStat stat, Skill skill, int Duration)
+    public IEnumerator buffStart(BaseStat stat, float Attack, int duration, SkillType skill)
     {
-        float Damage = skill.Attack * this.attackStat.Value;
-
-        if (skill.Type == SkillType.debuff)//디버프 아이디면
+        if(skill == SkillType.debuff)
         {
-            for(int i = 0; skill.damage.Length < i;  i++)
-            {
-                Damage = -Damage;
-            }
+            Attack = -Attack;
         }
-        if (skill.IsMuti)
-        {stat.AddMultiples(Damage);}
-        else
-        {stat.AddStat(Damage);}
-        yield return Duration <= 0; //나중에 턴수로 판단
-        if (skill.IsMuti)
-        {stat.AddMultiples(-Damage);}
-        else
-        {stat.AddStat(-Damage);}
+        stat.AddMultiples(Attack);
+        yield return duration <= 0;
+        stat.AddMultiples(-Attack);
     }
 
    

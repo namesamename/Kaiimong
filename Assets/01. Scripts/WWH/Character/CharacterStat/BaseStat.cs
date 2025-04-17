@@ -42,4 +42,6 @@ public class BaseStat : MonoBehaviour
         return (Value * ValueMultiples).ToString("F0");
     }
 
+  
+
 }

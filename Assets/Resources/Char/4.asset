@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 4
   Name: "\uB77C"
-  Grade: S
+  Grade: 0
   Health: 1300
   Attack: 265
   Defense: 0
   Speed: 101
-  CriticalPer: 6.3
+  CriticalPer: 0.063
   CriticalAttack: 1.47
+  IsEquiped: 0

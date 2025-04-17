@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 public class DummySkill : ICommand //DummySkillCommand
 {
-    public SkillObject skillData;
+    public ActiveSkillObject skillData;
     public CharacterCarrier unit;
     public List<CharacterCarrier> targets;
 
-    public DummySkill(CharacterCarrier unit, List<CharacterCarrier> targets, SkillObject skillData)
+    public DummySkill(CharacterCarrier unit, List<CharacterCarrier> targets, ActiveSkillObject skillData)
     {
         this.targets = new List<CharacterCarrier>(targets);
         this.unit = unit;
