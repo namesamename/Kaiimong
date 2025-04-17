@@ -96,6 +96,17 @@ public class CharacterCarrier : MonoBehaviour , ISavable
 
     }
 
+    public void SetstatToLevel(int Level, int ID)
+    {
+        stat.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(ID));
+        stat.attackStat.Value += Level;
+        stat.healthStat.Value += Level;
+        stat.agilityStat.Value += Level;
+        stat.criticalAttackStat.Value += (float)(Level * 0.01);
+        stat.criticalPerStat.Value += (float)(Level * 0.01);
+        stat.defenseStat.Value += Level;
+    }
+
     /// <summary>
     /// Ω∫≈» √ ±‚»≠
     /// </summary>

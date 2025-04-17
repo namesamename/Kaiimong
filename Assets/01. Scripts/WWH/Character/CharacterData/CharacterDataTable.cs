@@ -29,8 +29,6 @@ public class CharacterDataTable
             return null;
         }
     }
-
-
     //캐릭터 아이디로 생성
     public GameObject CharacterInstanceSummon(Character character, Vector3 pos, Transform parent = null)
     {
@@ -47,6 +45,15 @@ public class CharacterDataTable
     {
         GameObject Character = CharacterInstanceSummon(GetCharToID(saveData.ID), pos, parent);
         return Character;
+    }
+
+    public GameObject CharacterSummonToIDandLevel(int ID, int Level)
+    {
+        Character character = GetCharToID(ID);
+        GameObject game = CharacterInstanceSummon(character, Vector3.zero);
+        game.GetComponent<CharacterCarrier>().SetstatToLevel(Level,ID);
+        return game;
+
     }
 
 
