@@ -140,8 +140,6 @@ public class CharacterStat : MonoBehaviour
     
 
     }
-
-
     public IEnumerator buffStart(BaseStat stat, float Attack, int duration, SkillType skill)
     {
         if(skill == SkillType.debuff)
@@ -151,10 +149,6 @@ public class CharacterStat : MonoBehaviour
         stat.AddMultiples(Attack);
         yield return duration <= 0;
         stat.AddMultiples(-Attack);
-        
-
-
-
     }
 
    

@@ -6,20 +6,25 @@ using UnityEngine.TextCore.Text;
 
 public class SkillDataTable
 {
-   public Dictionary<int, ActiveSkill> SkillDataDic = new Dictionary<int, ActiveSkill>();
-
+   public Dictionary<int, ActiveSkill> ActSkillDataDic = new Dictionary<int, ActiveSkill>();
+    //public Dictionary<int, PassiveSkill> PasSkillDataDic = new Dictionary<int, PassiveSkill>();
     public Dictionary<int, Buff> BuffskillDic = new Dictionary<int, Buff>();
     public Dictionary<int, Debuff> DebuffskillDic = new Dictionary<int, Debuff>();
     public void Initialize()
     {
-        ActiveSkill[] skillSO = Resources.LoadAll<ActiveSkill>("Skil");
+        ActiveSkill[] ActSO = Resources.LoadAll<ActiveSkill>("ActS");
+        //PassiveSkill[] PasSO = Resources.LoadAll<PassiveSkill>("PasS");
         Debuff[] DebuffSO = Resources.LoadAll<Debuff>("Debu");
         Buff[] BuffSO = Resources.LoadAll<Buff>("Buff");
 
-        foreach (ActiveSkill skill in skillSO)
+        foreach (ActiveSkill skill in ActSO)
         {
-            SkillDataDic[skill.ID] = skill;
+            ActSkillDataDic[skill.ID] = skill;
         }
+        //foreach (PassiveSkill skill in PasSO)
+        //{
+        //    PasSkillDataDic[skill.ID] = skill;
+        //}
         foreach (Debuff skill in DebuffSO)
         {
             DebuffskillDic[skill.ID] = skill;
@@ -30,11 +35,11 @@ public class SkillDataTable
         }
     }
 
-    public ActiveSkill GetSkillSOToID(int SkillId)
+    public ActiveSkill GetActSkillSOToID(int SkillId)
     {
-        if (SkillDataDic[SkillId] != null && SkillDataDic.ContainsKey(SkillId))
+        if (ActSkillDataDic.ContainsKey(SkillId) && ActSkillDataDic[SkillId] != null)
         {
-            return SkillDataDic[SkillId];
+            return ActSkillDataDic[SkillId];
         }
         else
         {
@@ -42,9 +47,22 @@ public class SkillDataTable
             return null;
         }
     }
+
+    //public PassiveSkill GetPasSkillSOToID(int SkillId)
+    //{
+    //    if (PasSkillDataDic.ContainsKey(SkillId) && PasSkillDataDic[SkillId] != null)
+    //    {
+    //        return PasSkillDataDic[SkillId];
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("This ID is incorrect");
+    //        return null;
+    //    }
+    //}
     public Debuff GetDebuffToID(int id)
     {
-        if (DebuffskillDic[id] != null && DebuffskillDic.ContainsKey(id))
+        if( DebuffskillDic.ContainsKey(id) && DebuffskillDic[id] != null  )
         {
             return DebuffskillDic[id];
         }
@@ -56,7 +74,7 @@ public class SkillDataTable
     }
     public Buff GetBuffToID(int id)
     {
-        if (BuffskillDic[id] != null && BuffskillDic.ContainsKey(id))
+        if (BuffskillDic.ContainsKey(id) && BuffskillDic[id] != null)
         {
             return BuffskillDic[id];
         }
