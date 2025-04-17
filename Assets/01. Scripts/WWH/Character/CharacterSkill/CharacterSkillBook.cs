@@ -6,19 +6,21 @@ public class CharacterSkillBook : MonoBehaviour
 {
 
     public ActiveSkillObject[] ActiveSkillList = new ActiveSkillObject[3];
-   // public PassiveSkillObject[] PassiveSkillList = new PassiveSkillObject[3];
+    public ISkillable[] SkillList = new ActiveSkillObject[6];
+    // public PassiveSkillObject[] PassiveSkillList = new PassiveSkillObject[3];
     private void Awake()
     {
+        SkillList = GetComponentsInChildren<ISkillable>();
         ActiveSkillList = GetComponentsInChildren<ActiveSkillObject>();
-       // PassiveSkillList =GetComponentsInChildren<PassiveSkillObject>();
+
     }
    
 
     public void SkillSet(int ID)
     {
-        for (int i = 0; i < ActiveSkillList.Length; i++)
+        for (int i = 0; i < SkillList.Length; i++)
         {
-            ActiveSkillList[i].SetSkill(ID + i);
+            SkillList[i].SetSkill(ID + i);
 
         }
     }
@@ -28,6 +30,7 @@ public class CharacterSkillBook : MonoBehaviour
         //마나, 쿨타임, 사용 가능한가 불가능 한가
         if (!IsCoolTime(skill))
             return;
+
         skill.UseSkill(characters);
     }
 

@@ -23,6 +23,7 @@ public class CharacterCarrier : MonoBehaviour , ISavable
         stat = GetComponentInChildren<CharacterStat>();
         visual = GetComponentInChildren<CharacterVisual>();
         CharacterSaveData = new CharacterSaveData();
+        CharacterSaveData.Savetype = SaveType.Character;
 
     }
     private void Start()
@@ -35,7 +36,7 @@ public class CharacterCarrier : MonoBehaviour , ISavable
         //캐릭터 초기화
         CharacterSaveData.ID = Id;
         HaveData();
-        SetStat();
+        SetstatToLevel(CharacterSaveData.ID, CharacterSaveData.Level);
         SetVisual();
         //스킬 초기화
         skillBook.SkillSet(CharacterSaveData.ID);
@@ -55,7 +56,7 @@ public class CharacterCarrier : MonoBehaviour , ISavable
     /// <returns></returns>
     public CharacterSaveData CreatNewData()
     {
-        SaveDataBase.Instance.SetSingleSaveInstance(CharacterSaveData, SaveType.Character);
+        SaveDataBase.Instance.SaveSingleData(CharacterSaveData);
         return CharacterSaveData;
     }
     /// <summary>
@@ -68,9 +69,9 @@ public class CharacterCarrier : MonoBehaviour , ISavable
         CharacterSaveData.Level = saveData.Level;
         CharacterSaveData.Recognition = saveData.Recognition;
         CharacterSaveData.Necessity = saveData.Necessity;
-        CharacterSaveData.CurHp = stat.healthStat.Value;
-        CharacterSaveData.SpecialMoveGauge  = saveData.SpecialMoveGauge;
-        SetStat();
+        CharacterSaveData.CumExp = saveData.CumExp;
+        CharacterSaveData.IsEquiped = saveData.IsEquiped;
+        SetstatToLevel(saveData.ID, saveData.Level);
         SetVisual();
         skillBook.SkillSet(CharacterSaveData.ID);
     }
@@ -99,24 +100,13 @@ public class CharacterCarrier : MonoBehaviour , ISavable
 
     }
 
-    public void SetstatToLevel(int Level, int ID)
+    public void SetstatToLevel(int ID, int Level )
     {
-        stat.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(ID));
-        stat.attackStat.Value += Level;
-        stat.healthStat.Value += Level;
-        stat.agilityStat.Value += Level;
-        stat.criticalAttackStat.Value += (float)(Level * 0.01);
-        stat.criticalPerStat.Value += (float)(Level * 0.01);
-        stat.defenseStat.Value += Level;
+        stat.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(ID), Level);
+
     }
 
-    /// <summary>
-    /// 스탯 초기화
-    /// </summary>
-    public void SetStat()
-    {
-       stat.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(CharacterSaveData.ID));
-    }
+
 
     public void Save()
     {

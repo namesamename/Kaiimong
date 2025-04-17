@@ -2,7 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveSkillObject : MonoBehaviour
+public interface ISkillable
+{
+    public void UseSkill(List<CharacterCarrier> targetcharacter);
+    public void SetSkill(int id);
+}
+
+
+public class ActiveSkillObject : MonoBehaviour, ISkillable
 {
     public ActiveSkill skillSO;
     private float CurCooltime;

@@ -6,7 +6,6 @@ public class CharacterDataTable
     public Dictionary<int , Character> characterDic = new Dictionary<int , Character>();  
     public GameObject CharacterPrefabs;
 
-
     public void Initialize()
     {
         Character[] characters = Resources.LoadAll<Character>("Char");
@@ -19,7 +18,7 @@ public class CharacterDataTable
    
     public Character GetCharToID(int characterId)
     {
-        if (characterDic[characterId] != null && characterDic.ContainsKey(characterId))
+        if (characterDic.ContainsKey(characterId) && characterDic[characterId] != null )
         {
             return characterDic[characterId];
         }
@@ -51,7 +50,7 @@ public class CharacterDataTable
     {
         Character character = GetCharToID(ID);
         GameObject game = CharacterInstanceSummon(character, Vector3.zero);
-        game.GetComponent<CharacterCarrier>().SetstatToLevel(Level,ID);
+        game.GetComponent<CharacterCarrier>().SetstatToLevel(ID, Level);
         return game;
 
     }

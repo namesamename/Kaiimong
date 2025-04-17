@@ -20,9 +20,8 @@ public interface IPassivable
 public class PassiveSkill : SO
 {
     public PassiveType PassiveType;
-    public SkillType Type;
+    public float Value;
     public SkillTargetType Target;
-    public int TargetCount;
-    public float Attack;
-    public int BuffID;
+    public StatType StatType;
+
 }

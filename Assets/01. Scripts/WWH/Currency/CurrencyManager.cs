@@ -153,9 +153,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         return data;
     }
 
-
     public void Save()
     {
         SaveDataBase.Instance.SaveSingleData(DicToSaveData());
     }
+
 }
