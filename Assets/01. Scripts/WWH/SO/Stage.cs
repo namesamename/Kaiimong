@@ -8,7 +8,7 @@ public class Stage : SO
     public int Rounds;
     public int[] EnemiesID;
     public int EnemyLevel;
-    public int EnemyCount;
+    public int[] EnemyCount;
     public string BackgroundPath;
     public int ActivityPoint;
     public int[] ItemID;

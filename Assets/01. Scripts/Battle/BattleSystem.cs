@@ -26,6 +26,8 @@ public class BattleSystem : MonoBehaviour
     public SkillObject SelectedSkill;
     public List<CharacterCarrier> Targets;
     private float betweenPhaseTime;
+    public bool winFlag = false;
+    public bool loseFlag = false;
 
     [Header("Appear")]
     private bool appearAnimComplete = false;
@@ -40,7 +42,6 @@ public class BattleSystem : MonoBehaviour
     public bool AttackEnded = false;
 
     public CommandController CommandController { get; private set; }
-    public EndUI EndUI;
     public BattleUI BattleUI;
 
 
@@ -79,7 +80,7 @@ public class BattleSystem : MonoBehaviour
     {
         GameObject canvas = GameObject.Find("Canvas");
         GameObject uiPrefab = Instantiate(Resources.Load("Battle/BattleUI")) as GameObject;
-        EndUISet();
+        StageManager.Instance.EndUISet();
     }
     private void AttackPhase()
     {
@@ -105,7 +106,7 @@ public class BattleSystem : MonoBehaviour
         if (Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(LosePhase));
     }
 
-    private void StartBattle()
+    public void StartBattle()
     {
         activePlayers.Clear();
         activeEnemies.Clear();
@@ -134,12 +135,21 @@ public class BattleSystem : MonoBehaviour
 
     private void WinPhase()
     {
+        winFlag = true;
+        if(StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
+        {
+            StageManager.Instance.CurrentRound++;
+            StageManager.Instance.StageStart();
+        }
+        else
+        {
 
+        }
     }
 
     private void LosePhase()
     {
-
+        loseFlag = true;
     }
 
     public void SetBattle()
@@ -354,10 +364,4 @@ public class BattleSystem : MonoBehaviour
         nextPhase();
     }
 
-    public void EndUISet()
-    {
-        GameObject canvas = GameObject.Find("Canvas");
-        GameObject uiPrefab = Instantiate(Resources.Load("Battle/StageUI")) as GameObject;
-        EndUI = uiPrefab.GetComponent<EndUI>();
-    }
 }
