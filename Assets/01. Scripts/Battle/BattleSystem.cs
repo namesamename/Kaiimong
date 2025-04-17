@@ -143,13 +143,14 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-
+            StageManager.Instance.WinStage();
         }
     }
 
     private void LosePhase()
     {
         loseFlag = true;
+        StageManager.Instance.LoseStage();
     }
 
     public void SetBattle()
