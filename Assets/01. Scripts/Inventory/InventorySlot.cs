@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 //슬롯 하나 담당하는 스크립트
 
@@ -45,16 +46,16 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public bool TryConsume(int amount)                // 아이템 지정한 수량만큼 소비
     {
-        if(item.Type != EItemType.Consumable)         // 아임템 타입이 소모품이 아니면
+        if (item.ItemType != EItemType.Consume)         // 아임템 타입이 소모품이 아니면
             return false;                             // 소비 실패 (소모품만 사용 가능)
 
-        if(itemCount >= amount)                       // 현재 수량이 소비하려는 양 이상이면
+        if (itemCount >= amount)                       // 현재 수량이 소비하려는 양 이상이면
         {
             itemCount -= amount;                      // 수량 차감
             countText.text = itemCount > 0 ? itemCount.ToString() : "";  // 수량 표시, 0이면 표시 제거
 
-        if (itemCount == 0)                           
-            ClearSlot();                              // 수량 0이면 슬롯 비우기
+            if (itemCount == 0)
+                ClearSlot();                              // 수량 0이면 슬롯 비우기
 
             return true;                              // 소비 성공
         }
@@ -81,8 +82,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         if (item == null) return;                             // 아이템이 비어있으면 무시
 
-        //GameObject popupObj = UIManager.Instance.ShowPopup<Itemi>("ItemInfoPopup");    // UIManager의 ShowPopup 함수 호출
+        var popupObj = UIManager.Instance.ShowPopup<ItemInfoPopup>();    // UIManager의 ShowPopup 함수 호출
 
+        if (popupObj != null)
+        {
+            popupObj.Show(item, itemCount);  // 아이템 데이터 전달
+        }
     }
 }
 

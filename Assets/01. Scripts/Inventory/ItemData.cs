@@ -11,28 +11,30 @@ public class ItemData : ScriptableObject
     public ERarity Grade;                  // 희귀도
     public string Stage;                   // 드랍 스테이지
     public float Probability;              // 드랍 확률
+    
 
     [Header("소모품 정보")]
-    public string UseType;                  // 사용분류
+    public string Type;                  // 사용분류
     public int Value;                       // 효과 수치
 
     [Header("속성")]
-    public EItemType Type;                 // 아이템 타입
+    public EItemType ItemType;                 // 아이템 타입
     public EConsumableType ConsumableType; // 소모품 세부 분류
 
     [Header("게임 내 수치")]
+    public Sprite Icon;
     public int MaxStackCount = 999;  // 최대 중첩 수량
 
     [Header("획득 경로")]
-    public string ObtainLocation;     // 획득 경로
 
-    public Sprite Icon;
+    public string Description;        // 설명
+    public string ObtainLocation;     // 획득 경로
 }
 
 public enum EItemType 
 {   None,
     Item,            // 아이템
-    Consumable       // 소모품
+    Consume       // 소모품
 }
 
 public enum EConsumableType //소모품 타입

@@ -15,9 +15,9 @@ public class UIPopup : MonoBehaviour //불러올 프리펩에 상속시킬 것들
         transform.DOScale(Vector3.one, 0.25f).SetEase(Ease.OutBack);
     }
 
-    public virtual void Hide() //팝업을 제거하는 기능
+    public void Hide()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);                               // 팝업 비활성화
     }
 }
 
