@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 7
   Name: "\uC0AC"
-  Grade: A
+  Grade: 1
   Health: 1300
   Attack: 235
   Defense: 0
   Speed: 101
   CriticalPer: 0.062
   CriticalAttack: 1.4
+  IsEquiped: 0

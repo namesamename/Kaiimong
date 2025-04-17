@@ -58,6 +58,7 @@ public class SheetInfoSOEditor : Editor
 
     public void GetDatas(Type type, List<Dictionary<string, string>> datas)
     {
+
             foreach (var data in datas)
             {
                 var path = instance.OutPath + "/" + Directory + data["ID"] + ".asset";
@@ -92,7 +93,7 @@ public class SheetInfoSOEditor : Editor
         }
         else if (SheetId == "ActiveSkill")
         {
-            Directory = "Skil/";
+            Directory = "ActS/";
         }
         else if (SheetId == "Debuff")
         {

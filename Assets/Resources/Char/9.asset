@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 9
   Name: "\uC790"
-  Grade: A
+  Grade: 1
   Health: 1100
   Attack: 255
   Defense: 0
   Speed: 95
   CriticalPer: 0.059
   CriticalAttack: 1.44
+  IsEquiped: 0
