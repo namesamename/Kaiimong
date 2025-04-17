@@ -43,32 +43,33 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     }
 
-    public bool TryConsume()                // 소비하는 기능
+    public bool TryConsume(int amount)                // 아이템 지정한 수량만큼 소비
     {
+        if(item.Type != EItemType.Consumable)         // 아임템 타입이 소모품이 아니면
+            return false;                             // 소비 실패 (소모품만 사용 가능)
 
-        // 소비 가능 여부 확인
-        if (itemCount >= 1)
-    {
-        itemCount -= 1;                         // 1개 소비
-        countText.text = itemCount.ToString();  // 수량 텍스트 갱신
+        if(itemCount >= amount)                       // 현재 수량이 소비하려는 양 이상이면
+        {
+            itemCount -= amount;                      // 수량 차감
+            countText.text = itemCount > 0 ? itemCount.ToString() : "";  // 수량 표시, 0이면 표시 제거
 
-        if (itemCount == 0)
-            ClearSlot();                        // 수량 0이면 슬롯 비우기
+        if (itemCount == 0)                           
+            ClearSlot();                              // 수량 0이면 슬롯 비우기
 
-            return true;                                     // 소비 성공
+            return true;                              // 소비 성공
         }
         else
         {
             Debug.Log("재료 수량이 부족");
-            return false;                                    // 소비 실패
+            return false;                             // 소비 실패
         }
     }
-    public ItemData GetItem()               // 현재 아이템 정보 반환
+    public ItemData GetItem()                         // 현재 아이템 정보 반환
     {
         return item;
     }
 
-    public int GetCount()                   // 현재 아이템 수량 반환
+    public int GetCount()                             // 현재 아이템 수량 반환
     {
         return itemCount;
     }
