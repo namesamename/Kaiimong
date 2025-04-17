@@ -60,6 +60,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 GachaValue = 0,
                 GoldValue = 0,
                 DIAValue = 0,
+                CharacterEXP = 0,
                 ID = 0
             };
         }
@@ -127,18 +128,20 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         CurrencySaveDic[CurrencyType.Gold] = data.GoldValue;
         CurrencySaveDic[CurrencyType.Dia] = data.DIAValue;
         CurrencySaveDic[CurrencyType.Activity] = data.ActivityValue;
+        CurrencySaveDic[CurrencyType.CharacterEXP] = data.CharacterEXP;
     }
 
     public CurrencySaveData DicToSaveData()
     {
         CurrencySaveData data = new CurrencySaveData()
         {
-            UserLevel = 1,
-            UserEXP = 0,
+            UserLevel = CurrencySaveDic[CurrencyType.UserLevel],
+            UserEXP = CurrencySaveDic[CurrencyType.UserEXP],
             GachaValue = CurrencySaveDic[CurrencyType.Gacha],
             GoldValue = CurrencySaveDic[CurrencyType.Gold],
             DIAValue = CurrencySaveDic[CurrencyType.Dia],
             ActivityValue = CurrencySaveDic[CurrencyType.Activity],
+            CharacterEXP = CurrencySaveDic[CurrencyType.CharacterEXP],
             Savetype = SaveType.Currency,
             ID = 0
         };
