@@ -11,6 +11,7 @@ public class StageManager : Singleton<StageManager>
     [Header("Stage Info")] // 선택창에서 받아온 데이터
     public Stage CurrentStage;
     public int CurrentRound;
+    public float returnActivityPoints;
     public int CurrentRoundEnemyCount;
     public List<CharacterCarrier> Players;
     public List<CharacterCarrier> Enemies;
@@ -59,7 +60,7 @@ public class StageManager : Singleton<StageManager>
         battleSystem.Players = new List<CharacterCarrier>(Players);
         CreateEnemy();
         CurrentRound = 1;
-
+        returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
     }
 
     //CurrentStage.EnemiesID로 적 객체 생성 후 리스트업하기
@@ -107,9 +108,49 @@ public class StageManager : Singleton<StageManager>
         OnWin?.Invoke();
     }
 
+    private void OnStageWin()
+    {
+        //아이템,골드,유료재화 지급
+        //경험치,호감도 지급
+        //
+    }
+
     public void LoseStage()
     {
         LoseUI.gameObject.SetActive(true);
         OnLose?.Invoke();
+    }
+
+    private void OnStageLose()
+    {
+        //returnActivityPoints 반환하기
+        //
+    }
+
+    private IEnumerator BeforeSceneChangeDelay(Action action)
+    {
+        yield return new WaitForSeconds(1f);
+
+        action();
+    }
+
+    private void UnSubscribeAllAction()
+    {
+        foreach(CharacterCarrier carrier in Players)
+        {
+            battleSystem.UnSubscribeCharacterDeathAction(carrier);
+        }
+        foreach(CharacterCarrier carrier in Enemies)
+        {
+            battleSystem.UnSubscribeCharacterDeathAction(carrier);
+        }
+        battleSystem.UnSubscribeBattleSystem();
+        WinUI.UnSubscribeWinUI();
+        LoseUI.UnSubscribeLoseUI();
+    }
+
+    public void ToStageSelectScene()
+    {
+        SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
     }
 }

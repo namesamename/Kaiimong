@@ -32,14 +32,15 @@ public class CharacterUI : MonoBehaviour
         AddListener();
     }
 
-    void Update()
+    public void UnSubscribeCharacterUI()
     {
-
+        battleSystem.OnPlayerTurn -= GetActivePlayerUnit;
+        battleSystem.OnEnemyTurn -= GetActiveEnemyUnit;
+        RemoveListner();
     }
 
     void AddListener()
     {
-
         foreach (Button button in buttonList)
         {
             button.onClick.AddListener(() => OnClickSkillButton(button));
@@ -47,6 +48,17 @@ public class CharacterUI : MonoBehaviour
         targetConfirmButton.onClick.AddListener(OnClickTargetConfirmButton);
         cancelButton.onClick.AddListener(OnSkillCancelButton);
         actionButton.onClick.AddListener(OnActionButton);
+    }
+
+    void RemoveListner()
+    {
+        foreach (Button button in buttonList)
+        {
+            button.onClick.RemoveAllListeners();
+        }
+        targetConfirmButton.onClick.RemoveAllListeners();
+        cancelButton.onClick.RemoveAllListeners();
+        actionButton.onClick.RemoveAllListeners();
     }
 
     void OnActionButton()

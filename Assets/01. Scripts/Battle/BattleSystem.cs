@@ -42,6 +42,7 @@ public class BattleSystem : MonoBehaviour
     public bool AttackEnded = false;
 
     public CommandController CommandController { get; private set; }
+    public CharacterSelector CharacterSelector { get; private set; }
     public BattleUI BattleUI;
 
 
@@ -52,6 +53,8 @@ public class BattleSystem : MonoBehaviour
     private void Awake()
     {
         CommandController = GetComponent<CommandController>();
+        CharacterSelector = GetComponent<CharacterSelector>();
+        CharacterSelector.battleSystem = this;
         BattleUI.BattleSystem = this;
         BattleUI.CharacterUI.BattleSystem = this;
     }
@@ -74,6 +77,19 @@ public class BattleSystem : MonoBehaviour
             CanAttack = false;
             StartCoroutine(ChangePhase(AttackPhase));
         }
+    }
+
+    public void UnSubscribeBattleSystem()
+    {
+        CharacterSelector.UnSubscribeCharacterSelector();
+        BattleUI.CharacterUI.UnSubscribeCharacterUI();
+    }
+
+    public void UnSubscribeCharacterDeathAction(CharacterCarrier character)
+    {
+        character.stat.OnDeath -= () => EmptyPlateOnUnitDeath(character);
+        character.stat.OnDeath -= () => RemoveTarget(character);
+        character.stat.OnDeath -= CheckGameOver;
     }
 
     public void SetUI()

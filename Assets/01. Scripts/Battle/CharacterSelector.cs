@@ -4,13 +4,11 @@ using UnityEngine;
 public class CharacterSelector : MonoBehaviour
 {
     private CharacterCarrier selectedCharacter = null;
-    private BattleSystem battleSystem;
-
+    public BattleSystem battleSystem;
     private Camera _camera;
 
     private void Awake()
     {
-        battleSystem = GetComponent<BattleSystem>();
         _camera = Camera.main;
     }
 
@@ -19,6 +17,13 @@ public class CharacterSelector : MonoBehaviour
         battleSystem.BattleUI.CharacterUI.OnConfirmButton += OnConfirmButtonClicked;
         battleSystem.SkillChanged += ResetEffect;
         battleSystem.SkillChanged += ResetSelectedCharacter;
+    }
+
+    public void UnSubscribeCharacterSelector()
+    {
+        battleSystem.BattleUI.CharacterUI.OnConfirmButton -= OnConfirmButtonClicked;
+        battleSystem.SkillChanged -= ResetEffect;
+        battleSystem.SkillChanged -= ResetSelectedCharacter;
     }
 
     private void Update()
