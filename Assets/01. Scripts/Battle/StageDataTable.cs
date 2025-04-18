@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StageDataTable
-{
+{  
     public Dictionary<int, Stage> CurrencyDic = new Dictionary<int, Stage>();
 
     public void Initialize()
