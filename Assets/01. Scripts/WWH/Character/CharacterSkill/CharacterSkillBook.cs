@@ -21,7 +21,7 @@ public class CharacterSkillBook : MonoBehaviour
         for (int i = 0; i < ActiveSkillList.Length; i++)
         {
             ActiveSkillList[i].SetSkill(ID + i);
-            PassiveSkillList[i].SetSkill(ID + i);
+            //PassiveSkillList[i].SetSkill(ID + i);
 
         }
     }
