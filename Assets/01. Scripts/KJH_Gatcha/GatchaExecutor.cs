@@ -39,34 +39,51 @@ public class GatchaExecutor : MonoBehaviour
     private void Draw(int count)
     {
         var mgr = GatchaManager.Instance;
-        var CurManager = CurrencyManager.Instance;
+        var curManager = CurrencyManager.Instance;
 
-
-        int useTicket = Mathf.Min(count, CurManager.GetCurrency(CurrencyType.Gacha));
+        int useTicket = Mathf.Min(count, curManager.GetCurrency(CurrencyType.Gacha));
         int needCrystal = (count - useTicket) * 160;
 
         if (mgr.crystal < needCrystal)
         {
-            Debug.LogWarning("need more crystal");
+            Debug.LogWarning(" 크리스탈이 부족합니다!");
             return;
         }
 
+        // 재화 차감
         mgr.ticket -= useTicket;
         mgr.crystal -= needCrystal;
 
-        CurManager.SetCurrency(CurrencyType.Gacha, -useTicket);
-        CurManager.SetCurrency(CurrencyType.Dia, -needCrystal);
-  
-        Debug.Log($"{mgr.currentGachaType} Gatcha {count}time sucess!");
-        Debug.Log($"소비된 티켓: {useTicket}, 크리스탈: {needCrystal}");
+        curManager.SetCurrency(CurrencyType.Gacha, -useTicket);
+        curManager.SetCurrency(CurrencyType.Dia, -needCrystal);
+
+        Debug.Log($" {mgr.currentGachaType} Gatcha {count}회 성공!");
+        Debug.Log($" 소비된 티켓: {useTicket}, 크리스탈: {needCrystal}");
 
         for (int i = 0; i < count; i++)
         {
-            var result = GatchaTable.GetRandomCharacter();
-            Debug.Log($" [{result.grade}] {result.name} 획득!");
+            Grade grade = GetRandomGrade(); // 확률 기반 등급 선택
+            var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade);
+
+            if (pool.Count == 0)
+            {
+                Debug.LogWarning($"등급 {grade} 캐릭터가 없습니다!");
+                continue;
+            }
+
+            Character selected = pool[Random.Range(0, pool.Count)];
+            Debug.Log($" [{grade}] 등급 {selected.Name}획득");
         }
 
-        CurManager.Save();
-        // TODO: 실제 뽑기 결과 로직 연결
+        curManager.Save();
     }
+    private Grade GetRandomGrade()
+    {
+        float rand = Random.Range(0f, 100f);
+
+        if (rand < 55f) return Grade.S;        // 5%
+        else if (rand < 80f) return Grade.A;  // 15%
+        else return Grade.B;                  // 80%
+    }
+
 }
