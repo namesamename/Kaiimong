@@ -37,7 +37,7 @@ public static class LevelUpSystem
         {
             //if(character.CharacterSaveData.Level)
         }
-        else if(character.CharacterSaveData.Necessity ==1)
+        else if(character.CharacterSaveData.Necessity == 1)
         {
 
         }
@@ -49,8 +49,6 @@ public static class LevelUpSystem
         {
 
         }
-
-
 
         //if(character.CharacterSaveData.CumExp > NextNeedEXP ) 
         //{

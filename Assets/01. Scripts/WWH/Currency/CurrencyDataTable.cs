@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class CurrencyDataTable 
 {
-
     public Dictionary<CurrencyType, CurrencySO> CurrencyDic = new Dictionary<CurrencyType, CurrencySO>();
-
-
     public void Initialize()
     {
         CurrencySO[] currencySOs = Resources.LoadAll<CurrencySO>("Currency");
