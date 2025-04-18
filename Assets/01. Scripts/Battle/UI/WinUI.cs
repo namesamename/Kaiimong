@@ -13,7 +13,7 @@ public class WinUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerLevelText;
     [SerializeField] private TextMeshProUGUI playerExpText;
     [SerializeField] private TextMeshProUGUI earnedExpText;
-    public bool CanClick;
+    public bool CanClick = false;
 
 
     void Start()
@@ -33,11 +33,18 @@ public class WinUI : MonoBehaviour
 
     void SetWinUI()
     {
+        CanClick = true;
         characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
+        characterImage.SetNativeSize();
+        stageNameText.text = StageManager.Instance.CurrentStage.Name;
+        playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
+        playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
+        earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
     }
 
     public void UnSubscribeWinUI()
     {
+        CanClick = false;
         StageManager.Instance.OnWin += SetWinUI;
     }
 

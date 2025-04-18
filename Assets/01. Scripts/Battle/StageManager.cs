@@ -10,11 +10,15 @@ public class StageManager : Singleton<StageManager>
 
     [Header("Stage Info")] // 선택창에서 받아온 데이터
     public Stage CurrentStage;
-    public int CurrentRound;
-    public float returnActivityPoints;
-    public int CurrentRoundEnemyCount;
     public List<CharacterCarrier> Players;
     public List<CharacterCarrier> Enemies;
+    public int CurrentRound;
+    public int CurrentRoundEnemyCount;
+
+    [Header("Reward and Returns")]
+    public float returnActivityPoints;
+    public int userExp;
+    public int playerExp;
 
     [Header("StageUI")]
     public WinUI WinUI;
@@ -61,6 +65,8 @@ public class StageManager : Singleton<StageManager>
         CreateEnemy();
         CurrentRound = 1;
         returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
+        userExp = CurrentStage.ActivityPoint * 100;
+        playerExp = CurrentStage.ActivityPoint * 100 / 4;
     }
 
     //CurrentStage.EnemiesID로 적 객체 생성 후 리스트업하기
@@ -106,32 +112,40 @@ public class StageManager : Singleton<StageManager>
     {
         WinUI.gameObject.SetActive(true);
         OnWin?.Invoke();
+        OnStageWin();
+        StartCoroutine(BeforeSceneChangeDelay(WinUI.CanClick));
     }
 
     private void OnStageWin()
     {
-        //아이템,골드,유료재화 지급
-        //경험치,호감도 지급
-        //
+        //경험치, 골드,유료재화 지급
+        CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
+        CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
+        CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
+        //호감도 지급
+        //아이템
+
     }
 
     public void LoseStage()
     {
         LoseUI.gameObject.SetActive(true);
         OnLose?.Invoke();
+        OnStageLose();
+        StartCoroutine(BeforeSceneChangeDelay(LoseUI.CanClick));
     }
 
     private void OnStageLose()
     {
         //returnActivityPoints 반환하기
-        //
+        CurrencyManager.Instance.SetCurrency(CurrencyType.Activity, (int)returnActivityPoints);
     }
 
-    private IEnumerator BeforeSceneChangeDelay(Action action)
+    private IEnumerator BeforeSceneChangeDelay(bool canClick)
     {
         yield return new WaitForSeconds(1f);
 
-        action();
+        canClick = true;
     }
 
     private void UnSubscribeAllAction()
@@ -151,6 +165,15 @@ public class StageManager : Singleton<StageManager>
 
     public void ToStageSelectScene()
     {
+        UnSubscribeAllAction();
+        ClearStageSetting();
         SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+    }
+
+    private void ClearStageSetting()
+    {
+        Players.Clear();
+        Enemies.Clear();
+        CurrentStage = null;
     }
 }
