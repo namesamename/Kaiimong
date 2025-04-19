@@ -33,6 +33,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         skill.Initialize();
         currency.Initialize();
         Stage.Initialize();
+        Chapter.Initialize();
 
     }
 

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: ChapterLoader
   m_EditorClassIdentifier: 
   outPath: {fileID: 0}
-  url: 
-  datas: []
+  url: docs.google.com/spreadsheets/d/1aGp1NC1OXe1BS4HZ2Zem7ve51GHMwn28xygY
+  datas:
+  - className: "\uCC55\uD130"
+    sheetId: 359448246
