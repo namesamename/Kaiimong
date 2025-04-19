@@ -35,5 +35,11 @@ public class CurrencySaveData : SaveInstance
 
 public class StageSaveData : SaveInstance
 {
-    public bool StageCleared;
+    public bool ClearedStage;
+    public bool StageOpen;
+}
+
+public class ChapterSaveData : SaveInstance
+{
+    public bool ChapterOpen;
 }

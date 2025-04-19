@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4a39cf9ec78f1a4887fdcd4bb150834, type: 3}
-  m_Name: StageLoader
+  m_Name: ChapterLoader
   m_EditorClassIdentifier: 
   outPath: {fileID: 0}
   url: docs.google.com/spreadsheets/d/1aGp1NC1OXe1BS4HZ2Zem7ve51GHMwn28xygY
   datas:
-  - className: "\uC2A4\uD14C\uC774\uC9C0"
-    sheetId: 1488278824
+  - className: "\uCC55\uD130"
+    sheetId: 359448246
