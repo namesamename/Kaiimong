@@ -5,12 +5,12 @@ using UnityEngine.TextCore.Text;
 
 public static class LevelUpSystem
 {
-    static List<int> PlayerNeedExp = new List<int>();
-    static List<int> needExp = new List<int>(); // 각 레벨에 필요한 경험치 누적 아님
-    static List<int> needGold = new List<int>();
-    static List<int> needamulet = new List<int>();
+    public static List<int> PlayerNeedExp = new List<int>();
+    public static List<int> needExp = new List<int>(); // 각 레벨에 필요한 경험치 누적 아님
+    public static List<int> needGold = new List<int>();
+    public static List<int> needamulet = new List<int>();
     static int[] MaxLevel = new int[4] { 20, 40, 60, 90 };
-    private static void Init()
+    public static void Init()
     {
         for (int i = 1; i <= 90; i++)
         {

@@ -22,6 +22,8 @@ public class CharacterSaveData : SaveInstance
 [System.Serializable]
 public class CurrencySaveData : SaveInstance
 {
+
+    public string UserName = "JIHwan";
     public int UserLevel;
     public int UserEXP;
     public int CharacterEXP;

@@ -24,6 +24,19 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+        LevelUpSystem.Init();
         InitialIze();
     }
     private void Update()
@@ -58,6 +71,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         {
             data = new CurrencySaveData()
             {
+                UserName = "JIHwan",
                 Savetype = SaveType.Currency,
                 UserLevel = 1,
                 UserEXP = 0,
@@ -129,6 +143,11 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public int GetCurrency(CurrencyType currency)
     {
         return CurrencySaveDic[currency];
+    }
+
+    public string GetUserName()
+    {
+        return data.UserName;
     }
 
     public void DicSet()
