@@ -124,7 +124,6 @@ public class StageManager : Singleton<StageManager>
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
         //호감도 지급
         //아이템
-
     }
 
     public void LoseStage()
