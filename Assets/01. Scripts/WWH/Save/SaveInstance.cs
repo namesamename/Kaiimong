@@ -38,8 +38,13 @@ public class StageSaveData : SaveInstance
     public bool ClearedStage;
     public bool StageOpen;
 }
-
 public class ChapterSaveData : SaveInstance
 {
     public bool ChapterOpen;
 }
+
+public class ItemSavaData : SaveInstance
+{
+    int Value;
+}
+
