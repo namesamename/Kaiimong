@@ -17,6 +17,7 @@ public class CharacterSaveData : SaveInstance
     public int Necessity;
     public bool IsEquiped;
     public int CumExp;
+    public float Love;
 }
 [System.Serializable]
 public class CurrencySaveData : SaveInstance
