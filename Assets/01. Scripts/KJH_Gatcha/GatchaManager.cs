@@ -7,6 +7,9 @@ public class GatchaManager : MonoBehaviour //화면에서 가챠 타입을 구분해 주는 매
 {
     public int crystal;
     public int ticket;
+    public int gatchaDrawCount = 0;
+
+
 
     public enum GatchaType
     {
@@ -16,6 +19,9 @@ public class GatchaManager : MonoBehaviour //화면에서 가챠 타입을 구분해 주는 매
     public static GatchaManager Instance;
 
     public GatchaType currentGachaType;
+
+    public int pickupSCharacterID =1;         // S 픽업 대상
+    public List<int> pickupACharacterIDs = new() {6,7};
 
     private void Awake()
     {

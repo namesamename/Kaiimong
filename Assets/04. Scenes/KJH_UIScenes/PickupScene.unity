@@ -1183,7 +1183,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystal: 0
   ticket: 0
+  gatchaDrawCount: 0
   currentGachaType: 0
+  pickupSCharacterID: 1
+  pickupACharacterIDs: 0600000007000000
 --- !u!4 &508351939
 Transform:
   m_ObjectHideFlags: 0
