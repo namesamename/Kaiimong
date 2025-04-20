@@ -22,7 +22,7 @@ public class StageSlot : MonoBehaviour
 
     public StageSaveData CreatNewData()
     {
-        SaveDataBase.Instance.SetSingleSaveInstance(StageSaveData, SaveType.Stage);
+        SaveDataBase.Instance.SaveSingleData(StageSaveData);
         return StageSaveData;
     }
 
@@ -53,6 +53,6 @@ public class StageSlot : MonoBehaviour
 
     public void Save()
     {
-        SaveDataBase.Instance.SetSingleSaveInstance(StageSaveData, SaveType.Stage);
+        SaveDataBase.Instance.SaveSingleData(StageSaveData);
     }
 }

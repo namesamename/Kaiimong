@@ -41,7 +41,7 @@ public class ChapterSlot : MonoBehaviour
 
     public ChapterSaveData CreatNewData()
     {
-        SaveDataBase.Instance.SetSingleSaveInstance(ChapterSaveData, SaveType.Chapter);
+        SaveDataBase.Instance.SaveSingleData(ChapterSaveData);
         return ChapterSaveData;
     }
 
@@ -72,6 +72,6 @@ public class ChapterSlot : MonoBehaviour
 
     public void Save()
     {
-        SaveDataBase.Instance.SetSingleSaveInstance(ChapterSaveData, SaveType.Chapter);
+        SaveDataBase.Instance.SaveSingleData(ChapterSaveData);
     }
 }
