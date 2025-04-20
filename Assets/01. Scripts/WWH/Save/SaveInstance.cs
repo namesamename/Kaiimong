@@ -15,12 +15,15 @@ public class CharacterSaveData : SaveInstance
     public int Level;
     public int Recognition;
     public int Necessity;
-    public float CurHp;
-    public int SpecialMoveGauge;
+    public bool IsEquiped;
+    public int CumExp;
+    public float Love;
 }
 [System.Serializable]
 public class CurrencySaveData : SaveInstance
 {
+
+    public string UserName = "JIHwan";
     public int UserLevel;
     public int UserEXP;
     public int CharacterEXP;
@@ -32,5 +35,16 @@ public class CurrencySaveData : SaveInstance
 
 public class StageSaveData : SaveInstance
 {
-    public bool StageCleared;
+    public bool ClearedStage;
+    public bool StageOpen;
 }
+public class ChapterSaveData : SaveInstance
+{
+    public bool ChapterOpen;
+}
+
+public class ItemSavaData : SaveInstance
+{
+    int Value;
+}
+

@@ -12,6 +12,7 @@ public enum SaveType
     Character,
     Currency,
     Stage,
+    Chapter,
 
 }
 public static class GameSaveSystem

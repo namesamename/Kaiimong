@@ -12,14 +12,9 @@ public class UserInformation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI NickName;
     [SerializeField] private TextMeshProUGUI Level;
     [SerializeField] private TextMeshProUGUI exp;
-    [SerializeField] private Image expFillImage;
+    [SerializeField] private Slider Slider;
    
     //임시로 지정하는 데이터들 - 플레이어 데이터 
-    [SerializeField] private string UserNickname;
-    [SerializeField] private int UserLevel;
-    [SerializeField] private int Userexp;
-    [SerializeField] private int UserMaxexp;
-
     private void Start()
     {
         ShowUserInfo();
@@ -36,11 +31,11 @@ public class UserInformation : MonoBehaviour
      }
     public void ShowUserInfo() //이름, 
     {
-        NickName.text = UserNickname;
-        Level.text = "LV." + UserLevel;
-        exp.text = Userexp + " / " + UserMaxexp;
-        float fillAmount = (float)Userexp / UserMaxexp;
-        expFillImage.fillAmount = Mathf.Clamp01(fillAmount);
+        NickName.text = CurrencyManager.Instance.GetUserName();
+        Level.text = "LV." + CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel);
+        exp.text =$"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)}/{LevelUpSystem.PlayerNeedExp[CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)]}";
+        float fillAmount = (float)CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP) / LevelUpSystem.PlayerNeedExp[CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)];
+        Slider.value = Mathf.Clamp01(fillAmount);
     }
 
 

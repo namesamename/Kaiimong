@@ -14,7 +14,7 @@ public class SkillCommand
     }
     public void Execute()
     {
-        unit.skillBook.SkillUsing(skillData, targets);
+        unit.skillBook.ActiveSkillUsing(skillData, targets);
     }
 
     public void Undo()

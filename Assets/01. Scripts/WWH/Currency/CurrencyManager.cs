@@ -24,6 +24,19 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+        LevelUpSystem.Init();
         InitialIze();
     }
     private void Update()
@@ -58,6 +71,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         {
             data = new CurrencySaveData()
             {
+                UserName = "JIHwan",
                 Savetype = SaveType.Currency,
                 UserLevel = 1,
                 UserEXP = 0,
@@ -111,18 +125,29 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     public void SetCurrency(CurrencyType currency, int amount)
     {
-        if (CurrencySaveDic[currency] + amount > GlobalDataTable.Instance.currency.CurrencyDic[currency].MaxCount || CurrencySaveDic[currency] + amount < 0)
+        if (CurrencySaveDic[currency] + amount > GlobalDataTable.Instance.currency.CurrencyDic[currency].MaxCount )
         {
-            return;
+            CurrencySaveDic[currency] = GlobalDataTable.Instance.currency.CurrencyDic[currency].MaxCount;
+       
+        }
+        else if(CurrencySaveDic[currency] + amount < 0)
+        {
+            CurrencySaveDic[currency] = 0;
         }
         else
         {
             CurrencySaveDic[currency] += amount;
         }
+        Save();
     }
     public int GetCurrency(CurrencyType currency)
     {
         return CurrencySaveDic[currency];
+    }
+
+    public string GetUserName()
+    {
+        return data.UserName;
     }
 
     public void DicSet()
@@ -153,9 +178,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         return data;
     }
 
-
     public void Save()
     {
         SaveDataBase.Instance.SaveSingleData(DicToSaveData());
     }
+
 }

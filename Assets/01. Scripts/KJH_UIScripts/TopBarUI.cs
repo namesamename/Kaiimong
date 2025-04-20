@@ -23,15 +23,15 @@ public class TopBarUI : MonoBehaviour
 
     public void UpdateResource() // 추후 매개변수를 제거하고 받아온 데이터를 가지고 이동시키기
     {
-        //playerstamina = stamina;
-        //playergold = gold;
-        //playercrystal = crystal;
+        playerstamina = CurrencyManager.Instance.GetCurrency(CurrencyType.Activity);
+        playergold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
+        playercrystal = CurrencyManager.Instance.GetCurrency(CurrencyType.Dia);
     }
 
     public void ShowResource()
     {
-        staminaText.text = $"Stamina: {playerstamina} / {maxplayerstamina}";
-        goldText.text = $"Gold: {playergold}";
-        crystalText.text = $"Crystal: {playercrystal}";
+        staminaText.text = $"Stamina: {playerstamina} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount}";
+        goldText.text = $"Gold: {playergold} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Gold].MaxCount}";
+        crystalText.text = $"Crystal: {playercrystal} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Dia].MaxCount}";
     }
 }

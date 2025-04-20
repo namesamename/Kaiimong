@@ -31,6 +31,9 @@ public class ActiveSkill : SO
 
 
     public string Name;
+    public string Description;
+    public string IconPath;
+
     public bool isSingleAttack;
     public int attackCount;
     public int[] damage;

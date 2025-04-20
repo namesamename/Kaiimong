@@ -26,6 +26,8 @@ public class BattleSystem : MonoBehaviour
     public ActiveSkillObject SelectedSkill;
     public List<CharacterCarrier> Targets;
     private float betweenPhaseTime;
+    public bool winFlag = false;
+    public bool loseFlag = false;
 
     [Header("Appear")]
     private bool appearAnimComplete = false;
@@ -40,7 +42,7 @@ public class BattleSystem : MonoBehaviour
     public bool AttackEnded = false;
 
     public CommandController CommandController { get; private set; }
-    public EndUI EndUI;
+    public CharacterSelector CharacterSelector { get; private set; }
     public BattleUI BattleUI;
 
 
@@ -51,6 +53,8 @@ public class BattleSystem : MonoBehaviour
     private void Awake()
     {
         CommandController = GetComponent<CommandController>();
+        CharacterSelector = GetComponent<CharacterSelector>();
+        CharacterSelector.battleSystem = this;
         BattleUI.BattleSystem = this;
         BattleUI.CharacterUI.BattleSystem = this;
     }
@@ -75,11 +79,24 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    public void UnSubscribeBattleSystem()
+    {
+        CharacterSelector.UnSubscribeCharacterSelector();
+        BattleUI.CharacterUI.UnSubscribeCharacterUI();
+    }
+
+    public void UnSubscribeCharacterDeathAction(CharacterCarrier character)
+    {
+        character.stat.OnDeath -= () => EmptyPlateOnUnitDeath(character);
+        character.stat.OnDeath -= () => RemoveTarget(character);
+        character.stat.OnDeath -= CheckGameOver;
+    }
+
     public void SetUI()
     {
         GameObject canvas = GameObject.Find("Canvas");
         GameObject uiPrefab = Instantiate(Resources.Load("Battle/BattleUI")) as GameObject;
-        EndUISet();
+        StageManager.Instance.EndUISet();
     }
     private void AttackPhase()
     {
@@ -105,7 +122,7 @@ public class BattleSystem : MonoBehaviour
         if (Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(LosePhase));
     }
 
-    private void StartBattle()
+    public void StartBattle()
     {
         activePlayers.Clear();
         activeEnemies.Clear();
@@ -134,12 +151,22 @@ public class BattleSystem : MonoBehaviour
 
     private void WinPhase()
     {
-
+        winFlag = true;
+        if(StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
+        {
+            StageManager.Instance.CurrentRound++;
+            StageManager.Instance.StageStart();
+        }
+        else
+        {
+            StageManager.Instance.WinStage();
+        }
     }
 
     private void LosePhase()
     {
-
+        loseFlag = true;
+        StageManager.Instance.LoseStage();
     }
 
     public void SetBattle()
@@ -354,10 +381,4 @@ public class BattleSystem : MonoBehaviour
         nextPhase();
     }
 
-    public void EndUISet()
-    {
-        GameObject canvas = GameObject.Find("Canvas");
-        GameObject uiPrefab = Instantiate(Resources.Load("Battle/StageUI")) as GameObject;
-        EndUI = uiPrefab.GetComponent<EndUI>();
-    }
 }

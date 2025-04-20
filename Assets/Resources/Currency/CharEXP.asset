@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff6089cd330dcb4fbbc92b98530619d, type: 3}
   m_Name: CharEXP
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 2
   Name: 
   Description: 
   IconPath: 
   MaxCount: 999
   Value: 0
-  CurrencyType: 0
+  CurrencyType: 6
   exchangeInfos: []

@@ -18,7 +18,9 @@ MonoBehaviour:
   TargetCount: 1
   Attack: 1
   BuffID: 0
-  Name: 
+  Name: 2
+  Description: 2
+  IconPath: 
   isSingleAttack: 0
   attackCount: 0
   damage: 
