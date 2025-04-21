@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChapterSlotUI : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Chapter Chapter;
+    [SerializeField] private Image chapterIcon;
+    [SerializeField] private TextMeshProUGUI chapterNameText;
+    [SerializeField] private Button chapterButton;
+
     void Start()
+    {
+        chapterButton.onClick.AddListener(OnChapterButton);
+    }
+
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnChapterButton()
     {
-        
+        SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
     }
 }
