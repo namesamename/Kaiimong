@@ -12,12 +12,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TextMeshProUGUI countText;       //아이템 수량 텍스트
     [SerializeField] private Outline outlineEffect;           // 슬롯 외곽선 효과
 
-
     private ItemData item;                    // 현재 슬롯에 들어있는 아이템
     private int itemCount;                    // 해당 아이템 수량
-
-    private ItemSavaData savaData;
-
     public void SetSlot(ItemData newItem, int amount = 1)     // 슬롯에 새 아이템 슬롯 설정
     {
         item = newItem;

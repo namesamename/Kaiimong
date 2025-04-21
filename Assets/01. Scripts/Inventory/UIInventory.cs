@@ -184,18 +184,18 @@ public class UIInventory : MonoBehaviour
                 itemIDAndValue[saveData.ID] = saveData.Value;
         }
 
-        // 아이템 데이터와 수량을 페어로 저장
-        List<(ItemData itemData, int count)> itemsWithCount = new List<(ItemData, int)>();
+
+        List<(ItemData itemData, int count)> itemsAndValue = new List<(ItemData, int)>();
         foreach (var kvp in itemIDAndValue)
         {
             var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(kvp.Key);
-            itemsWithCount.Add((itemData, kvp.Value));
+            itemsAndValue.Add((itemData, kvp.Value));
         }
 
  
-        itemsWithCount = itemsWithCount.OrderBy(item => item.itemData.Grade).ToList();
+        itemsAndValue = itemsAndValue.OrderBy(item => item.itemData.Grade).ToList();
 
-        foreach (var (itemData, count) in itemsWithCount)
+        foreach (var (itemData, count) in itemsAndValue)
         {
             GameObject prefab = GetSlotPrefabByRarity(itemData.Grade);
             GameObject slotObj = Instantiate(prefab, parentPanel);
