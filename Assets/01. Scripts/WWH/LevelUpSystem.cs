@@ -20,7 +20,7 @@ public static class LevelUpSystem
             needamulet.Add(i);
         }
     }
-    public static void GainEXP(int EXP, CharacterCarrier character)
+    public static void GainEXP(int EXP, ChracterSaveData character)
     {
 
         if(EXP <= 0 )
@@ -33,7 +33,7 @@ public static class LevelUpSystem
     }
 
 
-    public static void BattleLevelup(int EXP, CharacterCarrier character)
+    public static void BattleLevelup(int EXP, ChracterSaveData character)
     {
         if (EXP <= 0)
         {
@@ -51,12 +51,21 @@ public static class LevelUpSystem
         if (NextNeedEXP < character.CharacterSaveData.CumExp)
         {
             character.CharacterSaveData.CumExp -= EXP;
-            LevelUp(true, character);
+            LevelUp(BattleLevelupOK(character), character);
         }
 
     }
 
-    public static void LevelUpCheck(CharacterCarrier character)
+
+    public static bool BattleLevelupOK(ChracterSaveData character)
+    {
+        if (character.CharacterSaveData.Level == MaxLevel[character.CharacterSaveData.Level])
+        {
+            return false;
+        }
+        return true;
+    }
+    public static void LevelUpCheck(ChracterSaveData character)
     {
 
         int NextNeedEXP = 0;
@@ -71,7 +80,7 @@ public static class LevelUpSystem
         LevelUp(IsLevelUpOk(character, NextNeedEXP, NextNeedGold, NextNeedAMulet), character);
     }
 
-    public static bool IsLevelUpOk(CharacterCarrier character, int EXP, int Gold, int Amulet)
+    public static bool IsLevelUpOk(ChracterSaveData character, int EXP, int Gold, int Amulet)
     {
         if (character.CharacterSaveData.Level < MaxLevel[character.CharacterSaveData.Level])
         {
@@ -98,7 +107,7 @@ public static class LevelUpSystem
         }
     }
 
-    public static void LevelUp(bool Ok, CharacterCarrier character)
+    public static void LevelUp(bool Ok, ChracterSaveData character)
     {
         if (Ok)
         {
@@ -109,69 +118,127 @@ public static class LevelUpSystem
     }
 
 
-    public static void LevelUpMax(CharacterCarrier character)
+    public static (int MaxLevel, int EXP, int Gold, int Amulet) OneLevelUPInfo(ChracterSaveData character)
     {
-
-        int maxLevelForCurrentStage = MaxLevel[character.CharacterSaveData.Necessity];
-
-
-        if (character.CharacterSaveData.Level >= maxLevelForCurrentStage)
+        int MaxLevelinCurrentNece = MaxLevel[character.CharacterSaveData.Necessity];
+        if (character.CharacterSaveData.Level >= MaxLevelinCurrentNece)
         {
-            Debug.Log($"이미 현재 인지 단계의 최대 레벨({maxLevelForCurrentStage})에 도달했습니다.");
+            Debug.Log($"이미 현재 인지 단계의 최대 레벨({MaxLevelinCurrentNece})에 도달했습니다.");
+            return new(character.CharacterSaveData.Level, 0, 0, 0);
+        }
+        int CurLevel = character.CharacterSaveData.Level;
+        
+        int expNeeded = needExp[CurLevel];
+        int goldNeeded = needGold[CurLevel];
+        int amuletNeeded = needamulet[CurLevel];
+
+        return (CurLevel + 1, expNeeded, goldNeeded, amuletNeeded);
+    }
+
+    public static (int MaxLevel,int EXP , int Gold, int Amulet) MaxLevelupInfo(ChracterSaveData character)
+    {
+        int MaxLevelinCurrentNece = MaxLevel[character.CharacterSaveData.Necessity];
+        if (character.CharacterSaveData.Level >= MaxLevelinCurrentNece)
+        {
+            Debug.Log($"이미 현재 인지 단계의 최대 레벨({MaxLevelinCurrentNece})에 도달했습니다.");
+            return new(character.CharacterSaveData.Level, 0, 0, 0);
+        }
+
+        int CurGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
+        int CurAmulet = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);
+        int CurLevel = character.CharacterSaveData.Level;
+        int CurExp = character.CharacterSaveData.CumExp;
+
+        int TotalExpNeeded = 0;
+        int TotalGoldNeeded = 0;
+        int TotalAmuletNeeded = 0;
+        int TargetLevel = CurLevel;
+
+        for (int level = CurLevel + 1; level <= MaxLevelinCurrentNece; level++)
+        {
+            int expNeeded = needExp[level - 1];
+            int goldNeeded = needGold[level - 1];
+            int amuletNeeded = needamulet[level - 1];
+
+            if (CurExp >= expNeeded && CurGold >= goldNeeded && CurAmulet >= amuletNeeded)
+            {
+                CurExp -= expNeeded;
+                CurGold -= goldNeeded;
+                CurAmulet -= amuletNeeded;
+
+                TotalExpNeeded += expNeeded;
+                TotalGoldNeeded += goldNeeded;
+                TotalAmuletNeeded += amuletNeeded;
+
+                TargetLevel = level;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return (TargetLevel, TotalExpNeeded, TotalGoldNeeded, TotalAmuletNeeded);
+    }
+
+    public static void LevelUpMax(ChracterSaveData character)
+    {
+        int MaxLevelinCurrentNece = MaxLevel[character.CharacterSaveData.Necessity];
+
+        if (character.CharacterSaveData.Level >= MaxLevelinCurrentNece)
+        {
+            Debug.Log($"이미 현재 인지 단계의 최대 레벨({MaxLevelinCurrentNece})에 도달했습니다.");
             return;
         }
 
-        int currentLevel = character.CharacterSaveData.Level;
-        int availableExp = character.CharacterSaveData.CumExp;
-        int availableGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
-        int availableAmulet = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);
-
-        int oldLevel = currentLevel;
-
-  
-        for (int targetLevel = currentLevel + 1; targetLevel <= maxLevelForCurrentStage; targetLevel++)
+        int CurLevel = character.CharacterSaveData.Level;
+        int CurExp = character.CharacterSaveData.CumExp;
+        int CurGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
+        int CurAmulet = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);
+        int oldLevel = CurLevel;
+        for (int targetLevel = CurLevel + 1; targetLevel <= MaxLevelinCurrentNece; targetLevel++)
         {
             int expNeeded = needExp[targetLevel - 1];
             int goldNeeded = needGold[targetLevel - 1];
             int amuletNeeded = needamulet[targetLevel - 1];
 
  
-            if (availableExp < expNeeded || availableGold < goldNeeded || availableAmulet < amuletNeeded)
+            if (CurExp < expNeeded || CurGold < goldNeeded || CurAmulet < amuletNeeded)
             {
                 break;
             }
 
 
-            availableExp -= expNeeded;
-            availableGold -= goldNeeded;
-            availableAmulet -= amuletNeeded;
+            CurExp -= expNeeded;
+            CurGold -= goldNeeded;
+            CurAmulet -= amuletNeeded;
 
 
-            currentLevel = targetLevel;
+            CurLevel = targetLevel;
         }
 
         // 실제로 레벨업이 이루어졌으면 캐릭터 정보 업데이트
-        if (currentLevel > oldLevel)
+        if (CurLevel > oldLevel)
         {
             // 사용한 자원량 계산
-            int expUsed = character.CharacterSaveData.CumExp - availableExp;
-            int goldUsed = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold) - availableGold;
-            int amuletUsed = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP) - availableAmulet;
+            int ExpUsed = character.CharacterSaveData.CumExp - CurExp;
+            int GoldUsed = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold) - CurGold;
+            int AmuletUsed = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP) - CurAmulet;
 
             // 자원 차감
-            character.CharacterSaveData.CumExp -= availableExp;
-            CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, -availableGold);
-            CurrencyManager.Instance.SetCurrency(CurrencyType.CharacterEXP, -availableAmulet);
+            character.CharacterSaveData.CumExp = ExpUsed;
+            CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, -GoldUsed);
+            CurrencyManager.Instance.SetCurrency(CurrencyType.CharacterEXP, -AmuletUsed);
 
             // 레벨 설정
-            int levelsGained = currentLevel - oldLevel;
-            character.CharacterSaveData.Level = currentLevel;
+            int levelsGained = CurLevel - oldLevel;
+            character.CharacterSaveData.Level = CurLevel;
 
             // 스탯 업데이트
             character.SetstatToLevel(character.CharacterSaveData.Level, character.CharacterSaveData.ID);
 
             // 레벨업 이벤트 호출
-            Debug.Log($"레벨 {oldLevel}에서 {currentLevel}로 {levelsGained}레벨 상승! (소모: 경험치 {expUsed}, 골드 {goldUsed}, 부적 {amuletUsed})");
+            Debug.Log($"레벨 {oldLevel}에서 {CurLevel}로 {levelsGained}레벨 상승! (소모: 경험치 {ExpUsed}, 골드 {GoldUsed}, 부적 {AmuletUsed})");
         }
         else
         {
