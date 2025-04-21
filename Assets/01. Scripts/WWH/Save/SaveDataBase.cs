@@ -65,7 +65,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
             return Save.OfType<T>().ToList();
         }
 
-        return null;
+        return new List<T>();
     }
 
     ///// <summary>

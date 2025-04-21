@@ -23,3 +23,7 @@ MonoBehaviour:
     sheetId: 1160731269
   - className: Debuff
     sheetId: 1386035039
+  - className: ItemData
+    sheetId: 1562201410
+  - className: Consume
+    sheetId: 391552210

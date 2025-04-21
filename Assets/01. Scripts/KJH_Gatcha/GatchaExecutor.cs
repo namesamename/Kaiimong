@@ -81,7 +81,11 @@ public class GatchaExecutor : MonoBehaviour
                     var pickupS = pool.Find(c => c.ID == mgr.pickupSCharacterID);
                     if (pickupS != null)
                     {
+                        //CharacterDuplicateCheck(pickupS.ID);
                         Debug.Log($" [PICKUP S] {pickupS.Name} (ID:{pickupS.ID}) »πµÊ!");
+
+                        
+
                         continue;
                     }
                 }
@@ -92,6 +96,7 @@ public class GatchaExecutor : MonoBehaviour
                     if (candidates.Count > 0)
                     {
                         var pickupA = candidates[Random.Range(0, candidates.Count)];
+                        //CharacterDuplicateCheck(pickupA.ID);
                         Debug.Log($" [PICKUP A] {pickupA.Name} (ID:{pickupA.ID}) »πµÊ!");
                         continue;
                     }
@@ -100,10 +105,27 @@ public class GatchaExecutor : MonoBehaviour
 
             // ¿œπ› ƒ≥∏Ø≈Õ
             var normal = pool[Random.Range(0, pool.Count)];
+            //CharacterDuplicateCheck(normal.ID);
             Debug.Log($" ¿œπ› »πµÊ: [{grade}] {normal.Name} (ID:{normal.ID})");
         }
 
         curManager.Save();
+    }
+
+
+    public void CharacterDuplicateCheck(int Id)
+    {
+        var Character = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, Id);
+
+        if(Character.IsEquiped)
+        {
+            ItemManager.Instance.SetitemCount(GlobalDataTable.Instance.character.GetCharToID(Character.ID).CharacterItem, 1);
+        }
+        else
+        {
+            Character.IsEquiped = true;
+        }
+        SaveDataBase.Instance.SaveSingleData(Character);
     }
 
     private Grade GetRandomGrade(GatchaType type, int drawCount)

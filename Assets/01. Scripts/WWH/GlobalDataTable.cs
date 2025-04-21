@@ -1,4 +1,6 @@
 
+using static UnityEditor.Progress;
+
 public class GlobalDataTable : Singleton<GlobalDataTable>
 {
 
@@ -8,6 +10,11 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public DataCarrier PartyID;
     public StageDataTable Stage;
     public ChapterDataTable Chapter;
+
+    public ItemDataTable Item;
+
+    public ChapterCategoryDataTable ChapterCategory;
+
 
     private void Awake()
     {
@@ -29,11 +36,20 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         PartyID = new DataCarrier();
         Stage = new StageDataTable();
         Chapter = new ChapterDataTable();
+
+        Item = new ItemDataTable();
+
+        ChapterCategory = new ChapterCategoryDataTable();
+
         character.Initialize();
         skill.Initialize();
         currency.Initialize();
         Stage.Initialize();
         Chapter.Initialize();
+
+        Item.Initialize();
+
+        ChapterCategory.Initialize();
 
     }
 

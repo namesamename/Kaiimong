@@ -60,7 +60,7 @@ public class CharacterStat : MonoBehaviour
     {
     
         attackStat.Value = character.Attack + Level;
-        defenseStat.Value = character.Defense + Level;
+        defenseStat.Value = character.Defence + Level;
         healthStat.Value = character.Health + Level;
         //agilityStat.Value = character.Speed + level;
         criticalAttackStat.Value = character.CriticalAttack + (float)(Level * 0.01);

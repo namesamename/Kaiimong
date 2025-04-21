@@ -17,8 +17,9 @@ MonoBehaviour:
   Grade: 0
   Health: 1600
   Attack: 250
-  Defense: 0
+  Defence: 130
   Speed: 100
   CriticalPer: 0.067
   CriticalAttack: 1.46
-  IsEquiped: 0
+  CharacterType: 0
+  CharacterItem: 1

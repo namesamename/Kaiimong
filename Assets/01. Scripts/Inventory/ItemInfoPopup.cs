@@ -15,7 +15,7 @@ public class ItemInfoPopup : UIPopup
     [SerializeField] private TextMeshProUGUI itemObtainText;       // 획득 경로
     public void Show(ItemData data, int count)
     {
-        itemImage.sprite = data.Icon;                              // 아이콘 이미지 설정
+        //itemImage.sprite = Resources.Load<Sprite>(data.IconPath);                              // 아이콘 이미지 설정
         itemCountText.text = $"x{count}";                          // 수량 표시
         itemNameText.text = data.Name;                             // 이름 텍스트 설정
         itemDescriptionText.text = data.Description;              // 설명 텍스트 설정
