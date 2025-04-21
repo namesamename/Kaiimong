@@ -172,9 +172,7 @@ public class UIInventory : MonoBehaviour
 
     private void SpawnSlots(Transform parentPanel)     // 슬롯들을 생성하고 아이템 데이터를 적용
     {
-
         ClearSlots();
-
         Dictionary<int, int> itemIDAndValue = new Dictionary<int, int>();
         foreach (var saveData in ItemManager.Instance.GetSaveList())
         {
@@ -197,13 +195,16 @@ public class UIInventory : MonoBehaviour
 
         foreach (var (itemData, count) in itemsAndValue)
         {
-            GameObject prefab = GetSlotPrefabByRarity(itemData.Grade);
-            GameObject slotObj = Instantiate(prefab, parentPanel);
+            if (count > 0)
+            {
+                GameObject prefab = GetSlotPrefabByRarity(itemData.Grade);
+                GameObject slotObj = Instantiate(prefab, parentPanel);
 
-            InventorySlot slot = slotObj.GetComponent<InventorySlot>();
-            slot.SetSlot(itemData, count);  // 아이템과 수량 전달
+                InventorySlot slot = slotObj.GetComponent<InventorySlot>();
+                slot.SetSlot(itemData, count);  // 아이템과 수량 전달
 
-            spawnedSlots.Add(slotObj);
+                spawnedSlots.Add(slotObj);
+            }
         }
 
         //ClearSlots();                                                           // 기존 슬롯 제거
