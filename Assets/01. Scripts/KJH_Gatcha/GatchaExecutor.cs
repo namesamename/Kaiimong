@@ -125,6 +125,7 @@ public class GatchaExecutor : MonoBehaviour
         {
             Character.IsEquiped = true;
         }
+        SaveDataBase.Instance.SaveSingleData(Character);
     }
 
     private Grade GetRandomGrade(GatchaType type, int drawCount)
