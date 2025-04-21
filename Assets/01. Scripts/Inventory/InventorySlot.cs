@@ -23,7 +23,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
         if (item != null)
         {
-            iconImage.sprite = item.Icon;    // 아이콘 이미지 설정
+            iconImage.sprite = Resources.Load<Sprite>(item.IconPath);
             iconImage.enabled = true;        // 아이콘  활성화
             countText.text = itemCount.ToString();  // 수량 표시
             outlineEffect.enabled = false;   // 슬롯 생성 시 외곽선 비활성화

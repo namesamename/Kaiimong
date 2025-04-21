@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class ItemDataTable : MonoBehaviour
 {
-    public Dictionary<int, ItemSO> CurrencyDic = new Dictionary<int, ItemSO>();
+    public Dictionary<int, ItemData> CurrencyDic = new Dictionary<int, ItemData>();
     public void Initialize()
     {
-        ItemSO[] currencySOs = Resources.LoadAll<ItemSO>("Item");
+        ItemData[] currencySOs = Resources.LoadAll<ItemData>("Item");
         for (int i = 0; i < currencySOs.Length; i++)
         {
             CurrencyDic[currencySOs[i].ID] = currencySOs[i];
         }
     }
-    public ItemSO GetCurrencySOToEnum(int ID) 
+    public ItemData GetCurrencySOToEnum(int ID) 
     {
         if (CurrencyDic.ContainsKey(ID))
         {
