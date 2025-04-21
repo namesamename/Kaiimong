@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemManager : Singleton<ItemManager>
+public class ItemManager : Singleton<ItemManager>, ISavable
 {
     public List<ItemSavaData>  itemDatas = new List<ItemSavaData>();
 
@@ -14,16 +14,13 @@ public class ItemManager : Singleton<ItemManager>
     }
 
     public void Initialize()
-    {
-        
+    {   
         foreach(ItemData item in GlobalDataTable.Instance.Item.ItemDic.Values)
         {
             HaveData(item, itemDatas);
         }
      
     }
-
-
     public void HaveData(ItemData item, List<ItemSavaData> CurSaveList)
     {
         var itemDatas = SaveDataBase.Instance.GetSaveInstanceList<ItemSavaData>(SaveType.Item);
@@ -42,13 +39,26 @@ public class ItemManager : Singleton<ItemManager>
             };
             CurSaveList.Add(itemSava);
         }
-     
-
     }
 
     public ItemSavaData GetSaveData(int ID)
     {
         return itemDatas.Find(x => x.ID == ID);
+    }
+
+    public List<ItemSavaData> GetSaveList()
+    {
+        List<ItemSavaData> list = new List<ItemSavaData>();
+        foreach(ItemSavaData item in itemDatas)
+        {
+            if(item.Value > 0)
+            {
+                list.Add(item);
+            }
+        }
+        
+        return list;
+
     }
 
     public void SetitemCount(int ID, int Amount)
@@ -57,5 +67,11 @@ public class ItemManager : Singleton<ItemManager>
         item.Value += Amount;
     }
 
-
+    public void Save()
+    {
+        foreach(var item in itemDatas) 
+        {
+            SaveDataBase.Instance.SaveSingleData(item);
+        }
+    }
 }

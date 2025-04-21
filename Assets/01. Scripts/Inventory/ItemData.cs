@@ -20,8 +20,6 @@ public class ItemData : SO
     [Header("È¹µæ °æ·Î")]
     public string Description;        // ¼³¸í
     public string ObtainLocation;     // È¹µæ °æ·Î
-    public bool IsStack;
-
     public float Probability;              // µå¶ø È®·ü
 
 
