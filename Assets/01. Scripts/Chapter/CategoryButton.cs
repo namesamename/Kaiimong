@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CategoryButton : MonoBehaviour
 {
     public int categoryID;
+
+    private ChapterSelectUI chapterSelectUI;
     private Button categoryButton;
 
     private void Awake()
     {
+        chapterSelectUI = GetComponentInParent<ChapterSelectUI>();
         categoryButton = GetComponent<Button>();
     }
 
@@ -18,13 +19,8 @@ public class CategoryButton : MonoBehaviour
         categoryButton.onClick.AddListener(OnCategoryButton);
     }
 
-    void Update()
-    {
-        
-    }
-
     private void OnCategoryButton()
     {
-
+        chapterSelectUI.SetChapterSlots(categoryID);
     }
 }

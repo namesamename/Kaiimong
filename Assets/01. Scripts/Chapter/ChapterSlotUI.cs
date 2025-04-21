@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +12,13 @@ public class ChapterSlotUI : MonoBehaviour
     void Start()
     {
         chapterButton.onClick.AddListener(OnChapterButton);
+        SetChapterSlot();
     }
 
-    void Update()
+    private void SetChapterSlot()
     {
-        
+        chapterIcon.sprite = Resources.Load<Sprite>(Chapter.IconPath);
+        chapterNameText.text = Chapter.Name;
     }
 
     private void OnChapterButton()

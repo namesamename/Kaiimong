@@ -8,5 +8,5 @@ public class Chapter : SO
     public int[] StagesID;
     public string ContentPrefabPath;
     //UI ¿ä¼Ò
-    public string SlotPrefabPath;
+    public string IconPath;
 }

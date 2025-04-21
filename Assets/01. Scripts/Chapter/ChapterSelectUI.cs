@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,34 +9,52 @@ public class ChapterSelectUI : MonoBehaviour
     [SerializeField] private GameObject categoryButtonBox;
     [SerializeField] private Button backButton;
 
+    public List<ChapterSlotUI> slots = new List<ChapterSlotUI>();
+
     void Start()
     {
         backButton.onClick.AddListener(OnBackButton);
-    }
-
-    void Update()
-    {
-        
+        SetCategoryButtons();
+        InitChapter();
     }
 
     private void InitChapter()
     {
-        CurChapterCategory = ChapterManager.Instance.CategoryDataTable.ChapterCategoryDic[0];
+        CurChapterCategory = GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic[0];
+        SetChapterSlots(0);
     }
 
-    private void SetChapterSlots()
+    public void SetChapterSlots(int chapterID)
     {
-        for(int i = 0; i < CurChapterCategory.ChaptersID.Length; i++)
+        CurChapterCategory = GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic[chapterID];
+        for (int i = 0; i < CurChapterCategory.ChaptersID.Length; i++)
         {
-            Instantiate(Resources.Load("Chapter/UI/ChapterSlotUI") as GameObject, contentBox.transform);
+            int chapterDataID = CurChapterCategory.ChaptersID[i];
+            Chapter chapterData = GlobalDataTable.Instance.Chapter.ChapterDic[chapterDataID];
+
+            ChapterSlotUI reusableSlot = slots.Find(slot => slot.Chapter == chapterData);
+            if (reusableSlot != null)
+            {
+                reusableSlot.gameObject.SetActive(true);
+            }
+            else
+            {
+                GameObject obj = Instantiate(Resources.Load("Chapter/UI/ChapterSlotUI") as GameObject, contentBox.transform);
+                ChapterSlotUI objSlot = obj.GetComponent<ChapterSlotUI>();
+                objSlot.Chapter = chapterData;
+                slots.Add(objSlot);
+            }
         }
     }
 
     private void SetCategoryButtons()
     {
-        
-        GameObject obj = Instantiate(Resources.Load("Chapter/UI/CategoryButton") as GameObject, categoryButtonBox.transform);
-        obj.GetComponent<CategoryButton>().categoryID = i;
+        for (int i = 0; i < GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic.Count; i++)
+        {
+            GameObject obj = Instantiate(Resources.Load("Chapter/UI/CategoryButton") as GameObject, categoryButtonBox.transform);
+            obj.GetComponent<CategoryButton>().categoryID = i;
+        }
+
     }
 
     private void OnBackButton()
