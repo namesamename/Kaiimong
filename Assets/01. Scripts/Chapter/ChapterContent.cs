@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChapterSlot : MonoBehaviour
+public class ChapterContent : MonoBehaviour
 {
     public ChapterSaveData ChapterSaveData;
-    public Chapter CurChapter;
+    public Chapter Chapter;
     public bool ChapterOpen = false;
     [SerializeField] private StageSlot[] slots;
 
@@ -26,9 +26,9 @@ public class ChapterSlot : MonoBehaviour
 
     private void InitializeStages()
     {
-        for (int i = 0; i < CurChapter.StagesID.Length; i++)
+        for (int i = 0; i < Chapter.StagesID.Length; i++)
         {
-            slots[i].Initialize(CurChapter.StagesID[i]);
+            slots[i].Initialize(Chapter.StagesID[i]);
         }
     }
 
