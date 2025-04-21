@@ -27,7 +27,6 @@ public class UIInventory : MonoBehaviour
 
     private List<GameObject> spawnedSlots = new List<GameObject>(); // 생성된 슬롯 오브젝트들을 추적하는 리스트
 
-
     private List<ItemData> itemList = new List<ItemData>();        // 일반 아이템 저장용 리스트
     private List<ItemData> consumableList = new List<ItemData>();  // 소모품 아이템 저장용 리스트
 
@@ -120,12 +119,12 @@ public class UIInventory : MonoBehaviour
 
         consumableList = SortByRarity(consumableList);           // 소모품 리스트 정렬
         SpawnSlots(consumableList, consumableSlotPanel);         // 소모품 슬롯 생성
-        UpdateItemCount(consumableList.Count);                   // 수량 텍스트 갱신
+
+  
     }
     public void UpdateItemCount(int current)
-    {
-        int max = 100;                                           // 최대값
-        itemslotCountText.text = $"{current} / {max}";           // 텍스트: "현재 / 최대"
+    {                               
+        itemslotCountText.text = $"{current} / {111}";           // 텍스트: "현재 / 최대"
     }
 
 

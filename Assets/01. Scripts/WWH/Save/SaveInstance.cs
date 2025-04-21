@@ -45,6 +45,6 @@ public class ChapterSaveData : SaveInstance
 
 public class ItemSavaData : SaveInstance
 {
-    int Value;
+    public int Value;
 }
 
