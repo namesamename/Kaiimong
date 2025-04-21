@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/04. Scenes/KJH_UIScenes/PickupScene.unity
     guid: 185bf9b1bdf091246a999ada2e5f1940
+  - enabled: 1
+    path: Assets/04. Scenes/KJH_UIScenes/GatchaResultScene.unity
+    guid: 2a319210f0445a642b685a52f50eceda
   m_configObjects: {}

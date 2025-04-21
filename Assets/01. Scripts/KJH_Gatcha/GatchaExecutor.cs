@@ -36,17 +36,21 @@ public class GatchaExecutor : MonoBehaviour
         }
     }
 
+    private List<Character> results = new();
+
     private void Draw(int count)
     {
         var mgr = GatchaManager.Instance;
         var curManager = CurrencyManager.Instance;
+        mgr.lastDrawCount = count; 
+        results.Clear(); // 결과 리스트 초기화
 
         int useTicket = Mathf.Min(count, curManager.GetCurrency(CurrencyType.Gacha));
         int needCrystal = (count - useTicket) * 160;
 
         if (mgr.crystal < needCrystal)
         {
-            Debug.LogWarning(" 크리스탈이 부족합니다!");
+            Debug.LogWarning("크리스탈이 부족합니다!");
             return;
         }
 
@@ -57,8 +61,8 @@ public class GatchaExecutor : MonoBehaviour
         curManager.SetCurrency(CurrencyType.Gacha, -useTicket);
         curManager.SetCurrency(CurrencyType.Dia, -needCrystal);
 
-        Debug.Log($" [{mgr.currentGachaType}] Gatcha {count}회 성공!");
-        Debug.Log($" 소비된 티켓: {useTicket}, 크리스탈: {needCrystal}");
+        Debug.Log($"[{mgr.currentGachaType}] Gatcha {count}회 성공!");
+        Debug.Log($"소비된 티켓: {useTicket}, 크리스탈: {needCrystal}");
 
         for (int i = 0; i < count; i++)
         {
@@ -69,7 +73,7 @@ public class GatchaExecutor : MonoBehaviour
 
             if (pool.Count == 0)
             {
-                Debug.LogWarning($" 등급 {grade} 캐릭터 풀이 비어 있음");
+                Debug.LogWarning($"등급 {grade} 캐릭터 풀이 비어 있음");
                 continue;
             }
 
@@ -81,7 +85,8 @@ public class GatchaExecutor : MonoBehaviour
                     var pickupS = pool.Find(c => c.ID == mgr.pickupSCharacterID);
                     if (pickupS != null)
                     {
-                        Debug.Log($" [PICKUP S] {pickupS.Name} (ID:{pickupS.ID}) 획득!");
+                        results.Add(pickupS);
+                        Debug.Log($"[PICKUP S] {pickupS.Name} (ID:{pickupS.ID}) 획득!");
                         continue;
                     }
                 }
@@ -92,7 +97,8 @@ public class GatchaExecutor : MonoBehaviour
                     if (candidates.Count > 0)
                     {
                         var pickupA = candidates[Random.Range(0, candidates.Count)];
-                        Debug.Log($" [PICKUP A] {pickupA.Name} (ID:{pickupA.ID}) 획득!");
+                        results.Add(pickupA);
+                        Debug.Log($"[PICKUP A] {pickupA.Name} (ID:{pickupA.ID}) 획득!");
                         continue;
                     }
                 }
@@ -100,28 +106,46 @@ public class GatchaExecutor : MonoBehaviour
 
             // 일반 캐릭터
             var normal = pool[Random.Range(0, pool.Count)];
-            Debug.Log($" 일반 획득: [{grade}] {normal.Name} (ID:{normal.ID})");
+            results.Add(normal);
+            Debug.Log($"일반 획득: [{grade}] {normal.Name} (ID:{normal.ID})");
         }
 
+        // 재화 및 가챠 횟수 저장
         curManager.Save();
+        PlayerPrefs.SetInt("GatchaDrawCount", mgr.gatchaDrawCount);
+        PlayerPrefs.Save();
+
+        // 결과 전달 및 씬 이동
+        GatchaResultHolder.results = results;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GatchaResultScene");
     }
 
     private Grade GetRandomGrade(GatchaType type, int drawCount)
     {
-        if (drawCount > 0 && drawCount % 80 == 0)
+        // 하드 천장: 70회차는 무조건 S
+        if (drawCount > 0 && drawCount % 70 == 0)
         {
-            Debug.Log("80회차 보정 발동! 무조건 S등급");
+            Debug.Log("70회차 보정 발동! 무조건 S등급");
             GatchaManager.Instance.gatchaDrawCount = 0;
-            return Grade.S;         
+            return Grade.S;
         }
 
         float rand = Random.Range(0f, 100f);
+        float sRate = 3f;
+        float aRate = 17f;
+
+        // 50~69회 구간에서 확률 변경
+        if (drawCount >= 50 && drawCount < 70)
+        {
+            sRate = 6f;
+            aRate = 25f;
+        }
 
         switch (type)
         {
             case GatchaType.Pickup:
-                if (rand < 6f) return Grade.S;
-                else if (rand < 24f) return Grade.A;
+                if (rand < sRate) return Grade.S;
+                else if (rand < sRate + aRate) return Grade.A;
                 else return Grade.B;
 
             case GatchaType.Standard:

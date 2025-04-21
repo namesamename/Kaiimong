@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GatchaCharacterPool : MonoBehaviour
+public class GatchaCharacterPool : MonoBehaviour //Resource/char에 있는 캐릭터들을 받아오는 클래스.
 {
     public static GatchaCharacterPool Instance { get; private set; }
 

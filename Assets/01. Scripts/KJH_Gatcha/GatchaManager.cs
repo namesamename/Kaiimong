@@ -8,6 +8,7 @@ public class GatchaManager : MonoBehaviour //화면에서 가챠 타입을 구분해 주는 매
     public int crystal;
     public int ticket;
     public int gatchaDrawCount = 0;
+    public int lastDrawCount = 0;  //최근 시도한 가챠 횟수 
 
 
 
@@ -18,7 +19,7 @@ public class GatchaManager : MonoBehaviour //화면에서 가챠 타입을 구분해 주는 매
     }
     public static GatchaManager Instance;
 
-    public GatchaType currentGachaType;
+    public GatchaType currentGachaType;  //가장 최근의 가챠 타입을 가져오기
 
     public int pickupSCharacterID =1;         // S 픽업 대상
     public List<int> pickupACharacterIDs = new() {6,7};
@@ -32,6 +33,10 @@ public class GatchaManager : MonoBehaviour //화면에서 가챠 타입을 구분해 주는 매
 
         SetGachaType(GatchaType.Pickup);
         Setting();
+    }
+    private void Start()
+    {
+        gatchaDrawCount = PlayerPrefs.GetInt("GatchaDrawCount", 0);
     }
     public void SetGachaType(GatchaType type) //기본 타입을 픽업으로 설정
     {
