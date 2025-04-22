@@ -16,7 +16,6 @@ public class CharacterSaveData : SaveInstance
     public int Recognition;
     public int Necessity;
     public bool IsEquiped;
-    public int CumExp;
     public float Love;
 }
 [System.Serializable]

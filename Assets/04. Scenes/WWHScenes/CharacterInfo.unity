@@ -5734,6 +5734,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelupPopUp
       objectReference: {fileID: 0}
+    - target: {fileID: 2508644654372677691, guid: d16fdd4baa6f01445934a4fced4e6350, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -275
+      objectReference: {fileID: 0}
     - target: {fileID: 3228139558707235077, guid: d16fdd4baa6f01445934a4fced4e6350, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5813,6 +5817,22 @@ PrefabInstance:
     - target: {fileID: 3228139558707235077, guid: d16fdd4baa6f01445934a4fced4e6350, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563417119528356250, guid: d16fdd4baa6f01445934a4fced4e6350, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4485532485425276243, guid: d16fdd4baa6f01445934a4fced4e6350, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -275
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666053006877991496, guid: d16fdd4baa6f01445934a4fced4e6350, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -275
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327067777948447646, guid: d16fdd4baa6f01445934a4fced4e6350, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -275
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

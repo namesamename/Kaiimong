@@ -34,8 +34,5 @@ public class UILevelupStatboard : BaseLevelupInfo
         }
     }
 
-    public override void Initiallize(int weight)
-    {
-        Statset(weight);
-    }
+   
 }

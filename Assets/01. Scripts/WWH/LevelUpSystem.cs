@@ -6,18 +6,18 @@ using UnityEngine.TextCore.Text;
 public static class LevelUpSystem
 {
     public static List<int> PlayerNeedExp = new List<int>();
-    public static List<int> needExp = new List<int>(); // 각 레벨에 필요한 경험치 누적 아님
     public static List<int> needGold = new List<int>();
     public static List<int> needamulet = new List<int>();
+    public static List<int> needLove = new List<int>();
     static int[] MaxLevel = new int[4] { 20, 40, 60, 90 };
     public static void Init()
     {
         for (int i = 1; i <= 90; i++)
         {
             PlayerNeedExp.Add(i);
-            needExp.Add(i);
             needGold.Add(i);
             needamulet.Add(i);
+            needLove.Add(i);
         }
     }
     //public static void GainEXP(int EXP, CharacterCarrier character)
@@ -31,35 +31,43 @@ public static class LevelUpSystem
     //    LevelUpCheck(character);
 
     //}
-    public static void BattleLevelup(int EXP, CharacterCarrier character)
+    //public static void BattleLevelup(int EXP, CharacterCarrier character)
+    //{
+    //    if (EXP <= 0)
+    //    {
+    //        return;
+    //    }
+
+    //    int NextNeedEXP = 0;
+    //    for (int i = 0; i < character.CharacterSaveData.Level; i++)
+    //    {
+    //        NextNeedEXP += needExp[i];
+    //    }
+
+    //    character.CharacterSaveData.CumExp += EXP;
+
+    //    if (NextNeedEXP < character.CharacterSaveData.CumExp)
+    //    {
+    //        character.CharacterSaveData.CumExp -= EXP;
+    //        LevelUp(BattleLevelupOK(character), character);
+    //    }
+
+    //}
+    //public static bool BattleLevelupOK(CharacterCarrier character)
+    //{
+    //    if (character.CharacterSaveData.Level == MaxLevel[character.CharacterSaveData.Level])
+    //    {
+    //        return false;
+    //    }
+    //    return true;
+    //}
+
+
+    public static void LevelUp( int Level,int UseGold, int UseAmulet, CharacterSaveData saveData)
     {
-        if (EXP <= 0)
-        {
-            return;
-        }
-
-        int NextNeedEXP = 0;
-        for (int i = 0; i < character.CharacterSaveData.Level; i++)
-        {
-            NextNeedEXP += needExp[i];
-        }
-
-        character.CharacterSaveData.CumExp += EXP;
-
-        if (NextNeedEXP < character.CharacterSaveData.CumExp)
-        {
-            character.CharacterSaveData.CumExp -= EXP;
-            LevelUp(BattleLevelupOK(character), character);
-        }
-
-    }
-    public static bool BattleLevelupOK(CharacterCarrier character)
-    {
-        if (character.CharacterSaveData.Level == MaxLevel[character.CharacterSaveData.Level])
-        {
-            return false;
-        }
-        return true;
+        CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, -UseGold);
+        CurrencyManager.Instance.SetCurrency(CurrencyType.CharacterEXP, -UseAmulet);
+        saveData.Level += Level;
     }
     //public static void LevelUpCheck(CharacterCarrier character)
     //{
@@ -103,33 +111,34 @@ public static class LevelUpSystem
     //    }
     //}
 
-    public static void LevelUp(bool Ok, CharacterCarrier character)
-    {
-        if (Ok)
-        {
-            character.CharacterSaveData.Level += 1;
-            //캐릭터 내부에서 레벨에 따른 스탯조정 메소드 넣어놓기
-            character.SetstatToLevel(character.CharacterSaveData.Level, character.CharacterSaveData.ID);
-        }
-    }
+    //public static void LevelUp(bool Ok, CharacterCarrier character)
+    //{
+    //    if (Ok)
+    //    {
+    //        character.CharacterSaveData.Level += 1;
+    //        character.CharacterSaveData.CumExp += needExp[character.CharacterSaveData.Level];
+    //        //캐릭터 내부에서 레벨에 따른 스탯조정 메소드 넣어놓기
+    //        character.SetstatToLevel(character.CharacterSaveData.Level, character.CharacterSaveData.ID);
+    //    }
+    //}
 
 
-    public static (int MaxLevel, int EXP, int Gold, int Amulet) OneLevelUPInfo(CharacterSaveData character)
-    {
-        int MaxLevelinCurrentNece = MaxLevel[character.Necessity];
-        if (character.Level >= MaxLevelinCurrentNece)
-        {
-            Debug.Log($"이미 현재 인지 단계의 최대 레벨({MaxLevelinCurrentNece})에 도달했습니다.");
-            return new(character.Level, 0, 0, 0);
-        }
-        int CurLevel = character.Level;
+    //public static (int MaxLevel, int EXP, int Gold, int Amulet) OneLevelUPInfo(CharacterSaveData character)
+    //{
+    //    int MaxLevelinCurrentNece = MaxLevel[character.Necessity];
+    //    if (character.Level == MaxLevelinCurrentNece)
+    //    {
+    //        Debug.Log($"이미 현재 인지 단계의 최대 레벨({MaxLevelinCurrentNece})에 도달했습니다.");
+    //        return new(character.Level, 0, 0, 0);
+    //    }
+    //    int CurLevel = character.Level;
         
-        int expNeeded = needExp[CurLevel];
-        int goldNeeded = needGold[CurLevel];
-        int amuletNeeded = needamulet[CurLevel];
+    //    int expNeeded = needExp[CurLevel];
+    //    int goldNeeded = needGold[CurLevel];
+    //    int amuletNeeded = needamulet[CurLevel];
 
-        return (CurLevel + 1, expNeeded, goldNeeded, amuletNeeded);
-    }
+    //    return (CurLevel + 1, expNeeded, goldNeeded, amuletNeeded);
+    //}
 
     //public static (int MaxLevel,int EXP , int Gold, int Amulet) MaxLevelupInfo(CharacterCarrier character)
     //{

@@ -4,6 +4,16 @@ using UnityEngine;
 
 public abstract class BaseLevelupInfo : MonoBehaviour
 {
-    public abstract void Initiallize(int weight);
+   
+
+    public LevelUpPopUP popUP;
+
+    private void Awake()
+    {
+        popUP = GetComponentInParent<LevelUpPopUP>();
+    }
+
+
+   
 
 }

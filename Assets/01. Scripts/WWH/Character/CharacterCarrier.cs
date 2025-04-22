@@ -29,7 +29,6 @@ public class CharacterCarrier : MonoBehaviour , ISavable
             ID = 0,
             Level = 0,
             Love = 0,
-            CumExp = 0,
             Necessity = 0,
             Recognition = 0,
             Savetype = SaveType.Character,
@@ -82,7 +81,6 @@ public class CharacterCarrier : MonoBehaviour , ISavable
         CharacterSaveData.Level = saveData.Level;
         CharacterSaveData.Recognition = saveData.Recognition;
         CharacterSaveData.Necessity = saveData.Necessity;
-        CharacterSaveData.CumExp = saveData.CumExp;
         CharacterSaveData.IsEquiped = saveData.IsEquiped;
         CharacterSaveData.Love = saveData.Love;
         SetstatToLevel(saveData.ID, saveData.Level);
