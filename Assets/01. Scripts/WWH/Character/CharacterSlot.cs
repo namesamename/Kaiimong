@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class CharacterSlot : MonoBehaviour
@@ -15,23 +16,27 @@ public class CharacterSlot : MonoBehaviour
     private CharacterSaveData characterData;                     // 캐릭터 저장 데이터 참조
     private int characterID;                                     // 캐릭터 고유 ID 저장
 
-    public void SetSlot(CharacterCarrier carrier)                // 슬롯에 캐릭터 정보를 설정하는 함수
+    public void SetSlot(CharacterSaveData saveData, Character character)                // 슬롯에 캐릭터 정보를 설정하는 함수
     {
-        characterData = carrier.CharacterSaveData;               // 저장 데이터 가져오기
-        characterID = characterData.ID;                          // 캐릭터 고유 ID 저장
+        characterData = saveData;                      // 저장된 레벨, 장착 여부, ID 저장
+        characterID = saveData.ID;                     // 캐릭터 ID 저장
 
-        nameText.text = carrier.visual.name;                     // 이름 텍스트 설정
-        levelText.text = $"Lv. {characterData.Level}";           // 레벨 텍스트 설정
+        nameText.text = character.Name;                // 캐릭터 이름 표시
+        levelText.text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
 
-
-        if (carrier.visual.icon != null)                         // 속성 아이콘 설정
-            attributeIcon.sprite = carrier.visual.icon;
+        if (attributeIcon != null && character.AttributeIcon!= null)
+        {
+            attributeIcon.sprite = character.AttributeIcon; // 속성 아이콘 표시
+        }
         else
-            Debug.Log($"속성 아이콘이 없습니다: ID {characterID}");
+        {
+            Debug.LogWarning($"[CharacterSlot] 속성 아이콘이 없습니다: ID {characterID}");
+        }
 
-
-           if (equippedMark != null)                             // 장착 여부에 따라 표시 ON/OFF
-               equippedMark.SetActive(characterData.IsEquiped);
+        if (equippedMark != null)
+        {
+            equippedMark.SetActive(saveData.IsEquiped); // 장착 여부에 따라 마크 활성화
+        }
     }
 
 

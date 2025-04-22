@@ -34,9 +34,6 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private List<ItemData> defaultItems;         // 일반 아이템 목록
     [SerializeField] private List<ItemData> defaultConsumables;   // 소모품 목록
 
-    [SerializeField] private UIItemFilter filterManager;           // 필터 스크립트 연결
-
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -71,7 +68,6 @@ public class UIInventory : MonoBehaviour
             consumableList = SortByRarity(consumableList);       // 소모품 회귀도 정렬
             SpawnSlots(consumableList, consumableSlotPanel);     // 소모품 슬롯 생성
             UpdateItemCount(consumableList.Count);               // 수량 표시 갱신
-            RefreshConsumableInventory();
         }
         else                                          // 일반 아이템일 경우
         {
@@ -79,7 +75,6 @@ public class UIInventory : MonoBehaviour
             itemList = SortByRarity(itemList);                   // 아이템 회귀도 정렬
             SpawnSlots(itemList, itemSlotPanel);                 // 아이템 슬롯 생성
             UpdateItemCount(itemList.Count);                     // 수량 표시 갱신
-            RefreshItemInventory();
 
         }
     }
@@ -113,7 +108,6 @@ public class UIInventory : MonoBehaviour
         itemList = SortByRarity(itemList);                        // 아이템 리스트 정렬
         SpawnSlots(itemList, itemSlotPanel);                      // 아이템 슬롯 생성
         UpdateItemCount(itemList.Count);                          // 수량 텍스트 갱신
-        RefreshItemInventory();
     }
 
     public void OpenConsumableInventory()
@@ -127,31 +121,11 @@ public class UIInventory : MonoBehaviour
         consumableList = SortByRarity(consumableList);           // 소모품 리스트 정렬
         SpawnSlots(consumableList, consumableSlotPanel);         // 소모품 슬롯 생성
         UpdateItemCount(consumableList.Count);                   // 수량 텍스트 갱신
-        RefreshConsumableInventory();
     }
     public void UpdateItemCount(int current)
     {
         int max = 100;                                           // 최대값
         itemslotCountText.text = $"{current} / {max}";           // 텍스트: "현재 / 최대"
-    }
-
-    private void RefreshItemInventory()
-    {
-        RefreshInventory(itemList, itemSlotPanel); // ← 변경: 공통 함수로 호출
-    }
-
-    private void RefreshConsumableInventory()
-    {
-        RefreshInventory(consumableList, consumableSlotPanel); // ← 변경: 공통 함수로 호출
-    }
-
-
-    private void RefreshInventory(List<ItemData> sourceList, Transform targetPanel)
-    {
-        // 필터링 적용
-        List<ItemData> filteredList = (filterManager != null)
-            ? sourceList.FindAll(item => filterManager.IsItemVisible(item)) // 필터 있으면 적용
-            : sourceList; // 없으면 전체 리스트
     }
 
     private void SpawnSlots(List<ItemData> dataList, Transform parentPanel)     // 슬롯들을 생성하고 아이템 데이터를 적용

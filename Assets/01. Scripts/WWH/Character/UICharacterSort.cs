@@ -11,7 +11,7 @@ public class UICharacterSort : MonoBehaviour                   // ·¹º§ ÀÚµ¿, Èñ±
 
     [SerializeField] private TextMeshProUGUI sortButtonText;   // Èñ±Íµµ Á¤·Ä ¹öÆ°¿¡ Ç¥½ÃµÉ ÅØ½ºÆ®
 
-    List<CharacterSaveData> characterSaves = new List<CharacterSaveData>();
+    List<CharacterSaveData> characterSaves = new List<CharacterSaveData>();     //CharacterSaveData Å¸ÀÔ ´ãÀº ¸®½ºÆ®
 
     private void Start()
     {
@@ -36,18 +36,6 @@ public class UICharacterSort : MonoBehaviour                   // ·¹º§ ÀÚµ¿, Èñ±
         }
     }
 
-    public void CharacterDecide()                         //³»°¡ °¡Áø Ä³¸¯ÅÍ¸¦ ¿ì¸® ¸®½ºÆ®¿¡ ³ÖÀ½
-    {
-        List<CharacterSaveData> characterSaveDatas = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
-        foreach (CharacterSaveData characterSaveData in characterSaveDatas)
-        {
-            if (characterSaveData.IsEquiped)
-            {
-                characterSaves.Add(characterSaveData);
-            }
-        }
-    }
-
     public List<CharacterCarrier> SortByLevel(List<CharacterCarrier> levellist)                                // ·¹º§ ÀÚµ¿ Á¤·Ä (³»¸²Â÷¼ø)
     {
         return levellist.OrderByDescending(characterLevel => characterLevel.CharacterSaveData.Level).ToList(); // ·¹º§ Å« ¼ø
@@ -62,13 +50,14 @@ public class UICharacterSort : MonoBehaviour                   // ·¹º§ ÀÚµ¿, Èñ±
             return list.OrderByDescending(characterDown => characterDown.Grade).ToList();       // ³ôÀº µî±Þ ¡æ ³·Àº µî±Þ 
     }
 
-    public List<Character> characters(List<CharacterSaveData> characterSaveDatas)   //CharacterSaveData¸¦ CharacterScriptObject·Î ¹Ù²Þ
+    public List<Character> characters(List<CharacterSaveData> characterSaveDatas)   //CharacterSaveData ¸®½ºÆ®¸¦ CharacterScriptObject·Î ¹Ù²Þ
     {
-        List<Character> characters = new List<Character>();
-        foreach (CharacterSaveData characterSaveData in characterSaveDatas) 
+        List<Character> characters = new List<Character>();                         // º¯È¯µÈ Ä³¸¯ÅÍ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÒ ¸®½ºÆ®
+
+        foreach (CharacterSaveData characterSaveData in characterSaveDatas)         // ¹ÞÀº ¼¼ÀÌºê µ¥ÀÌÅÍ¸¦ ÇÏ³ª¾¿ ¼øÈ¸ÇÏ¸é¼­
         {
-            characters.Add(GlobalDataTable.Instance.character.GetCharToID(characterSaveData.ID));
+            characters.Add(GlobalDataTable.Instance.character.GetCharToID(characterSaveData.ID));   // ID¸¦ ±âÁØÀ¸·Î Ä³¸¯ÅÍ µ¥ÀÌÅÍ Å×ÀÌºí¿¡¼­ ScriptableObject¸¦ Ã£¾Æ Ãß°¡
         }
-        return characters;
+        return characters;                                                                          // ¿Ï¼ºµÈ ¸®½ºÆ® ¹ÝÈ¯
     }
 }
