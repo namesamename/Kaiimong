@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/04. Scenes/KJH_UIScenes/PickupScene.unity
     guid: 185bf9b1bdf091246a999ada2e5f1940
   - enabled: 1
-    path: Assets/04. Scenes/YBK_Inventory/YBK_Inventory.unity
+    path: Assets/04. Scenes/YBK/YBK_Inventory.unity
     guid: 103e9fbabdddf0e42b9bd20cc67d0163
   - enabled: 1
     path: Assets/04. Scenes/WWHScenes/CharacterInfo.unity

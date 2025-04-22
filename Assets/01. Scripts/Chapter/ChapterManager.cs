@@ -34,8 +34,8 @@ public class ChapterManager : Singleton<ChapterManager>
 
     private void SetChapter()
     {
-        GameObject obj = Resources.Load(CurChapter.ContentPrefabPath) as GameObject;
-
+        GameObject obj = Instantiate(Resources.Load(CurChapter.ContentPrefabPath) as GameObject);
+        
         OnChapterOpen?.Invoke();
     }
     public void InitializeChapter(int Id)

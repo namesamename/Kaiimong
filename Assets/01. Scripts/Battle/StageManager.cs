@@ -125,8 +125,27 @@ public class StageManager : Singleton<StageManager>
         CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
-        //호감도 지급
         //아이템
+        //캐릭터 경험치?
+        //호감도 지급
+
+        //스테이지정보 업데이트
+        SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.ID).ClearedStage = true;
+        //스테이지 저장
+        SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.ID));
+        for (int i = 0; i < CurrentStage.UnlockID.Length; i++)
+        {
+            SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.UnlockID[i]).StageOpen = true;
+            //해금된 스테이지 정보 저장
+            SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.UnlockID[i]));
+        }
+        for (int i = 0; i < CurrentStage.UnlockChapterID.Length; i++)
+        {
+            SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, CurrentStage.UnlockChapterID[i]).ChapterOpen = true;
+            //해금된 챕터 저장
+            SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, CurrentStage.UnlockChapterID[i]));
+        }
+
     }
 
     public void LoseStage()
@@ -152,11 +171,11 @@ public class StageManager : Singleton<StageManager>
 
     private void UnSubscribeAllAction()
     {
-        foreach(CharacterCarrier carrier in Players)
+        foreach (CharacterCarrier carrier in Players)
         {
             battleSystem.UnSubscribeCharacterDeathAction(carrier);
         }
-        foreach(CharacterCarrier carrier in Enemies)
+        foreach (CharacterCarrier carrier in Enemies)
         {
             battleSystem.UnSubscribeCharacterDeathAction(carrier);
         }
