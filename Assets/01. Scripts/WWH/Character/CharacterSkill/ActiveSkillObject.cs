@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class ActiveSkillObject : MonoBehaviour
 {
     public ActiveSkill skillSO;
@@ -11,8 +13,6 @@ public class ActiveSkillObject : MonoBehaviour
     {
         skillSO=  GlobalDataTable.Instance.skill.GetActSkillSOToID(id);
     }
-
-
     public void UseSkill(List<CharacterCarrier> targetcharacter)
     {
         CharacterStat stat = GetComponentInParent<CharacterStat>();
@@ -39,9 +39,7 @@ public class ActiveSkillObject : MonoBehaviour
                     AllDamage *= stat.criticalAttackStat.Value;
                     Debug.Log("Å©¸®Æ¼ÄÃ ¶ä¤§¤§");
                 }
-
                 c.stat.TakeDamage( AllDamage);
-            
             }
         }
         

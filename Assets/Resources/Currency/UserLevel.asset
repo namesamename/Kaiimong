@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91d366ec2a6ceb84faa18dd9891012de, type: 3}
   m_Name: UserLevel
   m_EditorClassIdentifier: 
-  ID: 
+  ID: 6
   Name: 
   Description: 
   IconPath: 

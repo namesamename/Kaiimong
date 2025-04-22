@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791d529bcd693234bade6a9d2586a971, type: 3}
   m_Name: Activity
   m_EditorClassIdentifier: 
-  ID: 
+  ID: 5
   Name: 
   Description: 
   IconPath: 

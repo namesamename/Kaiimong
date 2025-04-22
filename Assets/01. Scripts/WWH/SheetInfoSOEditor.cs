@@ -103,7 +103,15 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "Buff/";
         }
- 
+        else if (SheetId == "ItemData")
+        {
+            Directory = "Item/";
+        }
+        else if (SheetId == "Consume")
+        {
+            Directory = "Cons/";
+        }
+
     }
 
 

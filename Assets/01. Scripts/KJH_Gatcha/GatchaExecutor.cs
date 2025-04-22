@@ -85,8 +85,16 @@ public class GatchaExecutor : MonoBehaviour
                     var pickupS = pool.Find(c => c.ID == mgr.pickupSCharacterID);
                     if (pickupS != null)
                     {
+
                         results.Add(pickupS);
                         Debug.Log($"[PICKUP S] {pickupS.Name} (ID:{pickupS.ID}) È¹µæ!");
+
+                        //CharacterDuplicateCheck(pickupS.ID);
+
+
+                        
+
+
                         continue;
                     }
                 }
@@ -97,8 +105,11 @@ public class GatchaExecutor : MonoBehaviour
                     if (candidates.Count > 0)
                     {
                         var pickupA = candidates[Random.Range(0, candidates.Count)];
+
                         results.Add(pickupA);
                         Debug.Log($"[PICKUP A] {pickupA.Name} (ID:{pickupA.ID}) È¹µæ!");
+                        //CharacterDuplicateCheck(pickupA.ID);
+
                         continue;
                     }
                 }
@@ -106,8 +117,11 @@ public class GatchaExecutor : MonoBehaviour
 
             // ÀÏ¹Ý Ä³¸¯ÅÍ
             var normal = pool[Random.Range(0, pool.Count)];
+
             results.Add(normal);
             Debug.Log($"ÀÏ¹Ý È¹µæ: [{grade}] {normal.Name} (ID:{normal.ID})");
+
+            //CharacterDuplicateCheck(normal.ID);
         }
 
         // ÀçÈ­ ¹× °¡Ã­ È½¼ö ÀúÀå
@@ -118,6 +132,41 @@ public class GatchaExecutor : MonoBehaviour
         // °á°ú Àü´Þ ¹× ¾À ÀÌµ¿
         GatchaResultHolder.results = results;
         UnityEngine.SceneManagement.SceneManager.LoadScene("GatchaResultScene");
+    }
+
+
+    public void CharacterDuplicateCheck(int Id)
+    {
+        var Character = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, Id);
+
+        if (Character != null)
+        {
+
+            if (Character.IsEquiped)
+            {
+                ItemManager.Instance.SetitemCount(GlobalDataTable.Instance.character.GetCharToID(Character.ID).CharacterItem, 1);
+            }
+            else
+            {
+                Character.IsEquiped = true;
+            }
+            SaveDataBase.Instance.SaveSingleData(Character);
+        }
+        else
+        {
+            CharacterSaveData chracterSave = new CharacterSaveData()
+            {
+                ID = Id,
+                Savetype = SaveType.Character,
+                CumExp = 0,
+                IsEquiped = true,
+                Level = 1,
+                Recognition = 0,
+                Necessity = 0,
+                Love = 0,
+             };
+            SaveDataBase.Instance.SaveSingleData(chracterSave);
+        }
     }
 
     private Grade GetRandomGrade(GatchaType type, int drawCount)

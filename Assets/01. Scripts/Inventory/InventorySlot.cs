@@ -12,20 +12,26 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TextMeshProUGUI countText;       //아이템 수량 텍스트
     [SerializeField] private Outline outlineEffect;           // 슬롯 외곽선 효과
 
-
     private ItemData item;                    // 현재 슬롯에 들어있는 아이템
     private int itemCount;                    // 해당 아이템 수량
-
     public void SetSlot(ItemData newItem, int amount = 1)     // 슬롯에 새 아이템 슬롯 설정
     {
         item = newItem;
-        itemCount = amount;
+        itemCount = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, item.ID).Value;
 
         if (item != null)
         {
-            iconImage.sprite = item.Icon;    // 아이콘 이미지 설정
+            iconImage.sprite = Resources.Load<Sprite>(item.IconPath);
             iconImage.enabled = true;        // 아이콘  활성화
-            countText.text = itemCount.ToString();  // 수량 표시
+            if (itemCount > 1)
+            {
+                countText.text = itemCount.ToString();
+            }
+            else
+            {
+                countText.text = string.Empty;
+            }
+
             outlineEffect.enabled = false;   // 슬롯 생성 시 외곽선 비활성화
         }
         else

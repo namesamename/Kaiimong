@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7686766805660304139}
-  - component: {fileID: 7913552969608800845}
+  - component: {fileID: 2598289514619512497}
+  - component: {fileID: 2247985307240507239}
   m_Layer: 0
-  m_Name: SkillObject (1)
+  m_Name: SecondSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 227030044190432666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7913552969608800845
+--- !u!114 &2598289514619512497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +42,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 482512201452634963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3586c7d1d0d85454fb2b0e0a29710998, type: 3}
+  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillSO: {fileID: 0}
-  buffSkillSO: {fileID: 0}
+--- !u!114 &2247985307240507239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482512201452634963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillSO: {fileID: 0}
 --- !u!1 &966315046957382935
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,9 +68,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2457410028012087338}
-  - component: {fileID: 5682374490155777911}
+  - component: {fileID: 5729646307559379001}
+  - component: {fileID: 8008621127315485212}
   m_Layer: 0
-  m_Name: SkillObject (2)
+  m_Name: ThridSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +92,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 227030044190432666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5682374490155777911
+--- !u!114 &5729646307559379001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,11 +101,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 966315046957382935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3586c7d1d0d85454fb2b0e0a29710998, type: 3}
+  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillSO: {fileID: 0}
-  buffSkillSO: {fileID: 0}
+--- !u!114 &8008621127315485212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966315046957382935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillSO: {fileID: 0}
 --- !u!1 &2380636551559904517
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +214,7 @@ Animator:
   m_GameObject: {fileID: 2380636551559904517}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4a76e0bac564ce4e9bf0bfed66d3b71, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -222,6 +248,7 @@ MonoBehaviour:
   - {fileID: 0}
   icon: {fileID: 21300000, guid: ec80c213390c15247b9148eaa1331b3f, type: 3}
   SelectEffect: {fileID: 0}
+  AppearAnimationLength: 0
 --- !u!1 &2516109690876170450
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,11 +300,15 @@ MonoBehaviour:
   skillBook: {fileID: 0}
   stat: {fileID: 0}
   visual: {fileID: 0}
+  CharacterSaveData:
+    Savetype: 0
+    ID: 0
+    Level: 0
+    Recognition: 0
+    Necessity: 0
+    CurHp: 0
+    SpecialMoveGauge: 0
   SelectEffect: {fileID: 3989826384810096057}
-  characterId: 001
-  Level: 0
-  Recognition: 0
-  Necessity: 0
 --- !u!1 &2793880361927308716
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,14 +356,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200c82e01454c384897969b3730de4c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkillList:
+  ActiveSkillList:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  SkillId:
-  - 
-  - 
-  - 
 --- !u!1 &3989826384810096057
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,9 +594,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5341915935390284445}
-  - component: {fileID: 5997350460215379462}
+  - component: {fileID: 2693029588099113269}
+  - component: {fileID: 6514155806812613608}
   m_Layer: 0
-  m_Name: SkillObject
+  m_Name: FirstSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -590,7 +618,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 227030044190432666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5997350460215379462
+--- !u!114 &2693029588099113269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -599,8 +627,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8392031930144181386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3586c7d1d0d85454fb2b0e0a29710998, type: 3}
+  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillSO: {fileID: 0}
-  buffSkillSO: {fileID: 0}
+--- !u!114 &6514155806812613608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8392031930144181386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillSO: {fileID: 0}

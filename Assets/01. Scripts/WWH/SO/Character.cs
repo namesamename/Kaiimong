@@ -6,18 +6,25 @@ public enum Grade
     B
 }
 
+public enum CharacterType
+{
+    Spirit,
+    Physics
+}
+
+
 public class Character : SO
 {
     public string Name;
     public Grade Grade;
     public int Health;
     public int Attack;
-    public int Defense;
+    public int Defence;
     public int Speed;
     public float CriticalPer;
     public float CriticalAttack;
+    public CharacterType CharacterType;
+    public int CharacterItem;
 
-    
-    public bool IsEquiped = false;
 
 }

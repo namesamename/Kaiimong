@@ -5,10 +5,20 @@
       "Level": 0,
       "Recognition": 0,
       "Necessity": 0,
-      "CurHp": 0.0,
-      "SpecialMoveGauge": 0,
+      "IsEquiped": false,
+      "CumExp": 0,
       "Savetype": 0,
       "ID": 2
+    },
+    {
+      "$type": "CharacterSaveData, Assembly-CSharp",
+      "Level": 0,
+      "Recognition": 0,
+      "Necessity": 0,
+      "IsEquiped": false,
+      "CumExp": 0,
+      "Savetype": 0,
+      "ID": 1
     }
   ]
 }

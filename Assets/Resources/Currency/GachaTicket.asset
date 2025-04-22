@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1832c52913bcd3444b37dd78e7475ba7, type: 3}
   m_Name: GachaTicket
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 4
   Name: 
   Description: 
   IconPath: 

@@ -64,8 +64,11 @@ public class StageManager : Singleton<StageManager>
         battleSystem.Players = new List<CharacterCarrier>(Players);
         CreateEnemy();
         CurrentRound = 1;
+        //반환 행동력
         returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
+        //플레이어 경험치
         userExp = CurrentStage.ActivityPoint * 100;
+        //캐릭터 경험치
         playerExp = CurrentStage.ActivityPoint * 100 / 4;
     }
 
@@ -124,7 +127,6 @@ public class StageManager : Singleton<StageManager>
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
         //호감도 지급
         //아이템
-
     }
 
     public void LoseStage()

@@ -1,19 +1,27 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System;
+
+public enum SpriteType
+{
+    Icon,
+    BattleSprite,
+    Illustration,
+}
 
 public class CharacterVisual : MonoBehaviour
 {
     private Animator animator;
     public Animator Animator { get { return animator; } }
     private SpriteRenderer spriteRenderer;
-
     public RuntimeAnimatorController runtimeController;
     public AnimationClip[] animationClips = new AnimationClip[7];
     public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
 
+    public Sprite Illustration;
     public Sprite icon;
+    public Sprite BattleSprite;
+
+
     public GameObject SelectEffect;
     public float AppearAnimationLength;
 
@@ -21,7 +29,13 @@ public class CharacterVisual : MonoBehaviour
     {
         animator = GetComponentInParent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-  
+
+
+
+        //icon = Resources.Load<Sprite>($"Icon/{GetComponentInParent<CharacterCarrier>().CharacterSaveData.ID}");
+        //BattleSprite = Resources.Load<Sprite>($"BattleSprite/{GetComponentInParent<CharacterCarrier>().CharacterSaveData.ID}");
+        //Illustration = Resources.Load<Sprite>($"Illustration/{GetComponentInParent<CharacterCarrier>().CharacterSaveData.ID}");
+
 
         // 애니메이션 길이 계산
         if (animator != null)
@@ -36,6 +50,34 @@ public class CharacterVisual : MonoBehaviour
         }
     }
 
+    public void SetSprite(SpriteType sprite)
+    {
+        switch (sprite)
+        {
+            case SpriteType.Icon:
+                spriteRenderer.sprite = icon;
+                break;
+            case SpriteType.BattleSprite:
+                spriteRenderer.sprite = BattleSprite;
+                break;
+            case SpriteType.Illustration:
+                spriteRenderer.sprite = Illustration; 
+                break;
+        }
+
+    }
+    public Sprite GetBattleSprite()
+    {
+        return BattleSprite;
+    }
+    public Sprite GetIcon()
+    {
+        return icon;
+    }
+    public Sprite GetIllustration()
+    {
+        return Illustration;
+    }
 
     public IEnumerator PlayAni()
     {

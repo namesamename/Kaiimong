@@ -7,13 +7,13 @@ using UnityEngine.TextCore.Text;
 public class SkillDataTable
 {
    public Dictionary<int, ActiveSkill> ActSkillDataDic = new Dictionary<int, ActiveSkill>();
-    //public Dictionary<int, PassiveSkill> PasSkillDataDic = new Dictionary<int, PassiveSkill>();
+    public Dictionary<int, PassiveSkill> PasSkillDataDic = new Dictionary<int, PassiveSkill>();
     public Dictionary<int, Buff> BuffskillDic = new Dictionary<int, Buff>();
     public Dictionary<int, Debuff> DebuffskillDic = new Dictionary<int, Debuff>();
     public void Initialize()
     {
         ActiveSkill[] ActSO = Resources.LoadAll<ActiveSkill>("ActS");
-        //PassiveSkill[] PasSO = Resources.LoadAll<PassiveSkill>("PasS");
+        PassiveSkill[] PasSO = Resources.LoadAll<PassiveSkill>("PasS");
         Debuff[] DebuffSO = Resources.LoadAll<Debuff>("Debu");
         Buff[] BuffSO = Resources.LoadAll<Buff>("Buff");
 
@@ -21,10 +21,10 @@ public class SkillDataTable
         {
             ActSkillDataDic[skill.ID] = skill;
         }
-        //foreach (PassiveSkill skill in PasSO)
-        //{
-        //    PasSkillDataDic[skill.ID] = skill;
-        //}
+        foreach (PassiveSkill skill in PasSO)
+        {
+            PasSkillDataDic[skill.ID] = skill;
+        }
         foreach (Debuff skill in DebuffSO)
         {
             DebuffskillDic[skill.ID] = skill;
@@ -48,18 +48,18 @@ public class SkillDataTable
         }
     }
 
-    //public PassiveSkill GetPasSkillSOToID(int SkillId)
-    //{
-    //    if (PasSkillDataDic.ContainsKey(SkillId) && PasSkillDataDic[SkillId] != null)
-    //    {
-    //        return PasSkillDataDic[SkillId];
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("This ID is incorrect");
-    //        return null;
-    //    }
-    //}
+    public PassiveSkill GetPasSkillSOToID(int SkillId)
+    {
+        if (PasSkillDataDic.ContainsKey(SkillId) && PasSkillDataDic[SkillId] != null)
+        {
+            return PasSkillDataDic[SkillId];
+        }
+        else
+        {
+            Debug.Log("This ID is incorrect");
+            return null;
+        }
+    }
     public Debuff GetDebuffToID(int id)
     {
         if( DebuffskillDic.ContainsKey(id) && DebuffskillDic[id] != null  )
