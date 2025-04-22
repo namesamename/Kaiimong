@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ItemDataTable : MonoBehaviour
+public class ItemDataTable
 {
     public Dictionary<int, ItemData> ItemDic = new Dictionary<int, ItemData>();
     public Dictionary<int, Consume> ConItemDic = new Dictionary<int, Consume>();

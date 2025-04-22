@@ -2,10 +2,11 @@
   "Saves": [
     {
       "$type": "CurrencySaveData, Assembly-CSharp",
+      "UserName": "JIHwan",
       "UserLevel": 1,
       "UserEXP": 0,
-      "CharacterEXP": 0,
-      "GoldValue": 0,
+      "CharacterEXP": 648,
+      "GoldValue": 648,
       "DIAValue": 99999,
       "GachaValue": 9554,
       "ActivityValue": 300,

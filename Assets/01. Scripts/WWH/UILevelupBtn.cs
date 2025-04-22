@@ -8,15 +8,16 @@ public class UILevelupBtn : BaseLevelupInfo
     Button[] buttons;
 
 
-
-    private void Start()
-    {
-        buttons = GetComponentsInChildren<Button>();
-    }
-
-
     public void initialize()
     {
+        
+        
+        buttons = GetComponentsInChildren<Button>();
+        for (int i = 0; i < buttons.Length; i++) 
+        {
+            buttons[i].onClick.RemoveAllListeners();
+        }
+
         buttons[0].onClick.AddListener(OnMax);
         buttons[1].onClick.AddListener(OnPlus);
         buttons[2].onClick.AddListener(OnMin);
@@ -26,38 +27,82 @@ public class UILevelupBtn : BaseLevelupInfo
     }
     public void OnMax()
     {
-        
+        int MaxEXP = popUP.effect.CalculateMaxCurrency(CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP), false);
+        int MaxGold = popUP.effect.CalculateMaxCurrency(CurrencyManager.Instance.GetCurrency(CurrencyType.Gold), true);
+
+        int maxPossibleLevels = Mathf.Min(MaxGold, MaxEXP);
+
+        popUP.LevelInterval = 1;
+
+        if (maxPossibleLevels > 0)
+        {
+            bool canLevelUp = popUP.effect.SetPlus(maxPossibleLevels);
+
+            if (canLevelUp)
+            {
+                buttons[5].onClick.AddListener(Excute);
+                buttons[5].interactable = true;
+  
+            }
+            else
+            {
+                buttons[5].interactable = false;
+            }
+        }
+        else
+        {
+            // 레벨업 불가능
+            buttons[5].interactable = false;
+        }
+
     }
     public void OnMin()
     {
 
+        popUP.LevelInterval = 0;
+        buttons[5].onClick.RemoveAllListeners();
+
+        if (popUP.effect.SetPlus(1))
+        {
+            buttons[5].onClick.AddListener(Excute);
+            buttons[5].interactable = true;
+       
+        }
+        else
+        {
+            buttons[5].interactable = false;
+        }
     }
     public void OnPlus()
     {
+
         buttons[5].onClick.RemoveAllListeners();
 
         if(popUP.effect.SetPlus(1))
         {
             buttons[5].onClick.AddListener(Excute);
             buttons[5].interactable = true;
+
         }
         else
         {
-            buttons[5].interactable = true;
+            buttons[5].interactable = false;
         }
 
     }
     public void OnMinus()
     {
+
         buttons[5].onClick.RemoveAllListeners();
         if (popUP.effect.SetMinus(1))
         {
             buttons[5].onClick.AddListener(Excute);
             buttons[5].interactable = true;
+
         }
         else
         {
-            buttons[5].interactable = true;
+            buttons[5].interactable = false;
         }
 
     
@@ -65,11 +110,12 @@ public class UILevelupBtn : BaseLevelupInfo
     public void OnDown()
     {
         popUP.UISet();
-        popUP.Hide();
+        popUP.Destroy();
     }
     public void Excute()
     {
         LevelUpSystem.LevelUp(popUP.LevelInterval, popUP.UsingGlod, popUP.UsingAmulet, ImsiGameManager.Instance.GetCharacterSaveData());
         popUP.Initialize();
+
     }
 }

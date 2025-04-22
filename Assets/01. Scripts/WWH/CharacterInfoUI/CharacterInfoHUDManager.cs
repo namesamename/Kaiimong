@@ -7,10 +7,7 @@ public class CharacterInfoHUDManager : MonoBehaviour
 
     private void Awake()
     {
-
         Initialize();
-
-
     }
 
 

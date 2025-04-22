@@ -9,7 +9,7 @@ public static class LevelUpSystem
     public static List<int> needGold = new List<int>();
     public static List<int> needamulet = new List<int>();
     public static List<int> needLove = new List<int>();
-    static int[] MaxLevel = new int[4] { 20, 40, 60, 90 };
+    public static int[] MaxLevel = new int[4] { 20, 40, 60, 90 };
     public static void Init()
     {
         for (int i = 1; i <= 90; i++)

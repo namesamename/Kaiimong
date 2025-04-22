@@ -10,13 +10,14 @@ public class UILevelUPEffect : BaseLevelupInfo
     Image[] Images;
     private void Start()
     {
-        textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
-        Images = GetComponentsInChildren<Image>();
+
     }
 
 
     public void Intialize()
     {
+        textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
+        Images = GetComponentsInChildren<Image>();
         textMeshPros[0].text = popUP.CurLevel.ToString();
         textMeshPros[1].text = popUP.NextLevel.ToString();
         textMeshPros[2].text = 0.ToString();
@@ -43,9 +44,17 @@ public class UILevelUPEffect : BaseLevelupInfo
     }
     public bool SetPlus(int levelToAdd)
     {
- 
+
+        if (popUP.CurLevel + popUP.LevelInterval + 1 > LevelUpSystem.MaxLevel[ImsiGameManager.Instance.GetCharacterSaveData().Necessity])
+        {
+            return false;
+        }
+
+        Debug.Log(popUP.LevelInterval);
+
         popUP.LevelInterval += levelToAdd;
         popUP.NextLevel = popUP.CurLevel + popUP.LevelInterval;
+      
         popUP.stat.Statset(popUP.LevelInterval);
 
         int curGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
@@ -62,7 +71,7 @@ public class UILevelUPEffect : BaseLevelupInfo
         textMeshPros[3].text = requiredExp.ToString();
         popUP.UsingAmulet = requiredExp;
 
-        textMeshPros[6].text = popUP.NextLevel.ToString();
+        textMeshPros[6].text = $"Lv.{popUP.NextLevel}";
 
         bool canLevelUp = true;
         if (curGold < requiredGold)
@@ -101,7 +110,7 @@ public class UILevelUPEffect : BaseLevelupInfo
     public bool SetMinus(int levelToSubtract)
     {
         // 레벨 간격이 1보다 작으면 더 이상 감소 불가
-        if (popUP.LevelInterval < 1)
+        if (popUP.LevelInterval < 1 )
         {
             return false;
         }
@@ -167,6 +176,26 @@ public class UILevelUPEffect : BaseLevelupInfo
         }
 
         return canLevelUp;
+    }
+
+
+    public int CalculateMaxCurrency(int curent, bool IsGold)
+    {
+        int MaxLevel = popUP.CurLevel;
+        int total = 0;
+       for(int i = MaxLevel + 1; i < LevelUpSystem.MaxLevel[ImsiGameManager.Instance.GetCharacterSaveData().Necessity]; i++) 
+        {
+            total += IsGold ? LevelUpSystem.needGold[i] : LevelUpSystem.needamulet[i];
+            if(total > curent)
+            {
+                break;
+            }
+            MaxLevel = i;
+        }
+
+
+       return MaxLevel - popUP.CurLevel;
+
     }
 
 

@@ -23,6 +23,10 @@ public class LevelUpPopUP : UIPopup
         btn = GetComponentInChildren<UILevelupBtn>();
         effect = GetComponentInChildren<UILevelUPEffect>();
         stat = GetComponentInChildren<UILevelupStatboard>();
+ 
+    }
+    private void Start()
+    {
         Initialize();
     }
 
