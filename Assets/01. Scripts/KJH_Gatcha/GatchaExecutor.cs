@@ -15,7 +15,6 @@ public class GatchaExecutor : MonoBehaviour
         string message = GetConfirmMessage(10);
         ShowConfirmPopup<PopupGatchaConfirm>(message, () => Draw(10));
     }
-
     private string GetConfirmMessage(int count)
     {
         var mgr = GatchaManager.Instance;
@@ -26,7 +25,6 @@ public class GatchaExecutor : MonoBehaviour
         return $"{mgr.currentGachaType} Gatcha {count}time :\n" +
                $"ticket {useTicket} + crystal {needCrystal} use \nDo it?";
     }
-
     private void ShowConfirmPopup<T>(string message, System.Action confirmAction) where T : PopupGatchaConfirm
     {
         var popup = UIManager.Instance.ShowPopup<T>();
@@ -91,10 +89,6 @@ public class GatchaExecutor : MonoBehaviour
 
                         //CharacterDuplicateCheck(pickupS.ID);
 
-
-                        
-
-
                         continue;
                     }
                 }
@@ -131,9 +125,80 @@ public class GatchaExecutor : MonoBehaviour
 
         // 결과 전달 및 씬 이동
         GatchaResultHolder.results = results;
+
+        GatchaResultHolder.session = new GatchaSessionData //최근 뽑기 형식 기억
+        {
+            gatchaType = mgr.currentGachaType,
+            drawCount = count,
+            pickupSId = mgr.pickupSCharacterID,
+            pickupAIds = new List<int>(mgr.pickupACharacterIDs)
+        };
+
+
         UnityEngine.SceneManagement.SceneManager.LoadScene("GatchaResultScene");
     }
+    public List<Character> DrawWithSession(GatchaSessionData session)
+    {
+        var mgr = GatchaManager.Instance;
+        var curManager = CurrencyManager.Instance;
+        List<Character> results = new();
 
+        int useTicket = Mathf.Min(session.drawCount, curManager.GetCurrency(CurrencyType.Gacha));
+        int needCrystal = (session.drawCount - useTicket) * 160;
+
+        if (mgr.crystal < needCrystal)
+        {
+            Debug.LogWarning("크리스탈이 부족합니다!");
+            return results;
+        }
+
+        // 재화 차감
+        mgr.ticket -= useTicket;
+        mgr.crystal -= needCrystal;
+        curManager.SetCurrency(CurrencyType.Gacha, -useTicket);
+        curManager.SetCurrency(CurrencyType.Dia, -needCrystal);
+
+        for (int i = 0; i < session.drawCount; i++)
+        {
+            mgr.gatchaDrawCount++;
+
+            Grade grade = GetRandomGrade(session.gatchaType, mgr.gatchaDrawCount);
+            var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade);
+
+            Character selected = SelectCharacterByPickup(grade, pool, session);
+            results.Add(selected);
+            Debug.Log($"[DrawMore] 획득: [{grade}] {selected.Name}");
+        }
+
+        curManager.Save();
+        PlayerPrefs.SetInt("GatchaDrawCount", mgr.gatchaDrawCount);
+        PlayerPrefs.Save();
+
+        return results;
+    }
+
+    private Character SelectCharacterByPickup(Grade grade, List<Character> pool, GatchaSessionData session)
+    {
+        if (session.gatchaType == GatchaType.Pickup)
+        {
+            if (grade == Grade.S && Random.value < 0.5f)
+            {
+                var pickupS = pool.Find(c => c.ID == session.pickupSId);
+                if (pickupS != null) return pickupS;
+            }
+
+            if (grade == Grade.A && Random.value < 0.5f)
+            {
+                var candidates = pool.FindAll(c => session.pickupAIds.Contains(c.ID));
+                if (candidates.Count > 0)
+                {
+                    return candidates[Random.Range(0, candidates.Count)];
+                }
+            }
+        }
+
+        return pool[Random.Range(0, pool.Count)];
+    }
 
     public void CharacterDuplicateCheck(int Id)
     {
@@ -171,37 +236,27 @@ public class GatchaExecutor : MonoBehaviour
 
     private Grade GetRandomGrade(GatchaType type, int drawCount)
     {
-        // 하드 천장: 70회차는 무조건 S
         if (drawCount > 0 && drawCount % 70 == 0)
         {
             Debug.Log("70회차 보정 발동! 무조건 S등급");
-            GatchaManager.Instance.gatchaDrawCount = 0;
             return Grade.S;
         }
 
-        float rand = Random.Range(0f, 100f);
         float sRate = 3f;
         float aRate = 17f;
 
-        // 50~69회 구간에서 확률 변경
-        if (drawCount >= 50 && drawCount < 70)
+        if (drawCount >= 60)
         {
-            sRate = 6f;
-            aRate = 25f;
+            sRate = 15f;
+        }
+        else if (drawCount >= 50)
+        {
+            sRate = 8f;
         }
 
-        switch (type)
-        {
-            case GatchaType.Pickup:
-                if (rand < sRate) return Grade.S;
-                else if (rand < sRate + aRate) return Grade.A;
-                else return Grade.B;
-
-            case GatchaType.Standard:
-            default:
-                if (rand < 3f) return Grade.S;
-                else if (rand < 18f) return Grade.A;
-                else return Grade.B;
-        }
+        float rand = Random.Range(0f, 100f);
+        if (rand < sRate) return Grade.S;
+        else if (rand < sRate + aRate) return Grade.A;
+        else return Grade.B;
     }
 }

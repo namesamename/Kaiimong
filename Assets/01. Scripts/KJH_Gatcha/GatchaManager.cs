@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GatchaManager;
 
-public class GatchaManager : MonoBehaviour //화면에서 가챠 타입을 구분해 주는 매니저 
+public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입을 구분해 주는 매니저 
 {
     public int crystal;
     public int ticket;
@@ -29,6 +29,12 @@ public class GatchaManager : MonoBehaviour //화면에서 가챠 타입을 구분해 주는 매
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // 중복 생성된 GatchaManager 제거
+            return;
         }
 
         SetGachaType(GatchaType.Pickup);

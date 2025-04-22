@@ -29,5 +29,26 @@ public class GatchaResultUI : MonoBehaviour
         }
     }
 
+    public void OnDrawMore()
+    {
+        var executor = FindObjectOfType<GatchaExecutor>();
+        var session = GatchaResultHolder.session;
+
+        if (executor != null && session != null)
+        {
+            var results = executor.DrawWithSession(session);
+            GatchaResultHolder.results = results;
+
+            foreach (Transform child in resultGrid)
+                Destroy(child.gameObject);
+
+            StartCoroutine(ShowResults());
+        }
+        else
+        {
+            Debug.LogWarning("DrawMore 실패: executor 또는 session이 null");
+        }
+    }
+
 
 }
