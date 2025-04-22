@@ -20,7 +20,8 @@ public class UICharacterSlotSpawner : MonoBehaviour
     {
         Debug.Log("[테스트] UICharacterSlotSpawner 스크립트가 실행되고 있음");
         CharacterDecide();
-        LoadAllCharacters(characters(characterSave));
+        LoadAllCharacters();
+        //LoadAllCharacters(characters(characterSave));
     }
 
     public void SpawnFromSaveData(List<CharacterSaveData> saveDataList)     // 저장된 캐릭터 데이터 기반으로 슬롯 생성
@@ -53,14 +54,14 @@ public class UICharacterSlotSpawner : MonoBehaviour
     {
         ClearSlots();  // 기존 슬롯 제거
 
-        
+
         List<CharacterSaveData> saveDataList = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);    // 저장된 캐릭터 세이브 데이터를 미리 가져오기
 
         foreach (Character character in filteredList)                       // 필터링된 캐릭터 리스트 확인
         {
             CharacterSaveData saveData = null;
 
-            
+
             foreach (CharacterSaveData data in saveDataList)                //  캐릭터 ID에 해당하는 저장 데이터를 찾기
             {
                 if (data.ID == character.ID)
@@ -70,20 +71,20 @@ public class UICharacterSlotSpawner : MonoBehaviour
                 }
             }
 
-            
+
             GameObject prefab = GetSlotPrefabByGrade(character.Grade);      // 슬롯 프리팹 선택
             GameObject slotObj = Instantiate(prefab, slotParent);           // 슬롯 생성
 
             CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
 
-            
+
             if (saveData != null)                                          // 저장 데이터가 있으면 함께 전달, 없으면 기본 캐릭터만
             {
-                slot.SetSlot(saveData, character);                         
+                slot.SetSlot(saveData, character);
             }
             else
             {
-                    // slot.SetSlot(character);                            // 저장 데이터가 없을 경우 캐릭터만 설정
+                // slot.SetSlot(character);                            // 저장 데이터가 없을 경우 캐릭터만 설정
             }
 
             spawnedSlots.Add(slotObj); // 생성된 슬롯 저장
@@ -116,44 +117,76 @@ public class UICharacterSlotSpawner : MonoBehaviour
         return slotPrefabs[index];                                       // 정상 범위면 해당 인덱스의 슬롯 프리팹 반환
     }
 
-    public void LoadAllCharacters(List<Character> allCharacters)
+    public void LoadAllCharacters()
     {
-        if ( allCharacters.Count > 0)
+        Character[] allCharacters = Resources.LoadAll<Character>("Char");
+        if (allCharacters.Length > 0)
         {
-           
+            Debug.Log($"[캐릭터 자동 로드] 총 {allCharacters.Length}개 캐릭터 불러옴");
 
+            ClearSlots();                                                               // 기존 슬롯 초기화
 
+            foreach (var character in allCharacters)
+            {
+                // 저장 데이터가 있는 경우 가져오기
 
-                Debug.Log($"[캐릭터 자동 로드] 총 {allCharacters.Count}개 캐릭터 불러옴");
+                CharacterSaveData saveData = SaveDataBase.Instance
+                    .GetSaveInstanceList<CharacterSaveData>(SaveType.Character)
+                    .Find(data => data.ID == character.ID);
 
-                    ClearSlots();                                                               // 기존 슬롯 초기화
+                // 슬롯 생성
 
-                    foreach (var character in allCharacters)
-                    {
-                        // 저장 데이터가 있는 경우 가져오기
+                GameObject prefab = GetSlotPrefabByGrade(character.Grade);               // 희귀도에 따라 프리팹 선택
+                GameObject slotObj = Instantiate(prefab, slotParent);                   // 슬롯 생성 및 부모 설정
 
-                        CharacterSaveData saveData = SaveDataBase.Instance
-                            .GetSaveInstanceList<CharacterSaveData>(SaveType.Character)
-                            .Find(data => data.ID == character.ID);
+                CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
 
-                        // 슬롯 생성
+                if (saveData != null)
+                    slot.SetSlot(saveData, character);                                  // 저장된 데이터가 있으면 적용
 
-                        GameObject prefab = GetSlotPrefabByGrade(character.Grade);               // 희귀도에 따라 프리팹 선택
-                        GameObject slotObj = Instantiate(prefab, slotParent);                   // 슬롯 생성 및 부모 설정
-
-                        CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
-
-                        if (saveData != null)
-                            slot.SetSlot(saveData, character);                                  // 저장된 데이터가 있으면 적용
-
-                        spawnedSlots.Add(slotObj);                                              // 추적 리스트에 추가
-                    }
-                }
+                spawnedSlots.Add(slotObj);                                              // 추적 리스트에 추가
+            }
+        }
         else
         {
             Debug.Log("저장된 캐릭터가 없습니다.");
         }
     }
+
+    //public void LoadAllCharacters(List<Character> allCharacters)
+    //{
+    //    if (allCharacters.Count > 0)
+    //    {
+    //        Debug.Log($"[캐릭터 자동 로드] 총 {allCharacters.Count}개 캐릭터 불러옴");
+
+    //        ClearSlots();                                                               // 기존 슬롯 초기화
+
+    //        foreach (var character in allCharacters)
+    //        {
+    //            // 저장 데이터가 있는 경우 가져오기
+
+    //            CharacterSaveData saveData = SaveDataBase.Instance
+    //                .GetSaveInstanceList<CharacterSaveData>(SaveType.Character)
+    //                .Find(data => data.ID == character.ID);
+
+    //            // 슬롯 생성
+
+    //            GameObject prefab = GetSlotPrefabByGrade(character.Grade);               // 희귀도에 따라 프리팹 선택
+    //            GameObject slotObj = Instantiate(prefab, slotParent);                   // 슬롯 생성 및 부모 설정
+
+    //            CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
+
+    //            if (saveData != null)
+    //                slot.SetSlot(saveData, character);                                  // 저장된 데이터가 있으면 적용
+
+    //            spawnedSlots.Add(slotObj);                                              // 추적 리스트에 추가
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("저장된 캐릭터가 없습니다.");
+    //    }
+    //}
 
     public void CharacterDecide()                                                           //내가 가진 캐릭터 중 장착된 캐릭터만 characterSaves 리스트에 추가
     {
