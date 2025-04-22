@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UILevelupStatboard : MonoBehaviour
+public class UILevelupStatboard : BaseLevelupInfo
 {
     TextMeshProUGUI[] textMeshPros;
     void Start()
@@ -34,6 +34,8 @@ public class UILevelupStatboard : MonoBehaviour
         }
     }
 
-
-   
+    public override void Initiallize(int weight)
+    {
+        Statset(weight);
+    }
 }

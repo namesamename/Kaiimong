@@ -5,11 +5,13 @@ using UnityEngine;
 public class LevelUpPopUP : UIPopup
 {
 
-    int UsingGlod;
-    int UsingAmulet;
+    public int UsingGlod;
+    public int UsingAmulet;
+    public int CurLevel;
+    public int NextLevel;
     private void Awake()
     {
-        GetComponentsInChildren<LevelupHUD>().Initialize();
+
     }
     void Start()
     {
