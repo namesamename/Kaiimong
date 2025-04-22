@@ -15,9 +15,7 @@ public class StageSlot : MonoBehaviour
 
     public void Initialize(int Id)
     {
-        //√ ±‚»≠
-        StageSaveData.ID = Id;
-        HaveData();
+        ChapterManager.Instance.InitializeStage(Id);
     }
 
     public StageSaveData CreatNewData()
