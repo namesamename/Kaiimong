@@ -10,11 +10,17 @@ public class UILevelupStatboard : BaseLevelupInfo
     {
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
     }
+    
+    public void Initialize()
+    {
+        Statset(0);
+    }
+
     public void Statset(int Weight = 0)
     {
         Character character = ImsiGameManager.Instance.GetCharacter();
         CharacterSaveData Save = ImsiGameManager.Instance.GetCharacterSaveData();
-        if ( Weight != 0)
+        if ( Weight == 0)
         {
             textMeshPros[1].text = (character.Health + Save.Level).ToString();
             textMeshPros[3].text = (character.Attack + Save.Level).ToString();

@@ -12,91 +12,162 @@ public class UILevelUPEffect : BaseLevelupInfo
     {
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
         Images = GetComponentsInChildren<Image>();
+    }
+
+
+    public void Intialize()
+    {
+        textMeshPros[0].text = popUP.CurLevel.ToString();
+        textMeshPros[1].text = popUP.NextLevel.ToString();
+        textMeshPros[2].text = 0.ToString();
+        textMeshPros[3].text = 0.ToString();
+        textMeshPros[4].text = (popUP.CurLevel).ToString();
+        CurCurrencyTextSet();
+        SetImages();
+    }
+
+
+    public void CurCurrencyTextSet()
+    { 
+        textMeshPros[4].text = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold).ToString();
+        textMeshPros[5].text = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP).ToString();
 
     }
     public void SetImages()
     {
-        Images[0].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.Gold).IconPath);
-        Images[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.CharacterEXP).IconPath); ;
-    }
-    public bool SetPlus(int Level)
-    {
-        popUP.LevelInterval += Level;
-        popUP.NextLevel = popUP.LevelInterval + popUP.CurLevel;
+        Images[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.Gold).IconPath);
+        Images[3].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.Gold).IconPath);
         
-        int CurGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
-        int CurAmulet = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);
-
-        textMeshPros[0].text = popUP.CurLevel.ToString();
-
-        if (popUP.NextLevel > popUP.CurLevel)
-        {
-            textMeshPros[1].text = (popUP.NextLevel).ToString();
-            
-            textMeshPros[2].text = LevelUpSystem.needGold[popUP.NextLevel].ToString();
-            popUP.UsingGlod = LevelUpSystem.needGold[popUP.NextLevel];
-
-
-            textMeshPros[3].text = LevelUpSystem.needamulet[popUP.NextLevel].ToString();
-            popUP.UsingAmulet = LevelUpSystem.needamulet[popUP.NextLevel];
-
-            textMeshPros[4].text = (popUP.NextLevel).ToString();
-
-
-            if(CurGold < LevelUpSystem.needGold[popUP.CurLevel])
-            {
-                textMeshPros[1].color = Color.red;
-                textMeshPros[2].color = Color.red;
-                return false;
-            }
-            if (CurAmulet < LevelUpSystem.needamulet[popUP.CurLevel])
-            {
-                textMeshPros[1].color = Color.red;
-                textMeshPros[3].color = Color.red;
-                return false;
-            }
-
-            return true;
-        }
-
-        return true;
+        Images[2].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.CharacterEXP).IconPath);
+        Images[4].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.CharacterEXP).IconPath); 
     }
-
-    public bool SetMinus(int Level)
+    public bool SetPlus(int levelToAdd)
     {
-        if(popUP.LevelInterval < 1)
-        {
-            return false;
-        }
-        int CurGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
-        int CurAmulet = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);
+ 
+        popUP.LevelInterval += levelToAdd;
+        popUP.NextLevel = popUP.CurLevel + popUP.LevelInterval;
+        popUP.stat.Statset(popUP.LevelInterval);
 
-        popUP.LevelInterval -= Level;
-        popUP.NextLevel -= popUP.LevelInterval;
+        int curGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
+        int curExp = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);
+
         textMeshPros[0].text = popUP.CurLevel.ToString();
-        textMeshPros[1].text = (popUP.NextLevel).ToString();
-        textMeshPros[2].text = LevelUpSystem.needGold[popUP.NextLevel].ToString();
-        popUP.UsingGlod = LevelUpSystem.needGold[popUP.NextLevel];
+        textMeshPros[1].text = popUP.NextLevel.ToString();
 
+        int requiredGold = LevelUpSystem.needGold[popUP.NextLevel];
+        textMeshPros[2].text = requiredGold.ToString();
+        popUP.UsingGlod = requiredGold;
 
-        textMeshPros[3].text = LevelUpSystem.needamulet[popUP.NextLevel].ToString();
-        popUP.UsingAmulet = LevelUpSystem.needamulet[popUP.NextLevel];
-        textMeshPros[4].text = (popUP.NextLevel).ToString();
-        if (CurGold < LevelUpSystem.needGold[popUP.NextLevel])
+        int requiredExp = LevelUpSystem.needamulet[popUP.NextLevel];
+        textMeshPros[3].text = requiredExp.ToString();
+        popUP.UsingAmulet = requiredExp;
+
+        textMeshPros[6].text = popUP.NextLevel.ToString();
+
+        bool canLevelUp = true;
+        if (curGold < requiredGold)
         {
             textMeshPros[1].color = Color.red;
             textMeshPros[2].color = Color.red;
-            return false;
+            canLevelUp = false;
         }
-        if (CurAmulet < LevelUpSystem.needamulet[popUP.NextLevel])
+        else
+        {
+
+            textMeshPros[1].color = Color.black;
+            textMeshPros[2].color = Color.black;
+        }   
+
+
+        if (curExp < requiredExp)
         {
             textMeshPros[1].color = Color.red;
             textMeshPros[3].color = Color.red;
-            return false;
+            canLevelUp = false;
         }
-        return true;
+        else
+        {
+
+            if (canLevelUp)
+            {
+                textMeshPros[1].color = Color.black;
+            }
+            textMeshPros[3].color = Color.black;
+        }
+
+        return canLevelUp;
     }
 
+    public bool SetMinus(int levelToSubtract)
+    {
+        // 레벨 간격이 1보다 작으면 더 이상 감소 불가
+        if (popUP.LevelInterval < 1)
+        {
+            return false;
+        }
+        popUP.LevelInterval -= levelToSubtract;
+        popUP.LevelInterval = Mathf.Max(0, popUP.LevelInterval);
+        popUP.NextLevel = popUP.CurLevel + popUP.LevelInterval;
+        popUP.stat.Statset(popUP.LevelInterval);
+        int curGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
+        int curExp = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);
+
+        textMeshPros[0].text = popUP.CurLevel.ToString();
+        textMeshPros[1].text = popUP.NextLevel.ToString();
+
+
+        int requiredGold = popUP.NextLevel > popUP.CurLevel ? LevelUpSystem.needGold[popUP.NextLevel] : 0;
+        textMeshPros[2].text = requiredGold.ToString();
+        popUP.UsingGlod = requiredGold;
+
+        int requiredExp = popUP.NextLevel > popUP.CurLevel ? LevelUpSystem.needamulet[popUP.NextLevel] : 0;
+        textMeshPros[3].text = requiredExp.ToString();
+        popUP.UsingAmulet = requiredExp;
+
+
+        textMeshPros[6].text = popUP.NextLevel.ToString();
+
+
+        if (popUP.LevelInterval == 0)
+        {
+
+            textMeshPros[1].color = Color.black;
+            textMeshPros[2].color = Color.black;
+            textMeshPros[3].color = Color.black;
+            return false;
+        }
+
+        bool canLevelUp = true;
+
+
+        if (curGold < requiredGold)
+        {
+            textMeshPros[1].color = Color.red;
+            textMeshPros[2].color = Color.red;
+            canLevelUp = false;
+        }
+        else
+        {
+            textMeshPros[1].color = Color.black;
+            textMeshPros[2].color = Color.black;
+        }
+        if (curExp < requiredExp)
+        {
+            textMeshPros[1].color = Color.red;
+            textMeshPros[3].color = Color.red;
+            canLevelUp = false;
+        }
+        else
+        {
+            if (canLevelUp)
+            {
+                textMeshPros[1].color = Color.black;
+            }
+            textMeshPros[3].color = Color.black;
+        }
+
+        return canLevelUp;
+    }
 
 
 
