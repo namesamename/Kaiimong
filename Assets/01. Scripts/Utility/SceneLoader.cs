@@ -42,7 +42,7 @@ public class SceneLoader : Singleton<SceneLoader>
         sceneContainer[SceneState.StageSelectScene] = null;
 
         // √ ±‚æ¿ : ∏ﬁ¿Œ 
-        sceneState = SceneState.MainScene;
+        sceneState = SceneState.StageSelectScene;
     }
 
     private void OnEnable()

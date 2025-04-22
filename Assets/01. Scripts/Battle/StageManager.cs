@@ -47,7 +47,6 @@ public class StageManager : Singleton<StageManager>
 
     void Start()
     {
-        StageStart();
     }
 
     private void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
@@ -55,12 +54,12 @@ public class StageManager : Singleton<StageManager>
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
         battleSystem = obj.GetComponent<BattleSystem>();
         SetStageInfo();
-
+        StageStart();
     }
     private void SetStageInfo()
     {
-        GameObject background = Instantiate(Resources.Load(CurrentStage.BackgroundPath)) as GameObject;
-        background.GetComponent<SpriteRenderer>().sprite = null;
+        GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
+        background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
         battleSystem.Players = new List<CharacterCarrier>(Players);
         CreateEnemy();
         CurrentRound = 1;
@@ -105,8 +104,8 @@ public class StageManager : Singleton<StageManager>
     public void EndUISet()
     {
         GameObject canvas = GameObject.Find("Canvas");
-        GameObject uiwinPrefab = Instantiate(Resources.Load("Battle/WinUI"), canvas.transform) as GameObject;
-        GameObject uilosePrefab = Instantiate(Resources.Load("Battle/LoseUI"), canvas.transform) as GameObject;
+        GameObject uiwinPrefab = Instantiate(Resources.Load("UI/Battle/WinUI"), canvas.transform) as GameObject;
+        GameObject uilosePrefab = Instantiate(Resources.Load("UI/Battle/LoseUI"), canvas.transform) as GameObject;
         WinUI = uiwinPrefab.GetComponent<WinUI>();
         LoseUI = uilosePrefab.GetComponent<LoseUI>();
     }

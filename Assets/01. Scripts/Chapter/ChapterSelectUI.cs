@@ -39,7 +39,7 @@ public class ChapterSelectUI : MonoBehaviour
             }
             else
             {
-                GameObject obj = Instantiate(Resources.Load("Chapter/UI/ChapterSlotUI") as GameObject, contentBox.transform);
+                GameObject obj = Instantiate(Resources.Load("UI/Chapter/ChapterSlotUI") as GameObject, contentBox.transform);
                 ChapterSlotUI objSlot = obj.GetComponent<ChapterSlotUI>();
                 objSlot.Chapter = chapterData;
                 slots.Add(objSlot);
@@ -51,7 +51,7 @@ public class ChapterSelectUI : MonoBehaviour
     {
         for (int i = 0; i < GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic.Count; i++)
         {
-            GameObject obj = Instantiate(Resources.Load("Chapter/UI/CategoryButton") as GameObject, categoryButtonBox.transform);
+            GameObject obj = Instantiate(Resources.Load("UI/Chapter/CategoryButton") as GameObject, categoryButtonBox.transform);
             obj.GetComponent<CategoryButton>().categoryID = i;
         }
 

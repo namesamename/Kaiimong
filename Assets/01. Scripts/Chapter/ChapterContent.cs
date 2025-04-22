@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChapterContent : MonoBehaviour
@@ -24,6 +25,7 @@ public class ChapterContent : MonoBehaviour
     private void Awake()
     {
         slots = GetComponentsInChildren<StageSlot>();
+        Chapter = GlobalDataTable.Instance.Chapter.ChapterDic[1];
         ChapterManager.Instance.InitializeChapter(Chapter.ID);
     }
 
@@ -39,6 +41,7 @@ public class ChapterContent : MonoBehaviour
             dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             clickStartTime = Time.time;
             isClickValid = true;
+            Debug.Log("Click");
         }
 
         if (Input.GetMouseButton(0))
@@ -56,6 +59,7 @@ public class ChapterContent : MonoBehaviour
                 Camera.main.transform.position += difference;
 
                 dragOrigin = curMousePos;
+                Debug.Log("dragging");
             }
         }
 
@@ -66,8 +70,15 @@ public class ChapterContent : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
                 if (hit.collider != null)
                 {
-                    Debug.Log("클릭된 오브젝트: " + hit.collider.name);
-                    // 여기서 오브젝트 정보 표시 함수 호출 가능
+                    if (hit.collider.CompareTag("Stage"))
+                    {
+                        //스테이지 정보 표시ui띄우기
+
+                    }
+                    else
+                    {
+                        //스테이지 정보 띄워져있으면 닫기
+                    }
                 }
             }
 
