@@ -17,13 +17,13 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public void SetSlot(ItemData newItem, int amount = 1)     // 슬롯에 새 아이템 슬롯 설정
     {
         item = newItem;
-        itemCount = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item,item.ID).Value;
+        itemCount = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, item.ID).Value;
 
         if (item != null)
         {
             iconImage.sprite = Resources.Load<Sprite>(item.IconPath);
             iconImage.enabled = true;        // 아이콘  활성화
-            if(itemCount > 1)
+            if (itemCount > 1)
             {
                 countText.text = itemCount.ToString();
             }
@@ -31,7 +31,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             {
                 countText.text = string.Empty;
             }
-           
+
             outlineEffect.enabled = false;   // 슬롯 생성 시 외곽선 비활성화
         }
         else

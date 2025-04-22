@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
 
 public class UIInventory : MonoBehaviour
 {
@@ -27,12 +28,12 @@ public class UIInventory : MonoBehaviour
 
     private List<GameObject> spawnedSlots = new List<GameObject>(); // 생성된 슬롯 오브젝트들을 추적하는 리스트
 
-
     private List<ItemData> itemList = new List<ItemData>();        // 일반 아이템 저장용 리스트
     private List<ItemData> consumableList = new List<ItemData>();  // 소모품 아이템 저장용 리스트
 
     [SerializeField] private List<ItemData> defaultItems;         // 일반 아이템 목록
     [SerializeField] private List<ItemData> defaultConsumables;   // 소모품 목록
+
 
     private void Awake()
     {
@@ -47,35 +48,74 @@ public class UIInventory : MonoBehaviour
 
     private void Start()
     {
-        LoadAllItems();                    // Resources 폴더에서 자동 로드
         OpenItemInventory();                         // 시작 시 기본으로 아이템 탭 열기
     }
 
 
 
-    private List<ItemData> SortByRarity(List<ItemData> list)           // 희귀도 순 정렬 (S → D 순)
+    private List<ItemData> SortByRarity()           // 희귀도 순 정렬 (S → D 순)
     {
-        return list.OrderBy(item => item.Grade).ToList();
+
+        List<ItemSavaData> HaveItem = ItemManager.Instance.GetSaveList();
+
+        if (HaveItem != null)
+        {
+            List<ItemData> List = new List<ItemData>();
+            foreach (ItemSavaData item in HaveItem)
+            {
+                var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(item.ID);
+                List.Add(itemData);
+            }
+
+            return List.OrderBy(item => item.Grade).ToList();
+        }
+        return new List<ItemData>();
     }
 
-    public void AddItem(ItemData item)
+    public void AddItem(int itemId, int count = 1)
     {
-        Debug.Log($"[AddItem 호출됨] {item.Name} / 타입: {item.ItemType}");
+        var existingItem = SaveDataBase.Instance.GetSaveInstanceList<ItemSavaData>(SaveType.Item).FirstOrDefault(item => item.ID == itemId);
+        var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(itemId);
 
-        if (item.ItemType == EItemType.Consume)       // 소모품일 경우
+        if (existingItem != null && existingItem.Value > 1)
         {
-            consumableList.Add(item);                            // 소모품 리스트 추가
-            consumableList = SortByRarity(consumableList);       // 소모품 회귀도 정렬
-            SpawnSlots(consumableList, consumableSlotPanel);     // 소모품 슬롯 생성
+            // 현재 스택에 추가 가능한지 확인
+            int newCount = existingItem.Value + count;
+            if (newCount <= itemData.MaxStackCount)
+            {
+                // 기존 아이템에 수량 추가
+                existingItem.Value = newCount;
+            }
+            else
+            {
+                // 최대 스택을 초과하면 새 슬롯 생성
+                var remainingCount = newCount - itemData.MaxStackCount;
+                existingItem.Value = itemData.MaxStackCount;
+
+                // 남은 수량으로 새 아이템 생성
+                AddItem(itemId, remainingCount);
+            }
+        }
+        else
+        {
+
+            var newItem = new ItemSavaData { ID = itemId, Value = count };
+            SaveDataBase.Instance.SaveSingleData(newItem);
+        }
+
+        if (itemData.ItemType == EItemType.Consume)       // 소모품일 경우
+        {
+            consumableList.Add(itemData);                            // 소모품 리스트 추가
+            consumableList = SortByRarity();       // 소모품 회귀도 정렬
+            SpawnSlots(consumableSlotPanel);     // 소모품 슬롯 생성
             UpdateItemCount(consumableList.Count);               // 수량 표시 갱신
         }
         else                                          // 일반 아이템일 경우
         {
-            itemList.Add(item);                                  // 아이템 리스트 추가
-            itemList = SortByRarity(itemList);                   // 아이템 회귀도 정렬
-            SpawnSlots(itemList, itemSlotPanel);                 // 아이템 슬롯 생성
+            itemList.Add(itemData);                                  // 아이템 리스트 추가
+            itemList = SortByRarity();                   // 아이템 회귀도 정렬
+            SpawnSlots(itemSlotPanel);                 // 아이템 슬롯 생성
             UpdateItemCount(itemList.Count);                     // 수량 표시 갱신
-
         }
     }
 
@@ -85,13 +125,13 @@ public class UIInventory : MonoBehaviour
         if (item.ItemType == EItemType.Consume)
         {
             consumableList.Remove(item);                         // 소모품 리스트 제거
-            SpawnSlots(consumableList, consumableSlotPanel);     // 슬롯 재생성
+            SpawnSlots(consumableSlotPanel);     // 슬롯 재생성
             UpdateItemCount(consumableList.Count);               // 소모품 수량 표시 갱신
         }
         else
         {
             itemList.Remove(item);                              // 아이템 리스트 제거
-            SpawnSlots(itemList, itemSlotPanel);                // 슬롯 재생성
+            SpawnSlots(itemSlotPanel);                // 슬롯 재생성
             UpdateItemCount(itemList.Count);                    // 아이템 수량 표시 갱신
         }
     }
@@ -105,8 +145,8 @@ public class UIInventory : MonoBehaviour
         itemScrollView.SetActive(true);                           // 아이템 스크롤 뷰 켜기
         consumableScrollView.SetActive(false);                    // 소모품 스크롤 뷰 끄기
 
-        itemList = SortByRarity(itemList);                        // 아이템 리스트 정렬
-        SpawnSlots(itemList, itemSlotPanel);                      // 아이템 슬롯 생성
+        itemList = SortByRarity();                        // 아이템 리스트 정렬
+        SpawnSlots(itemSlotPanel);                      // 아이템 슬롯 생성
         UpdateItemCount(itemList.Count);                          // 수량 텍스트 갱신
     }
 
@@ -118,35 +158,68 @@ public class UIInventory : MonoBehaviour
         itemScrollView.SetActive(false);                         // 아이템 스크롤 뷰 끄기
         consumableScrollView.SetActive(true);                    // 아이템 스크롤 뷰 켜기
 
-        consumableList = SortByRarity(consumableList);           // 소모품 리스트 정렬
-        SpawnSlots(consumableList, consumableSlotPanel);         // 소모품 슬롯 생성
-        UpdateItemCount(consumableList.Count);                   // 수량 텍스트 갱신
+        consumableList = SortByRarity();           // 소모품 리스트 정렬
+        SpawnSlots(consumableSlotPanel);         // 소모품 슬롯 생성
+
+
     }
     public void UpdateItemCount(int current)
     {
-        int max = 100;                                           // 최대값
-        itemslotCountText.text = $"{current} / {max}";           // 텍스트: "현재 / 최대"
+        itemslotCountText.text = $"{current} / {100}";           // 텍스트: "현재 / 최대"
     }
 
-    private void SpawnSlots(List<ItemData> dataList, Transform parentPanel)     // 슬롯들을 생성하고 아이템 데이터를 적용
+
+    private void SpawnSlots(Transform parentPanel)     // 슬롯들을 생성하고 아이템 데이터를 적용
     {
-        ClearSlots();                                                           // 기존 슬롯 제거
 
-        List<ItemData> sortedList = SortByRarity(dataList);                     // 정렬된 리스트 사용
-        Debug.Log($"[슬롯 생성] 총 {sortedList.Count}개의 슬롯 생성 시작");
+        ClearSlots();
 
-        foreach (ItemData item in sortedList)                                     // 전달받은 아이템 리스트를 순회
-
+        Dictionary<int, int> itemIDAndValue = new Dictionary<int, int>();
+        foreach (var saveData in ItemManager.Instance.GetSaveList())
         {
-            GameObject prefab = GetSlotPrefabByRarity(item.Grade);      // 희귀도에 맞는 슬롯 프리팹 선택
-            GameObject slotObj = Instantiate(prefab, parentPanel);       // 슬롯 프리팹 생성 및 부모 설정
-
-            Debug.Log($"[슬롯 생성] {item.Name} / {item.Grade}");
-
-            InventorySlot slot = slotObj.GetComponent<InventorySlot>();  // 생성된 슬롯 오브젝트에서 InventorySlot 컴포넌트를 가져옴
-            slot.SetSlot(item);                                          // 슬롯에 아이템 데이터 적용
-            spawnedSlots.Add(slotObj);                                   // 추적 리스트에 추가
+            if (itemIDAndValue.ContainsKey(saveData.ID))
+                itemIDAndValue[saveData.ID] += saveData.Value;
+            else
+                itemIDAndValue[saveData.ID] = saveData.Value;
         }
+
+
+        List<(ItemData itemData, int count)> itemsAndValue = new List<(ItemData, int)>();
+        foreach (var kvp in itemIDAndValue)
+        {
+            var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(kvp.Key);
+            itemsAndValue.Add((itemData, kvp.Value));
+        }
+
+
+        itemsAndValue = itemsAndValue.OrderBy(item => item.itemData.Grade).ToList();
+
+        foreach (var (itemData, count) in itemsAndValue)
+        {
+            GameObject prefab = GetSlotPrefabByRarity(itemData.Grade);
+            GameObject slotObj = Instantiate(prefab, parentPanel);
+
+            InventorySlot slot = slotObj.GetComponent<InventorySlot>();
+            slot.SetSlot(itemData, count);  // 아이템과 수량 전달
+
+            spawnedSlots.Add(slotObj);
+        }
+
+        //ClearSlots();                                                           // 기존 슬롯 제거
+        //List<ItemData> sortedList = SortByRarity();                     // 정렬된 리스트 사용
+        //Debug.Log($"[슬롯 생성] 총 {sortedList.Count}개의 슬롯 생성 시작");
+
+        //foreach (ItemData item in sortedList)                                     // 전달받은 아이템 리스트를 순회
+        //{
+        //    GameObject prefab = GetSlotPrefabByRarity(item.Grade);      // 희귀도에 맞는 슬롯 프리팹 선택
+        //    GameObject slotObj = Instantiate(prefab, parentPanel);       // 슬롯 프리팹 생성 및 부모 설정
+
+        //    Debug.Log($"[슬롯 생성] {item.Name} / {item.Grade}");
+
+        //    InventorySlot slot = slotObj.GetComponent<InventorySlot>();  // 생성된 슬롯 오브젝트에서 InventorySlot 컴포넌트를 가져옴
+        //    slot.SetSlot(item);                                          // 슬롯에 아이템 데이터 적용
+        //    spawnedSlots.Add(slotObj);                                   // 추적 리스트에 추가
+        //}
     }
 
     private void ClearSlots()                                           // 인벤토리 슬롯 초기화
@@ -163,19 +236,16 @@ public class UIInventory : MonoBehaviour
     private GameObject GetSlotPrefabByRarity(ERarity rarity)           // 희귀도에 따라 슬롯 프리팹 반환
     {
         int index = EnumToIndex(rarity);                                      // enum을 정수(int) 인덱스로 사용
-
         if (index < 0 || index >= slotPrefabs.Length)
         {
             Debug.LogWarning($"[경고] slotPrefabs 배열에 '{rarity}'에 해당하는 슬롯 프리팹이 없습니다. 기본 프리팹(S)을 사용합니다.");
             return slotPrefabs[0];
         }
-
         if (slotPrefabs[index] == null)
         {
             Debug.LogWarning($"[경고] 희귀도 {rarity} 슬롯 프리팹이 null입니다. 기본 프리팹(S)을 사용합니다.");
             return slotPrefabs[0];
         }
-
         return slotPrefabs[index];                                     // 정상 범위면 해당 프리팹 반환
     }
 
@@ -184,24 +254,5 @@ public class UIInventory : MonoBehaviour
         return (int)rarity;
     }
 
-    private void LoadAllItems()
-    {
-        var allItems = Resources.LoadAll<ItemData>("Item");   // Resources → Item 폴더에서 모두 불러오기 (이름과 똑같아야 한다.)
 
-        foreach (var item in allItems)
-        {
-            AddItem(item);                                   // Type에 따라 자동 분류 및 슬롯 생성
-        }
-
-        Debug.Log($"[아이템 자동 로드] 총 {allItems.Length}개 아이템 불러옴");
-
-
-        var allConsume = Resources.LoadAll<ItemData>("Consume");
-        foreach (var con in allConsume)
-        {
-            if (con.ItemType == EItemType.Consume)
-                AddItem(con);
-        }
-        Debug.Log($"[소모품 자동 로드] 총 {allConsume.Length}개 아이템 불러옴");
-    }
 }
