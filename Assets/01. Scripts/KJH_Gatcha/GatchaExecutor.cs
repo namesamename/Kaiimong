@@ -117,15 +117,34 @@ public class GatchaExecutor : MonoBehaviour
     {
         var Character = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, Id);
 
-        if(Character.IsEquiped)
+        if (Character != null)
         {
-            ItemManager.Instance.SetitemCount(GlobalDataTable.Instance.character.GetCharToID(Character.ID).CharacterItem, 1);
+
+            if (Character.IsEquiped)
+            {
+                ItemManager.Instance.SetitemCount(GlobalDataTable.Instance.character.GetCharToID(Character.ID).CharacterItem, 1);
+            }
+            else
+            {
+                Character.IsEquiped = true;
+            }
+            SaveDataBase.Instance.SaveSingleData(Character);
         }
         else
         {
-            Character.IsEquiped = true;
+            CharacterSaveData chracterSave = new CharacterSaveData()
+            {
+                ID = Id,
+                Savetype = SaveType.Character,
+                CumExp = 0,
+                IsEquiped = true,
+                Level = 1,
+                Recognition = 0,
+                Necessity = 0,
+                Love = 0,
+             };
+            SaveDataBase.Instance.SaveSingleData(chracterSave);
         }
-        SaveDataBase.Instance.SaveSingleData(Character);
     }
 
     private Grade GetRandomGrade(GatchaType type, int drawCount)
