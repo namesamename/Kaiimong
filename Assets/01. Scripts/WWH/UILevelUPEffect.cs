@@ -134,7 +134,7 @@ public class UILevelUPEffect : BaseLevelupInfo
         popUP.UsingAmulet = requiredExp;
 
 
-        textMeshPros[6].text = popUP.NextLevel.ToString();
+        textMeshPros[6].text = $"Lv.{popUP.NextLevel}";
 
 
         if (popUP.LevelInterval == 0)

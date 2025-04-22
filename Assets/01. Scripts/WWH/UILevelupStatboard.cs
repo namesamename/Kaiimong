@@ -23,12 +23,12 @@ public class UILevelupStatboard : BaseLevelupInfo
         CharacterSaveData Save = ImsiGameManager.Instance.GetCharacterSaveData();
         if ( Weight == 0 && Save.Level == 1)
         {
-            textMeshPros[1].text = (character.Health + Save.Level).ToString();
-            textMeshPros[3].text = (character.Attack + Save.Level).ToString();
-            textMeshPros[5].text = (character.Defence + Save.Level).ToString();
-            textMeshPros[7].text = (character.Speed + Save.Level).ToString();
-            textMeshPros[9].text = (character.CriticalPer + (Save.Level*0.001)).ToString("N3");
-            textMeshPros[11].text = (character.CriticalAttack + (Save.Level * 0.01)).ToString("N2");
+            textMeshPros[1].text = (character.Health + (Save.Level-1)).ToString();
+            textMeshPros[3].text = (character.Attack + (Save.Level - 1)).ToString();
+            textMeshPros[5].text = (character.Defence + (Save.Level - 1)).ToString();
+            textMeshPros[7].text = (character.Speed + (Save.Level - 1)).ToString();
+            textMeshPros[9].text = (character.CriticalPer + ((Save.Level-1)*0.001)).ToString("N3");
+            textMeshPros[11].text = (character.CriticalAttack + ((Save.Level-1) * 0.01)).ToString("N2");
         }
         else
         {
