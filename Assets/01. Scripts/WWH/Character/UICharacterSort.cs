@@ -11,7 +11,6 @@ public class UICharacterSort : MonoBehaviour                   // 레벨 자동, 희�
 
     [SerializeField] private TextMeshProUGUI sortButtonText;   // 희귀도 정렬 버튼에 표시될 텍스트
 
-    List<CharacterSaveData> characterSaves = new List<CharacterSaveData>();     //CharacterSaveData 타입 담은 리스트
 
     private void Start()
     {
@@ -48,16 +47,5 @@ public class UICharacterSort : MonoBehaviour                   // 레벨 자동, 희�
             return list.OrderBy(characterUp => characterUp.Grade).ToList();                     // 낮은 등급 → 높은 등급
         else                                                                                    // 내림차순
             return list.OrderByDescending(characterDown => characterDown.Grade).ToList();       // 높은 등급 → 낮은 등급 
-    }
-
-    public List<Character> characters(List<CharacterSaveData> characterSaveDatas)   //CharacterSaveData 리스트를 CharacterScriptObject로 바꿈
-    {
-        List<Character> characters = new List<Character>();                         // 변환된 캐릭터 데이터를 저장할 리스트
-
-        foreach (CharacterSaveData characterSaveData in characterSaveDatas)         // 받은 세이브 데이터를 하나씩 순회하면서
-        {
-            characters.Add(GlobalDataTable.Instance.character.GetCharToID(characterSaveData.ID));   // ID를 기준으로 캐릭터 데이터 테이블에서 ScriptableObject를 찾아 추가
-        }
-        return characters;                                                                          // 완성된 리스트 반환
     }
 }
