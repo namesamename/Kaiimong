@@ -11,7 +11,8 @@ public class UIBreakImage : MonoBehaviour, ISetPOPUp
     private void Awake()
     {
         Images =GetComponentsInChildren<Image>();
-        textMesh = GetComponent<TextMeshProUGUI>();
+        textMesh = GetComponentInChildren<TextMeshProUGUI>();
+
     }
     public void Initialize()
     {

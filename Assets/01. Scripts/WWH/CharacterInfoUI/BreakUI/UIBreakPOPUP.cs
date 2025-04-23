@@ -14,6 +14,11 @@ public class UIBreakPOPUP : UIPopup
     private void Awake()
     {
         setPOPUps = GetComponentsInChildren<ISetPOPUp>();
+
+    }
+    private void Start()
+    {
+        Initialize();
     }
 
     public void Initialize()
