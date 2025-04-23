@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GatchaManager;
 
-public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입을 구분해 주는 매니저 
+public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입 구분, 뽑기 횟수 저장 매니저 
 {
     public int crystal;
     public int ticket;
     public int gatchaDrawCount = 0;
-    public int lastDrawCount = 0;  //최근 시도한 가챠 횟수 
 
 
 
@@ -18,9 +17,7 @@ public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입을 구분
         Standard // 상시뽑기를 위한 타입
     }
     public static GatchaManager Instance;
-
     public GatchaType currentGachaType;  //가장 최근의 가챠 타입을 가져오기
-
     public int pickupSCharacterID =1;         // S 픽업 대상
     public List<int> pickupACharacterIDs = new() {6,7};
 
