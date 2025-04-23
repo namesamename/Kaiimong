@@ -33,10 +33,12 @@ public class CharacterInfoHUD : MonoBehaviour
 
             case CharacterInfoType.Back:
                 Button Backbutton = GetComponentInChildren<Button>();
+                Backbutton.onClick.RemoveAllListeners();
                 Backbutton.onClick.AddListener(() => SceneManager.LoadScene("ChracterSelect"));
                 break;
             case CharacterInfoType.Main:
                 Button button = GetComponentInChildren<Button>();
+                button.onClick.RemoveAllListeners();
                 button.onClick.AddListener(() => SceneManager.LoadScene("LobbyScene"));
                 break;
             case CharacterInfoType.Skin:
@@ -69,17 +71,20 @@ public class CharacterInfoHUD : MonoBehaviour
                 break;
              case CharacterInfoType.Dolpa:
                 Button DolpaButton = GetComponentInChildren<Button>();
+                DolpaButton.onClick.RemoveAllListeners();
                 DolpaButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("breakthroughPopUP"));
                 break;
             case CharacterInfoType.Levelup:
                 TextMeshProUGUI Level = GetComponentInChildren<TextMeshProUGUI>();
                 Button LevelUpButton = GetComponentInChildren<Button>();
+                LevelUpButton.onClick.RemoveAllListeners();
                 Level.text = $"Level\n{saveData.Level}";
                 LevelUpButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("LevelupPopUp"));
                 break;
             case CharacterInfoType.IngiUp:
                 TextMeshProUGUI Ingi = GetComponentInChildren<TextMeshProUGUI>();
                 Button IngiUpButton = GetComponentInChildren<Button>();
+                IngiUpButton.onClick.RemoveAllListeners();
                 Ingi.text = $"Ingi\n{saveData.Necessity}";
                 IngiUpButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("IngiPopUp"));
                 break;
@@ -88,6 +93,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 for(int i = 0; i < buttons.Length; i++)
                 {
                     int index = i;
+                    buttons[i].onClick.RemoveAllListeners();
                     buttons[i].onClick.AddListener(() => SetSkillPopup(index));
                 }
                 break;

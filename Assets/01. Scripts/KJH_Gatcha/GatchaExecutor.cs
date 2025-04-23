@@ -228,7 +228,6 @@ public class GatchaExecutor : MonoBehaviour
             {
                 ID = Id,
                 Savetype = SaveType.Character,
-                CumExp = 0,
                 IsEquiped = true,
                 Level = 1,
                 Recognition = 0,
