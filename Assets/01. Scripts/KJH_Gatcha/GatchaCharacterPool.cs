@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GatchaCharacterPool : MonoBehaviour
+public class GatchaCharacterPool : MonoBehaviour //Resource/char에 있는 캐릭터들을 받아오는 클래스.
 {
     public static GatchaCharacterPool Instance { get; private set; }
 
@@ -22,9 +22,9 @@ public class GatchaCharacterPool : MonoBehaviour
 
     public void Initialize()
     {
-        var characters = Resources.LoadAll<Character>("Char");
+        var characters = Resources.LoadAll<Character>("Char"); //리소스의 Char 폴더에 있은 오브젝트를 로드해오기 
 
-        foreach (var character in characters)
+        foreach (var character in characters) //foreach로 
         {
             if (!charactersByGrade.ContainsKey(character.Grade))
                 charactersByGrade[character.Grade] = new List<Character>();
