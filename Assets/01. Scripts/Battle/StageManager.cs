@@ -47,7 +47,6 @@ public class StageManager : Singleton<StageManager>
 
     void Start()
     {
-        StageStart();
     }
 
     private void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
@@ -55,12 +54,12 @@ public class StageManager : Singleton<StageManager>
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
         battleSystem = obj.GetComponent<BattleSystem>();
         SetStageInfo();
-
+        StageStart();
     }
     private void SetStageInfo()
     {
-        GameObject background = Instantiate(Resources.Load(CurrentStage.BackgroundPath)) as GameObject;
-        background.GetComponent<SpriteRenderer>().sprite = null;
+        GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
+        background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
         battleSystem.Players = new List<CharacterCarrier>(Players);
         CreateEnemy();
         CurrentRound = 1;
@@ -105,8 +104,8 @@ public class StageManager : Singleton<StageManager>
     public void EndUISet()
     {
         GameObject canvas = GameObject.Find("Canvas");
-        GameObject uiwinPrefab = Instantiate(Resources.Load("Battle/WinUI"), canvas.transform) as GameObject;
-        GameObject uilosePrefab = Instantiate(Resources.Load("Battle/LoseUI"), canvas.transform) as GameObject;
+        GameObject uiwinPrefab = Instantiate(Resources.Load("UI/Battle/WinUI"), canvas.transform) as GameObject;
+        GameObject uilosePrefab = Instantiate(Resources.Load("UI/Battle/LoseUI"), canvas.transform) as GameObject;
         WinUI = uiwinPrefab.GetComponent<WinUI>();
         LoseUI = uilosePrefab.GetComponent<LoseUI>();
     }
@@ -125,8 +124,27 @@ public class StageManager : Singleton<StageManager>
         CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
-        //호감도 지급
         //아이템
+        //캐릭터 경험치?
+        //호감도 지급
+
+        //스테이지정보 업데이트
+        SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.ID).ClearedStage = true;
+        //스테이지 저장
+        SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.ID));
+        for (int i = 0; i < CurrentStage.UnlockID.Length; i++)
+        {
+            SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.UnlockID[i]).StageOpen = true;
+            //해금된 스테이지 정보 저장
+            SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.UnlockID[i]));
+        }
+        for (int i = 0; i < CurrentStage.UnlockChapterID.Length; i++)
+        {
+            SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, CurrentStage.UnlockChapterID[i]).ChapterOpen = true;
+            //해금된 챕터 저장
+            SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, CurrentStage.UnlockChapterID[i]));
+        }
+
     }
 
     public void LoseStage()
@@ -152,11 +170,11 @@ public class StageManager : Singleton<StageManager>
 
     private void UnSubscribeAllAction()
     {
-        foreach(CharacterCarrier carrier in Players)
+        foreach (CharacterCarrier carrier in Players)
         {
             battleSystem.UnSubscribeCharacterDeathAction(carrier);
         }
-        foreach(CharacterCarrier carrier in Enemies)
+        foreach (CharacterCarrier carrier in Enemies)
         {
             battleSystem.UnSubscribeCharacterDeathAction(carrier);
         }

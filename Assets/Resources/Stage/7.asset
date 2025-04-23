@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7cb7d4dbd7ad5344a5d62f5d02f1e1d, type: 3}
+  m_Name: 7
+  m_EditorClassIdentifier: 
+  ID: 7
+  Name: 1-7
+  Rounds: 1
+  EnemiesID: 
+  EnemyLevel: 0
+  EnemyCount: 
+  BackgroundPath: Battle/BackGround2
+  ActivityPoint: 12
+  ItemID: 
+  Gold: 0
+  Dia: 0
+  UnlockID: 
+  UnlockChapterID: ffffffff

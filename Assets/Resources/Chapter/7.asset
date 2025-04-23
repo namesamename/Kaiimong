@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4a39cf9ec78f1a4887fdcd4bb150834, type: 3}
-  m_Name: ChapterLoader
+  m_Script: {fileID: 11500000, guid: b2b1a0677a9baea4fb7e9bd9565f0970, type: 3}
+  m_Name: 7
   m_EditorClassIdentifier: 
-  outPath: {fileID: 0}
-  url: docs.google.com/spreadsheets/d/1aGp1NC1OXe1BS4HZ2Zem7ve51GHMwn28xygY
-  datas:
-  - className: "\uCC55\uD130"
-    sheetId: 359448246
+  ID: 7
+  Name: Chpater7
+  StagesID: 
+  ContentPrefabPath: 
+  IconPath: 

@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class ChapterSlotUI : MonoBehaviour
     [SerializeField] private Image chapterIcon;
     [SerializeField] private TextMeshProUGUI chapterNameText;
     [SerializeField] private Button chapterButton;
+    [SerializeField] private Image blurIcon;
 
     void Start()
     {
@@ -17,12 +19,26 @@ public class ChapterSlotUI : MonoBehaviour
 
     private void SetChapterSlot()
     {
+        ChapterManager.Instance.InitializeChapter(Chapter.ID);
         chapterIcon.sprite = Resources.Load<Sprite>(Chapter.IconPath);
         chapterNameText.text = Chapter.Name;
+        if (!SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, Chapter.ID).ChapterOpen)
+        {
+            blurIcon.gameObject.SetActive(true);
+        }
+        else
+        {
+            blurIcon.gameObject.SetActive(false);
+        }
+
     }
 
     private void OnChapterButton()
     {
-        SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+        if (SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, Chapter.ID).ChapterOpen)
+        {
+            ChapterManager.Instance.CurChapter = Chapter;
+            SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+        }
     }
 }
