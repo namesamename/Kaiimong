@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILevelupBtn : BaseLevelupInfo
+public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
 {
     Button[] buttons;
 
 
-    public void initialize()
+    public void Initialize()
     {
-        
-        
         buttons = GetComponentsInChildren<Button>();
         for (int i = 0; i < buttons.Length; i++) 
         {
@@ -115,7 +113,6 @@ public class UILevelupBtn : BaseLevelupInfo
     public void Excute()
     {
         LevelUpSystem.LevelUp(popUP.LevelInterval, popUP.UsingGlod, popUP.UsingAmulet, ImsiGameManager.Instance.GetCharacterSaveData());
-        popUP.Initialize();
 
     }
 }

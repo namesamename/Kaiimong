@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UILevelupStatboard : BaseLevelupInfo
+public class UILevelupStatboard : BaseLevelupInfo, ISetPOPUp
 {
-    TextMeshProUGUI[] textMeshPros;
-    void Start()
-    {
-        
-    }
-    
+    TextMeshProUGUI[] textMeshPros;    
     public void Initialize()
     {
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();

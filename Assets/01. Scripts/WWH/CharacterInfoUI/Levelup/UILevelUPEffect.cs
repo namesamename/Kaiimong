@@ -4,17 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILevelUPEffect : BaseLevelupInfo
+public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
 {
     TextMeshProUGUI[] textMeshPros;
     Image[] Images;
-    private void Start()
-    {
-
-    }
-
-
-    public void Intialize()
+    public void Initialize()
     {
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
         Images = GetComponentsInChildren<Image>();
@@ -26,6 +20,7 @@ public class UILevelUPEffect : BaseLevelupInfo
         CurCurrencyTextSet();
         SetImages();
     }
+
 
 
     public void CurCurrencyTextSet()
@@ -197,8 +192,6 @@ public class UILevelUPEffect : BaseLevelupInfo
        return MaxLevel - popUP.CurLevel;
 
     }
-
-
 
 
 }
