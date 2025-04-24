@@ -26,9 +26,15 @@ public class StageInfoUI : MonoBehaviour
     public void DisableUI()
     {
         RemoveListner();
-        rect.DOAnchorPos(new Vector3(0, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
-        gameObject.SetActive(false);
         stage = null;
+        rect.DOAnchorPos(new Vector3(0, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
+        StartCoroutine(DisableDelay());
+    }
+
+    private IEnumerator DisableDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        gameObject.SetActive(false);
     }
 
     public void SetUI(StageSlot slot)

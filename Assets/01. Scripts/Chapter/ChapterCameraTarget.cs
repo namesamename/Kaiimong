@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ChapterCameraTarget : MonoBehaviour
 {
@@ -10,10 +11,27 @@ public class ChapterCameraTarget : MonoBehaviour
     private float clickStart;
     private bool isStillClick = true;
 
+    [SerializeField] private float camMax;
+    [SerializeField] private float camMin;
     [SerializeField] private float clickTime = 0.2f;
     [SerializeField] private float dragDistance = 0.1f;
 
     [SerializeField] private StageInfoUI stageInfoUI;
+    private SpriteRenderer background;
+
+    private void Start()
+    {
+        background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
+
+        if (background != null)
+        {
+            float cameraWidth = Camera.main.orthographicSize * Camera.main.aspect;
+
+            Bounds backgroundBound = background.bounds;
+            camMax = backgroundBound.max.x - cameraWidth;
+            camMin = backgroundBound.min.x + cameraWidth;
+        }
+    }
 
     void Update()
     {
@@ -40,13 +58,15 @@ public class ChapterCameraTarget : MonoBehaviour
             if (isDragging)
             {
                 transform.position += delta;
+                float clamp = Mathf.Clamp(transform.position.x, camMin, camMax);
+                transform.position = new Vector3(clamp, transform.position.y, transform.position.z);
                 dragStart = current;
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (isStillClick && Time.time - clickStart < dragDistance)
+            if (isStillClick && Time.time - clickStart < dragDistance && !EventSystem.current.IsPointerOverGameObject())
             {
                 TryClickObject();
             }
@@ -67,7 +87,7 @@ public class ChapterCameraTarget : MonoBehaviour
 
         if (hit.collider != null)
         {
-            if (stageInfoUI.enabled)
+            if (stageInfoUI.gameObject.activeSelf)
             {
                 stageInfoUI.DisableUI();
             }
@@ -76,8 +96,8 @@ public class ChapterCameraTarget : MonoBehaviour
                 if (hit.collider.CompareTag("Stage"))
                 {
                     StageSlot clickedStage = hit.collider.GetComponent<StageSlot>();
-                    stageInfoUI.SetUI(clickedStage);
                     stageInfoUI.gameObject.SetActive(true);
+                    stageInfoUI.SetUI(clickedStage);
                 }
             }
         }
