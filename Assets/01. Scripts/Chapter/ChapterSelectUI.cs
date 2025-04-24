@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,17 +18,17 @@ public class ChapterSelectUI : MonoBehaviour
         SetCategoryButtons();
         InitChapter();
     }
-
+    
     private void InitChapter()
     {
-        CurChapterCategory = GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic[0];
-        SetChapterSlots(0);
+        CurChapterCategory = GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic[1];
+        SetChapterSlots(1);
     }
 
     public void SetChapterSlots(int chapterID)
     {
         CurChapterCategory = GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic[chapterID];
-        for (int i = 0; i < CurChapterCategory.ChaptersID.Length; i++)
+        for (int i = 1; i < CurChapterCategory.ChaptersID.Length+1; i++)
         {
             int chapterDataID = CurChapterCategory.ChaptersID[i];
             Chapter chapterData = GlobalDataTable.Instance.Chapter.ChapterDic[chapterDataID];
@@ -49,7 +50,7 @@ public class ChapterSelectUI : MonoBehaviour
 
     private void SetCategoryButtons()
     {
-        for (int i = 0; i < GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic.Count; i++)
+        for (int i = 1; i < GlobalDataTable.Instance.ChapterCategory.ChapterCategoryDic.Count; i++)
         {
             GameObject obj = Instantiate(Resources.Load("UI/Chapter/CategoryButton") as GameObject, categoryButtonBox.transform);
             obj.GetComponent<CategoryButton>().categoryID = i;
@@ -59,6 +60,6 @@ public class ChapterSelectUI : MonoBehaviour
 
     private void OnBackButton()
     {
-        gameObject.SetActive(false);
+        SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
     }
 }

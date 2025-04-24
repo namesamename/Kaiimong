@@ -585,9 +585,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurChapterCategory: {fileID: 0}
-  contentBox: {fileID: 0}
-  categoryButtonBox: {fileID: 0}
-  backButton: {fileID: 0}
+  contentBox: {fileID: 668050461894693177}
+  categoryButtonBox: {fileID: 3003556255773682874}
+  backButton: {fileID: 6824949178220988107}
   slots: []
 --- !u!1 &8571745307796742635
 GameObject:

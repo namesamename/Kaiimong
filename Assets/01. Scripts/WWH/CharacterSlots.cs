@@ -22,6 +22,7 @@ public class CharacterSlots : MonoBehaviour
         Debug.Log(SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, 1));
 
         ImsiGameManager.Instance.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(1));
+        SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo);
        
 
     }
