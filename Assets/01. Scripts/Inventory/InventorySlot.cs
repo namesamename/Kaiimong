@@ -95,5 +95,14 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             popupObj.Show(item, itemCount);  // 아이템 데이터 전달
         }
     }
+
+    /* public void OnPointerClick(PointerEventData eventData)      // 슬롯 클릭 시 팝업 호출
+     {
+         if (item == null) return;                                 // 슬롯에 아이템이 없으면 돌아가기
+
+         ItemInfoPopup popup = FindObjectOfType<ItemInfoPopup>();  // 씬에서 ItemInfoPopup 오브젝트
+         if (popup != null)
+             popup.Show(item, itemCount);
+     }*/
 }
 

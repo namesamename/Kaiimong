@@ -6,73 +6,65 @@ using UnityEngine.TextCore.Text;
 
 public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
 {
-     public List<CharacterType> selectedAttributes = new();             // 선택된 속성 리스트
-     public List<Grade> selectedGrades = new();                         // 선택된 희귀도 리스트
+    public List<CharacterType> selectedAttributes = new();    // 선택된 속성 리스트
+    public List<Grade> selectedGrades = new();                // 선택된 희귀도 리스트
 
-
-
-
-    // 캐릭터가 현재 필터 조건에 맞는지 확인
-
-    public List<Character> Characters(List<Character> allCharacter)               // 필터된 캐릭터를 저장할 리스트 생성
+    // 특정 조건(속성/등급)에 맞는 캐릭터 리스트 반환
+    public List<Character> FilterCharacters(List<Character> allCharacters)
     {
         List<Character> filteredCharacters = new List<Character>();
-        foreach (Character character in allCharacter)                             // 모든 캐릭터를 하나씩 확인
+
+        foreach (Character character in allCharacters) // 모든 캐릭터 순회
         {
-             if (selectedAttributes.Contains(character.CharacterType) &&            // 속성과 등급이 선택된 필터 조건에 포함되는지
-              selectedGrades.Contains(character.Grade))                         // 캐릭터의 등급이 선택된 필터 조건에 포함되는지 확인
+            // 조건: 선택된 속성 + 등급이 모두 일치해야 리스트에 추가
+            if ((selectedAttributes.Count == 0 || selectedAttributes.Contains(character.CharacterType)) &&
+                (selectedGrades.Count == 0 || selectedGrades.Contains(character.Grade)))
             {
-                filteredCharacters.Add(character);                               // 조건 만족시 리스트에 추가
+                filteredCharacters.Add(character);
             }
         }
         return filteredCharacters;
     }
 
-    public void OnClickApplyFilter()  // 버튼에 연결해서 사용할 함수
+    // 버튼에 연결해서 필터 적용
+    public void OnClickApplyFilter()
     {
         // 저장된 모든 캐릭터 세이브 데이터 가져오기
-        List<CharacterSaveData> saveDataList = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
+        List<CharacterSaveData> allSaves = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
 
-        
-        // isEquip이 true인 캐릭터만 필터링
-
-        List<CharacterSaveData> equippedData = new List<CharacterSaveData>();   // 장착 캐릭터 저장용 리스트
-
-        foreach (CharacterSaveData data in saveDataList)                        // 모든 저장 데이터를 순회
+        // 장착 캐릭터만 추출
+        List<CharacterSaveData> equipped = new List<CharacterSaveData>();
+        foreach (CharacterSaveData data in allSaves)
         {
-            if (data.IsEquiped)                                                 // 장착 여부 확인
-            {
-                equippedData.Add(data);                                         // 장착된 캐릭터만 추가
-            }
+            if (data.IsEquiped)
+                equipped.Add(data);
         }
+        Debug.Log($"[필터] 장착 캐릭터: {equipped.Count}명");
 
-        // ScriptableObject 기반 Character로 변환
-
-        List<Character> allCharacters = new();
-        foreach (var saveData in equippedData)
+        // CharacterSaveData → Character SO 변환
+        List<Character> allCharacters = new List<Character>();
+        foreach (CharacterSaveData save in equipped)
         {
-            Character character = GlobalDataTable.Instance.character.GetCharToID(saveData.ID);
-            if (character != null)
-                allCharacters.Add(character);
+            Character so = GlobalDataTable.Instance.character.GetCharToID(save.ID);
+            if (so != null)
+                allCharacters.Add(so);
         }
+        Debug.Log($"[필터] SO 변환된 캐릭터: {allCharacters.Count}명");
 
-        // 속성 + 등급 필터 적용
-        List<Character> filteredCharacters = Characters(allCharacters);  // 현재 조건에 맞는 캐릭터 추출
+        // 선택된 조건으로 필터 적용
+        List<Character> filtered = FilterCharacters(allCharacters);
+        Debug.Log($"[필터] 최종 필터링 캐릭터: {filtered.Count}명");
 
-        
-        // 정렬 스크립트가 있다면 적용 (예: 희귀도 오름/내림)
-
-        UICharacterSort sorter = FindObjectOfType<UICharacterSort>();
-        if (sorter != null)
-        {
- //           filteredCharacters = sorter.CharacterDecide(filteredCharacters);
-        }
-
-        // 슬롯 생성
+        // SlotSpawner로 전달
         UICharacterSlotSpawner spawner = FindObjectOfType<UICharacterSlotSpawner>();
         if (spawner != null)
         {
-//            spawner.SpawnFromSaveData(filteredCharacters);
+            spawner.SpawnFromFilteredCharacters(filtered);
+            Debug.Log("[필터] 슬롯 스포너 호출: 슬롯 생성 완료");
+        }
+        else
+        {
+            Debug.LogWarning("슬롯 생성기(UICharacterSlotSpawner)를 찾지 못했습니다.");
         }
     }
 }

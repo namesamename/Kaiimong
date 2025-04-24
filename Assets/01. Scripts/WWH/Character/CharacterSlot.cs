@@ -10,7 +10,7 @@ public class CharacterSlot : MonoBehaviour
     [Header("UI Reference")]
     [SerializeField] private TextMeshProUGUI nameText;           // 캐릭터 이름 텍스트
     [SerializeField] private TextMeshProUGUI levelText;          // 캐릭터 레벨 텍스트
-    [SerializeField] private Image attributeIcon;                // 속성 아이콘 이미지
+ // [SerializeField] private Image attributeIcon;                // 속성 아이콘 이미지
     [SerializeField] private GameObject equippedMark;            // 장착 중 마크
 
     private CharacterSaveData characterData;                     // 캐릭터 저장 데이터 참조
@@ -24,14 +24,14 @@ public class CharacterSlot : MonoBehaviour
         nameText.text = character.Name;                // 캐릭터 이름 표시
         levelText.text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
 
-        if (attributeIcon != null && character.AttributeIcon!= null)
+       /* if (attributeIcon != null && character.AttributeIcon!= null)
         {
             attributeIcon.sprite = character.AttributeIcon; // 속성 아이콘 표시
         }
         else
         {
             Debug.LogWarning($"[CharacterSlot] 속성 아이콘이 없습니다: ID {characterID}");
-        }
+        }*/
 
         if (equippedMark != null)
         {

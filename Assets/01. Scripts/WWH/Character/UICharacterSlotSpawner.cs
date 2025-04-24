@@ -18,12 +18,33 @@ public class UICharacterSlotSpawner : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("[테스트] UICharacterSlotSpawner 스크립트가 실행되고 있음");
-        CharacterDecide();
-        LoadAllCharacters();
+        ShowOwnedCharacters();
+        //LoadAllCharacters();
         //LoadAllCharacters(characters(characterSave));
     }
 
+    // 내 소유 캐릭터(가챠 뽑기 등으로 SaveDataBase에 저장된)만 보여줌
+    public void ShowOwnedCharacters()
+    {
+        //  저장된(내가 가진) 캐릭터 세이브 데이터 전부 가져옴
+        List<CharacterSaveData> ownedSaves = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
+
+        //  (Character, SaveData) 쌍으로 만듦
+        List<(Character character, CharacterSaveData saveData)> ownedPairs = new List<(Character, CharacterSaveData)>();
+        foreach (var save in ownedSaves)
+        {
+            Character so = GlobalDataTable.Instance.character.GetCharToID(save.ID);
+            if (so != null)
+            {
+                ownedPairs.Add((so, save));
+                Debug.Log($"[ShowOwnedCharacters] 내 소유 캐릭터: {so.Name} (ID:{so.ID}) Lv.{save.Level} Grade:{so.Grade}");
+            }
+            else
+            {
+                Debug.LogWarning($"[ShowOwnedCharacters] ID {save.ID} 캐릭터 SO를 찾을 수 없음!");
+            }
+        }
+    }
     public void SpawnFromSaveData(List<CharacterSaveData> saveDataList)     // 저장된 캐릭터 데이터 기반으로 슬롯 생성
     {
         ClearSlots();                                                            // 기존 슬롯 제거
@@ -48,6 +69,26 @@ public class UICharacterSlotSpawner : MonoBehaviour
 
             spawnedSlots.Add(slotObj);                                  // 생성 슬롯 리스트에 추가
         }
+    }
+
+    public void SpawnFromSortedList(List<(Character character, CharacterSaveData saveData)> sortedList)         // (Character, SaveData) 쌍 리스트 슬롯 생성
+    {
+        ClearSlots(); // 기존 슬롯 제거
+
+        foreach (var pair in sortedList)
+        {
+            Character character = pair.character;
+            CharacterSaveData saveData = pair.saveData;
+
+            GameObject prefab = GetSlotPrefabByGrade(character.Grade); // 등급별 프리팹 선택
+            GameObject slotObj = Instantiate(prefab, slotParent);
+
+            CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
+            slot.SetSlot(saveData, character); // 슬롯에 데이터 설정
+
+            spawnedSlots.Add(slotObj); // 리스트에 추가
+        }
+        Debug.Log($"[SlotSpawner] {spawnedSlots.Count}개 슬롯 생성 완료 (내 소유 캐릭터만)");
     }
 
     public void SpawnFromFilteredCharacters(List<Character> filteredList)       // 필터/정렬된 Character 리스트 기반으로 생성
@@ -142,10 +183,18 @@ public class UICharacterSlotSpawner : MonoBehaviour
                 CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
 
                 if (saveData != null)
-                    slot.SetSlot(saveData, character);                                  // 저장된 데이터가 있으면 적용
+                {
+                    slot.SetSlot(saveData, character); // 저장된 데이터가 있으면 슬롯에 설정
+                    Debug.Log($"[슬롯 생성] 저장된 캐릭터: {character.Name} (ID: {character.ID}) | Lv.{saveData.Level} | Grade: {character.Grade}");
+                }
+                else
+                {
+                    Debug.Log($"[슬롯 생성] 저장되지 않은 캐릭터: {character.Name} (ID: {character.ID}) | Grade: {character.Grade}");
+                }
 
-                spawnedSlots.Add(slotObj);                                              // 추적 리스트에 추가
+                spawnedSlots.Add(slotObj);
             }
+            Debug.Log($"[총 슬롯 수] {spawnedSlots.Count}개 슬롯 생성 완료");
         }
         else
         {
@@ -188,18 +237,6 @@ public class UICharacterSlotSpawner : MonoBehaviour
     //    }
     //}
 
-    public void CharacterDecide()                                                           //내가 가진 캐릭터 중 장착된 캐릭터만 characterSaves 리스트에 추가
-    {
-        List<CharacterSaveData> characterSaveDatas = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);  // 저장된 모든 캐릭터 세이브 데이터 불러오기
-
-        foreach (CharacterSaveData characterSaveData in characterSaveDatas)                 // 모든 세이브 데이터를 하나하나 확인
-        {
-            if (characterSaveData.IsEquiped)                                                // 장착된 캐릭터인지 확인
-            {
-                characterSave.Add(characterSaveData);                                      // 장착된 캐릭터만 리스트에 저장
-            }
-        }
-    }
 
     public List<Character> characters(List<CharacterSaveData> characterSaveDatas)   //CharacterSaveData 리스트를 CharacterScriptObject로 바꿈
     {
@@ -211,5 +248,5 @@ public class UICharacterSlotSpawner : MonoBehaviour
         }
         return characters;                                                                          // 완성된 리스트 반환
     }
-
+   
 }
