@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 5
   Name: 1-5
-  Rounds: 2
-  EnemiesID: 
-  EnemyLevel: 0
-  EnemyCount: 
-  BackgroundPath: Battle/BackGround1
+  Rounds: 1
+  EnemiesID: 010000000100000001000000
+  EnemyLevel: 5
+  EnemyCount: 03000000
+  BackgroundPath: Battle/BackGround/One
   ActivityPoint: 10
-  ItemID: 
-  Gold: 0
-  Dia: 0
+  ItemID: 010000000200000003000000
+  Gold: 200
+  Dia: 200
   UnlockID: 
   UnlockChapterID: ffffffff

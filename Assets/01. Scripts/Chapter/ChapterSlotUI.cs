@@ -19,9 +19,13 @@ public class ChapterSlotUI : MonoBehaviour
 
     private void SetChapterSlot()
     {
-        ChapterManager.Instance.InitializeChapter(Chapter.ID);
+        //ChapterManager.Instance.InitializeChapter(Chapter.ID);
         chapterIcon.sprite = Resources.Load<Sprite>(Chapter.IconPath);
         chapterNameText.text = Chapter.Name;
+        if(SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, Chapter.ID) == null)
+        {
+            Debug.Log("2");
+        }
         if (!SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, Chapter.ID).ChapterOpen)
         {
             blurIcon.gameObject.SetActive(true);

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.LowLevel;
 
 public class ChapterManager : Singleton<ChapterManager>
 {
@@ -28,6 +29,16 @@ public class ChapterManager : Singleton<ChapterManager>
         }
         ChapterSaveData = new ChapterSaveData();
         StageSaveData = new StageSaveData();
+
+        for(int i = 1; i < GlobalDataTable.Instance.Chapter.ChapterDic.Count+1; i++)
+        {
+            InitializeChapter(GlobalDataTable.Instance.Chapter.ChapterDic[i].ID);
+        }
+
+        for (int i = 1; i < GlobalDataTable.Instance.Stage.StageDic.Count + 1; i++)
+        {
+            InitializeStage(GlobalDataTable.Instance.Stage.StageDic[i].ID);
+        }
 
         SceneLoader.Instance.RegisterSceneAction(SceneState.StageSelectScene, SetChapter);
     }
@@ -98,6 +109,7 @@ public class ChapterManager : Singleton<ChapterManager>
     public void LoadDataStage(StageSaveData saveData)
     {
         StageSaveData.ClearedStage = saveData.ClearedStage;
+        StageSaveData.StageOpen = saveData.StageOpen;
     }
 
     public void HaveDataStage()

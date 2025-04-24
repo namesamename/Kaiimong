@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   categoryID: 0
+  categoryName: {fileID: 3826036085362939784}
 --- !u!1 &4848173889541694424
 GameObject:
   m_ObjectHideFlags: 0

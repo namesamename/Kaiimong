@@ -18,10 +18,10 @@ MonoBehaviour:
   EnemiesID: 0100000002000000010000000200000002000000
   EnemyLevel: 5
   EnemyCount: 0200000003000000
-  BackgroundPath: Battle/BackGround1
+  BackgroundPath: Battle/BackGround/One
   ActivityPoint: 10
   ItemID: 040000000500000006000000
-  Gold: 0
-  Dia: 0
+  Gold: 200
+  Dia: 200
   UnlockID: 
   UnlockChapterID: ffffffff
