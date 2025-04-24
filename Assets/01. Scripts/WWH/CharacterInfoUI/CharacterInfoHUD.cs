@@ -28,6 +28,16 @@ public class CharacterInfoHUD : MonoBehaviour
 
     public void InitialIze(Character character , CharacterSaveData saveData)
     {
+
+        if(character == null)
+        {
+            Debug.Log("Characternull");
+        }
+        if(saveData == null)
+        {
+            Debug.Log("saveDatanull");
+        }
+
         switch (CharacterInfoType)
         {
 

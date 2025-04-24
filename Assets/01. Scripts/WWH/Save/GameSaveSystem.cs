@@ -25,6 +25,8 @@ public static class GameSaveSystem
             //경로를 계산 /폴더 이름을 가져옴
             string path = Path.Combine(Application.persistentDataPath, $"JsonData/{saveType}/{saveType}Database.json");
             string directory = Path.GetDirectoryName(path);
+
+     
             //경로에 폴더가 존재하지않는 경우 생성을 해줌
             if (!Directory.Exists(directory))
             {
@@ -48,6 +50,8 @@ public static class GameSaveSystem
     {
         //경로를 찾아옴
         string path = Path.Combine(Application.persistentDataPath, $"JsonData/{saveType}/{saveType}Database.json");
+
+
         //파일이 있다면
         if(File.Exists(path))
         {

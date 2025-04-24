@@ -78,9 +78,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 UserEXP = 0,
                 ActivityValue = 100,
                 GachaValue = 10000,
-                GoldValue = 0,
+                GoldValue = 1000,
                 DIAValue = 99999,
-                CharacterEXP = 0,
+                CharacterEXP = 1000,
                 ID = 0
             };
         }

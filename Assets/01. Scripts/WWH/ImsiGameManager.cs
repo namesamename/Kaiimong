@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class ImsiGameManager : Singleton<ImsiGameManager>
 {
     Character character;
-    CharacterSaveData characterSaveData;
+    CharacterSaveData Scharacter;
 
 
     private void Awake()
@@ -22,6 +23,20 @@ public class ImsiGameManager : Singleton<ImsiGameManager>
                 Destroy(gameObject);
             }
         }
+
+        Scharacter = new CharacterSaveData()
+        {
+            ID = 1,
+            Level = 1,
+            Love = 0,
+            Necessity = 0,
+            Recognition = 0,
+            Savetype = SaveType.Character,
+            IsEquiped = false,
+        };
+
+        SaveDataBase.Instance.SaveSingleData(Scharacter);
+
     }
 
     public Character GetCharacter() 
@@ -31,15 +46,16 @@ public class ImsiGameManager : Singleton<ImsiGameManager>
 
     public CharacterSaveData GetCharacterSaveData() 
     {
-        return characterSaveData;
+        return Scharacter;
     }
     public void SetCharacter(Character character)
     {
         this.character = character;
+        Debug.Log(character);
     }
     public void SetCharacterSaveData(CharacterSaveData character)
     {
-        characterSaveData = character;
+        Scharacter = character;
     }
 
 

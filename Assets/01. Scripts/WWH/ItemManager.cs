@@ -6,9 +6,6 @@ using UnityEngine;
 public class ItemManager : Singleton<ItemManager>, ISavable
 {
     public List<ItemSavaData>  itemDatas = new List<ItemSavaData>();
-
-
-
     private void Start()
     {
         Initialize();
