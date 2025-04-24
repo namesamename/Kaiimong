@@ -48,6 +48,7 @@ public class GatchaExecutor : MonoBehaviour
         if (mgr.crystal < needCrystal)
         {
             Debug.LogWarning("크리스탈이 부족합니다!");
+            UIManager.Instance.ShowPopup<PopupCurrencyLack>();
             return;
         }
 

@@ -37,11 +37,24 @@ public class GatchaResultUI : MonoBehaviour
         if (executor != null && session != null)
         {
             var results = executor.DrawWithSession(session);
+
+            //  재화 부족 등으로 실패했을 경우
+            if (results == null || results.Count == 0)
+            {
+                Debug.LogWarning("재화 부족 또는 뽑기 실패!");
+                UIManager.Instance.ShowPopup<PopupCurrencyLack>(); // 재화 부족 팝업
+                return;
+            }
+
             GatchaResultHolder.results = results;
 
+            //  기존 결과 오브젝트 제거
             foreach (Transform child in resultGrid)
+            {
                 Destroy(child.gameObject);
+            }
 
+            StopAllCoroutines(); // 중복 방지
             StartCoroutine(ShowResults());
         }
         else
@@ -49,6 +62,7 @@ public class GatchaResultUI : MonoBehaviour
             Debug.LogWarning("DrawMore 실패: executor 또는 session이 null");
         }
     }
+
 
 
 }
