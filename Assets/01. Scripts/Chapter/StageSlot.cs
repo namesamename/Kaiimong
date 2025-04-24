@@ -12,6 +12,6 @@ public class StageSlot : MonoBehaviour
 
     public void Initialize(int Id)
     {
-        ChapterManager.Instance.InitializeStage(Id);
+        //ChapterManager.Instance.InitializeStage(Id);
     }
 }

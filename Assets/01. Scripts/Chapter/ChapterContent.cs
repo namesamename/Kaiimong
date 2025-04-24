@@ -12,7 +12,7 @@ public class ChapterContent : MonoBehaviour
     {
         slots = GetComponentsInChildren<StageSlot>();
         Chapter = GlobalDataTable.Instance.Chapter.ChapterDic[1];
-        ChapterManager.Instance.InitializeChapter(Chapter.ID);
+        //ChapterManager.Instance.InitializeChapter(Chapter.ID);
     }
 
     void Start()
