@@ -1,18 +1,53 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageInfoUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button enterButton;
+    [SerializeField] private TextMeshProUGUI stageName;
+
+    private Stage stage;
+    private RectTransform rect;
+
+    private void Awake()
     {
-        
+        rect = GetComponent<RectTransform>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        rect.DOAnchorPos(new Vector3(-960, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
     }
+
+    public void DisableUI()
+    {
+        RemoveListner();
+        rect.DOAnchorPos(new Vector3(0, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
+        gameObject.SetActive(false);
+        stage = null;
+    }
+
+    public void SetUI(StageSlot slot)
+    {
+        stage = slot.Stage;
+        stageName.text = stage.Name;
+        enterButton.onClick.AddListener(OnEnterButton);
+    }
+
+    private void OnEnterButton()
+    {
+        StageManager.Instance.CurrentStage = stage;
+        RemoveListner();
+        SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+    }
+
+    private void RemoveListner()
+    {
+        enterButton.onClick.RemoveListener(OnEnterButton);
+    }
+
 }
