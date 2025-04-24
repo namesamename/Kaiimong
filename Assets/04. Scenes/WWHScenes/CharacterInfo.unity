@@ -6103,9 +6103,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8216754627285540907, guid: b96fb75d8a27bdb4ba707ead012a8064, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216754627285540907, guid: b96fb75d8a27bdb4ba707ead012a8064, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216754627285540907, guid: b96fb75d8a27bdb4ba707ead012a8064, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216754627285540907, guid: b96fb75d8a27bdb4ba707ead012a8064, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8491476656211775749, guid: b96fb75d8a27bdb4ba707ead012a8064, type: 3}
       propertyPath: m_Name
       value: IngiPopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491476656211775749, guid: b96fb75d8a27bdb4ba707ead012a8064, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
