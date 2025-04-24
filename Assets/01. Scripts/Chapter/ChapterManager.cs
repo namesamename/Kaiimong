@@ -59,6 +59,9 @@ public class ChapterManager : Singleton<ChapterManager>
             ChaptersSaveList[chapterId] = newChapterData;
         }
 
+        ChaptersSaveList[1].ChapterOpen = true;
+        SaveDataBase.Instance.SaveSingleData(ChaptersSaveList[1]);
+
 
         // 모든 스테이지 초기화
         for (int i = 1; i < GlobalDataTable.Instance.Stage.StageDic.Count + 1; i++)
@@ -87,15 +90,11 @@ public class ChapterManager : Singleton<ChapterManager>
             StageSaveList[stageId] = newStageData;
         }
 
+        StageSaveList[1].StageOpen = true;
+        SaveDataBase.Instance.SaveSingleData(StageSaveList[1]);
+
 
         SceneLoader.Instance.RegisterSceneAction(SceneState.StageSelectScene, SetChapter);
-    }
-
-    private void Start()
-    {
-        ChaptersSaveList[1].ChapterOpen = true;
-        StageSaveList[1].StageOpen = true;
-        SaveAllData();
     }
 
     private void SetChapter()
@@ -104,8 +103,6 @@ public class ChapterManager : Singleton<ChapterManager>
         
         OnChapterOpen?.Invoke();
     }
-
-    // 기존 메서드들은 더 이상 사용하지 않거나 필요시 수정
 
     public ChapterSaveData GetChapterSaveData(int chapterId)
     {
