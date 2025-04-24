@@ -20,14 +20,14 @@ public class CharacterCarrier : MonoBehaviour , ISavable
     {
         //각 하위에 들어갈 수 있도록
 
-        Debug.Log("ASd");
+ 
         skillBook =GetComponentInChildren<CharacterSkillBook>();
         stat = GetComponentInChildren<CharacterStat>();
         visual = GetComponentInChildren<CharacterVisual>();
         CharacterSaveData = new CharacterSaveData()
         {
             ID = 0,
-            Level = 0,
+            Level = 1,
             Love = 0,
             Necessity = 0,
             Recognition = 0,
@@ -35,8 +35,6 @@ public class CharacterCarrier : MonoBehaviour , ISavable
             IsEquiped = false,
 
         };
-        CharacterSaveData.Savetype = SaveType.Character;
-
     }
     private void Start()
     {
@@ -66,10 +64,9 @@ public class CharacterCarrier : MonoBehaviour , ISavable
     /// 저장 데이터가 없으면 새 데이터 만들기
     /// </summary>
     /// <returns></returns>
-    public CharacterSaveData CreatNewData()
+    public void SaveData()
     {
         SaveDataBase.Instance.SaveSingleData(CharacterSaveData);
-        return CharacterSaveData;
     }
     /// <summary>
     /// 저장 데이터를 불러오기
@@ -100,15 +97,8 @@ public class CharacterCarrier : MonoBehaviour , ISavable
             {
                 LoadData(foundData.Find(x => x.ID == CharacterSaveData.ID));
             }
-            else
-            {
-                CreatNewData();
-            }
         }
-        else
-        {
-            CreatNewData();
-        }
+        Save();
 
     }
 

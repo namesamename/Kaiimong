@@ -17,6 +17,25 @@ public class IngiBtn : MonoBehaviour, ISetPOPUp
     public void Initialize()
     {
 
+        buttons[0].onClick.RemoveAllListeners();
+        buttons[1].onClick.RemoveAllListeners();
+
+        if (ingiPOPUP.slot.IsIngiBreakOK(ingiPOPUP.slot.NeedTabel))
+        {
+            buttons[0].interactable = true;
+
+        }
+        else
+        {
+            buttons[0].interactable = false;
+        }
+
         buttons[1].onClick.AddListener(ingiPOPUP.Destroy);
+    }
+
+
+    public void UpGrade()
+    {
+        
     }
 }
