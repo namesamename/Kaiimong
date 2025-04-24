@@ -37,8 +37,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             }
         }
         LevelUpSystem.Init();
-        InitialIze();
     }
+
+
     private void Update()
     {
         if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
@@ -99,6 +100,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
     private void Start()
     {
+        InitialIze();
         ActSO = GlobalDataTable.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
         if (PlayerPrefs.HasKey(LastTimeExitKey))
         {
@@ -109,6 +111,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             offTime = (float)span.TotalSeconds;
             DisableAutoCharge(offTime);
         }
+       
     }
     public void DisableAutoCharge(float offTime)
     {
