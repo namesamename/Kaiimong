@@ -48,6 +48,25 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
+
+    public void SetGold(int NeedCount)
+    {
+        itemCount = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
+        iconImage[1].sprite = Resources.Load<Sprite>( GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
+        countText.text = $"{itemCount}/{NeedCount}";
+        if (itemCount < NeedCount)
+        {
+            countText.color = Color.red;
+        }
+        else
+        {
+            countText.color = Color.green;
+        }
+
+
+
+    }
+
     public void ClearSlot()                 // 슬롯 비우기
     {
         item = null;                        // 아이템 제거
