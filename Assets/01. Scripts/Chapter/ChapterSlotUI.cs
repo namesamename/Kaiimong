@@ -19,23 +19,27 @@ public class ChapterSlotUI : MonoBehaviour
 
     private void SetChapterSlot()
     {
-        ChapterManager.Instance.InitializeChapter(Chapter.ID);
+        //ChapterManager.Instance.InitializeChapter(Chapter.ID);
         chapterIcon.sprite = Resources.Load<Sprite>(Chapter.IconPath);
         chapterNameText.text = Chapter.Name;
-        if (!SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, Chapter.ID).ChapterOpen)
+        ChapterSaveData chapterData = ChapterManager.Instance.GetChapterSaveData(Chapter.ID);
+        if (chapterData != null)
         {
-            blurIcon.gameObject.SetActive(true);
+            if (!chapterData.ChapterOpen)
+            {
+                blurIcon.gameObject.SetActive(true);
+            }
+            else
+            {
+                blurIcon.gameObject.SetActive(false);
+            }
         }
-        else
-        {
-            blurIcon.gameObject.SetActive(false);
-        }
-
     }
 
     private void OnChapterButton()
     {
-        if (SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, Chapter.ID).ChapterOpen)
+        ChapterSaveData chapterData = ChapterManager.Instance.GetChapterSaveData(Chapter.ID);
+        if (chapterData != null && chapterData.ChapterOpen)
         {
             ChapterManager.Instance.CurChapter = Chapter;
             SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 2
   Name: Chpater2
-  StagesID: 100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e000000
-  ContentPrefabPath: Chapter/ChapterTwo
+  StagesID: 060000000700000008000000
+  ContentPrefabPath: Chapter/Prefab/ChapterTwo
   IconPath: Chapter/Icons/IconTwo

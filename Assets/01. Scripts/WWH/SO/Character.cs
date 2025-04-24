@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public enum Grade
 {
     S,
@@ -25,6 +27,7 @@ public class Character : SO
     public float CriticalAttack;
     public CharacterType CharacterType;
     public int CharacterItem;
+    public Sprite AttributeIcon;
 
 
 }

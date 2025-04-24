@@ -15,13 +15,13 @@ MonoBehaviour:
   ID: 14
   Name: 1-14
   Rounds: 2
-  EnemiesID: 
-  EnemyLevel: 0
-  EnemyCount: 
-  BackgroundPath: Battle/BackGround3
-  ActivityPoint: 14
-  ItemID: 
-  Gold: 0
-  Dia: 0
+  EnemiesID: 0100000002000000010000000200000002000000
+  EnemyLevel: 5
+  EnemyCount: 0200000003000000
+  BackgroundPath: Battle/BackGround/One
+  ActivityPoint: 10
+  ItemID: 040000000500000006000000
+  Gold: 200
+  Dia: 200
   UnlockID: 
   UnlockChapterID: ffffffff

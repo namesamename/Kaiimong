@@ -17,24 +17,21 @@ public class ChapterCameraTarget : MonoBehaviour
     [SerializeField] private float dragDistance = 0.1f;
 
     [SerializeField] private StageInfoUI stageInfoUI;
-    private SpriteRenderer background;
+    [SerializeField] private SpriteRenderer background;
+    private bool backgroundFound = false;
 
     private void Start()
     {
-        background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
-
-        if (background != null)
-        {
-            float cameraWidth = Camera.main.orthographicSize * Camera.main.aspect;
-
-            Bounds backgroundBound = background.bounds;
-            camMax = backgroundBound.max.x - cameraWidth;
-            camMin = backgroundBound.min.x + cameraWidth;
-        }
+        FindBackGround();
     }
 
     void Update()
     {
+        if (!backgroundFound)
+        {
+            FindBackGround();
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             dragStart = GetMouseWorldPosition();
@@ -70,6 +67,22 @@ public class ChapterCameraTarget : MonoBehaviour
             {
                 TryClickObject();
             }
+        }
+    }
+
+    void FindBackGround()
+    {
+        background = GameObject.Find("Background").GetComponent<SpriteRenderer>();
+
+        if (background != null)
+        {
+            float cameraWidth = Camera.main.orthographicSize * Camera.main.aspect;
+
+            Bounds backgroundBound = background.bounds;
+            camMax = backgroundBound.max.x - cameraWidth;
+            camMin = backgroundBound.min.x + cameraWidth;
+
+            backgroundFound = true;
         }
     }
 

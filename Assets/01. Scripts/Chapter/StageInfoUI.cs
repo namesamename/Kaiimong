@@ -48,7 +48,7 @@ public class StageInfoUI : MonoBehaviour
     {
         StageManager.Instance.CurrentStage = stage;
         RemoveListner();
-        SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+        SceneLoader.Instance.ChangeScene(SceneState.BattleScene);
     }
 
     private void RemoveListner()
