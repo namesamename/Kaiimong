@@ -49,6 +49,9 @@ public class IngiBtn : MonoBehaviour, ISetPOPUp
            
         }
         ImsiGameManager.Instance.GetCharacterSaveData().Recognition += 1;
-        
+
+        Initialize();
+
+
     }
 }

@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class IngiPOPUP : UIPopup
 {
-
+    [HideInInspector]
     public IngiBoard board;
+    [HideInInspector]
     public IngiSlots slot;
+    [HideInInspector]
     public IngiBtn btn;
+
+
+    ISetPOPUp[] setPOPUps;
 
     private void Awake()
     {
+        setPOPUps = GetComponentsInChildren<ISetPOPUp>();
         board = GetComponentInChildren<IngiBoard>();
         slot = GetComponentInChildren<IngiSlots>();
         btn = GetComponentInChildren<IngiBtn>();
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+
+        setPOPUps.Initialize();
     }
 
 
