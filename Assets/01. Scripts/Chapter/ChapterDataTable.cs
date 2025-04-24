@@ -8,10 +8,10 @@ public class ChapterDataTable
 
     public void Initialize()
     {
-        Chapter[] stageSO = Resources.LoadAll<Chapter>("Chapter");
-        for (int i = 0; i < stageSO.Length; i++)
+        Chapter[] ChapterSO = Resources.LoadAll<Chapter>("Chapter");
+        for (int i = 0; i < ChapterSO.Length; i++)
         {
-            ChapterDic[stageSO[i].ID] = stageSO[i];
+            ChapterDic[ChapterSO[i].ID] = ChapterSO[i];
         }
     }
 }

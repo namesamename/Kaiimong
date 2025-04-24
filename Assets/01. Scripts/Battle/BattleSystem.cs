@@ -95,7 +95,7 @@ public class BattleSystem : MonoBehaviour
     public void SetUI()
     {
         GameObject canvas = GameObject.Find("Canvas");
-        GameObject uiPrefab = Instantiate(Resources.Load("Battle/BattleUI")) as GameObject;
+        GameObject uiPrefab = Instantiate(Resources.Load("UI/Battle/BattleUI")) as GameObject;
         StageManager.Instance.EndUISet();
     }
     private void AttackPhase()

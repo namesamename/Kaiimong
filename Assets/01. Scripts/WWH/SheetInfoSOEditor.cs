@@ -111,6 +111,18 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "Cons/";
         }
+        else if (SheetId == "Chapter")
+        {
+            Directory = "Chapter/";
+        }
+        else if (SheetId == "ChapterCategory")
+        {
+            Directory = "ChapterCategory/";
+        }
+        else if (SheetId == "Stage")
+        {
+            Directory = "Stage/";
+        }
 
     }
 

@@ -36,9 +36,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         PartyID = new DataCarrier();
         Stage = new StageDataTable();
         Chapter = new ChapterDataTable();
-
         Item = new ItemDataTable();
-
         ChapterCategory = new ChapterCategoryDataTable();
 
         character.Initialize();
@@ -46,9 +44,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         currency.Initialize();
         Stage.Initialize();
         Chapter.Initialize();
-
         Item.Initialize();
-
         ChapterCategory.Initialize();
 
     }

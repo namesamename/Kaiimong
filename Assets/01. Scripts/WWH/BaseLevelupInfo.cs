@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseLevelupInfo : MonoBehaviour
+public class BaseLevelupInfo : MonoBehaviour
 {
-    public abstract void Initiallize(int weight);
-
+    public LevelUpPopUP popUP;
+    private void Awake()
+    {
+        popUP =  GetComponentInParent<LevelUpPopUP>();
+    }
 }

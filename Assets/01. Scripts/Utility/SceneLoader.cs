@@ -7,10 +7,19 @@ using UnityEngine.SceneManagement;
 // 씬 이름과 같아야함
 public enum SceneState
 {
-    MainScene,
-    BattleScene,
+    StartScene,
+    LobbyScene,
+    PickupScene,
+    ProfileScene,
     StageSelectScene,
-
+    BattleScene,
+    YBK_Inventory,
+    CharacterInfo,
+    ChracterSelect,
+    ChapterScene,
+    MessageScene,
+    QuestScene,
+    ShopScene,
 }
 
 public class SceneLoader : Singleton<SceneLoader>
@@ -37,12 +46,15 @@ public class SceneLoader : Singleton<SceneLoader>
 
         // 컨테이너 초기화 
         sceneContainer = new Dictionary<SceneState, Action>();
-        sceneContainer[SceneState.MainScene] = null;
-        sceneContainer[SceneState.BattleScene] = null;
-        sceneContainer[SceneState.StageSelectScene] = null;
 
+        foreach(SceneState state in Enum.GetValues(typeof(SceneState)))
+        {
+            sceneContainer[state] = null;
+        }
+
+      
         // 초기씬 : 메인 
-        sceneState = SceneState.MainScene;
+        sceneState = SceneState.StartScene;
     }
 
     private void OnEnable()

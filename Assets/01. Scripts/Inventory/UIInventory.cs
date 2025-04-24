@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 public class UIInventory : MonoBehaviour
@@ -35,6 +36,9 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private List<ItemData> defaultConsumables;   // 소모품 목록
 
 
+    private Button[] button;
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -42,13 +46,16 @@ public class UIInventory : MonoBehaviour
             Destroy(this.gameObject); // 중복 방지
             return;
         }
-
+        button = GetComponentsInChildren<Button>();
         Instance = this;
     }
 
     private void Start()
     {
         OpenItemInventory();                         // 시작 시 기본으로 아이템 탭 열기
+
+        button[0].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
+        button[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
     }
 
 

@@ -1,16 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+
 
 
 public class SaveDataBase : Singleton<SaveDataBase>
 {
 
+
+    
     //세이브 데이타 있는 거 보관
     public Dictionary<SaveType, List<SaveInstance>> SaveDic = new Dictionary<SaveType, List<SaveInstance>>();
+
+
     /// <summary>
     /// 특정 하나만 가져오기
     /// </summary>
@@ -21,8 +25,25 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// 
     private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+
         List<List<SaveInstance>> saveInstances = new List<List<SaveInstance>>();
         saveInstances = LoadAll();
+     
         foreach (SaveType type in Enum.GetValues(typeof(SaveType)))
         {
             SaveDic[type] = new List<SaveInstance>();
@@ -37,11 +58,16 @@ public class SaveDataBase : Singleton<SaveDataBase>
                 {
                     SaveDic[type] = new List<SaveInstance>();
                 }
-
+            
                 SaveDic[type].Add(instance);
             }
         }
+
+        sw.Stop();
+        UnityEngine.Debug.Log($"SaveDic 정리에 걸린 시간: {sw.ElapsedMilliseconds}ms");
+    
     }
+
     public T GetSaveDataToID<T>(SaveType type, int Id ) where T :SaveInstance
     {
         if (SaveDic.TryGetValue(type, out List<SaveInstance> Sava)&& SaveDic[type].Count > 0 )

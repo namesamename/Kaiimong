@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class CategoryButton : MonoBehaviour
 
     private ChapterSelectUI chapterSelectUI;
     private Button categoryButton;
+    public TextMeshProUGUI categoryName;
 
     private void Awake()
     {
