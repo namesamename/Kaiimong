@@ -20,7 +20,7 @@ public class IngiBtn : MonoBehaviour, ISetPOPUp
         buttons[0].onClick.RemoveAllListeners();
         buttons[1].onClick.RemoveAllListeners();
 
-        if (ingiPOPUP.slot.IsIngiBreakOK(ingiPOPUP.slot.NeedTable) || ImsiGameManager.Instance.GetCharacterSaveData().Recognition == 3)
+        if (ingiPOPUP.slot.IsIngiBreakOK(ingiPOPUP.slot.NeedTable) || GlobalDataTable.Instance.DataCarrier.GetSave().Recognition == 3)
         {
             buttons[0].interactable = true;
             buttons[0].onClick.AddListener(UpGrade);
@@ -48,8 +48,10 @@ public class IngiBtn : MonoBehaviour, ISetPOPUp
             }
            
         }
-        ImsiGameManager.Instance.GetCharacterSaveData().Recognition += 1;
+        GlobalDataTable.Instance.DataCarrier.GetSave().Recognition += 1;
 
+
+        SaveDataBase.Instance.SaveSingleData(GlobalDataTable.Instance.DataCarrier.GetSave());
         Initialize();
 
 

@@ -7,7 +7,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public CharacterDataTable character; 
     public SkillDataTable skill;
     public CurrencyDataTable currency;
-    public DataCarrier PartyID;
+    public DataCarrier DataCarrier;
     public StageDataTable Stage;
     public ChapterDataTable Chapter;
     public ItemDataTable Item;
@@ -33,7 +33,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         character = new CharacterDataTable();
         skill = new SkillDataTable();
         currency = new CurrencyDataTable();
-        PartyID = new DataCarrier();
+        DataCarrier = new DataCarrier();
         Stage = new StageDataTable();
         Chapter = new ChapterDataTable();
         Item = new ItemDataTable();

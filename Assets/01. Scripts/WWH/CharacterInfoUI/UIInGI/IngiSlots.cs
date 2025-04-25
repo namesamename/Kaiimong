@@ -16,9 +16,9 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
 
     public void Initialize()
     {
-        int Rec = ImsiGameManager.Instance.GetCharacterSaveData().Recognition;
-        int Id = ImsiGameManager.Instance.GetCharacterSaveData().ID;
-        List<CharacterUpgradeTable> list = GlobalDataTable.Instance.Upgrade.GetRecoList(ImsiGameManager.Instance.GetCharacterSaveData().ID);
+        int Rec = GlobalDataTable.Instance.DataCarrier.GetSave().Recognition;
+        int Id = GlobalDataTable.Instance.DataCarrier.GetSave().ID;
+        List<CharacterUpgradeTable> list = GlobalDataTable.Instance.Upgrade.GetRecoList(GlobalDataTable.Instance.DataCarrier.GetSave().ID);
         SetItemslot(list[Rec]);
     }
 
