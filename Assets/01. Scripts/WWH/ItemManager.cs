@@ -123,6 +123,7 @@ public class ItemManager : Singleton<ItemManager>
     {
         var item = ItemDatasSaveDic[ID];
         item.Value += Amount;
+        SaveSingleData(ID);
     }
 
     //public void Save()
