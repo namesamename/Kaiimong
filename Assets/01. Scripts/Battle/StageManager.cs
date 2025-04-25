@@ -60,8 +60,8 @@ public class StageManager : Singleton<StageManager>
     {
         GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
         background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
-        battleSystem.Players = new List<CharacterCarrier>(Players);
         CreateEnemy();
+        battleSystem.Players = new List<CharacterCarrier>(Players);
         CurrentRound = 1;
         //반환 행동력
         returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
