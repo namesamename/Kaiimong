@@ -104,20 +104,20 @@ public class ItemManager : Singleton<ItemManager>
     //    return itemDatas.Find(x => x.ID == ID);
     //}
 
-    //public List<ItemSavaData> GetSaveList()
-    //{
-    //    List<ItemSavaData> list = new List<ItemSavaData>();
-    //    foreach(ItemSavaData item in itemDatas)
-    //    {
-    //        if(item.Value > 0)
-    //        {
-    //            list.Add(item);
-    //        }
-    //    }
+    public List<ItemSavaData> GetSaveList()
+    {
+        List<ItemSavaData> list = new List<ItemSavaData>();
+        foreach (ItemSavaData item in ItemDatasSaveDic.Values)
+        {
+            if (item.Value > 0)
+            {
+                list.Add(item);
+            }
+        }
 
-    //    return list;
+        return list;
 
-    //}
+    }
 
     public void SetitemCount(int ID, int Amount)
     {
