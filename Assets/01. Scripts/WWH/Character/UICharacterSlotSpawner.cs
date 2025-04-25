@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GatchaTable;
+// using static GatchaTable;
 
 public class UICharacterSlotSpawner : MonoBehaviour
 {
@@ -17,7 +17,39 @@ public class UICharacterSlotSpawner : MonoBehaviour
 
 
     private void Start()
-    {
+    {        // 1. 임시로 저장할 캐릭터 세이브 데이터 생성
+        CharacterSaveData testSave1 = new CharacterSaveData();
+        testSave1.ID = 2;        // 캐릭터 SO에 있는 ID로 입력 (예: 1)
+        testSave1.Level = 6;    // 원하는 레벨
+        testSave1.IsEquiped = true; // 장착 상태
+
+        // 2. 저장 (SaveDataBase에 추가)
+        SaveDataBase.Instance.SaveSingleData(testSave1);
+
+        // 3. 또 다른 캐릭터도 추가 가능
+        CharacterSaveData testSave2 = new CharacterSaveData();
+        testSave2.ID = 4;
+        testSave2.Level = 5;
+        testSave2.IsEquiped = true;
+
+        SaveDataBase.Instance.SaveSingleData(testSave2);
+
+        CharacterSaveData testSave3 = new CharacterSaveData();
+        testSave3.ID = 6;
+        testSave3.Level = 7;
+        testSave3.IsEquiped = false;
+
+        SaveDataBase.Instance.SaveSingleData(testSave3);
+        
+        CharacterSaveData testSave4 = new CharacterSaveData();
+        testSave4.ID = 8;
+        testSave4.Level = 2;
+        testSave4.IsEquiped = false;
+
+        SaveDataBase.Instance.SaveSingleData(testSave4);
+
+        Debug.Log("테스트용 캐릭터 SaveData 4개 저장 완료!");
+
         ShowOwnedCharacters();
         //LoadAllCharacters();
         //LoadAllCharacters(characters(characterSave));
@@ -44,6 +76,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
                 Debug.LogWarning($"[ShowOwnedCharacters] ID {save.ID} 캐릭터 SO를 찾을 수 없음!");
             }
         }
+
     }
     public void SpawnFromSaveData(List<CharacterSaveData> saveDataList)     // 저장된 캐릭터 데이터 기반으로 슬롯 생성
     {
