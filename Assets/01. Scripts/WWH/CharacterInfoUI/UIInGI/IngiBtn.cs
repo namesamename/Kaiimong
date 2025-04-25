@@ -20,7 +20,7 @@ public class IngiBtn : MonoBehaviour, ISetPOPUp
         buttons[0].onClick.RemoveAllListeners();
         buttons[1].onClick.RemoveAllListeners();
 
-        if (ingiPOPUP.slot.IsIngiBreakOK(ingiPOPUP.slot.NeedTabel) || ImsiGameManager.Instance.GetCharacterSaveData().Recognition == 3)
+        if (ingiPOPUP.slot.IsIngiBreakOK(ingiPOPUP.slot.NeedTable) || ImsiGameManager.Instance.GetCharacterSaveData().Recognition == 3)
         {
             buttons[0].interactable = true;
             buttons[0].onClick.AddListener(UpGrade);
@@ -36,15 +36,15 @@ public class IngiBtn : MonoBehaviour, ISetPOPUp
 
     public void UpGrade()
     {
-        foreach(int ID in ingiPOPUP.slot.NeedTabel.Keys)
+        foreach(int ID in ingiPOPUP.slot.NeedTable.Keys)
         {
             if(ID == 0)
             {
-                CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, -ingiPOPUP.slot.NeedTabel[ID]);
+                CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, -ingiPOPUP.slot.NeedTable[ID]);
             }
             else
             {
-                ItemManager.Instance.SetitemCount(ID, -ingiPOPUP.slot.NeedTabel[ID]);
+                ItemManager.Instance.SetitemCount(ID, -ingiPOPUP.slot.NeedTable[ID]);
             }
            
         }

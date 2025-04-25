@@ -10,8 +10,7 @@ public class IngiPOPUP : UIPopup
     public IngiSlots slot;
     [HideInInspector]
     public IngiBtn btn;
-
-
+   
     ISetPOPUp[] setPOPUps;
 
     private void Awake()
@@ -28,6 +27,8 @@ public class IngiPOPUP : UIPopup
 
         setPOPUps.Initialize();
     }
+
+
 
 
 }

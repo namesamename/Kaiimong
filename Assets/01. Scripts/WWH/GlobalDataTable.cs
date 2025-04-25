@@ -11,6 +11,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public StageDataTable Stage;
     public ChapterDataTable Chapter;
     public ItemDataTable Item;
+    public UpGradeTable Upgrade;
 
     public ChapterCategoryDataTable ChapterCategory;
 
@@ -37,7 +38,9 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         Chapter = new ChapterDataTable();
         Item = new ItemDataTable();
         ChapterCategory = new ChapterCategoryDataTable();
+        Upgrade = new UpGradeTable();
 
+        Upgrade.Initialize();
         character.Initialize();
         skill.Initialize();
         currency.Initialize();

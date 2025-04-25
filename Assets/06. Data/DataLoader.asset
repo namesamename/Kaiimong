@@ -29,3 +29,5 @@ MonoBehaviour:
     sheetId: 391552210
   - className: Enemy
     sheetId: 663780245
+  - className: CharacterUpgradeTable
+    sheetId: 126858498
