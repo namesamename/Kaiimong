@@ -15,7 +15,6 @@ public class UIBreakEffect : MonoBehaviour, ISetPOPUp
     {
         Images = GetComponentsInChildren<Image>();
         Texts = GetComponentsInChildren<TextMeshProUGUI>();
-        
     }
     public void Initialize()
     {

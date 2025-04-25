@@ -25,6 +25,7 @@ public class CurrencySaveData : SaveInstance
     public string UserName = "JIHwan";
     public int UserLevel;
     public int UserEXP;
+    public int CurrentStaminaMax;
     public int CharacterEXP;
     public int GoldValue;
     public int DIAValue;
