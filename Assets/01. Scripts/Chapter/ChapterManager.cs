@@ -134,6 +134,17 @@ public class ChapterManager : Singleton<ChapterManager>
             SaveDataBase.Instance.SaveSingleData(stageData);
         }
     }
+
+    public void SaveChapterSingleData(int chpaterID)
+    {
+        SaveDataBase.Instance.SaveSingleData(ChaptersSaveList[chpaterID]);
+    }
+
+    public void SaveStageSingleData(int stageID)
+    {
+        SaveDataBase.Instance.SaveSingleData(StageSaveList[stageID]);
+    }
+
     //public void InitializeChapter(int Id)
     //{
     //    //√ ±‚»≠
