@@ -64,7 +64,17 @@ public class GatchaExecutor : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            Grade grade = GetRandomGrade(mgr.currentGachaType, mgr.gatchaDrawCount); //등급 추출
+            Grade grade;
+
+            // 마지막 10번째 보정 처리
+            if (count == 10 && i == count - 1)
+            {
+                grade = GetGuaranteedAorSGrade(mgr.gatchaDrawCount);
+            }
+            else
+            {
+                grade = GetRandomGrade(mgr.currentGachaType, mgr.gatchaDrawCount); //등급 추출
+            }
 
             var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade); //해당 등급 풀 가져오기
             if (pool.Count == 0)
@@ -78,7 +88,7 @@ public class GatchaExecutor : MonoBehaviour
             // 픽업 처리 (S or A, 50% 확률)
             if (mgr.currentGachaType == GatchaType.Pickup)
             {
-                if (grade == Grade.S&& Random.value < 0.5f) // 50퍼센트로  S일시 지정된 픽업캐릭터 획득하기
+                if (grade == Grade.S && Random.value < 0.5f) // 50퍼센트로  S일시 지정된 픽업캐릭터 획득하기
                 {
                     selected = pool.Find(c => c.ID == mgr.pickupSCharacterID);  //픽업 S
                 }
@@ -100,7 +110,8 @@ public class GatchaExecutor : MonoBehaviour
             }
 
             results.Add(selected);
-
+            GatchaHistoryManager.Instance.AddEntry(new GatchaHistoryEntry(
+selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
             Debug.Log($"획득: [{grade}] {selected.Name} (ID:{selected.ID})");
 
             // S등급이면 무조건 카운트 초기화, 아니면 증가
@@ -134,19 +145,33 @@ public class GatchaExecutor : MonoBehaviour
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("GatchaResultScene");
     }
+    private Grade GetGuaranteedAorSGrade(int drawCount)
+    {
+        float sRate = 3f;
 
-    public List<Character> DrawWithSession(GatchaSessionData session) //결과창에서 진행하는 뽑기 
+        if (drawCount >= 60)
+            sRate = 15f;
+        else if (drawCount >= 50)
+            sRate = 8f;
+
+        float rand = Random.Range(0f, 100f);
+        if (rand < sRate) return Grade.S;
+        else return Grade.A;  // A 또는 S만 반환됨
+    }
+
+    public List<Character> DrawWithSession(GatchaSessionData session)
     {
         var mgr = GatchaManager.Instance;
         var curManager = CurrencyManager.Instance;
         List<Character> results = new();
 
-        int useTicket = Mathf.Min(session.drawCount,mgr.ticket);
+        int useTicket = Mathf.Min(session.drawCount, curManager.GetCurrency(CurrencyType.Gacha));
         int needCrystal = (session.drawCount - useTicket) * 180;
 
         if (mgr.crystal < needCrystal)
         {
             Debug.LogWarning("크리스탈이 부족합니다!");
+            UIManager.Instance.ShowPopup<PopupCurrencyLack>();
             return results;
         }
 
@@ -158,22 +183,44 @@ public class GatchaExecutor : MonoBehaviour
 
         for (int i = 0; i < session.drawCount; i++)
         {
-            Grade grade = GetRandomGrade(session.gatchaType, mgr.gatchaDrawCount);
+            Grade grade;
 
-            // S등급 뽑혔으면 카운터 초기화
+            // 마지막 10번째 보정 처리
+            if (session.drawCount == 10 && i == session.drawCount - 1)
+            {
+                grade = GetGuaranteedAorSGrade(mgr.gatchaDrawCount);
+            }
+            else
+            {
+                grade = GetRandomGrade(session.gatchaType, mgr.gatchaDrawCount);
+            }
+
+            var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade);
+            if (pool.Count == 0)
+            {
+                Debug.LogWarning($"등급 {grade} 캐릭터 풀이 비어 있음");
+                continue;
+            }
+
+            Character selected = SelectCharacterByPickup(grade, pool, session);
+            results.Add(selected);
+
+          
+            GatchaHistoryManager.Instance.AddEntry(new GatchaHistoryEntry(
+    selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+            Debug.Log($"[DrawMore] 획득: [{grade}] {selected.Name} (ID:{selected.ID})");
+
+            // S등급이면 무조건 카운트 초기화, 아니면 증가
             if (grade == Grade.S)
             {
                 mgr.gatchaDrawCount = 0;
             }
             else
             {
-                mgr.gatchaDrawCount++; // S가 아닐 때만 증가
+                mgr.gatchaDrawCount++;
             }
-            var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade);
-            Character selected = SelectCharacterByPickup(grade, pool, session);
-            results.Add(selected);
 
-            Debug.Log($"[DrawMore] 획득: [{grade}] {selected.Name}");
+            //CharacterDuplicateCheck(selected.ID);
         }
 
         curManager.Save();
