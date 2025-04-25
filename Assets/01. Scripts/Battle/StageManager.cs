@@ -18,7 +18,6 @@ public class StageManager : Singleton<StageManager>
     [Header("Reward and Returns")]
     public float returnActivityPoints;
     public int userExp;
-    public int playerExp;
 
     [Header("StageUI")]
     public WinUI WinUI;
@@ -67,8 +66,6 @@ public class StageManager : Singleton<StageManager>
         returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
         //플레이어 경험치
         userExp = CurrentStage.ActivityPoint * 100;
-        //캐릭터 경험치
-        playerExp = CurrentStage.ActivityPoint * 100 / 4;
     }
 
     //CurrentStage.EnemiesID로 적 객체 생성 후 리스트업하기
@@ -125,7 +122,7 @@ public class StageManager : Singleton<StageManager>
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
         //아이템
-        //캐릭터 경험치?
+
         //호감도 지급
 
         //스테이지정보 업데이트

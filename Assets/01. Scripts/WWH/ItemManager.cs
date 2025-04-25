@@ -99,10 +99,10 @@ public class ItemManager : Singleton<ItemManager>
     //    }
     //}
 
-    //public ItemSavaData GetSaveData(int ID)
-    //{
-    //    return itemDatas.Find(x => x.ID == ID);
-    //}
+    public ItemSavaData GetSaveData(int ID)
+    {
+        return ItemDatasSaveDic[ID];
+    }
 
     public List<ItemSavaData> GetSaveList()
     {
