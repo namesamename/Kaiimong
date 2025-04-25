@@ -5818,6 +5818,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: breakthroughPopUP
       objectReference: {fileID: 0}
+    - target: {fileID: 232924850738646703, guid: a5f665cf7836d8b4083d5bb072d1bfe2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5087564841521585356, guid: a5f665cf7836d8b4083d5bb072d1bfe2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
