@@ -15,6 +15,7 @@ public class Enemy : SO
     public StatGrade Def;
     public StatGrade Speed;
     public StatGrade Cri;
+    public int SkillID;
 
 
   

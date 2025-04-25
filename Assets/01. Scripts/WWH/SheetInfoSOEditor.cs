@@ -123,6 +123,11 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "Stage/";
         }
+    
+        else if (SheetId == "Enemy")
+        {
+            Directory = "Enem/";
+        }
 
     }
 

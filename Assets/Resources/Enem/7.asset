@@ -9,16 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 356044ada97fc0444aea8db3a7eb3041, type: 3}
+  m_Script: {fileID: 11500000, guid: 97e06bd7541eb7e45b0d34c397f275d0, type: 3}
   m_Name: 7
   m_EditorClassIdentifier: 
   ID: 7
-  Name: "\uC131\uC7A5 \uC7AC\uB8CC7"
-  Grade: 4
-  ItemType: 1
-  ConsumeID: 0
-  IconPath: sad
-  MaxStackCount: 999
-  Description: "\u3141\u3134\u3147"
-  ObtainLocation: "\u3141\u3134\u3147"
-  Probability: 0.2
+  Name: "\uBAAC7"
+  HP: 800
+  Att: 3
+  Def: 2
+  Speed: 2
+  Cri: 3
+  SkillID: 0

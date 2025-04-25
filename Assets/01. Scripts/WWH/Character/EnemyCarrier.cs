@@ -5,10 +5,13 @@ using UnityEngine;
 public class EnemyCarrier : MonoBehaviour
 {
     Enemy enemy;
-
-    CharacterVisual characterVisual;
-    CharacterSkillBook characterSkillBook;
-    CharacterStat stat;
+    [HideInInspector]
+    public CharacterVisual characterVisual;
+    [HideInInspector]
+    public CharacterSkillBook characterSkillBook;
+    [HideInInspector]
+    public CharacterStat stat;
+    public GameObject SelectEffect;
 
     private void Awake()
     {
@@ -22,10 +25,8 @@ public class EnemyCarrier : MonoBehaviour
     {
         enemy = GlobalDataTable.Instance.character.GetEnemyToID(i);
         characterVisual.Initialize();
-        characterSkillBook.SkillSet(i);
+        characterSkillBook.SkillSet(enemy.SkillID);
         stat.SetEnemy(enemy, Level);
-
-
     }
 
 

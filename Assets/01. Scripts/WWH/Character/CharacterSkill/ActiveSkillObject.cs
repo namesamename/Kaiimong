@@ -8,7 +8,6 @@ public class ActiveSkillObject : MonoBehaviour
 {
     public ActiveSkill skillSO;
     private float CurCooltime;
-
     public void SetSkill(int id)
     {
         skillSO=  GlobalDataTable.Instance.skill.GetActSkillSOToID(id);
