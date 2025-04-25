@@ -14,8 +14,8 @@ public class UILevelupStatboard : BaseLevelupInfo, ISetPOPUp
 
     public void Statset(int Weight = 0)
     {
-        Character character = ImsiGameManager.Instance.GetCharacter();
-        CharacterSaveData Save = ImsiGameManager.Instance.GetCharacterSaveData();
+        Character character = GlobalDataTable.Instance.DataCarrier.GetCharacter();
+        CharacterSaveData Save = GlobalDataTable.Instance.DataCarrier.GetSave();
         if ( Weight == 0 && Save.Level == 1)
         {
             textMeshPros[1].text = (character.Health + (Save.Level-1)).ToString();

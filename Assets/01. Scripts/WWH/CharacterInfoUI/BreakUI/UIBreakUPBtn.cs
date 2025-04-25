@@ -16,8 +16,8 @@ public class UIBreakUPBtn : MonoBehaviour, ISetPOPUp
     public void Initialize()
     {
 
-        ItemSavaData itemSavaData = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, ImsiGameManager.Instance.GetCharacter().CharacterItem);
-        CharacterSaveData characterSave = ImsiGameManager.Instance.GetCharacterSaveData();
+        ItemSavaData itemSavaData = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, GlobalDataTable.Instance.DataCarrier.GetCharacter().CharacterItem);
+        CharacterSaveData characterSave = GlobalDataTable.Instance.DataCarrier.GetSave();
 
 
         buttons[0].onClick.RemoveAllListeners();

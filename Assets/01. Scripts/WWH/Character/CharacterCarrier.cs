@@ -19,8 +19,6 @@ public class CharacterCarrier : MonoBehaviour , ISavable
     private void Awake()
     {
         //각 하위에 들어갈 수 있도록
-
- 
         skillBook =GetComponentInChildren<CharacterSkillBook>();
         stat = GetComponentInChildren<CharacterStat>();
         visual = GetComponentInChildren<CharacterVisual>();
@@ -33,7 +31,6 @@ public class CharacterCarrier : MonoBehaviour , ISavable
             Recognition = 0,
             Savetype = SaveType.Character,
             IsEquiped = false,
-
         };
     }
     private void Start()

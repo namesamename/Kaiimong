@@ -8,9 +8,9 @@ using Unity.VisualScripting;
 
 public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
 {
-   private Image[] iconImage;                 // 슬롯 안의 아이콘 이미지
-   private TextMeshProUGUI countText;       //아이템 수량 텍스트
-   private Outline outlineEffect;           // 슬롯 외곽선 효과
+    private Image[] iconImage;                 // 슬롯 안의 아이콘 이미지
+    private TextMeshProUGUI countText;       //아이템 수량 텍스트
+    private Outline outlineEffect;           // 슬롯 외곽선 효과
 
     private ItemData item;                    // 현재 슬롯에 들어있는 아이템
     private int itemCount;                    // 해당 아이템 수량
@@ -20,25 +20,38 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
         iconImage = GetComponentsInChildren<Image>();
         countText = GetComponentInChildren<TextMeshProUGUI>();
     }
-    public void SetSlot(ItemData newItem, int NeedCount )     // 슬롯에 새 아이템 슬롯 설정
+    public void SetSlot(ItemData newItem, int NeedCount)     // 슬롯에 새 아이템 슬롯 설정
     {
         item = newItem;
-        itemCount = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, item.ID).Value;
+
+        ItemSavaData itemSava = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, item.ID);
 
         if (item != null)
         {
             iconImage[1].sprite = Resources.Load<Sprite>(item.IconPath);
             iconImage[1].enabled = true;        // 아이콘  활성화
-            countText.text = $"{itemCount}/{NeedCount}";
-            if (itemCount < NeedCount)
+
+            if (itemSava != null)
             {
-                countText.color = Color.red;
+
+                countText.text = $"{itemCount}/{NeedCount}";
+                if (itemCount < NeedCount)
+                {
+                    countText.color = Color.red;
+                }
+                else
+                {
+                    countText.color = Color.green;
+                }
             }
             else
             {
-                countText.color = Color.green;
+                countText.text = $"{0}/{NeedCount}";
+
+                countText.color = Color.red;
+
             }
-       
+
 
             outlineEffect.enabled = false;   // 슬롯 생성 시 외곽선 비활성화
         }
@@ -52,7 +65,7 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
     public void SetGold(int NeedCount)
     {
         itemCount = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
-        iconImage[1].sprite = Resources.Load<Sprite>( GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
+        iconImage[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
         countText.text = $"{itemCount}/{NeedCount}";
         if (itemCount < NeedCount)
         {
@@ -62,9 +75,6 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
         {
             countText.color = Color.green;
         }
-
-
-
     }
 
     public void ClearSlot()                 // 슬롯 비우기

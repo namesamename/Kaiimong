@@ -7,7 +7,7 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
 
     GameObject[] Slots;
 
-    public Dictionary<int,int> NeedTabel = new Dictionary<int,int>();
+    public Dictionary<int,int> NeedTable = new Dictionary<int,int>();
 
     private void Awake()
     {
@@ -16,31 +16,33 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
 
     public void Initialize()
     {
-        int Rec = ImsiGameManager.Instance.GetCharacterSaveData().Recognition;
-        int Id = ImsiGameManager.Instance.GetCharacterSaveData().ID;
+        int Rec = GlobalDataTable.Instance.DataCarrier.GetSave().Recognition;
+        int Id = GlobalDataTable.Instance.DataCarrier.GetSave().ID;
+        List<CharacterUpgradeTable> list = GlobalDataTable.Instance.Upgrade.GetRecoList(GlobalDataTable.Instance.DataCarrier.GetSave().ID);
+        SetItemslot(list[Rec]);
+    }
 
-
-
-        //UpgradeData updata=  GlobalDatabase.instance.Upgrade.GetChracterIDAndRecognition(Id, Rec);
-        //if(updata.ItemCount >= 3)
-        //{
-        //    NeedTable[0] = updata.NeedGold;
-        //    SlotInstantiate(0, false)
-        //    NeedTabel[updata.fristItemId] = updata.firstItemCount;
-        //    SlotInstantiate(updata.fristItemId)
-        //    NeedTabel[updata.SecondItemId] = updata.SecondItemCount;
-        //    SlotInstantiate(updata.SecondItemId)
-        //}
-        //if(updata.ItemCount >= 4)
-        //{
-        //    NeedTabel[updata.ThridItemId] = updata.ThridItemCount;
-        //    SlotInstantiate(updata.ThridItemId)
-        //}
-        //if(updata.ItemCount >= 5)
-        //{
-        //    NeedTabel[updata.FourthItemId] = updata.FourthItemCount;
-        //    SlotInstantiate(updata.FourthItemId)
-        //}
+    public void SetItemslot(CharacterUpgradeTable table )
+    {
+        if (table.ItemCount >= 3)
+        {
+            NeedTable[0] = table.NeedGold;
+            SlotInstantiate(0, false);
+            NeedTable[table.FirstItemID] = table.FirstItemCount;
+            SlotInstantiate(table.FirstItemID);
+            NeedTable[table.SecondItemID] = table.SecondItemCount;
+            SlotInstantiate(table.SecondItemID);
+        }
+        if (table.ItemCount >= 4)
+        {
+            NeedTable[table.ThridItemID] = table.ThridItemCount;
+            SlotInstantiate(table.ThridItemID);
+        }
+        if (table.ItemCount >= 5)
+        {
+            NeedTable[table.FourthItemID] = table.FourthItemCount;
+            SlotInstantiate(table.FourthItemID);
+        }
     }
 
 
@@ -52,33 +54,33 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
             if (item.Grade == ERarity.S)
             {
                 GameObject Game = Instantiate(Slots[4], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTabel[id]);
+                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
             }
             else if (item.Grade == ERarity.A)
             {
                 GameObject Game = Instantiate(Slots[0], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTabel[id]);
+                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
             }
             else if (item.Grade == ERarity.B)
             {
                 GameObject Game = Instantiate(Slots[1], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTabel[id]);
+                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
             }
             else if (item.Grade == ERarity.C)
             {
                 GameObject Game = Instantiate(Slots[2], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTabel[id]);
+                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
             }
             else if (item.Grade == ERarity.D)
             {
                 GameObject Game = Instantiate(Slots[3], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTabel[id]);
+                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
             }
         }
         else
         {
             GameObject Game = Instantiate(Slots[4], transform);
-            Game.GetComponent<IngiitemSlot>().SetGold(NeedTabel[0]);
+            Game.GetComponent<IngiitemSlot>().SetGold(NeedTable[0]);
         }
 
     }

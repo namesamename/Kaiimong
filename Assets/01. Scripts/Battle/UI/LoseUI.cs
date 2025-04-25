@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoseUI : MonoBehaviour
@@ -19,10 +15,12 @@ public class LoseUI : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log(CanClick);
         if (CanClick)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                Time.timeScale = 1f;
                 StageManager.Instance.ToStageSelectScene();
             }
         }
@@ -30,7 +28,7 @@ public class LoseUI : MonoBehaviour
 
     public void SetLoseUI()
     {
-        CanClick = true;
+        CanClick = false;
         returnActivityText.text = $": 행동력 반환 +{StageManager.Instance.returnActivityPoints}";
         //activityImage =
     }

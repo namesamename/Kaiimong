@@ -28,7 +28,7 @@ public class UIPartyList : MonoBehaviour
     {
         Index = 0;
         partyDown();
-        Party = GlobalDataTable.Instance.PartyID;
+        Party = GlobalDataTable.Instance.DataCarrier;
         foreach (int id in Party.GetCharacterIDList())
         {
             SlotList[Index].GetComponent<CharacterBattleSlot>().SetSlot(id);

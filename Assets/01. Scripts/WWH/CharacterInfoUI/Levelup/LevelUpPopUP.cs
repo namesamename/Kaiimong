@@ -48,7 +48,7 @@ public class LevelUpPopUP : UIPopup
         UsingGlod = 0;
         UsingAmulet = 0;
         LevelInterval = 0;
-        CurLevel = ImsiGameManager.Instance.GetCharacterSaveData().Level;
+        CurLevel = GlobalDataTable.Instance.DataCarrier.GetSave().Level;
         NextLevel = CurLevel;
     }
 

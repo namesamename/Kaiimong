@@ -40,7 +40,7 @@ public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
     public bool SetPlus(int levelToAdd)
     {
 
-        if (popUP.CurLevel + popUP.LevelInterval + 1 > LevelUpSystem.MaxLevel[ImsiGameManager.Instance.GetCharacterSaveData().Necessity])
+        if (popUP.CurLevel + popUP.LevelInterval + 1 > LevelUpSystem.MaxLevel[GlobalDataTable.Instance.DataCarrier.GetSave().Necessity])
         {
             return false;
         }
@@ -178,7 +178,7 @@ public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
     {
         int MaxLevel = popUP.CurLevel;
         int total = 0;
-       for(int i = MaxLevel + 1; i < LevelUpSystem.MaxLevel[ImsiGameManager.Instance.GetCharacterSaveData().Necessity]; i++) 
+       for(int i = MaxLevel + 1; i < LevelUpSystem.MaxLevel[GlobalDataTable.Instance.DataCarrier.GetSave().Necessity]; i++) 
         {
             total += IsGold ? LevelUpSystem.needGold[i] : LevelUpSystem.needamulet[i];
             if(total > curent)

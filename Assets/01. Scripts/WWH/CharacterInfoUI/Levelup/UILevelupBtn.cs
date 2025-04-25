@@ -113,8 +113,8 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
     public void Excute()
     {
         
-        LevelUpSystem.LevelUp(popUP.LevelInterval, popUP.UsingGlod, popUP.UsingAmulet, ImsiGameManager.Instance.GetCharacterSaveData());
-        SaveDataBase.Instance.SaveSingleData(ImsiGameManager.Instance.GetCharacterSaveData());
+        LevelUpSystem.LevelUp(popUP.LevelInterval, popUP.UsingGlod, popUP.UsingAmulet, GlobalDataTable.Instance.DataCarrier.GetSave());
+        SaveDataBase.Instance.SaveSingleData(GlobalDataTable.Instance.DataCarrier.GetSave());
         popUP.Initialize();
 
     }

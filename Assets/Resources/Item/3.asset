@@ -21,5 +21,4 @@ MonoBehaviour:
   MaxStackCount: 999
   Description: "\u3134\u3141\u3147"
   ObtainLocation: "\u3141\u3134\u3147"
-  IsStack: 1
-  Probability: 0
+  Probability: 0.2

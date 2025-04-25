@@ -115,11 +115,11 @@ public class CharacterInfoHUD : MonoBehaviour
 
     }
 
-
+    
     public void SetSkillPopup(int index)
     {
         UIPopup game = UIManager.Instance.ShowPopup("SkillInfoPopup");
-        game.GetComponent<SkillInfoPoPUP>().SetPopup(ImsiGameManager.Instance.GetCharacter(), index);
+        game.GetComponent<SkillInfoPoPUP>().SetPopup(GlobalDataTable.Instance.DataCarrier.GetCharacter(), index);
     }
 
 }

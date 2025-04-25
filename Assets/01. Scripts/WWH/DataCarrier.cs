@@ -5,6 +5,30 @@ using UnityEngine;
 public class DataCarrier
 {
     List<int> CharacterID = new List<int>();
+
+    Character character;
+    CharacterSaveData characterSaveData;
+
+
+    public Character GetCharacter()
+    {
+        return character;
+    }
+    public CharacterSaveData GetSave()
+    {
+        return characterSaveData;
+    }
+
+    public void SetCharacter(Character character)
+    {
+        this.character = character;
+    }
+
+    public void SetSave(CharacterSaveData characterSaveData)
+    {
+        this.characterSaveData = characterSaveData;
+    }
+
     public void AddCharacterID(int Id)
     {
 

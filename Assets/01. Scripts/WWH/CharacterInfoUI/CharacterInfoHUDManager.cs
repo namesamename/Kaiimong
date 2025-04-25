@@ -12,11 +12,9 @@ public class CharacterInfoHUDManager : MonoBehaviour
     {
         CharacterInfoHUD[] characterInfos = GetComponentsInChildren<CharacterInfoHUD>();
 
-        Debug.Log(ImsiGameManager.Instance.GetCharacter());
-        Debug.Log(ImsiGameManager.Instance.GetCharacterSaveData());
         for (int i = 0; i < characterInfos.Length; i++)
         {
-            characterInfos[i].InitialIze(ImsiGameManager.Instance.GetCharacter(), ImsiGameManager.Instance.GetCharacterSaveData());
+            characterInfos[i].InitialIze(GlobalDataTable.Instance.DataCarrier.GetCharacter(), GlobalDataTable.Instance.DataCarrier.GetSave());
         }
     }
 

@@ -133,7 +133,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                GlobalDataTable.Instance.PartyID.RemoveIndex(Index);
+                GlobalDataTable.Instance.DataCarrier.RemoveIndex(Index);
                 TurnDown();
                 partyList.Partyset();
             }
@@ -143,7 +143,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 Turnon(partyList.Index);
-                GlobalDataTable.Instance.PartyID.AddCharacterID(Save.ID);
+                GlobalDataTable.Instance.DataCarrier.AddCharacterID(Save.ID);
                 partyList.Partyset();
             }
         }
