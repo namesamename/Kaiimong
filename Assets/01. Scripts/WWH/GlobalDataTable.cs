@@ -10,7 +10,6 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public DataCarrier PartyID;
     public StageDataTable Stage;
     public ChapterDataTable Chapter;
-
     public ItemDataTable Item;
 
     public ChapterCategoryDataTable ChapterCategory;

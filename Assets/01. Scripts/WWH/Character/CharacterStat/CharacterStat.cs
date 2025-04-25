@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 
 public enum StatType
@@ -66,6 +67,44 @@ public class CharacterStat : MonoBehaviour
         criticalAttackStat.Value = character.CriticalAttack + (float)(Level * 0.01);
         criticalPerStat.Value = character.CriticalPer +  (float)(Level * 0.01);
     }
+    public void SetEnemy(Enemy enemy, int Level)
+    {
+        //List<StatGrade> statList = new List<StatGrade>
+        //{
+        //    enemy.Att,
+        //    enemy.Def,
+        //    enemy.Cri,
+        //    enemy.Speed
+        //};
+  
+        //foreach (StatGrade stat in statList) 
+        //{
+        //    switch (stat)
+        //    {
+        //        case StatGrade.A:
+        //            break;
+        //        case StatGrade.B:
+        //            break;
+        //        case StatGrade.C:
+        //            break;
+        //        case StatGrade.D:
+        //            break;
+        //    }
+        //}
+
+
+        attackStat.Value = Level;
+        defenseStat.Value = Level;
+        healthStat.Value = Level;
+        //agilityStat.Value = character.Speed + level;
+        criticalAttackStat.Value = (float)(Level * 0.01);
+        criticalPerStat.Value = (float)(Level * 0.01);
+
+
+
+
+    }
+
 
     public void TakeDamage(float Amount)
     {

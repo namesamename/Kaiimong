@@ -34,7 +34,7 @@ public class ActiveSkillObject : MonoBehaviour
             foreach (CharacterCarrier c in targetcharacter)
             {
                 float AllDamage = skillSO.Attack * stat.attackStat.GetStat();
-                if (stat.criticalPerStat.Value < Random.Range(0.000f, 1f))
+                if (stat.criticalPerStat.Value > Random.Range(0.000f, 1f))
                 {
                     AllDamage *= stat.criticalAttackStat.Value;
                     Debug.Log("Å©¸®Æ¼ÄÃ ¶ä¤§¤§");
