@@ -18,6 +18,7 @@ public class StageManager : Singleton<StageManager>
     [Header("Reward and Returns")]
     public float returnActivityPoints;
     public int userExp;
+    public int playerLove;
 
     [Header("StageUI")]
     public WinUI WinUI;
@@ -65,7 +66,8 @@ public class StageManager : Singleton<StageManager>
         //반환 행동력
         returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
         //플레이어 경험치
-        userExp = CurrentStage.ActivityPoint * 100;
+        userExp = CurrentStage.ActivityPoint * 20;
+        playerLove = CurrentStage.ActivityPoint;
     }
 
     //CurrentStage.EnemiesID로 적 객체 생성 후 리스트업하기
@@ -112,44 +114,50 @@ public class StageManager : Singleton<StageManager>
         WinUI.gameObject.SetActive(true);
         OnWin?.Invoke();
         OnStageWin();
-        StartCoroutine(BeforeSceneChangeDelay(WinUI.CanClick));
+        StartCoroutine(BeforeWinChangeDelay());
     }
 
     private void OnStageWin()
     {
-        //경험치, 골드,유료재화 지급
+        //경험치, 골드,유료재화 지급 
         CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
         //아이템
+        //for(int i = 0; i < CurrentStage.ItemID.Length; i++)
+        //{
+        //    int itemID = CurrentStage.ItemID[i];
+        //    ItemSavaData itemSaveData = ItemManager.Instance.GetItemSaveData(itemID);
 
-        //호감도 지급
 
+        //}
+        //호감도 지급      
+        foreach(CharacterCarrier player in Players)
+        {
+            player.CharacterSaveData.Love += playerLove;
+            //저장
+            player.SaveData();
+        }
         //스테이지정보 업데이트
-        SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.ID).ClearedStage = true;
-        //스테이지 저장
-        SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.ID));
+        ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;
         for (int i = 0; i < CurrentStage.UnlockID.Length; i++)
         {
-            SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.UnlockID[i]).StageOpen = true;
-            //해금된 스테이지 정보 저장
-            SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.UnlockID[i]));
+            ChapterManager.Instance.GetStageSaveData(CurrentStage.UnlockID[i]).StageOpen = true;
         }
         for (int i = 0; i < CurrentStage.UnlockChapterID.Length; i++)
         {
-            SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, CurrentStage.UnlockChapterID[i]).ChapterOpen = true;
-            //해금된 챕터 저장
-            SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, CurrentStage.UnlockChapterID[i]));
+            ChapterManager.Instance.GetChapterSaveData(CurrentStage.UnlockChapterID[i]).ChapterOpen = true;
         }
-
+        //저장
+        ChapterManager.Instance.SaveAllData();
     }
 
     public void LoseStage()
-    {
+    {        
         LoseUI.gameObject.SetActive(true);
         OnLose?.Invoke();
         OnStageLose();
-        StartCoroutine(BeforeSceneChangeDelay(LoseUI.CanClick));
+        StartCoroutine(BeforeLoseChangeDelay());
     }
 
     private void OnStageLose()
@@ -158,11 +166,18 @@ public class StageManager : Singleton<StageManager>
         CurrencyManager.Instance.SetCurrency(CurrencyType.Activity, (int)returnActivityPoints);
     }
 
-    private IEnumerator BeforeSceneChangeDelay(bool canClick)
+    private IEnumerator BeforeLoseChangeDelay()
     {
-        yield return new WaitForSeconds(1f);
+        LoseUI.CanClick = false;
+        yield return new WaitForSecondsRealtime(1f);
+        LoseUI.CanClick = true;
+    }
 
-        canClick = true;
+    private IEnumerator BeforeWinChangeDelay()
+    {
+        WinUI.CanClick = false;
+        yield return new WaitForSecondsRealtime(1f);
+        WinUI.CanClick = true;
     }
 
     private void UnSubscribeAllAction()
