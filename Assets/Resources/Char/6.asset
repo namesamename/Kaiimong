@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a77f04e01116b4f82385ed165b2c0e, type: 3}
+  m_Script: {fileID: 11500000, guid: 37670e058308cdd47b823e72ffc15d08, type: 3}
   m_Name: 6
   m_EditorClassIdentifier: 
   ID: 6
@@ -23,3 +23,4 @@ MonoBehaviour:
   CriticalAttack: 1.43
   CharacterType: 0
   CharacterItem: 1
+  AttributeIcon: {fileID: 0}

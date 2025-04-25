@@ -24,6 +24,7 @@ public class CharacterSlot : MonoBehaviour
         nameText.text = character.Name;                // 캐릭터 이름 표시
         levelText.text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
 
+        Debug.Log($"[SetSlot] 슬롯에 적용: {character.Name} (ID:{character.ID}) Lv.{saveData.Level} Grade:{character.Grade}");
        /* if (attributeIcon != null && character.AttributeIcon!= null)
         {
             attributeIcon.sprite = character.AttributeIcon; // 속성 아이콘 표시

@@ -5,31 +5,63 @@ using UnityEngine;
 
 public class UICharacterSlotSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject[] slotPrefabs;              // ½½·Ô ÇÁ¸®ÆÕ
-    [SerializeField] private Transform slotParent;                  // ½½·ÔµéÀÌ µé¾î°¥ Content
+    [SerializeField] private GameObject[] slotPrefabs;              // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private Transform slotParent;                  // ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ ï¿½ï¿½î°¥ Content
 
-    [SerializeField] private List<Character> defaultcharacters;      //Ä³¸¯ÅÍ ¸ñ·Ï
+    [SerializeField] private List<Character> defaultcharacters;      //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-    private List<GameObject> spawnedSlots = new List<GameObject>(); // »ý¼ºµÈ ½½·Ôµé ÃßÀû
+    private List<GameObject> spawnedSlots = new List<GameObject>(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    List<CharacterSaveData> characterSave = new List<CharacterSaveData>();     //CharacterSaveData Å¸ÀÔ ´ãÀº ¸®½ºÆ®
+    List<CharacterSaveData> characterSave = new List<CharacterSaveData>();     //CharacterSaveData Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 
 
 
     private void Start()
-    {
+    {        // 1. ï¿½Ó½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        CharacterSaveData testSave1 = new CharacterSaveData();
+        testSave1.ID = 2;        // Ä³ï¿½ï¿½ï¿½ï¿½ SOï¿½ï¿½ ï¿½Ö´ï¿½ IDï¿½ï¿½ ï¿½Ô·ï¿½ (ï¿½ï¿½: 1)
+        testSave1.Level = 6;    // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+        testSave1.IsEquiped = true; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+        // 2. ï¿½ï¿½ï¿½ï¿½ (SaveDataBaseï¿½ï¿½ ï¿½ß°ï¿½)
+        SaveDataBase.Instance.SaveSingleData(testSave1);
+
+        // 3. ï¿½ï¿½ ï¿½Ù¸ï¿½ Ä³ï¿½ï¿½ï¿½Íµï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½
+        CharacterSaveData testSave2 = new CharacterSaveData();
+        testSave2.ID = 4;
+        testSave2.Level = 5;
+        testSave2.IsEquiped = true;
+
+        SaveDataBase.Instance.SaveSingleData(testSave2);
+
+        CharacterSaveData testSave3 = new CharacterSaveData();
+        testSave3.ID = 6;
+        testSave3.Level = 7;
+        testSave3.IsEquiped = false;
+
+        SaveDataBase.Instance.SaveSingleData(testSave3);
+        
+        CharacterSaveData testSave4 = new CharacterSaveData();
+        testSave4.ID = 8;
+        testSave4.Level = 2;
+        testSave4.IsEquiped = false;
+
+        SaveDataBase.Instance.SaveSingleData(testSave4);
+
+        Debug.Log("ï¿½×½ï¿½Æ®ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ SaveData 4ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½!");
+
         ShowOwnedCharacters();
         //LoadAllCharacters();
         //LoadAllCharacters(characters(characterSave));
     }
 
-    // ³» ¼ÒÀ¯ Ä³¸¯ÅÍ(°¡Ã­ »Ì±â µîÀ¸·Î SaveDataBase¿¡ ÀúÀåµÈ)¸¸ º¸¿©ÁÜ
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ã­ ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ SaveDataBaseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void ShowOwnedCharacters()
     {
-        //  ÀúÀåµÈ(³»°¡ °¡Áø) Ä³¸¯ÅÍ ¼¼ÀÌºê µ¥ÀÌÅÍ ÀüºÎ °¡Á®¿È
+        //  ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         List<CharacterSaveData> ownedSaves = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
 
-        //  (Character, SaveData) ½ÖÀ¸·Î ¸¸µê
+        //  (Character, SaveData) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         List<(Character character, CharacterSaveData saveData)> ownedPairs = new List<(Character, CharacterSaveData)>();
         foreach (var save in ownedSaves)
         {
@@ -37,125 +69,126 @@ public class UICharacterSlotSpawner : MonoBehaviour
             if (so != null)
             {
                 ownedPairs.Add((so, save));
-                Debug.Log($"[ShowOwnedCharacters] ³» ¼ÒÀ¯ Ä³¸¯ÅÍ: {so.Name} (ID:{so.ID}) Lv.{save.Level} Grade:{so.Grade}");
+                Debug.Log($"[ShowOwnedCharacters] ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½: {so.Name} (ID:{so.ID}) Lv.{save.Level} Grade:{so.Grade}");
             }
             else
             {
-                Debug.LogWarning($"[ShowOwnedCharacters] ID {save.ID} Ä³¸¯ÅÍ SO¸¦ Ã£À» ¼ö ¾øÀ½!");
+                Debug.LogWarning($"[ShowOwnedCharacters] ID {save.ID} Ä³ï¿½ï¿½ï¿½ï¿½ SOï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
             }
         }
+
     }
-    public void SpawnFromSaveData(List<CharacterSaveData> saveDataList)     // ÀúÀåµÈ Ä³¸¯ÅÍ µ¥ÀÌÅÍ ±â¹ÝÀ¸·Î ½½·Ô »ý¼º
+    public void SpawnFromSaveData(List<CharacterSaveData> saveDataList)     // ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        ClearSlots();                                                            // ±âÁ¸ ½½·Ô Á¦°Å
+        ClearSlots();                                                            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        foreach (var saveData in saveDataList)                                   // ÀúÀåµÈ Ä³¸¯ÅÍ µ¥ÀÌÅÍ °¢°¢ È®ÀÎ
+        foreach (var saveData in saveDataList)                                   // ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         {
-            Character character = GlobalDataTable.Instance.character.GetCharToID(saveData.ID);  // ÀúÀåµÈ ID¸¦ ÅëÇØ SO º¯È¯
+            Character character = GlobalDataTable.Instance.character.GetCharToID(saveData.ID);  // ï¿½ï¿½ï¿½ï¿½ï¿½ IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ SO ï¿½ï¿½È¯
 
-            if (character == null)                                              // ID¿¡ ¸Â´Â Ä³¸¯ÅÍ°¡ ¾øÀ¸¸é ½ºÅµ
+            if (character == null)                                              // IDï¿½ï¿½ ï¿½Â´ï¿½ Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åµ
             {
-                Debug.Log($"[SlotSpawner] ID {saveData.ID}¿¡ ÇØ´çÇÏ´Â Ä³¸¯ÅÍ¸¦ Ã£À» ¼ö ¾øÀ½");
+                Debug.Log($"[SlotSpawner] ID {saveData.ID}ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 continue;
             }
 
-            Debug.Log($"[½½·Ô »ý¼º] {character.Grade} µî±ÞÀÇ ÇÁ¸®ÆÕÀ¸·Î ½½·Ô »ý¼º Áß...");
+            Debug.Log($"[ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½] {character.Grade} ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½...");
 
-            GameObject prefab = GetSlotPrefabByGrade(character.Grade);  // Èñ±Íµµ¿¡ ¸Â´Â ÇÁ¸®ÆÕ ¼±ÅÃ
-            GameObject slotObj = Instantiate(prefab, slotParent);       // ½½·Ô »ý¼º ¹× ¹èÄ¡
+            GameObject prefab = GetSlotPrefabByGrade(character.Grade);  // ï¿½ï¿½Íµï¿½ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            GameObject slotObj = Instantiate(prefab, slotParent);       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡
 
             CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
-            slot.SetSlot(saveData, character);                          // ½½·Ô¿¡ µ¥ÀÌÅÍ Àû¿ë
+            slot.SetSlot(saveData, character);                          // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            spawnedSlots.Add(slotObj);                                  // »ý¼º ½½·Ô ¸®½ºÆ®¿¡ Ãß°¡
+            spawnedSlots.Add(slotObj);                                  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
         }
     }
 
-    public void SpawnFromSortedList(List<(Character character, CharacterSaveData saveData)> sortedList)         // (Character, SaveData) ½Ö ¸®½ºÆ® ½½·Ô »ý¼º
+    public void SpawnFromSortedList(List<(Character character, CharacterSaveData saveData)> sortedList)         // (Character, SaveData) ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        ClearSlots(); // ±âÁ¸ ½½·Ô Á¦°Å
+        ClearSlots(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         foreach (var pair in sortedList)
         {
             Character character = pair.character;
             CharacterSaveData saveData = pair.saveData;
 
-            GameObject prefab = GetSlotPrefabByGrade(character.Grade); // µî±Þº° ÇÁ¸®ÆÕ ¼±ÅÃ
+            GameObject prefab = GetSlotPrefabByGrade(character.Grade); // ï¿½ï¿½Þºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             GameObject slotObj = Instantiate(prefab, slotParent);
 
             CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
-            slot.SetSlot(saveData, character); // ½½·Ô¿¡ µ¥ÀÌÅÍ ¼³Á¤
+            slot.SetSlot(saveData, character); // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            spawnedSlots.Add(slotObj); // ¸®½ºÆ®¿¡ Ãß°¡
+            spawnedSlots.Add(slotObj); // ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
         }
-        Debug.Log($"[SlotSpawner] {spawnedSlots.Count}°³ ½½·Ô »ý¼º ¿Ï·á (³» ¼ÒÀ¯ Ä³¸¯ÅÍ¸¸)");
+        Debug.Log($"[SlotSpawner] {spawnedSlots.Count}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ (ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½)");
     }
 
-    public void SpawnFromFilteredCharacters(List<Character> filteredList)       // ÇÊÅÍ/Á¤·ÄµÈ Character ¸®½ºÆ® ±â¹ÝÀ¸·Î »ý¼º
+    public void SpawnFromFilteredCharacters(List<Character> filteredList)       // ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½Äµï¿½ Character ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        ClearSlots();  // ±âÁ¸ ½½·Ô Á¦°Å
+        ClearSlots();  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 
-        List<CharacterSaveData> saveDataList = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);    // ÀúÀåµÈ Ä³¸¯ÅÍ ¼¼ÀÌºê µ¥ÀÌÅÍ¸¦ ¹Ì¸® °¡Á®¿À±â
+        List<CharacterSaveData> saveDataList = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);    // ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-        foreach (Character character in filteredList)                       // ÇÊÅÍ¸µµÈ Ä³¸¯ÅÍ ¸®½ºÆ® È®ÀÎ
+        foreach (Character character in filteredList)                       // ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® È®ï¿½ï¿½
         {
             CharacterSaveData saveData = null;
 
 
-            foreach (CharacterSaveData data in saveDataList)                //  Ä³¸¯ÅÍ ID¿¡ ÇØ´çÇÏ´Â ÀúÀå µ¥ÀÌÅÍ¸¦ Ã£±â
+            foreach (CharacterSaveData data in saveDataList)                //  Ä³ï¿½ï¿½ï¿½ï¿½ IDï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½ï¿½
             {
                 if (data.ID == character.ID)
                 {
                     saveData = data;
-                    break;                                                  // ¸ÅÄªµÇ¸é ·çÇÁ Á¾·á
+                    break;                                                  // ï¿½ï¿½Äªï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 }
             }
 
 
-            GameObject prefab = GetSlotPrefabByGrade(character.Grade);      // ½½·Ô ÇÁ¸®ÆÕ ¼±ÅÃ
-            GameObject slotObj = Instantiate(prefab, slotParent);           // ½½·Ô »ý¼º
+            GameObject prefab = GetSlotPrefabByGrade(character.Grade);      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            GameObject slotObj = Instantiate(prefab, slotParent);           // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
 
 
-            if (saveData != null)                                          // ÀúÀå µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é ÇÔ²² Àü´Þ, ¾øÀ¸¸é ±âº» Ä³¸¯ÅÍ¸¸
+            if (saveData != null)                                          // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº» Ä³ï¿½ï¿½ï¿½Í¸ï¿½
             {
                 slot.SetSlot(saveData, character);
             }
             else
             {
-                // slot.SetSlot(character);                            // ÀúÀå µ¥ÀÌÅÍ°¡ ¾øÀ» °æ¿ì Ä³¸¯ÅÍ¸¸ ¼³Á¤
+                // slot.SetSlot(character);                            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
 
-            spawnedSlots.Add(slotObj); // »ý¼ºµÈ ½½·Ô ÀúÀå
+            spawnedSlots.Add(slotObj); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
-    public void ClearSlots()                                                     // »ý¼ºµÈ ¸ðµç ½½·Ô Á¦°Å
+    public void ClearSlots()                                                     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         foreach (var obj in spawnedSlots)
         {
-            Destroy(obj);                                                   // ½½·Ô ¿ÀºêÁ§Æ® »èÁ¦
+            Destroy(obj);                                                   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         }
-        spawnedSlots.Clear();                                               // ¸®½ºÆ® ÃÊ±âÈ­
+        spawnedSlots.Clear();                                               // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
     }
 
-    private int EnumToIndex(Grade grade)                                   // Grade(enum)¸¦ int·Î º¯È¯
+    private int EnumToIndex(Grade grade)                                   // Grade(enum)ï¿½ï¿½ intï¿½ï¿½ ï¿½ï¿½È¯
     {
         return (int)grade;
     }
 
-    private GameObject GetSlotPrefabByGrade(Grade grade)                   // µî±Þ¿¡ µû¶ó ½½·Ô ÇÁ¸®ÆÕ ¹ÝÈ¯
+    private GameObject GetSlotPrefabByGrade(Grade grade)                   // ï¿½ï¿½Þ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
     {
-        int index = EnumToIndex(grade);                                    // enumÀ» ÀÎµ¦½º·Î º¯È¯
+        int index = EnumToIndex(grade);                                    // enumï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 
-        if (index < 0 || index >= slotPrefabs.Length)                     // ¹è¿­ ¹üÀ§¸¦ ¹þ¾î³ª¸é
+        if (index < 0 || index >= slotPrefabs.Length)                     // ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³ªï¿½ï¿½
         {
-            Debug.Log($"[½½·Ô ÇÁ¸®ÆÕ ¿À·ù] {grade}¿¡ ¸Â´Â ½½·ÔÀÌ ¾ø¾î¼­ ±âº» ½½·ÔÀ» ¹ÝÈ¯.");
-            return slotPrefabs[0];                                        // ±âº»½½·Ô º¯È¯
+            Debug.Log($"[ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½] {grade}ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î¼­ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯.");
+            return slotPrefabs[0];                                        // ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         }
 
-        return slotPrefabs[index];                                       // Á¤»ó ¹üÀ§¸é ÇØ´ç ÀÎµ¦½ºÀÇ ½½·Ô ÇÁ¸®ÆÕ ¹ÝÈ¯
+        return slotPrefabs[index];                                       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
     }
 
     public void LoadAllCharacters()
@@ -163,42 +196,42 @@ public class UICharacterSlotSpawner : MonoBehaviour
         Character[] allCharacters = Resources.LoadAll<Character>("Char");
         if (allCharacters.Length > 0)
         {
-            Debug.Log($"[Ä³¸¯ÅÍ ÀÚµ¿ ·Îµå] ÃÑ {allCharacters.Length}°³ Ä³¸¯ÅÍ ºÒ·¯¿È");
+            Debug.Log($"[Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½Îµï¿½] ï¿½ï¿½ {allCharacters.Length}ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½");
 
-            ClearSlots();                                                               // ±âÁ¸ ½½·Ô ÃÊ±âÈ­
+            ClearSlots();                                                               // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
             foreach (var character in allCharacters)
             {
-                // ÀúÀå µ¥ÀÌÅÍ°¡ ÀÖ´Â °æ¿ì °¡Á®¿À±â
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
                 CharacterSaveData saveData = SaveDataBase.Instance
                     .GetSaveInstanceList<CharacterSaveData>(SaveType.Character)
                     .Find(data => data.ID == character.ID);
 
-                // ½½·Ô »ý¼º
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-                GameObject prefab = GetSlotPrefabByGrade(character.Grade);               // Èñ±Íµµ¿¡ µû¶ó ÇÁ¸®ÆÕ ¼±ÅÃ
-                GameObject slotObj = Instantiate(prefab, slotParent);                   // ½½·Ô »ý¼º ¹× ºÎ¸ð ¼³Á¤
+                GameObject prefab = GetSlotPrefabByGrade(character.Grade);               // ï¿½ï¿½Íµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                GameObject slotObj = Instantiate(prefab, slotParent);                   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
                 CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
 
                 if (saveData != null)
                 {
-                    slot.SetSlot(saveData, character); // ÀúÀåµÈ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é ½½·Ô¿¡ ¼³Á¤
-                    Debug.Log($"[½½·Ô »ý¼º] ÀúÀåµÈ Ä³¸¯ÅÍ: {character.Name} (ID: {character.ID}) | Lv.{saveData.Level} | Grade: {character.Grade}");
+                    slot.SetSlot(saveData, character); // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    Debug.Log($"[ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½: {character.Name} (ID: {character.ID}) | Lv.{saveData.Level} | Grade: {character.Grade}");
                 }
                 else
                 {
-                    Debug.Log($"[½½·Ô »ý¼º] ÀúÀåµÇÁö ¾ÊÀº Ä³¸¯ÅÍ: {character.Name} (ID: {character.ID}) | Grade: {character.Grade}");
+                    Debug.Log($"[ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½: {character.Name} (ID: {character.ID}) | Grade: {character.Grade}");
                 }
 
                 spawnedSlots.Add(slotObj);
             }
-            Debug.Log($"[ÃÑ ½½·Ô ¼ö] {spawnedSlots.Count}°³ ½½·Ô »ý¼º ¿Ï·á");
+            Debug.Log($"[ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½] {spawnedSlots.Count}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
         }
         else
         {
-            Debug.Log("ÀúÀåµÈ Ä³¸¯ÅÍ°¡ ¾ø½À´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
     }
 
@@ -206,47 +239,47 @@ public class UICharacterSlotSpawner : MonoBehaviour
     //{
     //    if (allCharacters.Count > 0)
     //    {
-    //        Debug.Log($"[Ä³¸¯ÅÍ ÀÚµ¿ ·Îµå] ÃÑ {allCharacters.Count}°³ Ä³¸¯ÅÍ ºÒ·¯¿È");
+    //        Debug.Log($"[Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½Îµï¿½] ï¿½ï¿½ {allCharacters.Count}ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½");
 
-    //        ClearSlots();                                                               // ±âÁ¸ ½½·Ô ÃÊ±âÈ­
+    //        ClearSlots();                                                               // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
     //        foreach (var character in allCharacters)
     //        {
-    //            // ÀúÀå µ¥ÀÌÅÍ°¡ ÀÖ´Â °æ¿ì °¡Á®¿À±â
+    //            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     //            CharacterSaveData saveData = SaveDataBase.Instance
     //                .GetSaveInstanceList<CharacterSaveData>(SaveType.Character)
     //                .Find(data => data.ID == character.ID);
 
-    //            // ½½·Ô »ý¼º
+    //            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    //            GameObject prefab = GetSlotPrefabByGrade(character.Grade);               // Èñ±Íµµ¿¡ µû¶ó ÇÁ¸®ÆÕ ¼±ÅÃ
-    //            GameObject slotObj = Instantiate(prefab, slotParent);                   // ½½·Ô »ý¼º ¹× ºÎ¸ð ¼³Á¤
+    //            GameObject prefab = GetSlotPrefabByGrade(character.Grade);               // ï¿½ï¿½Íµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    //            GameObject slotObj = Instantiate(prefab, slotParent);                   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     //            CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
 
     //            if (saveData != null)
-    //                slot.SetSlot(saveData, character);                                  // ÀúÀåµÈ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é Àû¿ë
+    //                slot.SetSlot(saveData, character);                                  // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    //            spawnedSlots.Add(slotObj);                                              // ÃßÀû ¸®½ºÆ®¿¡ Ãß°¡
+    //            spawnedSlots.Add(slotObj);                                              // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
     //        }
     //    }
     //    else
     //    {
-    //        Debug.Log("ÀúÀåµÈ Ä³¸¯ÅÍ°¡ ¾ø½À´Ï´Ù.");
+    //        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
     //    }
     //}
 
 
-    public List<Character> characters(List<CharacterSaveData> characterSaveDatas)   //CharacterSaveData ¸®½ºÆ®¸¦ CharacterScriptObject·Î ¹Ù²Þ
+    public List<Character> characters(List<CharacterSaveData> characterSaveDatas)   //CharacterSaveData ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ CharacterScriptObjectï¿½ï¿½ ï¿½Ù²ï¿½
     {
-        List<Character> characters = new List<Character>();                         // º¯È¯µÈ Ä³¸¯ÅÍ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÒ ¸®½ºÆ®
+        List<Character> characters = new List<Character>();                         // ï¿½ï¿½È¯ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 
-        foreach (CharacterSaveData characterSaveData in characterSaveDatas)         // ¹ÞÀº ¼¼ÀÌºê µ¥ÀÌÅÍ¸¦ ÇÏ³ª¾¿ ¼øÈ¸ÇÏ¸é¼­
+        foreach (CharacterSaveData characterSaveData in characterSaveDatas)         // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ï¸é¼­
         {
-            characters.Add(GlobalDataTable.Instance.character.GetCharToID(characterSaveData.ID));   // ID¸¦ ±âÁØÀ¸·Î Ä³¸¯ÅÍ µ¥ÀÌÅÍ Å×ÀÌºí¿¡¼­ ScriptableObject¸¦ Ã£¾Æ Ãß°¡
+            characters.Add(GlobalDataTable.Instance.character.GetCharToID(characterSaveData.ID));   // IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ ScriptableObjectï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ß°ï¿½
         }
-        return characters;                                                                          // ¿Ï¼ºµÈ ¸®½ºÆ® ¹ÝÈ¯
+        return characters;                                                                          // ï¿½Ï¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯
     }
    
 }
