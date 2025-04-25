@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemManager : Singleton<ItemManager>, ISavable
+public class ItemManager : Singleton<ItemManager>
 {
     public Dictionary<int, ItemSavaData> ItemDatasSaveDic = new Dictionary<int, ItemSavaData>();
 
@@ -121,13 +121,8 @@ public class ItemManager : Singleton<ItemManager>, ISavable
 
     public void SetitemCount(int ID, int Amount)
     {
-        var item = itemDatas.Find(x => x.ID == ID);
+        var item = ItemDatasSaveDic[ID];
         item.Value += Amount;
-    }
-
-    public void Save()
-    {
-        throw new System.NotImplementedException();
     }
 
     //public void Save()
