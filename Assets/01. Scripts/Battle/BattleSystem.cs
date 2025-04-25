@@ -55,13 +55,12 @@ public class BattleSystem : MonoBehaviour
         CommandController = GetComponent<CommandController>();
         CharacterSelector = GetComponent<CharacterSelector>();
         CharacterSelector.battleSystem = this;
-        BattleUI.BattleSystem = this;
-        BattleUI.CharacterUI.BattleSystem = this;
+        SetUI();
     }
 
     void Start()
     {
-        StartBattle();
+        //StartBattle();
     }
 
     void Update()
@@ -96,8 +95,13 @@ public class BattleSystem : MonoBehaviour
     {
         GameObject canvas = GameObject.Find("Canvas");
         GameObject uiPrefab = Instantiate(Resources.Load("UI/Battle/BattleUI")) as GameObject;
+        uiPrefab.transform.SetParent(canvas.transform, false);
+        BattleUI = uiPrefab.GetComponent<BattleUI>();
+        BattleUI.BattleSystem = this;
+        BattleUI.CharacterUI.BattleSystem = this;
         StageManager.Instance.EndUISet();
     }
+
     private void AttackPhase()
     {
         CommandController.ExecuteCommand();
