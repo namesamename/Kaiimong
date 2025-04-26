@@ -24,7 +24,7 @@ public class UICharacterSort : MonoBehaviour
         currentSortType = SortType.Level;
         UpdateLevelSortText();
         UpdateRaritySortText();
-        ApplySort(); // 처음엔 레벨 내림차순으로 정렬
+       // ApplySort(); // 처음엔 레벨 내림차순으로 정렬
     }
 
     // 캐릭터/세이브 데이터 쌍 리스트 정렬(레벨)
@@ -100,7 +100,36 @@ public class UICharacterSort : MonoBehaviour
     // 정렬 & 슬롯 재생성
     private void ApplySort()
     {
-        //  저장된 캐릭터 데이터 가져오기 (장착 캐릭터만)
+       
+        
+        //전체 데이터 가져오기
+        
+        // ↓ 장착 여부 필터 제거: 전체 리스트 사용
+        var allSave = SaveDataBase.Instance
+            .GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
+
+        // (Character, SaveData) 쌍으로 만듦
+        var pairs = allSave
+            .Select(d => (GlobalDataTable.Instance.character.GetCharToID(d.ID), d))
+            .Where(p => p.Item1 != null)
+            .ToList();
+
+        // 정렬
+        List<(Character, CharacterSaveData)> sorted = currentSortType == SortType.Level
+            ? SortByLevel(pairs)
+            : SortByRarity(pairs);
+
+        // 스포너에 넘겨서 **전체** 재생성
+        var spawner = FindObjectOfType<UICharacterSlotSpawner>();
+        if (spawner != null)
+            spawner.SpawnFromSortedList(sorted);
+        else
+            Debug.LogWarning("[ApplySort] 슬롯 생성기를 찾을 수 없습니다.");
+
+
+
+        /*
+         * //  저장된 캐릭터 데이터 가져오기 (장착 캐릭터만)
         List<CharacterSaveData> allSave = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
         List<CharacterSaveData> equipped = allSave.Where(data => data.IsEquiped).ToList();
 
@@ -129,6 +158,6 @@ public class UICharacterSort : MonoBehaviour
         else
         {
             Debug.LogWarning("[ApplySort] 슬롯 생성기 없음!");
-        }
+        }*/
     }
 }
