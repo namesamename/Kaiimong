@@ -151,7 +151,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
     {
         int index = EnumToIndex(grade);                                    // enum을 인덱스로 변환
 
-        if (index < 0 || index >= slotPrefabs.Length)                     // 배열 범위를 벗어나면
+        if (index < 0 || index >= slotPrefabs.Length || slotPrefabs[index] == null)                     // 배열 범위를 벗어나면
         {
             Debug.Log($"[슬롯 프리팹 오류] {grade}에 맞는 슬롯이 없어서 기본 슬롯을 반환.");
             return slotPrefabs[0];                                        // 기본슬롯 변환
@@ -163,55 +163,65 @@ public class UICharacterSlotSpawner : MonoBehaviour
     public void LoadAllCharacters()
     {
         Character[] allCharacters = Resources.LoadAll<Character>("Char");
-        if (allCharacters.Length > 0)
-        {
-            Debug.Log($"[캐릭터 자동 로드] 총 {allCharacters.Length}개 캐릭터 불러옴");
-
-            var sorted = allCharacters.OrderBy(character => character.ID).ToArray();
-
-            Debug.Log($"[캐릭터 SO 리스트] {string.Join(", ", sorted.Select(c => c.ID))}");
-            Debug.Log($"[캐릭터 SO 개수] {sorted.Length}");
-
-            ClearSlots();
-
-            // 저장 데이터 전부 미리 가져오기 (1회만)
-            var saveDataList = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
-
-            foreach (var character in sorted)   // <-- sorted 
-            {
-                // 저장 데이터 찾기
-                CharacterSaveData saveData = saveDataList.Find(data => data.ID == character.ID);
-
-                if (saveData == null)
-                {
-                    // 저장 데이터가 없으면 새로 생성해서 저장
-                    saveData = new CharacterSaveData
-                    {
-                        ID = character.ID,
-                        Level = 1,           // 기본값(필요시 수정)
-                        IsEquiped = false,   // 기본값
-                    };
-                    SaveDataBase.Instance.SaveSingleData(saveData);  // 저장
-                    Debug.Log($"[세이브 데이터 추가] {character.Name} (ID: {character.ID}) Lv.1 저장됨");
-                }
-
-                // 슬롯 프리팹 선택 및 생성
-                GameObject prefab = GetSlotPrefabByGrade(character.Grade);
-                GameObject slotObj = Instantiate(prefab, slotParent);
-
-                CharacterSlot slot = slotObj.GetComponent<CharacterSlot>();
-
-                slot.SetSlot(saveData, character);
-                spawnedSlots.Add(slotObj);
-
-                Debug.Log($"[슬롯 생성] {character.Name} (ID: {character.ID}) | Lv.{saveData.Level} | Grade: {character.Grade}");
-            }
-            Debug.Log($"[총 슬롯 수] {spawnedSlots.Count}개 슬롯 생성 완료");
-        }
-        else
+        if (allCharacters.Length == 0)
         {
             Debug.Log("저장된 캐릭터가 없습니다.");
+            return;
         }
+
+        Debug.Log($"[캐릭터 자동 로드] 총 {allCharacters.Length}개 캐릭터 불러옴");
+
+        var sorted = allCharacters
+            .OrderBy(c => c.ID)
+            .ToArray();
+
+        Debug.Log($"[캐릭터 SO 리스트] {string.Join(", ", sorted.Select(c => c.ID))}");
+        Debug.Log($"[캐릭터 SO 개수] {sorted.Length}");
+
+        ClearSlots();
+
+        // 세이브 데이터 미리 가져오기
+        var saveDataList = SaveDataBase.Instance
+            .GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
+
+        foreach (var character in sorted)
+        {
+            // 저장 데이터 찾기
+            var saveData = saveDataList
+                .Find(data => data.ID == character.ID);
+
+            if (saveData == null)
+            {
+                // 없으면 새로 생성
+                saveData = new CharacterSaveData
+                {
+                    ID = character.ID,
+                    Level = 1,
+                    IsEquiped = false
+                };
+                SaveDataBase.Instance.SaveSingleData(saveData);
+                Debug.Log($"[세이브 데이터 추가] {character.Name} (ID: {character.ID}) Lv.1 저장됨");
+            }
+
+            // 슬롯 생성
+            var prefab = GetSlotPrefabByGrade(character.Grade);
+            var slotObj = Instantiate(prefab, slotParent);
+            // --- 디버그: 생성 직후 Child Count 찍기 ---
+            Debug.Log($"[디버그] 슬롯 생성 직후 Content 자식 개수: {slotParent.childCount}");
+
+            var slot = slotObj.GetComponent<CharacterSlot>();
+            slot.SetSlot(saveData, character);
+
+            spawnedSlots.Add(slotObj);
+
+            Debug.Log($"[슬롯 생성] {character.Name} (ID: {character.ID}) | Lv.{saveData.Level} | Grade: {character.Grade}");
+        }
+
+        Debug.Log($"[총 슬롯 수] {spawnedSlots.Count}개 슬롯 생성 완료");
+
+        // --- 전체 캐릭터 데이터(12명) 저장 ---
+        SaveDataBase.Instance.SaveAll();
+        Debug.Log("[SlotSpawner] 전체 캐릭터 데이터 저장 완료");
     }
     //public void LoadAllCharacters(List<Character> allCharacters)
     //{
