@@ -16,20 +16,8 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public ChapterCategoryDataTable ChapterCategory;
 
 
-    private void Awake()
+    public void Initialize()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
         character = new CharacterDataTable();
         skill = new SkillDataTable();
         currency = new CurrencyDataTable();
@@ -48,8 +36,6 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         Chapter.Initialize();
         Item.Initialize();
         ChapterCategory.Initialize();
-
     }
-
 
 }

@@ -27,27 +27,13 @@ public class StageManager : Singleton<StageManager>
     public Action OnWin;
     public Action OnLose;
 
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
+ 
 
+    public void Initialize()
+    {
         SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, SetBattleScene);
     }
 
-    void Start()
-    {
-    }
 
     private void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
     {

@@ -14,20 +14,9 @@ public class ChapterManager : Singleton<ChapterManager>
 
     public Action OnChapterOpen;
 
-    private void Awake()
+
+    public void Initailize()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
         ChapterSaveData = new ChapterSaveData();
         StageSaveData = new StageSaveData();
 
@@ -92,9 +81,15 @@ public class ChapterManager : Singleton<ChapterManager>
         SaveDataBase.Instance.SaveSingleData(StageSaveList[1]);
 
 
-        SceneLoader.Instance.RegisterSceneAction(SceneState.StageSelectScene, SetChapter);
+        
     }
 
+    public void RegisterChapter(Chapter chapter)
+    {
+        CurChapter = chapter;
+        SceneLoader.Instance.RegisterSceneAction(SceneState.StageSelectScene, SetChapter);
+    }
+  
     private void SetChapter()
     {
         GameObject obj = Instantiate(Resources.Load(CurChapter.ContentPrefabPath) as GameObject);

@@ -3,49 +3,6 @@ using System.Collections.Generic;
 public class ItemManager : Singleton<ItemManager>
 {
     public Dictionary<int, ItemSavaData> ItemDatasSaveDic = new Dictionary<int, ItemSavaData>();
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-
-        // 모든 아이템 초기화
-        for (int i = 1; i < GlobalDataTable.Instance.Item.ItemDic.Count + 1; i++)
-        {
-            int itemID = GlobalDataTable.Instance.Item.ItemDic[i].ID;
-            ItemSavaData newItemData = new ItemSavaData();
-            newItemData.ID = itemID;
-
-            // 저장된 데이터가 있는지 확인
-            var foundData = SaveDataBase.Instance.GetSaveInstanceList<ItemSavaData>(SaveType.Item);
-            if (foundData != null && foundData.Find(x => x.ID == itemID) != null)
-            {
-                // 저장된 데이터 로드
-                var savedData = foundData.Find(x => x.ID == itemID);
-                newItemData.Value = savedData.Value;
-            }
-            else
-            {
-                // 새 데이터 생성
-                newItemData.Savetype = SaveType.Item;
-                SaveDataBase.Instance.SaveSingleData(newItemData);
-            }
-
-            // 사전에 저장
-            ItemDatasSaveDic[itemID] = newItemData;
-        }
-    }
-
     public ItemSavaData GetItemSaveData(int itemID)
     {
         if (ItemDatasSaveDic.ContainsKey(itemID))
@@ -121,6 +78,35 @@ public class ItemManager : Singleton<ItemManager>
         var item = ItemDatasSaveDic[ID];
         item.Value += Amount;
         SaveSingleData(ID);
+    }
+
+    public void Initialize()
+    {
+        // 모든 아이템 초기화
+        for (int i = 1; i < GlobalDataTable.Instance.Item.ItemDic.Count + 1; i++)
+        {
+            int itemID = GlobalDataTable.Instance.Item.ItemDic[i].ID;
+            ItemSavaData newItemData = new ItemSavaData();
+            newItemData.ID = itemID;
+
+            // 저장된 데이터가 있는지 확인
+            var foundData = SaveDataBase.Instance.GetSaveInstanceList<ItemSavaData>(SaveType.Item);
+            if (foundData != null && foundData.Find(x => x.ID == itemID) != null)
+            {
+                // 저장된 데이터 로드
+                var savedData = foundData.Find(x => x.ID == itemID);
+                newItemData.Value = savedData.Value;
+            }
+            else
+            {
+                // 새 데이터 생성
+                newItemData.Savetype = SaveType.Item;
+                SaveDataBase.Instance.SaveSingleData(newItemData);
+            }
+
+            // 사전에 저장
+            ItemDatasSaveDic[itemID] = newItemData;
+        }
     }
 
     //public void Save()

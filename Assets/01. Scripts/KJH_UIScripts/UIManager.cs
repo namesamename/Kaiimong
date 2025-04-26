@@ -8,20 +8,18 @@ using JetBrains.Annotations;
 
 public class UIManager : Singleton<UIManager>
 {
-    protected void Awake()
+
+
+    List<GameObject> POPS = new List<GameObject>();
+    public void Initialize()
     {
-        if (_instance == null)
+        GameObject[] POPs = Resources.LoadAll<GameObject>("Popups");
+
+        for (int i = 0; i < POPs.Length; i++) 
         {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
+            POPS.Add(POPs[i]);
         }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
+
     }
 
     public T ShowPopup<T>() where T : UIPopup
@@ -31,8 +29,10 @@ public class UIManager : Singleton<UIManager>
 
     public UIPopup ShowPopup(string popupName)
     {
-        var obj = Resources.Load($"Popups/{popupName}", typeof(GameObject)) as GameObject;
-        if (!obj)
+        
+        var obj = POPS.Find(x => x.name == popupName);
+        //var obj = Resources.Load($"Popups/{popupName}", typeof(GameObject)) as GameObject;
+        if (obj == null)
         {
             Debug.LogWarning($"Failed to ShowPopup({popupName})");
             return null;

@@ -44,12 +44,12 @@ public class CharacterInfoHUD : MonoBehaviour
             case CharacterInfoType.Back:
                 Button Backbutton = GetComponentInChildren<Button>();
                 Backbutton.onClick.RemoveAllListeners();
-                Backbutton.onClick.AddListener(() => SceneManager.LoadScene("ChracterSelect"));
+                Backbutton.onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
                 break;
             case CharacterInfoType.Main:
                 Button button = GetComponentInChildren<Button>();
                 button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() => SceneManager.LoadScene("LobbyScene"));
+                button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
                 break;
             case CharacterInfoType.Skin:
                 

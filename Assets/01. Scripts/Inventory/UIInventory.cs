@@ -54,7 +54,7 @@ public class UIInventory : MonoBehaviour
     {
         OpenItemInventory();                         // 시작 시 기본으로 아이템 탭 열기
 
-        button[0].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
+        button[0].onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
         button[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
     }
 

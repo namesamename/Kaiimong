@@ -22,24 +22,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
 
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-        LevelUpSystem.Init();
-    }
-
-
+  
     private void Update()
     {
         if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
@@ -60,6 +43,24 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public void InitialIze()
     {
         HaveData();
+        StartCoroutine(StartStamina());
+ 
+    }
+
+
+    public IEnumerator StartStamina()
+    {
+        ActSO = GlobalDataTable.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
+        yield return new WaitUntil(() => ActSO != null);
+        if (PlayerPrefs.HasKey(LastTimeExitKey))
+        {
+            Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
+            DateTime last = DateTime.Parse(PlayerPrefs.GetString(LastTimeExitKey));
+            DateTime Utc = last.ToUniversalTime();
+            TimeSpan span = DateTime.UtcNow - Utc;
+            offTime = (float)span.TotalSeconds;
+            DisableAutoCharge(offTime);
+        }
     }
     private void HaveData()
     {
@@ -99,21 +100,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         }
 
     }
-    private void Start()
-    {
-        InitialIze();
-        ActSO = GlobalDataTable.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
-        if (PlayerPrefs.HasKey(LastTimeExitKey))
-        {
-            Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
-            DateTime last = DateTime.Parse(PlayerPrefs.GetString(LastTimeExitKey));
-            DateTime Utc = last.ToUniversalTime();
-            TimeSpan span = DateTime.UtcNow - Utc;
-            offTime = (float)span.TotalSeconds;
-            DisableAutoCharge(offTime);
-        }
-       
-    }
+
     public void DisableAutoCharge(float offTime)
     {
         CurrencySaveDic[CurrencyType.Activity] += (int)(offTime / ActSO.AutoRecoveryPerMinute);

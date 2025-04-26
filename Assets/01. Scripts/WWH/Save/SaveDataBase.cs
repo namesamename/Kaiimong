@@ -23,27 +23,14 @@ public class SaveDataBase : Singleton<SaveDataBase>
     /// <param name="Id"></param>
     /// <returns></returns>
     /// 
-    private void Awake()
+    public void Initialize()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-
         Stopwatch sw = new Stopwatch();
         sw.Start();
 
         List<List<SaveInstance>> saveInstances = new List<List<SaveInstance>>();
         saveInstances = LoadAll();
-     
+
         foreach (SaveType type in Enum.GetValues(typeof(SaveType)))
         {
             SaveDic[type] = new List<SaveInstance>();
@@ -52,21 +39,28 @@ public class SaveDataBase : Singleton<SaveDataBase>
         {
             foreach (SaveInstance instance in instanceList)
             {
+                if(instance == null)
+                {
+                    UnityEngine.Debug.Log($"null");
+                }
                 SaveType type = instance.Savetype;
 
                 if (!SaveDic.ContainsKey(type))
                 {
                     SaveDic[type] = new List<SaveInstance>();
                 }
-            
+
                 SaveDic[type].Add(instance);
             }
         }
 
         sw.Stop();
         UnityEngine.Debug.Log($"SaveDic 정리에 걸린 시간: {sw.ElapsedMilliseconds}ms");
-    
     }
+
+
+    
+
 
     public T GetSaveDataToID<T>(SaveType type, int Id ) where T :SaveInstance
     {

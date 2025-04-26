@@ -40,8 +40,13 @@ public class ChapterSlotUI : MonoBehaviour
         ChapterSaveData chapterData = ChapterManager.Instance.GetChapterSaveData(Chapter.ID);
         if (chapterData != null && chapterData.ChapterOpen)
         {
-            ChapterManager.Instance.CurChapter = Chapter;
+
+            ChapterManager.Instance.RegisterChapter(Chapter);
             SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+        }
+        else
+        {
+            Debug.Log("Null");
         }
     }
 }

@@ -23,8 +23,10 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
     {
         for (int i = 0; i < Buttons.Length; i++) 
         {
-            Buttons[0].onClick.RemoveAllListeners();
+            Buttons[i].onClick.RemoveAllListeners();
         }
+
+        BTNSet();
 
     }
     public void BTNSet()
@@ -34,18 +36,18 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
         Buttons[1].onClick.AddListener(Destroy);
         //개별 조건을 달아준다
 
-        if(SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, 0).Value > 0)
-        {
-            Buttons[2].onClick.AddListener(SmallStaminaUse);
-        }
-        if (SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, 0).Value > 0)
-        { 
-            Buttons[3].onClick.AddListener(BigStaminaUse);
-        }
-        if (SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, 0).Value > 0)
-        { 
-            Buttons[4].onClick.AddListener(CrystalStaminaUse);
-        }
+        //if(SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, 0).Value > 0)
+        //{
+        //    Buttons[2].onClick.AddListener(SmallStaminaUse);
+        //}
+        //if (SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, 0).Value > 0)
+        //{ 
+        //    Buttons[3].onClick.AddListener(BigStaminaUse);
+        //}
+        //if (SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, 0).Value > 0)
+        //{ 
+        //    Buttons[4].onClick.AddListener(CrystalStaminaUse);
+        //}
     }
 
     public void ImageSET()

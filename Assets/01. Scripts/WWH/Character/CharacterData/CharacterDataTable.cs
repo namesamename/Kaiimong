@@ -18,7 +18,7 @@ public class CharacterDataTable
         }
         foreach (Enemy enemy in enemies)
         {
-            enemies[enemy.ID] = enemy;
+            enemyDic[enemy.ID] = enemy;
         }
     }
    
