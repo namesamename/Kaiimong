@@ -1,4 +1,5 @@
 
+using System.Data.Common;
 using UnityEngine;
 
 
@@ -12,6 +13,8 @@ public enum CharacterType
 public abstract class CharacterCarrier : MonoBehaviour 
 {
 
+
+    int ID = 0;
     [HideInInspector]
     public CharacterSkillBook skillBook;
     [HideInInspector]
@@ -32,6 +35,16 @@ public abstract class CharacterCarrier : MonoBehaviour
 
 
     public abstract void Initialize(int id, int level = -1);
+
+
+    public void SetID(int ID)
+    {
+        this.ID = ID; 
+    }
+    public int GetID()
+    {
+        return ID;
+    }
 
     //    private void Start()
     //    {
