@@ -16,7 +16,7 @@ public enum SceneState
     BattleScene,
     YBK_Inventory,
     CharacterInfo,
-    ChracterSelect,
+    YBK_Character,
     ChapterScene,
     MessageScene,
     QuestScene,

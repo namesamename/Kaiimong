@@ -771,9 +771,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3b0e2608ff7b9439a3730450a1b172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 6209840717037934884}
-  levelText: {fileID: 4053009482923164228}
-  equippedMark: {fileID: 0}
 --- !u!1 &4041404756532964972
 GameObject:
   m_ObjectHideFlags: 0

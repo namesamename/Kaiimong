@@ -9,43 +9,90 @@ public class UICharacterSlotSpawner : MonoBehaviour
 {
 
 
-    GameObject SlotPrefabs;
-
-    List<CharacterSaveData> HaveCharacters;      //캐릭터 목록
-
+    public GameObject SlotPrefabs;
     private List<GameObject> spawnedSlots = new List<GameObject>(); // 생성된 슬롯들 추적
 
-    List<CharacterSaveData> characterSave = new List<CharacterSaveData>();     //CharacterSaveData 타입 담은 리스트
 
+    public bool ISGradeOrder = false;
+    public bool ISLevelOrder = false;  
 
     private void Awake()
     {
         SlotPrefabs = Resources.Load<GameObject>("CharacterSlot/CharacterSelectSlot");
     }
 
-    private void Start()
+
+   
+    public void GradeDescendingFilter(List<CharacterSaveData> saveDatas)
     {
-        SaveDataSet();
+
+        List<CharacterSaveData> EndList = new List<CharacterSaveData>();
+
+        List<Character> CharacterList = new List<Character>();
+        if (saveDatas != null)
+        {
+
+            foreach (CharacterSaveData item in saveDatas)
+            {
+
+                var CharacterData = GlobalDataTable.Instance.character.GetCharToID(item.ID);
+                CharacterList.Add(CharacterData);
+            }
+
+            List<Character> GradeSortList = CharacterList.OrderByDescending(item => item.Grade).
+                ThenByDescending(Item => SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, Item.ID).Level).ToList();
+
+            foreach (Character grade in GradeSortList)
+            {
+                var Characterdata = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, grade.ID);
+                EndList.Add(Characterdata);
+            }
+            ISGradeOrder = !ISGradeOrder;
+            SpawnFromSaveData(EndList);
+        }
+        else
+        {
+            Debug.Log("null");
+        }
+  
     }
 
-  
-    public void SaveDataSet()
+    public void LevelFilter(List<CharacterSaveData> saveDatas)
     {
 
-        List<CharacterSaveData> ownedSaves = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
-
-        foreach(CharacterSaveData data in ownedSaves)
+        if (saveDatas != null)
         {
-            if(data.IsEquiped)
-            {
-                HaveCharacters.Add(data);
-            }
+            List<CharacterSaveData> GradeSortList = saveDatas.OrderBy(item => item.Level).ThenBy(item => GlobalDataTable.Instance.character.GetCharToID(item.ID).Grade).ToList();
+
+            ISLevelOrder = !ISLevelOrder;
+            SpawnFromSaveData(GradeSortList);
+ 
+        }
+        else
+        {
+            Debug.Log("null");
         }
     }
 
+    public void  LevelDescendingFilter(List<CharacterSaveData> saveDatas)
+    {
+
+        if (saveDatas != null)
+        {
+            List<CharacterSaveData> GradeSortList = saveDatas.OrderByDescending(item => item.Level).ThenByDescending(item => GlobalDataTable.Instance.character.GetCharToID(item.ID).Grade).ToList();
+            ISLevelOrder = !ISLevelOrder;
+            SpawnFromSaveData(GradeSortList);
+
+        }
+        else
+        {
+            Debug.Log("null");
+        }
+
+    }
 
 
-    public List<CharacterSaveData> GradeFilter(List<CharacterSaveData> saveDatas)
+    public void GradeFilter(List<CharacterSaveData> saveDatas)
     {
 
         List<CharacterSaveData> EndList = new List<CharacterSaveData>();
@@ -54,33 +101,29 @@ public class UICharacterSlotSpawner : MonoBehaviour
         if (saveDatas != null)
         {
    
-            foreach (CharacterSaveData item in saveDatas)
+            foreach (CharacterSaveData Save in saveDatas)
             {
 
-                var CharacterData = GlobalDataTable.Instance.character.GetCharToID(item.ID);
+                var CharacterData = GlobalDataTable.Instance.character.GetCharToID(Save.ID);
                 CharacterList.Add(CharacterData);
             }
 
-            List<Character> GradeSortList = CharacterList.OrderBy(item => item.Grade).ToList();
+            List<Character> GradeSortList = CharacterList.OrderBy(item => item.Grade).
+                ThenBy(Item => SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, Item.ID).Level).ToList();
 
             foreach (Character grade in GradeSortList)
             {
                 var Characterdata = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, grade.ID);
                 EndList.Add(Characterdata);
             }
-          
-
-            return EndList;
+            ISGradeOrder = !ISGradeOrder;
+            SpawnFromSaveData(EndList);
         }
         else
         {
-            return new List<CharacterSaveData>();
+            Debug.Log("null");
         }
     }
-
-
-
-
 
     public void SpawnFromSaveData(List<CharacterSaveData> saveDataList)     // 저장된 캐릭터 데이터 기반으로 슬롯 생성
     {

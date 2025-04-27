@@ -97,7 +97,7 @@ public class ItemManager : Singleton<ItemManager>
                 // 저장된 데이터 로드
                 var savedData = foundData.Find(x => x.ID == itemID);
                 newItemData.Value = savedData.Value;
-                Debug.Log("item data OK");
+         
             }
             else
             {

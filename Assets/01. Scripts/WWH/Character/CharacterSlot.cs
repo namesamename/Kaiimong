@@ -10,9 +10,10 @@ public class CharacterSlot : MonoBehaviour
     [Header("UI Reference")]
     TextMeshProUGUI[] textMeshPros;
     Image[] images;
-
     Button button;
 
+    CharacterSaveData characterSaveData;
+    Character Character;
 
     private void Awake()
     {
@@ -28,22 +29,31 @@ public class CharacterSlot : MonoBehaviour
 
     public void SetSlot(CharacterSaveData saveData, Character character)                
     {
-
+        characterSaveData = saveData;
+        Character = character;
         SetSlotColor(saveData, character);
         textMeshPros[1].text = character.Name;                // 캐릭터 이름 표시
         textMeshPros[0].text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
 
         button.onClick.RemoveAllListeners();
 
-        GlobalDataTable.Instance.DataCarrier.SetSave(saveData);
-        GlobalDataTable.Instance.DataCarrier.SetCharacter(character);
 
 
-        button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo));
+
+        button.onClick.AddListener(ChangeScene);
 
         Debug.Log($"[SetSlot] 슬롯에 적용: {character.Name} (ID:{character.ID}) Lv.{saveData.Level} Grade:{character.Grade}");
 
        
+    }
+
+
+    public void ChangeScene()
+    {
+
+        GlobalDataTable.Instance.DataCarrier.SetSave(characterSaveData);
+        GlobalDataTable.Instance.DataCarrier.SetCharacter(Character);
+        SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo);
     }
 
 
@@ -72,7 +82,8 @@ public class CharacterSlot : MonoBehaviour
                 images[0].color = new Color(34f / 255f, 111f / 255f, 236f / 255f);
                 break;
         }
-        //images[0].enabled = true;
+        images[0].enabled = true;
+        images[1].enabled = true;
         //images[1].sprite = Resources.Load<Sprite>(character.icon);
 
         for (int i = 0;i < saveData.Recognition; i++) 

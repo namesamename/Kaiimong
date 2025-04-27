@@ -151,7 +151,7 @@ public class UICharacterSort : MonoBehaviour
         }
 
         // 4) 스포너에 넘겨서 슬롯 재생성
-        spawner.SpawnFromSortedList(pairs);
+        //spawner.SpawnFromSortedList(pairs);
 
         //항상 장착된 캐릭터만 정렬하고 보여주기
         /*    private void ApplySort()
