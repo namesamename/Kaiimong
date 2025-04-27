@@ -7,7 +7,7 @@ using UnityEngine.TextCore.Text;
 
 public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
 {
-    public List<CharacterType> selectedAttributes = new();    // 선택된 속성 리스트
+    public List<CharacterAttackType> selectedAttributes = new();    // 선택된 속성 리스트
     public List<Grade> selectedGrades = new();                // 선택된 희귀도 리스트
 
     // 특정 조건(속성/등급)에 맞는 캐릭터 리스트 반환

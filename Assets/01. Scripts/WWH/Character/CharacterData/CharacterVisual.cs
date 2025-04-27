@@ -25,17 +25,27 @@ public class CharacterVisual : MonoBehaviour
     public GameObject SelectEffect;
     public float AppearAnimationLength;
 
-    public void Initialize()
+    public void Initialize(int ID , CharacterType character )
     {
         animator = GetComponentInParent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
 
-
-        //icon = Resources.Load<Sprite>($"Icon/{GetComponentInParent<CharacterCarrier>().CharacterSaveData.ID}");
-        //BattleSprite = Resources.Load<Sprite>($"BattleSprite/{GetComponentInParent<CharacterCarrier>().CharacterSaveData.ID}");
-        //Illustration = Resources.Load<Sprite>($"Illustration/{GetComponentInParent<CharacterCarrier>().CharacterSaveData.ID}");
-
+        switch (character)
+        {
+            case CharacterType.Friend:
+                //icon = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                //BattleSprite = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                //Illustration = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                break;
+            case CharacterType.Enemy:
+                //icon = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                //BattleSprite = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                //Illustration = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                break;
+        }
 
         // 애니메이션 길이 계산
         if (animator != null)
@@ -45,7 +55,8 @@ public class CharacterVisual : MonoBehaviour
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             AppearAnimationLength = stateInfo.length;
             //Debug.Log(AppearAnimationLength);
-            animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
+            //여기도 수정
+            //animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
             //StartCoroutine(PlayAni());
         }
     }

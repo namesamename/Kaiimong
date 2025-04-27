@@ -53,9 +53,9 @@ public class CharacterDataTable
     {
         GameObject CharacterObject = Object.Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
 
-        if(CharacterObject.GetComponent<CharacterCarrier>() == null) 
-        {   CharacterObject.AddComponent<CharacterCarrier>();}
-        CharacterObject.GetComponent<CharacterCarrier>().Initialize(character.ID);
+        if(CharacterObject.GetComponent<FriendCarrier>() == null) 
+        {   CharacterObject.AddComponent<FriendCarrier>();}
+        CharacterObject.GetComponent<FriendCarrier>().Initialize(character.ID);
         return CharacterObject;
 
     }
@@ -66,13 +66,13 @@ public class CharacterDataTable
         return Character;
     }
 
-    public GameObject CharacterSummonToIDandLevel(int ID, int Level)
-    {
-        Character character = GetCharToID(ID);
-        GameObject game = CharacterInstanceSummon(character, Vector3.zero);
-        game.GetComponent<CharacterCarrier>().SetstatToLevel(ID, Level);
-        return game;
-    }
+    //public GameObject CharacterSummonToIDandLevel(int ID, int Level)
+    //{
+    //    Character character = GetCharToID(ID);
+    //    GameObject game = CharacterInstanceSummon(character, Vector3.zero);
+    //    game.GetComponent<FriendCarrier>().SetstatToLevel(ID, Level);
+    //    return game;
+    //}
 
     public GameObject EnemyInstanceSummon(Enemy character, int level,Vector3 pos, Transform parent = null)
     {

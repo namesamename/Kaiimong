@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ItemManager : Singleton<ItemManager>
 {
@@ -96,12 +97,14 @@ public class ItemManager : Singleton<ItemManager>
                 // 저장된 데이터 로드
                 var savedData = foundData.Find(x => x.ID == itemID);
                 newItemData.Value = savedData.Value;
+                Debug.Log("item data OK");
             }
             else
             {
                 // 새 데이터 생성
                 newItemData.Savetype = SaveType.Item;
                 SaveDataBase.Instance.SaveSingleData(newItemData);
+                Debug.Log("item data NO");
             }
 
             // 사전에 저장
