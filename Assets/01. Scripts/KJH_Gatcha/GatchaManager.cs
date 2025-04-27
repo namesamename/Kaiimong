@@ -27,7 +27,7 @@ public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입 구분, 
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else if (Instance != this)
         {

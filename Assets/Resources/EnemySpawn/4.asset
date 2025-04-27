@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 4
   Stage: 2
-  Round: 1
-  Set: 3
+  Round: 2
+  Set: 1
   EnemyID: 1
   Count: 1
   Level: 2
