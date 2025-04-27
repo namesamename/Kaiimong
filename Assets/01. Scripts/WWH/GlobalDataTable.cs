@@ -12,6 +12,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public ChapterDataTable Chapter;
     public ItemDataTable Item;
     public UpGradeTable Upgrade;
+    public EnemySpawnDataTable EnemySpawn;
 
     public ChapterCategoryDataTable ChapterCategory;
 
@@ -27,6 +28,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         Item = new ItemDataTable();
         ChapterCategory = new ChapterCategoryDataTable();
         Upgrade = new UpGradeTable();
+        EnemySpawn = new EnemySpawnDataTable();
 
         Upgrade.Initialize();
         character.Initialize();
@@ -36,6 +38,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         Chapter.Initialize();
         Item.Initialize();
         ChapterCategory.Initialize();
+        EnemySpawn.Initialize();
     }
 
 }

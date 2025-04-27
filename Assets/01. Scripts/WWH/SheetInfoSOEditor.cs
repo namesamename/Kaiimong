@@ -131,6 +131,10 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "Enem/";
         }
+        else if (SheetId == "EnemySpawn")
+        {
+            Directory = "EnemySpawn/";
+        }
 
     }
 
