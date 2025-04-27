@@ -2,13 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
 public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
 {
+    [Header("필터 패널")]
+    [SerializeField] private GameObject filterPanel;       // 에디터에서 연결할 FilterPanel
+
+    [Header("필터 상태")]
     public List<CharacterType> selectedAttributes = new();    // 선택된 속성 리스트
     public List<Grade> selectedGrades = new();                // 선택된 희귀도 리스트
+
+
+
+    private void Start()
+    {
+        // 시작할 때 필터 패널 숨김
+        if (filterPanel != null)
+            filterPanel.SetActive(false);
+    }
+
+   // Filter 버튼 클릭 시 호출
+    public void OnClickToggleFilterPanel()
+    {
+        if (filterPanel == null) return;
+        filterPanel.SetActive(!filterPanel.activeSelf);
+    }
+
+
 
     // 특정 조건(속성/등급)에 맞는 캐릭터 리스트 반환
     public List<Character> FilterCharacters(List<Character> allCharacters)
@@ -70,9 +93,65 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
         }
     }
 
+    // 체크박스 토글로 속성 선택/해제될 때 호출
+    
+    public void OnAttributeToggle(CharacterType type, bool isOn)
+    {
+        if (isOn)
+        {
+            if (!selectedAttributes.Contains(type))
+                selectedAttributes.Add(type);
+        }
+        else
+        {
+            selectedAttributes.Remove(type);
+        }
+    }
+
+    // 체크박스 토글로 등급 선택/해제될 때 호출
+    public void OnGradeToggle(Grade grade, bool isOn)
+    {
+        if (isOn)
+        {
+            if (!selectedGrades.Contains(grade))
+                selectedGrades.Add(grade);
+        }
+        else
+        {
+            selectedGrades.Remove(grade);
+        }
+    }
 
 
+    // Spirit 토글 바인딩용
+    public void OnToggleSpirit(bool isOn)
+    {
+        OnAttributeToggle(CharacterType.Spirit, isOn);
+    }
 
+    // Physics 토글 바인딩용
+    public void OnTogglePhysics(bool isOn)
+    {
+        OnAttributeToggle(CharacterType.Physics, isOn);
+    }
+
+    // S 등급 토글 바인딩용
+    public void OnToggleGradeS(bool isOn)
+    {
+        OnGradeToggle(Grade.S, isOn);
+    }
+
+    // A 등급 토글 바인딩용
+    public void OnToggleGradeA(bool isOn)
+    {
+        OnGradeToggle(Grade.A, isOn);
+    }
+
+    // B 등급 토글 바인딩용
+    public void OnToggleGradeB(bool isOn)
+    {
+        OnGradeToggle(Grade.B, isOn);
+    }
 
 
 
