@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class ItemEditorWindow : EditorWindow
 {
+    private int Value;
+    private int ID;
+    List<SaveInstance> instances = new List<SaveInstance>();
+    List<ItemSavaData> items = new List<ItemSavaData>();
 
     [MenuItem("TestWindow/Item %g")]
     public static void EditorShow()
@@ -16,6 +20,13 @@ public class ItemEditorWindow : EditorWindow
 
     private void OnGUI()
     {
+        instances= GameSaveSystem.Load(SaveType.Item);
+        foreach (var item in instances) 
+        {
+            items.Add((ItemSavaData)item);
+        }
+  
+
         if (GUI.Button(new Rect(0, 0, 250, 100), "Creat new Item SaveData"))
         {
             List<SaveInstance> instances = new List<SaveInstance>();
@@ -32,6 +43,27 @@ public class ItemEditorWindow : EditorWindow
             }
             GameSaveSystem.Save(SaveType.Item, instances);
         }
+
+        GUILayout.Space(100);
+        GUILayout.Label("Item Setting", EditorStyles.boldLabel);
+        ID = EditorGUILayout.IntField("ItemID", ID);
+        Value = EditorGUILayout.IntField("Value", Value);
+        if (GUI.Button(new Rect(0, 160, 250, 100), "Set SaveData"))
+        {
+            ItemSavaData savaData = items.Find(X => X.ID == ID);
+            savaData.Value = Value;
+        }
+
+
+        if (GUI.Button(new Rect(0, 260, 250, 100), "Delete SaveAll"))
+        {
+            GameSaveSystem.Delete(SaveType.Item);
+        }
+
+
+
+
+
     }
 
 }
