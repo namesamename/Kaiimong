@@ -15,7 +15,7 @@ public class GatchaHistoryManager : MonoBehaviour
         {
             Instance = this;
             LoadHistoryFromFile(); //JSON 파일에서 로드 시도
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {

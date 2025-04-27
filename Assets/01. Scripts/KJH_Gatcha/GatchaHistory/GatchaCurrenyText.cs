@@ -22,8 +22,8 @@ public class GatchaCurrenyText : MonoBehaviour
         ticket = CurrencyManager.Instance.GetCurrency(CurrencyType.Gacha);
         crystal = CurrencyManager.Instance.GetCurrency(CurrencyType.Dia);
 
-        tickettxt.text = ticket.ToString();
-        crystaltxt.text = crystal.ToString();
+        tickettxt.text = "Ticket : " + ticket.ToString();
+        crystaltxt.text ="Crystal : " + crystal.ToString();
     }
 
 }

@@ -10,7 +10,6 @@ public class UIHistoryItem : MonoBehaviour
 
     public void Setup(GatchaHistoryEntry entry)
     {
-        Debug.Log($"[DEBUG] History Entry Setup - {entry.characterName}, {entry.grade}, {entry.gatchaType}, {entry.timestamp}");
         characterName.text = entry.characterName;
         grade.text = entry.grade.ToString();
         type.text = entry.gatchaType.ToString();
