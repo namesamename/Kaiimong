@@ -13,6 +13,17 @@ public class ItemInfoPopup : UIPopup
     [SerializeField] private TextMeshProUGUI itemNameText;         // 이름
     [SerializeField] private TextMeshProUGUI itemDescriptionText;  // 설명
     [SerializeField] private TextMeshProUGUI itemObtainText;       // 획득 경로
+
+    Button Button;
+    private void Awake()
+    {
+        Button = GetComponentInChildren<Button>();
+    }
+    private void Start()
+    {
+        Button.onClick.RemoveAllListeners();
+        Button.onClick.AddListener(Destroy);
+    }
     public void Show(ItemData data, int count)
     {
         //itemImage.sprite = Resources.Load<Sprite>(data.IconPath);                              // 아이콘 이미지 설정

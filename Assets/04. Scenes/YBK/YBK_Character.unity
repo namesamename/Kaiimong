@@ -292,7 +292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0.000091553}
+  m_AnchoredPosition: {x: -0.000061035156, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &96839781
@@ -1321,7 +1321,7 @@ MonoBehaviour:
   isLevelAscending: 0
   isGradeAscending: 0
   levelSortButtonText: {fileID: 16658209}
-  raritySortButtonText: {fileID: 1508470782}
+  gradeSortButtonText: {fileID: 1508470782}
 --- !u!1 &1155378535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2571,7 +2571,7 @@ MonoBehaviour:
   isLevelAscending: 0
   isGradeAscending: 0
   levelSortButtonText: {fileID: 16658209}
-  raritySortButtonText: {fileID: 1508470782}
+  gradeSortButtonText: {fileID: 1508470782}
 --- !u!1 &1936573187
 GameObject:
   m_ObjectHideFlags: 0

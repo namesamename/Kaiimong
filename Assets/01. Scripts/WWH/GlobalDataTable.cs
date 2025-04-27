@@ -7,38 +7,30 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public CharacterDataTable character; 
     public SkillDataTable skill;
     public CurrencyDataTable currency;
-    public DataCarrier PartyID;
+    public DataCarrier DataCarrier;
     public StageDataTable Stage;
     public ChapterDataTable Chapter;
-
     public ItemDataTable Item;
+    public UpGradeTable Upgrade;
+    public EnemySpawnDataTable EnemySpawn;
 
     public ChapterCategoryDataTable ChapterCategory;
 
 
-    private void Awake()
+    public void Initialize()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
         character = new CharacterDataTable();
         skill = new SkillDataTable();
         currency = new CurrencyDataTable();
-        PartyID = new DataCarrier();
+        DataCarrier = new DataCarrier();
         Stage = new StageDataTable();
         Chapter = new ChapterDataTable();
         Item = new ItemDataTable();
         ChapterCategory = new ChapterCategoryDataTable();
+        Upgrade = new UpGradeTable();
+        EnemySpawn = new EnemySpawnDataTable();
 
+        Upgrade.Initialize();
         character.Initialize();
         skill.Initialize();
         currency.Initialize();
@@ -46,8 +38,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         Chapter.Initialize();
         Item.Initialize();
         ChapterCategory.Initialize();
-
+        EnemySpawn.Initialize();
     }
-
 
 }

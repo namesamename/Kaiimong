@@ -170,7 +170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 1442174721517083513}
   levelText: {fileID: 5674342953730100692}
-  attributeIcon: {fileID: 8383937614699120586}
   equippedMark: {fileID: 8602133506817083774}
 --- !u!1 &2415594133967520965
 GameObject:

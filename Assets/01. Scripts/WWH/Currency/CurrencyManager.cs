@@ -22,24 +22,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
 
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-        LevelUpSystem.Init();
-    }
-
-
+  
     private void Update()
     {
         if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
@@ -51,7 +34,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 {
                     TimeWhenNextCharge = ActSO.AutoRecoveryPerMinute - Interval;
                     Interval -= ActSO.AutoRecoveryPerMinute;
-                    CurrencySaveDic[CurrencyType.Activity] += 1;
+                    SetCurrency(CurrencyType.Activity, 1);
                     Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
                 }
             }
@@ -60,6 +43,24 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public void InitialIze()
     {
         HaveData();
+        StartCoroutine(StartStamina());
+ 
+    }
+
+
+    public IEnumerator StartStamina()
+    {
+        ActSO = GlobalDataTable.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
+        yield return new WaitUntil(() => ActSO != null);
+        if (PlayerPrefs.HasKey(LastTimeExitKey))
+        {
+            Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
+            DateTime last = DateTime.Parse(PlayerPrefs.GetString(LastTimeExitKey));
+            DateTime Utc = last.ToUniversalTime();
+            TimeSpan span = DateTime.UtcNow - Utc;
+            offTime = (float)span.TotalSeconds;
+            DisableAutoCharge(offTime);
+        }
     }
     private void HaveData()
     {
@@ -76,6 +77,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 Savetype = SaveType.Currency,
                 UserLevel = 1,
                 UserEXP = 0,
+                CurrentStaminaMax = 160,
                 ActivityValue = 100,
                 GachaValue = 10000,
                 GoldValue = 1000,
@@ -98,21 +100,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         }
 
     }
-    private void Start()
-    {
-        InitialIze();
-        ActSO = GlobalDataTable.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
-        if (PlayerPrefs.HasKey(LastTimeExitKey))
-        {
-            Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
-            DateTime last = DateTime.Parse(PlayerPrefs.GetString(LastTimeExitKey));
-            DateTime Utc = last.ToUniversalTime();
-            TimeSpan span = DateTime.UtcNow - Utc;
-            offTime = (float)span.TotalSeconds;
-            DisableAutoCharge(offTime);
-        }
-       
-    }
+
     public void DisableAutoCharge(float offTime)
     {
         CurrencySaveDic[CurrencyType.Activity] += (int)(offTime / ActSO.AutoRecoveryPerMinute);
@@ -126,20 +114,53 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         return DicToSaveData();
     }
-    public void SetCurrency(CurrencyType currency, int amount)
+
+    public void HealStamina(int amount)
     {
-        if (CurrencySaveDic[currency] + amount > GlobalDataTable.Instance.currency.CurrencyDic[currency].MaxCount )
+        if (CurrencySaveDic[CurrencyType.Activity] + amount > GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount)
         {
-            CurrencySaveDic[currency] = GlobalDataTable.Instance.currency.CurrencyDic[currency].MaxCount;
-       
-        }
-        else if(CurrencySaveDic[currency] + amount < 0)
-        {
-            CurrencySaveDic[currency] = 0;
+            CurrencySaveDic[CurrencyType.Activity] = GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount;
         }
         else
         {
-            CurrencySaveDic[currency] += amount;
+            CurrencySaveDic[CurrencyType.Activity] += amount;
+        }
+  
+    }
+    public void SetCurrency(CurrencyType currency, int amount)
+    {
+        if (currency != CurrencyType.Activity)
+        {
+
+            if (CurrencySaveDic[currency] + amount > GlobalDataTable.Instance.currency.CurrencyDic[currency].MaxCount)
+            {
+                CurrencySaveDic[currency] = GlobalDataTable.Instance.currency.CurrencyDic[currency].MaxCount;
+
+            }
+            else if (CurrencySaveDic[currency] + amount < 0)
+            {
+                CurrencySaveDic[currency] = 0;
+            }
+            else
+            {
+                CurrencySaveDic[currency] += amount;
+            }
+        }
+        else
+        {
+            if (CurrencySaveDic[currency] + amount > data.CurrentStaminaMax)
+            {
+                CurrencySaveDic[currency] = data.CurrentStaminaMax;
+
+            }
+            else if (CurrencySaveDic[currency] + amount < 0)
+            {
+                CurrencySaveDic[currency] = 0;
+            }
+            else
+            {
+                CurrencySaveDic[currency] += amount;
+            }
         }
         Save();
     }
@@ -162,6 +183,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         CurrencySaveDic[CurrencyType.Dia] = data.DIAValue;
         CurrencySaveDic[CurrencyType.Activity] = data.ActivityValue;
         CurrencySaveDic[CurrencyType.CharacterEXP] = data.CharacterEXP;
+        CurrencySaveDic[CurrencyType.CurMaxStamina] = data.CurrentStaminaMax;
     }
 
     public CurrencySaveData DicToSaveData()

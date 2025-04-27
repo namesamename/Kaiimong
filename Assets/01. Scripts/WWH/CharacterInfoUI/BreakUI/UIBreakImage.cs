@@ -19,7 +19,7 @@ public class UIBreakImage : MonoBehaviour, ISetPOPUp
         //Images[0].sprite = Resources.Load<Sprite>(ImsiGameManager.Instance.GetCharacter().chracterpath);
         //Images[0].sprite = Resources.Load<Sprite>( GlobalDataTable.Instance.Item.GetItemDataToID(ImsiGameManager.Instance.GetCharacter().CharacterItem).IconPath);
 
-        ItemSavaData itemSava = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, ImsiGameManager.Instance.GetCharacter().CharacterItem);
+        ItemSavaData itemSava = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, GlobalDataTable.Instance.DataCarrier.GetCharacter().CharacterItem);
 
         if(itemSava == null)
         {

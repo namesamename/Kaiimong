@@ -13,11 +13,12 @@ public class StageManager : Singleton<StageManager>
     public List<CharacterCarrier> Players;
     public List<CharacterCarrier> Enemies;
     public int CurrentRound;
-    public int CurrentRoundEnemyCount;
+    public int CurrentRoundEnemyCount; //없애도 될수도
 
     [Header("Reward and Returns")]
     public float returnActivityPoints;
     public int userExp;
+    public int playerLove;
 
     [Header("StageUI")]
     public WinUI WinUI;
@@ -26,27 +27,13 @@ public class StageManager : Singleton<StageManager>
     public Action OnWin;
     public Action OnLose;
 
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
 
+
+    public void Initialize()
+    {
         SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, SetBattleScene);
     }
 
-    void Start()
-    {
-    }
 
     private void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
     {
@@ -59,42 +46,54 @@ public class StageManager : Singleton<StageManager>
     {
         GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
         background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
-        CreateEnemy();
         battleSystem.Players = new List<CharacterCarrier>(Players);
         CurrentRound = 1;
         //반환 행동력
         returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
         //플레이어 경험치
-        userExp = CurrentStage.ActivityPoint * 100;
+        userExp = CurrentStage.ActivityPoint * 20;
+        playerLove = CurrentStage.ActivityPoint;
     }
 
     //CurrentStage.EnemiesID로 적 객체 생성 후 리스트업하기
     private void CreateEnemy()
     {
-        for (int i = 0; i < CurrentStage.EnemiesID.Length; i++)
+        List<EnemySpawn> curEnemyList = new List<EnemySpawn>(GlobalDataTable.Instance.EnemySpawn.EnemySpawnDic[CurrentStage.ID]);
+        foreach (EnemySpawn enemy in curEnemyList)
         {
-            GameObject enemy = GlobalDataTable.Instance.character.CharacterSummonToIDandLevel(CurrentStage.EnemiesID[i], CurrentStage.EnemyLevel);
-            Enemies.Add(enemy.GetComponent<CharacterCarrier>());
+            if (enemy.Round == CurrentRound)
+            {
+                Enemy spawnEnemy = GlobalDataTable.Instance.character.enemyDic[enemy.EnemyID];
+                for (int i = 0; i < enemy.Count; i++)
+                {
+                    GameObject newEnemy = GlobalDataTable.Instance.character.EnemyInstanceSummon(spawnEnemy, enemy.Level, Vector3.zero);
+                    Enemies.Add(newEnemy.GetComponent<CharacterCarrier>());
+                }
+            }
         }
     }
 
     public void StageStart()
     {
+        CreateEnemy();
         if (CurrentRound <= CurrentStage.Rounds)
         {
-            if (CurrentRound == 1)
-            {
-                CurrentRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
-                battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(0, CurrentRoundEnemyCount));
-                battleSystem.StartBattle();
-            }
-            else
-            {
-                int nextRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
-                battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(CurrentRoundEnemyCount, nextRoundEnemyCount));
-                CurrentRoundEnemyCount = nextRoundEnemyCount;
-                battleSystem.SetBattle();
-            }
+            battleSystem.Enemies.Clear();
+            battleSystem.Enemies = new List<CharacterCarrier>(Enemies);
+            battleSystem.SetBattle();
+            //if (CurrentRound == 1)
+            //{
+            //    CurrentRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
+            //    battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(0, CurrentRoundEnemyCount));
+            //    battleSystem.StartBattle();
+            //}
+            //else
+            //{
+            //    int nextRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
+            //    battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(CurrentRoundEnemyCount, nextRoundEnemyCount));
+            //    CurrentRoundEnemyCount = nextRoundEnemyCount;
+            //    battleSystem.SetBattle();
+            //}
         }
         else return;
     }
@@ -112,36 +111,44 @@ public class StageManager : Singleton<StageManager>
         WinUI.gameObject.SetActive(true);
         OnWin?.Invoke();
         OnStageWin();
-        StartCoroutine(BeforeSceneChangeDelay(WinUI.CanClick));
+        StartCoroutine(BeforeWinChangeDelay());
     }
 
     private void OnStageWin()
     {
-        //경험치, 골드,유료재화 지급
+        //경험치, 골드,유료재화 지급 
         CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
         //아이템
+        //for(int i = 0; i < CurrentStage.ItemID.Length; i++)
+        //{
+        //    int itemID = CurrentStage.ItemID[i];
+        //    ItemSavaData itemSaveData = ItemManager.Instance.GetItemSaveData(itemID);
 
-        //호감도 지급
 
+        //}
+        //호감도 지급      
+        foreach (CharacterCarrier player in Players)
+        {
+            CharacterManager.Instance.CharacterSaveDic[player.GetID()].Love += playerLove;
+            //player.CharacterSaveData.Love += playerLove;
+            //저장
+            CharacterManager.Instance.SaveSingleData(player.GetID());
+            //player.SaveData();
+        }
         //스테이지정보 업데이트
-        SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.ID).ClearedStage = true;
-        //스테이지 저장
-        SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.ID));
+        ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;
         for (int i = 0; i < CurrentStage.UnlockID.Length; i++)
         {
-            SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.UnlockID[i]).StageOpen = true;
-            //해금된 스테이지 정보 저장
-            SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<StageSaveData>(SaveType.Stage, CurrentStage.UnlockID[i]));
+            ChapterManager.Instance.GetStageSaveData(CurrentStage.UnlockID[i]).StageOpen = true;
         }
         for (int i = 0; i < CurrentStage.UnlockChapterID.Length; i++)
         {
-            SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, CurrentStage.UnlockChapterID[i]).ChapterOpen = true;
-            //해금된 챕터 저장
-            SaveDataBase.Instance.SaveSingleData(SaveDataBase.Instance.GetSaveDataToID<ChapterSaveData>(SaveType.Chapter, CurrentStage.UnlockChapterID[i]));
+            ChapterManager.Instance.GetChapterSaveData(CurrentStage.UnlockChapterID[i]).ChapterOpen = true;
         }
-
+        //저장
+        ChapterManager.Instance.SaveAllData();
     }
 
     public void LoseStage()
@@ -149,7 +156,7 @@ public class StageManager : Singleton<StageManager>
         LoseUI.gameObject.SetActive(true);
         OnLose?.Invoke();
         OnStageLose();
-        StartCoroutine(BeforeSceneChangeDelay(LoseUI.CanClick));
+        StartCoroutine(BeforeLoseChangeDelay());
     }
 
     private void OnStageLose()
@@ -158,11 +165,18 @@ public class StageManager : Singleton<StageManager>
         CurrencyManager.Instance.SetCurrency(CurrencyType.Activity, (int)returnActivityPoints);
     }
 
-    private IEnumerator BeforeSceneChangeDelay(bool canClick)
+    private IEnumerator BeforeLoseChangeDelay()
     {
-        yield return new WaitForSeconds(1f);
+        LoseUI.CanClick = false;
+        yield return new WaitForSecondsRealtime(1f);
+        LoseUI.CanClick = true;
+    }
 
-        canClick = true;
+    private IEnumerator BeforeWinChangeDelay()
+    {
+        WinUI.CanClick = false;
+        yield return new WaitForSecondsRealtime(1f);
+        WinUI.CanClick = true;
     }
 
     private void UnSubscribeAllAction()

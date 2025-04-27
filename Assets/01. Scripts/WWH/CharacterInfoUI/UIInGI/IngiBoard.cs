@@ -13,30 +13,20 @@ public class IngiBoard : MonoBehaviour, ISetPOPUp
 
     public void Initialize()
     {
-        int Rec = ImsiGameManager.Instance.GetCharacterSaveData().Recognition;
-        int Id = ImsiGameManager.Instance.GetCharacterSaveData().ID;
-
-        //Textmesh[0].text = Rec.ToString();
-        //if (Rec == 0)
-        //{
-        //    Textmesh[1].text = GlobalDataTable.Instance.skill.GetReco(Id, Rec).Name;
-        //    Textmesh[2].text = GlobalDataTable.Instance.skill.GetReco(Id, Rec).Des;
-        //}
-        //else if (Rec == 1)
-        //{
-        //    Textmesh[1].text = GlobalDataTable.Instance.skill.GetReco(Id, Rec).Name;
-        //    Textmesh[2].text = GlobalDataTable.Instance.skill.GetReco(Id, Rec).Des;
-        //}
-        //else if(Rec == 2)
-        //{
-        //    Textmesh[1].text = GlobalDataTable.Instance.skill.GetReco(Id, Rec).Name;
-        //    Textmesh[2].text = GlobalDataTable.Instance.skill.GetReco(Id, Rec).Des;
-        //}
-        //else if(Rec == 3)
-        //{
-        //    Textmesh[1].text = GlobalDataTable.Instance.skill.GetReco(Id, Rec).Name;
-        //    Textmesh[2].text = GlobalDataTable.Instance.skill.GetReco(Id, Rec).Des;
-        //}
+        int Rec = GlobalDataTable.Instance.DataCarrier.GetSave().Recognition;
+        int Id = GlobalDataTable.Instance.DataCarrier.GetSave().ID;
+        List<CharacterUpgradeTable> list = GlobalDataTable.Instance.Upgrade.GetRecoList(GlobalDataTable.Instance.DataCarrier.GetSave().ID);
+        Textmesh[0].text = Rec.ToString();
+        SetText(Rec, list);
     }
+
+
+    public void SetText(int Reco, List<CharacterUpgradeTable> list)
+    {
+        Textmesh[1].text = list[Reco].Name;
+        Textmesh[2].text = list[Reco].Des;
+
+    }
+
 
 }

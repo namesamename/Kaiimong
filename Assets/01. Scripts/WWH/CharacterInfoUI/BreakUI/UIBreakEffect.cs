@@ -15,7 +15,6 @@ public class UIBreakEffect : MonoBehaviour, ISetPOPUp
     {
         Images = GetComponentsInChildren<Image>();
         Texts = GetComponentsInChildren<TextMeshProUGUI>();
-        
     }
     public void Initialize()
     {
@@ -28,7 +27,7 @@ public class UIBreakEffect : MonoBehaviour, ISetPOPUp
         {
             Texts[i].text = i.ToString();
         }
-        for (int i = Texts.Length-1; i >= ImsiGameManager.Instance.GetCharacterSaveData().Recognition; i--) 
+        for (int i = Texts.Length-1; i >= GlobalDataTable.Instance.DataCarrier.GetSave().Recognition; i--) 
         {
             Texts[i].color = Color.gray;
         }

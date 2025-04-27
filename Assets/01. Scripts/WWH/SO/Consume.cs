@@ -6,6 +6,6 @@ public class Consume : SO
 {
     public string Name;
     public EConsumableType Type;
-    public float Value;
+    public int Value;
  
 }
