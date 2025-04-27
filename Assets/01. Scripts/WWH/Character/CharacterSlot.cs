@@ -8,90 +8,88 @@ using UnityEngine.UI;
 public class CharacterSlot : MonoBehaviour
 {
     [Header("UI Reference")]
-    [SerializeField] private TextMeshProUGUI nameText;           // 캐릭터 이름 텍스트
-    [SerializeField] private TextMeshProUGUI levelText;          // 캐릭터 레벨 텍스트
- // [SerializeField] private Image attributeIcon;                // 속성 아이콘 이미지
-    [SerializeField] private GameObject equippedMark;            // 장착 중 마크
+    TextMeshProUGUI[] textMeshPros;
+    Image[] images;
 
-    private CharacterSaveData characterData;                     // 캐릭터 저장 데이터 참조
-    private Character characterSO;
-    private int characterID;                                     // 캐릭터 고유 ID 저장
+    Button button;
 
-    public CharacterSaveData GetCharacterData() => characterData;
-    public int GetCharacterID() => characterSO != null ? characterSO.ID : -1;
 
-    public void SetSlot(CharacterSaveData saveData, Character character)                // 슬롯에 캐릭터 정보를 설정하는 함수
+    private void Awake()
     {
-        characterData = saveData;                      // 저장된 레벨, 장착 여부, ID 저장
-        characterSO = character;
-        RefreshUI();
-        characterID = saveData.ID;                     // 캐릭터 ID 저장
+        textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
+        images = GetComponentsInChildren<Image>();
 
-        nameText.text = character.Name;                // 캐릭터 이름 표시
-        levelText.text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
+        button = GetComponentInChildren<Button>();
+    }
+
+                                 // 캐릭터 고유 ID 저장
+
+
+
+    public void SetSlot(CharacterSaveData saveData, Character character)                
+    {
+
+        SetSlotColor(saveData, character);
+        textMeshPros[1].text = character.Name;                // 캐릭터 이름 표시
+        textMeshPros[0].text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
+
+        button.onClick.RemoveAllListeners();
+
+        GlobalDataTable.Instance.DataCarrier.SetSave(saveData);
+        GlobalDataTable.Instance.DataCarrier.SetCharacter(character);
+
+
+        button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo));
 
         Debug.Log($"[SetSlot] 슬롯에 적용: {character.Name} (ID:{character.ID}) Lv.{saveData.Level} Grade:{character.Grade}");
-       /* if (attributeIcon != null && character.AttributeIcon!= null)
+
+       
+    }
+
+
+
+    public void SetSlotColor(CharacterSaveData saveData, Character character)
+    {
+
+        for (int i = 0; i < images.Length; i++) 
         {
-            attributeIcon.sprite = character.AttributeIcon; // 속성 아이콘 표시
+            images[i].enabled = false;
         }
-        else
-        {
-            Debug.LogWarning($"[CharacterSlot] 속성 아이콘이 없습니다: ID {characterID}");
-        }*/
 
-        if (equippedMark != null)
+
+        switch (character.Grade)
         {
-            equippedMark.SetActive(saveData.IsEquiped); // 장착 여부에 따라 마크 활성화
+            case Grade.S:
+                images[0].enabled = true;
+                images[0].color = new Color(229f / 255f, 156f / 255f, 42f / 255f);
+                break;
+            case Grade.A:
+                images[0].enabled = true;
+                images[0].color = new Color(164f / 255f, 68f / 255f, 217f / 255f);
+                break;
+            case Grade.B:
+                images[0].enabled = true;
+                images[0].color = new Color(34f / 255f, 111f / 255f, 236f / 255f);
+                break;
         }
-    }
+        //images[0].enabled = true;
+        //images[1].sprite = Resources.Load<Sprite>(character.icon);
 
-
-    public CharacterSaveData GetCharacterData()                 // 슬롯에 연결된 캐릭터 데이터를 외부에서 사용할 수 있게 반환
-    {
-        return characterData;
-    }
-
-
-    public int GetCharacterID()                                 // 슬롯의 캐릭터 고유 ID 반환
-    {
-        return characterID;
-    }
-
-    public void SetSlotFromGacha(Character character)
-    {
-        characterSO = character;
-
-        // 새 세이브데이터 생성 (초기 레벨·장착 여부 지정)
-        characterData = new CharacterSaveData
+        for (int i = 0;i < saveData.Recognition; i++) 
         {
-            ID = characterSO.ID,
-            Level = 1,
-            IsEquiped = false,
-        };
+            images[i+2].enabled = true;
+        }
+        for (int i = 0; i < saveData.Necessity; i++)
+        {
+            images[i + 5].enabled = true;
+        }
 
-        // DataBase에 저장
-     //   SaveDataBase.Instance.AddOrUpdateSave(characterData);
 
-        // 3) UI 갱신
-        RefreshUI();
-        Debug.Log($"[Gacha] 신규 저장 생성 & 슬롯 세팅: {characterSO.Name} (ID:{characterSO.ID})");
+
     }
 
-    private void RefreshUI()
-    {
-        if (characterSO == null || characterData == null) return;
 
-        // 이름·레벨
-        nameText.text = characterSO.Name;
-        levelText.text = $"Lv. {characterData.Level}";
 
-        // 속성 아이콘
-      //  if (attributeIcon != null && characterSO.AttributeIcon != null)
-      //      attributeIcon.sprite = characterSO.AttributeIcon;;
 
-        // 장착 마크
-        if (equippedMark != null)
-            equippedMark.SetActive(characterData.IsEquiped);
-    }
+
 }

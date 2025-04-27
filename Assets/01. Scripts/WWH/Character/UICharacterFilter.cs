@@ -14,7 +14,7 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
     [Header("필터 상태")]
     public List<CharacterType> selectedAttributes = new();    // 선택된 속성 리스트
 
-    public List<CharacterType> selectedAttack
+    public List<CharacterType> selectedAttack;
 
     public List<Grade> selectedGrades = new();                // 선택된 희귀도 리스트
 
