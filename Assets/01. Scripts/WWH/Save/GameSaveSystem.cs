@@ -73,8 +73,27 @@ public static class GameSaveSystem
         } 
     }
 
-   
-  
+    public static void Delete(SaveType saveType)
+    {
+        try
+        {
+            string path = Path.Combine(Application.persistentDataPath, $"JsonData/{saveType}/{saveType}Database.json");
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+
+            }
+            else
+            {
+                Debug.Log($"삭제할 파일이 존재하지 않습니다: {path}");
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.LogException(exception);
+        }
+    }
+
 
     [System.Serializable]
     public class SaveDataWrapper
