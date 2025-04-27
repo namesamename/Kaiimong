@@ -180,7 +180,6 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
         mgr.crystal -= needCrystal;
         curManager.SetCurrency(CurrencyType.Gacha, -useTicket);
         curManager.SetCurrency(CurrencyType.Dia, -needCrystal);
-
         for (int i = 0; i < session.drawCount; i++)
         {
             Grade grade;
@@ -226,6 +225,11 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
         curManager.Save();
         PlayerPrefs.SetInt("GatchaDrawCount", mgr.gatchaDrawCount);
         PlayerPrefs.Save();
+        var currencyText = FindObjectOfType<GatchaCurrenyText>();
+        if (currencyText != null)
+        {
+            currencyText.SettingCurrency();
+        }
 
         return results;
     }
