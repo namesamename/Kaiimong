@@ -141,29 +141,33 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log(IsSeted);
-        //나중에 바꿔야함 
-        if (IsSeted)
-        {
-            if (eventData.button == PointerEventData.InputButton.Left)
+      
+            //나중에 바꿔야함 
+            if (IsSeted )
             {
-                Debug.Log("asd");
-                GlobalDataTable.Instance.DataCarrier.RemoveIndex(Index);
-                IsSeted = false;
-                battleSlots.SlotIdexSet();
-                partyList.Partyset();
+                if (eventData.button == PointerEventData.InputButton.Left)
+                {
+                    Debug.Log("asd");
+                    GlobalDataTable.Instance.DataCarrier.RemoveIndex(Index);
+
+                    battleSlots.SelectSlot(this);
+                    battleSlots.SlotIdexSet();
+                    partyList.Partyset();
+                }
             }
-        }
-        else
-        {
-            if (eventData.button == PointerEventData.InputButton.Left)
+            else if( battleSlots.BattleSlots.Count < 4 && !IsSeted)
             {
-                //Turnon(partyList.Index);
-                GlobalDataTable.Instance.DataCarrier.AddCharacterID(Save.ID);
-                IsSeted = true;
-                battleSlots.SlotIdexSet();
-                partyList.Partyset();
+                if (eventData.button == PointerEventData.InputButton.Left)
+                {
+                    //Turnon(partyList.Index);
+                    GlobalDataTable.Instance.DataCarrier.AddCharacterID(Save.ID);
+
+                    battleSlots.SelectSlot(this);
+                    battleSlots.SlotIdexSet();
+                    partyList.Partyset();
+                }
             }
-        }
+    
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
