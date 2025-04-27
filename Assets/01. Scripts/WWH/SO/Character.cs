@@ -8,7 +8,7 @@ public enum Grade
     B
 }
 
-public enum CharacterType
+public enum CharacterAttackType
 {
     Spirit,
     Physics
@@ -25,7 +25,7 @@ public class Character : SO
     public int Speed;
     public float CriticalPer;
     public float CriticalAttack;
-    public CharacterType CharacterType;
+    public CharacterAttackType CharacterType;
     public int CharacterItem;
     public Sprite AttributeIcon;
 

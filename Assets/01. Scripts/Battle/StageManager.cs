@@ -61,8 +61,8 @@ public class StageManager : Singleton<StageManager>
     {
         for (int i = 0; i < CurrentStage.EnemiesID.Length; i++)
         {
-            GameObject enemy = GlobalDataTable.Instance.character.CharacterSummonToIDandLevel(CurrentStage.EnemiesID[i], CurrentStage.EnemyLevel);
-            Enemies.Add(enemy.GetComponent<CharacterCarrier>());
+            //GameObject enemy = GlobalDataTable.Instance.character.CharacterSummonToIDandLevel(CurrentStage.EnemiesID[i], CurrentStage.EnemyLevel);
+            //Enemies.Add(enemy.GetComponent<CharacterCarrier>());
         }
     }
 
@@ -120,9 +120,9 @@ public class StageManager : Singleton<StageManager>
         //호감도 지급      
         foreach(CharacterCarrier player in Players)
         {
-            player.CharacterSaveData.Love += playerLove;
+            //player.CharacterSaveData.Love += playerLove;
             //저장
-            player.SaveData();
+            //player.SaveData();
         }
         //스테이지정보 업데이트
         ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;

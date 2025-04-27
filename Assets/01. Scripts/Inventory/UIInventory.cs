@@ -58,8 +58,6 @@ public class UIInventory : MonoBehaviour
         button[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
     }
 
-
-
     private List<ItemData> SortByRarity()           // 희귀도 순 정렬 (S → D 순)
     {
 
@@ -70,12 +68,35 @@ public class UIInventory : MonoBehaviour
             List<ItemData> List = new List<ItemData>();
             foreach (ItemSavaData item in HaveItem)
             {
+        
                 var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(item.ID);
                 List.Add(itemData);
             }
 
             return List.OrderBy(item => item.Grade).ToList();
         }
+
+        return new List<ItemData>();
+    }
+
+    private List<ItemData> ComsumableSortByRarity()           // 희귀도 순 정렬 (S → D 순)
+    {
+
+        List<ItemSavaData> HaveItem = ItemManager.Instance.GetSaveList();
+
+        if (HaveItem != null)
+        {
+            List<ItemData> List = new List<ItemData>();
+            foreach (ItemSavaData item in HaveItem)
+            {
+
+                var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(item.ID);
+                List.Add(itemData);
+            }
+
+            return List.OrderBy(item => item.Grade).ToList();
+        }
+
         return new List<ItemData>();
     }
 
@@ -181,19 +202,21 @@ public class UIInventory : MonoBehaviour
 
         ClearSlots();
 
+        Debug.Log("Summon");
+
         Dictionary<int, int> itemIDAndValue = new Dictionary<int, int>();
         foreach (var saveData in ItemManager.Instance.GetSaveList())
         {
+            Debug.Log(saveData);
             if (itemIDAndValue.ContainsKey(saveData.ID))
                 itemIDAndValue[saveData.ID] += saveData.Value;
             else
                 itemIDAndValue[saveData.ID] = saveData.Value;
         }
-
-
         List<(ItemData itemData, int count)> itemsAndValue = new List<(ItemData, int)>();
         foreach (var kvp in itemIDAndValue)
         {
+            Debug.Log(kvp);
             var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(kvp.Key);
             itemsAndValue.Add((itemData, kvp.Value));
         }
@@ -208,7 +231,6 @@ public class UIInventory : MonoBehaviour
 
             InventorySlot slot = slotObj.GetComponent<InventorySlot>();
             slot.SetSlot(itemData, count);  // 아이템과 수량 전달
-
             spawnedSlots.Add(slotObj);
         }
 
