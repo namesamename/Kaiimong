@@ -124,7 +124,7 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
                 mgr.gatchaDrawCount++;
             }
 
-            //CharacterDuplicateCheck(selected.ID);
+            CharacterDuplicateCheck(selected.ID);
         }
 
         // ÀçÈ­ ¹× °¡Ã­ È½¼ö ÀúÀå
@@ -220,7 +220,7 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
                 mgr.gatchaDrawCount++;
             }
 
-            //CharacterDuplicateCheck(selected.ID);
+            CharacterDuplicateCheck(selected.ID);
         }
 
         curManager.Save();
@@ -282,7 +282,7 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
                 Necessity = 0,
                 Love = 0,
              };
-            SaveDataBase.Instance.SaveSingleData(chracterSave);
+            CharacterManager.Instance.SaveCharacterSaveData(chracterSave);
         }
     }
 
