@@ -105,7 +105,7 @@ public class UICharacterSort : MonoBehaviour
         // 1) 필수 인스턴스 체크
         if (GlobalDataTable.Instance == null || GlobalDataTable.Instance.character == null)
         {
-            Debug.LogWarning("[ApplySort] GlobalDataTable.character가 아직 null입니다. 다시 시도하세요.");
+            Debug.LogWarning("[ApplySort] GlobalDataTable.character가 null입니다.");
             return;
         }
 
@@ -178,29 +178,29 @@ public class UICharacterSort : MonoBehaviour
             continue;
 
         Character chr = GlobalDataTable.Instance.character.GetCharToID(save.ID);
-        if (chr != null)
-            list.Add((chr, save));
+        if (char != null)
+            list.Add((char, save));
     }
 
     // 3) 한 번에 Sort
     list.Sort((a, b) =>
     {
-        int cmp;
+        int comp;
         if (currentSortType == SortType.Level)
         {
             // 레벨 내림차순 → 동일 레벨이면 희귀도 내림차순
-            cmp = b.save.Level.CompareTo(a.save.Level);
-            if (cmp == 0)
-                cmp = ((int)b.chr.Grade).CompareTo((int)a.chr.Grade);
+            comp = b.save.Level.CompareTo(a.save.Level);
+            if (comp == 0)
+                comp = ((int)b.chr.Grade).CompareTo((int)a.chr.Grade);
         }
         else
         {
             // 희귀도 내림차순 → 동일 희귀도면 레벨 내림차순
-            cmp = ((int)b.chr.Grade).CompareTo((int)a.chr.Grade);
-            if (cmp == 0)
-                cmp = b.save.Level.CompareTo(a.save.Level);
+            comp = ((int)b.chr.Grade).CompareTo((int)a.chr.Grade);
+            if (comp == 0)
+                comp = b.save.Level.CompareTo(a.save.Level);
         }
-        return cmp;
+        return comp;
     });
 
     // 4) 스포너에 넘겨 재생성

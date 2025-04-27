@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -12,6 +13,8 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
 
     [Header("필터 상태")]
     public List<CharacterType> selectedAttributes = new();    // 선택된 속성 리스트
+
+    public List<CharacterType> selectedAttack
 
     public List<Grade> selectedGrades = new();                // 선택된 희귀도 리스트
 
@@ -38,15 +41,16 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
     {
         List<Character> filteredCharacters = new List<Character>();
 
-        foreach (Character character in allCharacters) // 모든 캐릭터 순회
+        foreach (Character character in allCharacters)
         {
-            // 조건: 선택된 속성 + 등급이 모두 일치해야 리스트에 추가
-            if ((selectedAttributes.Count == 0 || selectedAttributes.Contains(character.CharacterType)) &&
-                (selectedGrades.Count == 0 || selectedGrades.Contains(character.Grade)))
-            {
+            // 속성 또는 등급이 비어있으면 모든 값 허용
+            bool matchAttr = selectedAttributes.Count == 0 || selectedAttributes.Contains(character.CharacterType);
+            bool matchGrade = selectedGrades.Count == 0 || selectedGrades.Contains(character.Grade);
+
+            if (matchAttr && matchGrade)
                 filteredCharacters.Add(character);
-            }
         }
+
         return filteredCharacters;
     }
 
@@ -60,7 +64,7 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
             Debug.LogWarning("[필터] GlobalDataTable.character가 아직 null입니다.");
             return;
         }
-        if (character == null) return;
+        if ( character == null) return;
 
         // 2) 전체 저장 데이터 불러와 (Character, SaveData) 쌍으로 변환
         var rawSaves = SaveDataBase.Instance
@@ -130,7 +134,7 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
     // Spirit 토글 바인딩용
     public void OnToggleSpirit(bool isOn)
     {
-        OnAttributeToggle(CharacterType.Spirit, isOn);
+        OnAttributeToggle(CharacterType., isOn);
     }
 
     // Physics 토글 바인딩용
