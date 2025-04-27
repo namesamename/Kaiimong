@@ -30,7 +30,6 @@ public class CharacterSelectHUD : MonoBehaviour
             if (data.IsEquiped)
             {
                 saveDatas.Add(data);
-                Debug.Log(data.IsEquiped);
             }
         }
 
