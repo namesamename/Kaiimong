@@ -22,10 +22,18 @@ public class CharacterManager : Singleton<CharacterManager>
         }
     }
 
-    public void SaveSingleData(int itemID)
+    public void SaveSingleData(int CharacterID)
     {
-        SaveDataBase.Instance.SaveSingleData(CharacterSaveDic[itemID]);
+        SaveDataBase.Instance.SaveSingleData(CharacterSaveDic[CharacterID]);
     }
+
+    public void SaveCharacterSaveData(CharacterSaveData saveData)
+    {
+        CharacterSaveDic[saveData.ID] = saveData;
+        SaveDataBase.Instance.SaveSingleData(saveData);
+    }
+
+
 
     //public void Initialize()
     //{   

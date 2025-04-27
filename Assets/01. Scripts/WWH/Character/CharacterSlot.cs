@@ -8,47 +8,88 @@ using UnityEngine.UI;
 public class CharacterSlot : MonoBehaviour
 {
     [Header("UI Reference")]
-    [SerializeField] private TextMeshProUGUI nameText;           // 캐릭터 이름 텍스트
-    [SerializeField] private TextMeshProUGUI levelText;          // 캐릭터 레벨 텍스트
- // [SerializeField] private Image attributeIcon;                // 속성 아이콘 이미지
-    [SerializeField] private GameObject equippedMark;            // 장착 중 마크
+    TextMeshProUGUI[] textMeshPros;
+    Image[] images;
 
-    private CharacterSaveData characterData;                     // 캐릭터 저장 데이터 참조
-    private int characterID;                                     // 캐릭터 고유 ID 저장
+    Button button;
 
-    public void SetSlot(CharacterSaveData saveData, Character character)                // 슬롯에 캐릭터 정보를 설정하는 함수
+
+    private void Awake()
     {
-        characterData = saveData;                      // 저장된 레벨, 장착 여부, ID 저장
-        characterID = saveData.ID;                     // 캐릭터 ID 저장
+        textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
+        images = GetComponentsInChildren<Image>();
 
-        nameText.text = character.Name;                // 캐릭터 이름 표시
-        levelText.text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
+        button = GetComponentInChildren<Button>();
+    }
+
+                                 // 캐릭터 고유 ID 저장
+
+
+
+    public void SetSlot(CharacterSaveData saveData, Character character)                
+    {
+
+        SetSlotColor(saveData, character);
+        textMeshPros[1].text = character.Name;                // 캐릭터 이름 표시
+        textMeshPros[0].text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
+
+        button.onClick.RemoveAllListeners();
+
+        GlobalDataTable.Instance.DataCarrier.SetSave(saveData);
+        GlobalDataTable.Instance.DataCarrier.SetCharacter(character);
+
+
+        button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo));
 
         Debug.Log($"[SetSlot] 슬롯에 적용: {character.Name} (ID:{character.ID}) Lv.{saveData.Level} Grade:{character.Grade}");
-       /* if (attributeIcon != null && character.AttributeIcon!= null)
-        {
-            attributeIcon.sprite = character.AttributeIcon; // 속성 아이콘 표시
-        }
-        else
-        {
-            Debug.LogWarning($"[CharacterSlot] 속성 아이콘이 없습니다: ID {characterID}");
-        }*/
 
-        if (equippedMark != null)
-        {
-            equippedMark.SetActive(saveData.IsEquiped); // 장착 여부에 따라 마크 활성화
-        }
+       
     }
 
 
-    public CharacterSaveData GetCharacterData()                 // 슬롯에 연결된 캐릭터 데이터를 외부에서 사용할 수 있게 반환
+
+    public void SetSlotColor(CharacterSaveData saveData, Character character)
     {
-        return characterData;
+
+        for (int i = 0; i < images.Length; i++) 
+        {
+            images[i].enabled = false;
+        }
+
+
+        switch (character.Grade)
+        {
+            case Grade.S:
+                images[0].enabled = true;
+                images[0].color = new Color(229f / 255f, 156f / 255f, 42f / 255f);
+                break;
+            case Grade.A:
+                images[0].enabled = true;
+                images[0].color = new Color(164f / 255f, 68f / 255f, 217f / 255f);
+                break;
+            case Grade.B:
+                images[0].enabled = true;
+                images[0].color = new Color(34f / 255f, 111f / 255f, 236f / 255f);
+                break;
+        }
+        //images[0].enabled = true;
+        //images[1].sprite = Resources.Load<Sprite>(character.icon);
+
+        for (int i = 0;i < saveData.Recognition; i++) 
+        {
+            images[i+2].enabled = true;
+        }
+        for (int i = 0; i < saveData.Necessity; i++)
+        {
+            images[i + 5].enabled = true;
+        }
+
+
+
     }
 
 
-    public int GetCharacterID()                                 // 슬롯의 캐릭터 고유 ID 반환
-    {
-        return characterID;
-    }
+
+
+
 }

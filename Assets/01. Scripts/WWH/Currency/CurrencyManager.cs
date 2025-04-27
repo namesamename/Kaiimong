@@ -90,6 +90,12 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
 
 
+    public void UserLevelup()
+    {
+        SetCurrency(CurrencyType.CurMaxStamina, 1);
+        HealStamina(GetCurrency(CurrencyType.CurMaxStamina));
+    }
+
     public void OnApplicationQuit()
     {
         if (SaveDataBase.Instance.SaveDic.ContainsKey(SaveType.Currency))
@@ -125,7 +131,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         {
             CurrencySaveDic[CurrencyType.Activity] += amount;
         }
-  
     }
     public void SetCurrency(CurrencyType currency, int amount)
     {
@@ -164,6 +169,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         }
         Save();
     }
+
+
     public int GetCurrency(CurrencyType currency)
     {
         return CurrencySaveDic[currency];

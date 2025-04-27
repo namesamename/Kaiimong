@@ -2,28 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
 public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
 {
-    public List<CharacterAttackType> selectedAttributes = new();    // 선택된 속성 리스트
+    [Header("필터 패널")]
+    [SerializeField] private GameObject filterPanel;       // 에디터에서 연결할 FilterPanel
+
+    [Header("필터 상태")]
+    public List<CharacterType> selectedAttributes = new();    // 선택된 속성 리스트
+
+    public List<CharacterType> selectedAttack;
+
     public List<Grade> selectedGrades = new();                // 선택된 희귀도 리스트
+
+
+
+    private void Start()
+    {
+        // 시작할 때 필터 패널 숨김
+        if (filterPanel != null)
+            filterPanel.SetActive(false);
+    }
+
+   // Filter 버튼 클릭 시 호출
+    public void OnClickToggleFilterPanel()
+    {
+        if (filterPanel == null) return;
+        filterPanel.SetActive(!filterPanel.activeSelf);
+    }
+
+
 
     // 특정 조건(속성/등급)에 맞는 캐릭터 리스트 반환
     public List<Character> FilterCharacters(List<Character> allCharacters)
     {
         List<Character> filteredCharacters = new List<Character>();
 
-        foreach (Character character in allCharacters) // 모든 캐릭터 순회
+        foreach (Character character in allCharacters)
         {
-            // 조건: 선택된 속성 + 등급이 모두 일치해야 리스트에 추가
-            if ((selectedAttributes.Count == 0 || selectedAttributes.Contains(character.CharacterType)) &&
-                (selectedGrades.Count == 0 || selectedGrades.Contains(character.Grade)))
-            {
+            // 속성 또는 등급이 비어있으면 모든 값 허용
+            bool matchAttr = selectedAttributes.Count == 0 || selectedAttributes.Contains(character.CharacterType);
+            bool matchGrade = selectedGrades.Count == 0 || selectedGrades.Contains(character.Grade);
+
+            if (matchAttr && matchGrade)
                 filteredCharacters.Add(character);
-            }
         }
+
         return filteredCharacters;
     }
 
@@ -31,48 +58,108 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
     public void OnClickApplyFilter()
     {
 
-        //모든 캐릭터 가져오기
+        // 1) 필수 인스턴스 체크
+        if (GlobalDataTable.Instance?.character == null)
+        {
+            Debug.LogWarning("[필터] GlobalDataTable.character가 아직 null입니다.");
+            return;
+        }
+        if ( character == null) return;
 
-        // 모든 세이브 데이터(12개) 불러오기
-        List<CharacterSaveData> allSaves =
-            SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
-
-        // (Character, SaveData) 쌍으로 변환
-        var allPairs = allSaves
-            .Select(d => (GlobalDataTable.Instance.character.GetCharToID(d.ID), d))
-            .Where(p => p.Item1 != null)
-            .ToList();
-
+        // 2) 전체 저장 데이터 불러와 (Character, SaveData) 쌍으로 변환
+        var rawSaves = SaveDataBase.Instance
+            .GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
+        var allPairs = new List<(Character chr, CharacterSaveData save)>();
+        foreach (var save in rawSaves)
+        {
+            var chr = GlobalDataTable.Instance.character.GetCharToID(save.ID);
+            if (chr != null)
+                allPairs.Add((chr, save));
+        }
         Debug.Log($"[필터 전] 전체 캐릭터 수: {allPairs.Count}");
 
-        // SO만 뽑아서 필터링
-        var soList = allPairs.Select(p => p.Item1).ToList();
-        var filteredSO = FilterCharacters(soList);
+        // 3) 선택된 속성/등급 조건에 맞게 바로 필터링
+        var filteredPairs = new List<(Character chr, CharacterSaveData save)>();
+        foreach (var pair in allPairs)
+        {
+            bool matchesAttribute = selectedAttributes.Count == 0
+                                    || selectedAttributes.Contains(pair.chr.CharacterType);
+            bool matchesGrade = selectedGrades.Count == 0
+                                    || selectedGrades.Contains(pair.chr.Grade);
 
-        // 필터된 SO를 다시 (SO,SaveData) 쌍으로 매칭
-        var filteredPairs = filteredSO
-            .Select(so => allPairs.Find(p => p.Item1.ID == so.ID))
-            .Where(p => p.Item1 != null)
-            .ToList();
-
+            if (matchesAttribute && matchesGrade)
+                filteredPairs.Add(pair);
+        }
         Debug.Log($"[필터 후] 필터링된 캐릭터 수: {filteredPairs.Count}");
 
-        // 스포너에 넘겨서 전체 필터링된 쌍 그리기
-        var spawner = FindObjectOfType<UICharacterSlotSpawner>();
-        if (spawner != null)
+        // 4) 스포너에 넘겨서 재생성
+        spawner.SpawnFromSortedList(filteredPairs);
+        Debug.Log("[필터] 슬롯 생성 완료");
+
+        // 5) 필터 패널 자동 닫기 (선택 사항)
+        if (filterPanel != null)
+            filterPanel.SetActive(false);
+    }
+
+    // 체크박스 토글로 속성 선택/해제될 때 호출
+
+    public void OnAttributeToggle(CharacterType type, bool isOn)
+    {
+        if (isOn)
         {
-            spawner.SpawnFromSortedList(filteredPairs);
-            Debug.Log("[필터] 슬롯 생성 완료");
+            if (!selectedAttributes.Contains(type))
+                selectedAttributes.Add(type);
         }
         else
         {
-            Debug.LogWarning("[필터] 슬롯 생성기를 찾지 못했습니다.");
+            selectedAttributes.Remove(type);
+        }
+    }
+
+    // 체크박스 토글로 등급 선택/해제될 때 호출
+    public void OnGradeToggle(Grade grade, bool isOn)
+    {
+        if (isOn)
+        {
+            if (!selectedGrades.Contains(grade))
+                selectedGrades.Add(grade);
+        }
+        else
+        {
+            selectedGrades.Remove(grade);
         }
     }
 
 
+    // Spirit 토글 바인딩용
+    public void OnToggleSpirit(bool isOn)
+    {
+        OnAttributeToggle(CharacterType., isOn);
+    }
 
+    // Physics 토글 바인딩용
+    public void OnTogglePhysics(bool isOn)
+    {
+        OnAttributeToggle(CharacterType.Physics, isOn);
+    }
 
+    // S 등급 토글 바인딩용
+    public void OnToggleGradeS(bool isOn)
+    {
+        OnGradeToggle(Grade.S, isOn);
+    }
+
+    // A 등급 토글 바인딩용
+    public void OnToggleGradeA(bool isOn)
+    {
+        OnGradeToggle(Grade.A, isOn);
+    }
+
+    // B 등급 토글 바인딩용
+    public void OnToggleGradeB(bool isOn)
+    {
+        OnGradeToggle(Grade.B, isOn);
+    }
 
 
 

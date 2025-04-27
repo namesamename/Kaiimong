@@ -20,6 +20,7 @@ public class UIPartyList : MonoBehaviour
         {
             GameObject game = Instantiate(Prefabs, transform);
             game.GetComponent<CharacterBattleSlot>().SetComponent();
+            game.GetComponent<CharacterBattleSlot>().IsSelected = true;
             game.GetComponent<CharacterBattleSlot>().SlotClear();
             SlotList.Add(game);
         }

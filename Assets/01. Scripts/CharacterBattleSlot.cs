@@ -19,6 +19,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
     CharacterSaveData Save;
 
     public bool IsSeted = false;
+    public bool IsSelected = false;
 
     [SerializeField] GameObject Selected;
     UIPartyList partyList;
@@ -28,11 +29,11 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
 
     int Index;
 
-  
+
     public void SetComponent()
     {
         partyList = FindAnyObjectByType<UIPartyList>();
-        battleSlots =GetComponentInParent<CharacterBattleSlots>();
+        battleSlots = GetComponentInParent<CharacterBattleSlots>();
         images = GetComponentsInChildren<Image>();
         LV = GetComponentInChildren<TextMeshProUGUI>();
         INGI = new Image[3] { images[2], images[3], images[4] };
@@ -53,7 +54,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
             images[i].enabled = true;
         }
         character = GlobalDataTable.Instance.character.GetCharToID(ID);
-       Save = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, ID);
+        Save = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, ID);
 
         SetSlotColorAndCharacterImage(character);
         SetINGIAndBraekAndLV(Save);
@@ -67,11 +68,11 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         Button[] buttons = GetComponentsInChildren<Button>();
         images[0].color = Color.white;
 
-        for (int i = 0; i < buttons.Length; i++) 
+        for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].enabled = false;
         }
-        for (int i = 1; i < images.Length; i++) 
+        for (int i = 1; i < images.Length; i++)
         {
             images[i].enabled = false;
         }
@@ -81,7 +82,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
     {
         //images[1].sprite = Resources.Load<Sprite>(character.Icon);
         Grade grade = character.Grade;
-        switch (grade) 
+        switch (grade)
         {
             case Grade.S:
                 images[0].color = Color.magenta;
@@ -99,7 +100,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
     {
 
         LV.text = $"LV.{Save.Level}";
-    
+
         for (int i = 0; i < INGI.Length; i++)
         {
             INGI[i].enabled = false;
@@ -114,7 +115,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
 
         }
 
-        for(int i = 0; i < Save.Necessity; i++)
+        for (int i = 0; i < Save.Necessity; i++)
         {
             BreakThrought[i].enabled = true;
         }
@@ -135,40 +136,41 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         text.text = string.Empty;
         Index = 0;
         Selected.SetActive(false);
-   
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(IsSeted);
-        //나중에 바꿔야함 
-        if (IsSeted)
-        {
-            if (eventData.button == PointerEventData.InputButton.Left)
+        if (!IsSelected)
+        { 
+            if (IsSeted)
             {
-                Debug.Log("asd");
-                GlobalDataTable.Instance.DataCarrier.RemoveIndex(Index);
-                IsSeted = false;
-                battleSlots.SlotIdexSet();
-                partyList.Partyset();
+                if (eventData.button == PointerEventData.InputButton.Left)
+                {
+                    GlobalDataTable.Instance.DataCarrier.RemoveIndex(Index);
+                    battleSlots.SelectSlot(this);
+                    battleSlots.SlotIdexSet();
+                    partyList.Partyset();
+                }
             }
-        }
-        else
-        {
-            if (eventData.button == PointerEventData.InputButton.Left)
+            else if (battleSlots.BattleSlots.Count < 4 && !IsSeted)
             {
-                //Turnon(partyList.Index);
-                GlobalDataTable.Instance.DataCarrier.AddCharacterID(Save.ID);
-                IsSeted = true;
-                battleSlots.SlotIdexSet();
-                partyList.Partyset();
+                if (eventData.button == PointerEventData.InputButton.Left)
+                {
+                    //Turnon(partyList.Index);
+                    GlobalDataTable.Instance.DataCarrier.AddCharacterID(Save.ID);
+
+                    battleSlots.SelectSlot(this);
+                    battleSlots.SlotIdexSet();
+                    partyList.Partyset();
+                }
             }
         }
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             GlobalDataTable.Instance.DataCarrier.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(CharacterID));
-            GlobalDataTable.Instance.DataCarrier.SetSave(SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character,CharacterID));
+            GlobalDataTable.Instance.DataCarrier.SetSave(SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, CharacterID));
 
             SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo);
         }
