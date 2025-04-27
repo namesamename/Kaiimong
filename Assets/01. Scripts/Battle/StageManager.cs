@@ -131,8 +131,10 @@ public class StageManager : Singleton<StageManager>
         //호감도 지급      
         foreach (CharacterCarrier player in Players)
         {
+            CharacterManager.Instance.CharacterSaveDic[player.GetID()].Love += playerLove;
             //player.CharacterSaveData.Love += playerLove;
             //저장
+            CharacterManager.Instance.SaveSingleData(player.GetID());
             //player.SaveData();
         }
         //스테이지정보 업데이트
