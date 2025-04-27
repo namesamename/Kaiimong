@@ -13,7 +13,7 @@ public class StageManager : Singleton<StageManager>
     public List<CharacterCarrier> Players;
     public List<CharacterCarrier> Enemies;
     public int CurrentRound;
-    public int CurrentRoundEnemyCount;
+    public int CurrentRoundEnemyCount; //없애도 될수도
 
     [Header("Reward and Returns")]
     public float returnActivityPoints;
@@ -27,7 +27,7 @@ public class StageManager : Singleton<StageManager>
     public Action OnWin;
     public Action OnLose;
 
- 
+
 
     public void Initialize()
     {
@@ -46,7 +46,6 @@ public class StageManager : Singleton<StageManager>
     {
         GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
         background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
-        CreateEnemy();
         battleSystem.Players = new List<CharacterCarrier>(Players);
         CurrentRound = 1;
         //반환 행동력
@@ -59,30 +58,42 @@ public class StageManager : Singleton<StageManager>
     //CurrentStage.EnemiesID로 적 객체 생성 후 리스트업하기
     private void CreateEnemy()
     {
-        for (int i = 0; i < CurrentStage.EnemiesID.Length; i++)
+        List<EnemySpawn> curEnemyList = new List<EnemySpawn>(GlobalDataTable.Instance.EnemySpawn.EnemySpawnDic[CurrentStage.ID]);
+        foreach (EnemySpawn enemy in curEnemyList)
         {
-            GameObject enemy = GlobalDataTable.Instance.character.CharacterSummonToIDandLevel(CurrentStage.EnemiesID[i], CurrentStage.EnemyLevel);
-            Enemies.Add(enemy.GetComponent<CharacterCarrier>());
+            if (enemy.Round == CurrentRound)
+            {
+                Enemy spawnEnemy = GlobalDataTable.Instance.character.enemyDic[enemy.EnemyID];
+                for (int i = 0; i < enemy.Count; i++)
+                {
+                    GameObject newEnemy = GlobalDataTable.Instance.character.EnemyInstanceSummon(spawnEnemy, enemy.Level, Vector3.zero);
+                    Enemies.Add(newEnemy.GetComponent<CharacterCarrier>());
+                }
+            }
         }
     }
 
     public void StageStart()
     {
+        CreateEnemy();
         if (CurrentRound <= CurrentStage.Rounds)
         {
-            if (CurrentRound == 1)
-            {
-                CurrentRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
-                battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(0, CurrentRoundEnemyCount));
-                battleSystem.StartBattle();
-            }
-            else
-            {
-                int nextRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
-                battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(CurrentRoundEnemyCount, nextRoundEnemyCount));
-                CurrentRoundEnemyCount = nextRoundEnemyCount;
-                battleSystem.SetBattle();
-            }
+            battleSystem.Enemies.Clear();
+            battleSystem.Enemies = new List<CharacterCarrier>(Enemies);
+            battleSystem.SetBattle();
+            //if (CurrentRound == 1)
+            //{
+            //    CurrentRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
+            //    battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(0, CurrentRoundEnemyCount));
+            //    battleSystem.StartBattle();
+            //}
+            //else
+            //{
+            //    int nextRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
+            //    battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(CurrentRoundEnemyCount, nextRoundEnemyCount));
+            //    CurrentRoundEnemyCount = nextRoundEnemyCount;
+            //    battleSystem.SetBattle();
+            //}
         }
         else return;
     }
@@ -118,11 +129,13 @@ public class StageManager : Singleton<StageManager>
 
         //}
         //호감도 지급      
-        foreach(CharacterCarrier player in Players)
+        foreach (CharacterCarrier player in Players)
         {
-            player.CharacterSaveData.Love += playerLove;
+            CharacterManager.Instance.CharacterSaveDic[player.GetID()].Love += playerLove;
+            //player.CharacterSaveData.Love += playerLove;
             //저장
-            player.SaveData();
+            CharacterManager.Instance.SaveSingleData(player.GetID());
+            //player.SaveData();
         }
         //스테이지정보 업데이트
         ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;
@@ -139,7 +152,7 @@ public class StageManager : Singleton<StageManager>
     }
 
     public void LoseStage()
-    {        
+    {
         LoseUI.gameObject.SetActive(true);
         OnLose?.Invoke();
         OnStageLose();

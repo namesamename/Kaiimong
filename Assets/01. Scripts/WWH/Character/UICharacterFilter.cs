@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -13,6 +12,7 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
 
     [Header("필터 상태")]
     public List<CharacterType> selectedAttributes = new();    // 선택된 속성 리스트
+
     public List<Grade> selectedGrades = new();                // 선택된 희귀도 리스트
 
 
@@ -54,47 +54,51 @@ public class UICharacterFilter : MonoBehaviour                  //필터 기능 적용
     public void OnClickApplyFilter()
     {
 
-        //모든 캐릭터 가져오기
+        // 1) 필수 인스턴스 체크
+        if (GlobalDataTable.Instance?.character == null)
+        {
+            Debug.LogWarning("[필터] GlobalDataTable.character가 아직 null입니다.");
+            return;
+        }
+        if (character == null) return;
 
-        // 모든 세이브 데이터(12개) 불러오기
-        List<CharacterSaveData> allSaves =
-            SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
-
-        // (Character, SaveData) 쌍으로 변환
-        var allPairs = allSaves
-            .Select(d => (GlobalDataTable.Instance.character.GetCharToID(d.ID), d))
-            .Where(p => p.Item1 != null)
-            .ToList();
-
+        // 2) 전체 저장 데이터 불러와 (Character, SaveData) 쌍으로 변환
+        var rawSaves = SaveDataBase.Instance
+            .GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
+        var allPairs = new List<(Character chr, CharacterSaveData save)>();
+        foreach (var save in rawSaves)
+        {
+            var chr = GlobalDataTable.Instance.character.GetCharToID(save.ID);
+            if (chr != null)
+                allPairs.Add((chr, save));
+        }
         Debug.Log($"[필터 전] 전체 캐릭터 수: {allPairs.Count}");
 
-        // SO만 뽑아서 필터링
-        var soList = allPairs.Select(p => p.Item1).ToList();
-        var filteredSO = FilterCharacters(soList);
+        // 3) 선택된 속성/등급 조건에 맞게 바로 필터링
+        var filteredPairs = new List<(Character chr, CharacterSaveData save)>();
+        foreach (var pair in allPairs)
+        {
+            bool matchesAttribute = selectedAttributes.Count == 0
+                                    || selectedAttributes.Contains(pair.chr.CharacterType);
+            bool matchesGrade = selectedGrades.Count == 0
+                                    || selectedGrades.Contains(pair.chr.Grade);
 
-        // 필터된 SO를 다시 (SO,SaveData) 쌍으로 매칭
-        var filteredPairs = filteredSO
-            .Select(so => allPairs.Find(p => p.Item1.ID == so.ID))
-            .Where(p => p.Item1 != null)
-            .ToList();
-
+            if (matchesAttribute && matchesGrade)
+                filteredPairs.Add(pair);
+        }
         Debug.Log($"[필터 후] 필터링된 캐릭터 수: {filteredPairs.Count}");
 
-        // 스포너에 넘겨서 전체 필터링된 쌍 그리기
-        var spawner = FindObjectOfType<UICharacterSlotSpawner>();
-        if (spawner != null)
-        {
-            spawner.SpawnFromSortedList(filteredPairs);
-            Debug.Log("[필터] 슬롯 생성 완료");
-        }
-        else
-        {
-            Debug.LogWarning("[필터] 슬롯 생성기를 찾지 못했습니다.");
-        }
+        // 4) 스포너에 넘겨서 재생성
+        spawner.SpawnFromSortedList(filteredPairs);
+        Debug.Log("[필터] 슬롯 생성 완료");
+
+        // 5) 필터 패널 자동 닫기 (선택 사항)
+        if (filterPanel != null)
+            filterPanel.SetActive(false);
     }
 
     // 체크박스 토글로 속성 선택/해제될 때 호출
-    
+
     public void OnAttributeToggle(CharacterType type, bool isOn)
     {
         if (isOn)

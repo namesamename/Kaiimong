@@ -58,8 +58,6 @@ public class UIInventory : MonoBehaviour
         button[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
     }
 
-
-
     private List<ItemData> SortByRarity()           // 희귀도 순 정렬 (S → D 순)
     {
 
@@ -70,13 +68,50 @@ public class UIInventory : MonoBehaviour
             List<ItemData> List = new List<ItemData>();
             foreach (ItemSavaData item in HaveItem)
             {
+        
                 var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(item.ID);
                 List.Add(itemData);
             }
 
             return List.OrderBy(item => item.Grade).ToList();
         }
+
         return new List<ItemData>();
+    }
+
+    private List<ItemData> ComsumableSortByRarity()           // 희귀도 순 정렬 (S → D 순)
+    {
+
+        List<ItemSavaData> HaveItem = ItemManager.Instance.GetSaveList();
+        List<ItemData > ConsumList = new List<ItemData>();
+        if (HaveItem != null)
+        {
+            List<ItemData> List = new List<ItemData>();
+            foreach (ItemSavaData item in HaveItem)
+            {
+
+                var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(item.ID);
+                List.Add(itemData);
+            }
+
+            List<ItemData> GradeSortList =  List.OrderBy(item => item.Grade).ToList();
+
+            foreach (ItemData item in GradeSortList) 
+            {
+                if(item.ItemType == EItemType.Consume)
+                {
+                    ConsumList.Add(item);
+                }
+            }
+
+            return ConsumList;
+        }
+        else
+        {
+            return new List<ItemData>();
+        }
+
+  
     }
 
     public void AddItem(int itemId, int count = 1)
@@ -114,14 +149,14 @@ public class UIInventory : MonoBehaviour
         {
             consumableList.Add(itemData);                            // 소모품 리스트 추가
             consumableList = SortByRarity();       // 소모품 회귀도 정렬
-            SpawnSlots(consumableSlotPanel);     // 소모품 슬롯 생성
+            SpawnSlots(consumableSlotPanel, consumableList);     // 소모품 슬롯 생성
             UpdateItemCount(consumableList.Count);               // 수량 표시 갱신
         }
         else                                          // 일반 아이템일 경우
         {
             itemList.Add(itemData);                                  // 아이템 리스트 추가
             itemList = SortByRarity();                   // 아이템 회귀도 정렬
-            SpawnSlots(itemSlotPanel);                 // 아이템 슬롯 생성
+            SpawnSlots(itemSlotPanel, itemList);                 // 아이템 슬롯 생성
             UpdateItemCount(itemList.Count);                     // 수량 표시 갱신
         }
     }
@@ -132,13 +167,13 @@ public class UIInventory : MonoBehaviour
         if (item.ItemType == EItemType.Consume)
         {
             consumableList.Remove(item);                         // 소모품 리스트 제거
-            SpawnSlots(consumableSlotPanel);     // 슬롯 재생성
+            SpawnSlots(consumableSlotPanel, consumableList);     // 슬롯 재생성
             UpdateItemCount(consumableList.Count);               // 소모품 수량 표시 갱신
         }
         else
         {
             itemList.Remove(item);                              // 아이템 리스트 제거
-            SpawnSlots(itemSlotPanel);                // 슬롯 재생성
+            SpawnSlots(itemSlotPanel, itemList);                // 슬롯 재생성
             UpdateItemCount(itemList.Count);                    // 아이템 수량 표시 갱신
         }
     }
@@ -153,7 +188,7 @@ public class UIInventory : MonoBehaviour
         consumableScrollView.SetActive(false);                    // 소모품 스크롤 뷰 끄기
 
         itemList = SortByRarity();                        // 아이템 리스트 정렬
-        SpawnSlots(itemSlotPanel);                      // 아이템 슬롯 생성
+        SpawnSlots(itemSlotPanel, itemList);                      // 아이템 슬롯 생성
         UpdateItemCount(itemList.Count);                          // 수량 텍스트 갱신
     }
 
@@ -165,8 +200,9 @@ public class UIInventory : MonoBehaviour
         itemScrollView.SetActive(false);                         // 아이템 스크롤 뷰 끄기
         consumableScrollView.SetActive(true);                    // 아이템 스크롤 뷰 켜기
 
-        consumableList = SortByRarity();           // 소모품 리스트 정렬
-        SpawnSlots(consumableSlotPanel);         // 소모품 슬롯 생성
+        consumableList = ComsumableSortByRarity();           // 소모품 리스트 정렬
+        SpawnSlots(consumableSlotPanel, consumableList);         // 소모품 슬롯 생성
+        UpdateItemCount(consumableList.Count);
 
 
     }
@@ -176,39 +212,40 @@ public class UIInventory : MonoBehaviour
     }
 
 
-    private void SpawnSlots(Transform parentPanel)     // 슬롯들을 생성하고 아이템 데이터를 적용
+    private void SpawnSlots(Transform parentPanel, List<ItemData> items)     // 슬롯들을 생성하고 아이템 데이터를 적용
     {
 
         ClearSlots();
 
-        Dictionary<int, int> itemIDAndValue = new Dictionary<int, int>();
-        foreach (var saveData in ItemManager.Instance.GetSaveList())
+        //Debug.Log("Summon");
+
+        //Dictionary<int, int> itemIDAndValue = new Dictionary<int, int>();
+        //foreach (var saveData in ItemManager.Instance.GetSaveList())
+        //{
+        //    Debug.Log(saveData);
+        //    if (itemIDAndValue.ContainsKey(saveData.ID))
+        //        itemIDAndValue[saveData.ID] += saveData.Value;
+        //    else
+        //        itemIDAndValue[saveData.ID] = saveData.Value;
+        //}
+        //List<(ItemData itemData, int count)> itemsAndValue = new List<(ItemData, int)>();
+        //foreach (var kvp in itemIDAndValue)
+        //{
+        //    Debug.Log(kvp);
+        //    var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(kvp.Key);
+        //    itemsAndValue.Add((itemData, kvp.Value));
+        //}
+
+
+        //itemsAndValue = itemsAndValue.OrderBy(item => item.itemData.Grade).ToList();
+
+        foreach (var Item  in items)
         {
-            if (itemIDAndValue.ContainsKey(saveData.ID))
-                itemIDAndValue[saveData.ID] += saveData.Value;
-            else
-                itemIDAndValue[saveData.ID] = saveData.Value;
-        }
-
-
-        List<(ItemData itemData, int count)> itemsAndValue = new List<(ItemData, int)>();
-        foreach (var kvp in itemIDAndValue)
-        {
-            var itemData = GlobalDataTable.Instance.Item.GetItemDataToID(kvp.Key);
-            itemsAndValue.Add((itemData, kvp.Value));
-        }
-
-
-        itemsAndValue = itemsAndValue.OrderBy(item => item.itemData.Grade).ToList();
-
-        foreach (var (itemData, count) in itemsAndValue)
-        {
-            GameObject prefab = GetSlotPrefabByRarity(itemData.Grade);
+            GameObject prefab = GetSlotPrefabByRarity(Item.Grade);
             GameObject slotObj = Instantiate(prefab, parentPanel);
 
             InventorySlot slot = slotObj.GetComponent<InventorySlot>();
-            slot.SetSlot(itemData, count);  // 아이템과 수량 전달
-
+            slot.SetSlot(Item, ItemManager.Instance.GetItemSaveData(Item.ID).Value);  // 아이템과 수량 전달
             spawnedSlots.Add(slotObj);
         }
 

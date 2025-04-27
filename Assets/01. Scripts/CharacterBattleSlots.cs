@@ -8,6 +8,7 @@ public class CharacterBattleSlots : MonoBehaviour
     GameObject Prefabs;
     List<CharacterSaveData> saveDatas = new List<CharacterSaveData>();
     List<GameObject> Slots = new List<GameObject>();
+    public List<CharacterBattleSlot> BattleSlots = new List<CharacterBattleSlot>();
     int index = 0;
     private void Awake()
     {
@@ -39,27 +40,33 @@ public class CharacterBattleSlots : MonoBehaviour
         }
     }
 
+    public void SelectSlot(CharacterBattleSlot slot)
+    {
+        if (!slot.IsSeted)
+        {
+            slot.IsSeted = true;
+            BattleSlots.Add(slot);
+        }
+        else
+        {
+            slot.IsSeted = false;
+            BattleSlots.Remove(slot);
+        }
+    }
 
 
     public void SlotIdexSet()
     {
-        index = 0;
-
+ 
         foreach (GameObject gameObject in Slots)
         {
-            if(gameObject.GetComponent<CharacterBattleSlot>().IsSeted)
-            {
-                gameObject.GetComponent<CharacterBattleSlot>().Turnon(index);
-                index++;
-            }
-            else
-            {
-                gameObject.GetComponent<CharacterBattleSlot>().TurnDown();
-            }
+            gameObject.GetComponent<CharacterBattleSlot>().TurnDown();
         }
 
 
-
-
+        for (int i = 0; i < BattleSlots.Count; i++)
+        {
+            BattleSlots[i].Turnon(i);
+        }
     }
 }

@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     StageManager stageManager;
     GlobalDataTable GlobalDataTable;
     SaveDataBase SaveData;
+    CharacterManager characterManager;
 
     GameObject[] ManagersPrefabs;
 
@@ -50,7 +51,8 @@ public class GameManager : Singleton<GameManager>
     {
         SaveData.Initialize();
         GlobalDataTable.Initialize();
- 
+
+        characterManager.Initialize();
         itemManager.Initialize();
         currencyManager.InitialIze();
 
@@ -66,6 +68,13 @@ public class GameManager : Singleton<GameManager>
 
     public void GetCompo()
     {
+        characterManager = GetComponentInChildren<CharacterManager>();
+        if( characterManager == null )
+        {
+            characterManager = Instantiate(Resources.Load<GameObject>("Manager/CharacterManager")).GetComponent<CharacterManager>();
+            characterManager.transform.SetParent(transform);  // 부모 설정 (필요 시)
+        }
+
         itemManager = GetComponentInChildren<ItemManager>();
         if (itemManager == null)
         {

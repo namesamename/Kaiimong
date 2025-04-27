@@ -1,38 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
-public class EnemyCarrier : MonoBehaviour
+public class EnemyCarrier : CharacterCarrier
 {
-    Enemy enemy;
-    [HideInInspector]
-    public CharacterVisual characterVisual;
-    [HideInInspector]
-    public CharacterSkillBook characterSkillBook;
-    [HideInInspector]
-    public CharacterStat stat;
-    public GameObject SelectEffect;
-
-    private void Awake()
+    public override void Initialize(int id, int level = -1)
     {
-        characterSkillBook = GetComponentInChildren<CharacterSkillBook>();
-        stat = GetComponentInChildren<CharacterStat>();
-        characterVisual = GetComponentInChildren<CharacterVisual>();
+        SetID(id);
+        visual.Initialize(id , CharacterType.Enemy);
+        skillBook.SkillSet(GlobalDataTable.Instance.character.GetEnemyToID(id).SkillID);
+        stat.SetEnemy(GlobalDataTable.Instance.character.GetEnemyToID(id), level);
     }
-
-
-    public void Initialize(int i, int Level)
-    {
-        enemy = GlobalDataTable.Instance.character.GetEnemyToID(i);
-        characterVisual.Initialize();
-        characterSkillBook.SkillSet(enemy.SkillID);
-        stat.SetEnemy(enemy, Level);
-    }
-
-
-
-   
-
-
-
 }
