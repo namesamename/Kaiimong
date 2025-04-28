@@ -17,5 +17,5 @@ MonoBehaviour:
   Round: 2
   Set: 1
   EnemyID: 1
-  Count: 1
+  EnemyCount: 1
   Level: 2

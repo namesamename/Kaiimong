@@ -19,7 +19,6 @@ public class CharacterSlot : MonoBehaviour
     {
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
         images = GetComponentsInChildren<Image>();
-
         button = GetComponentInChildren<Button>();
     }
 
@@ -37,23 +36,30 @@ public class CharacterSlot : MonoBehaviour
 
         button.onClick.RemoveAllListeners();
 
+       button.onClick.AddListener(ChangeScene);
 
 
 
-        button.onClick.AddListener(ChangeScene);
 
         Debug.Log($"[SetSlot] ½½·Ô¿¡ Àû¿ë: {character.Name} (ID:{character.ID}) Lv.{saveData.Level} Grade:{character.Grade}");
 
        
     }
-
-
     public void ChangeScene()
     {
 
         GlobalDataTable.Instance.DataCarrier.SetSave(characterSaveData);
         GlobalDataTable.Instance.DataCarrier.SetCharacter(Character);
-        SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo);
+        if(SceneLoader.Instance.GetPre()  == SceneState.ProfileScene)
+        {
+
+            SceneLoader.Instance.ChangeScene(SceneState.ProfileScene);
+        }
+        else
+        {
+            SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo);
+        }
+
     }
 
 

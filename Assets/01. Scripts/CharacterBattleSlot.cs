@@ -26,7 +26,6 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
     CharacterBattleSlots battleSlots;
 
     int CharacterID = 0;
-
     int Index;
 
 

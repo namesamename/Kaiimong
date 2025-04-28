@@ -23,4 +23,6 @@ MonoBehaviour:
   CriticalAttack: 1.4
   CharacterType: 1
   CharacterItem: 1
-  AttributeIcon: {fileID: 0}
+  SpritePath: CharacterSprite
+  IconPath: CharacterSprite
+  BattlePath: CharacterSprite

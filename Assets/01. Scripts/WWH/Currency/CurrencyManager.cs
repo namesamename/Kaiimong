@@ -35,7 +35,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                     TimeWhenNextCharge = ActSO.AutoRecoveryPerMinute - Interval;
                     Interval -= ActSO.AutoRecoveryPerMinute;
                     SetCurrency(CurrencyType.Activity, 1);
-                    Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
+                    //Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
                 }
             }
         }

@@ -28,14 +28,14 @@ public class CharacterUI : MonoBehaviour
     void Start()
     {
         battleSystem.OnPlayerTurn += GetActivePlayerUnit;
-        battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
+        //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
     }
 
     public void UnSubscribeCharacterUI()
     {
         battleSystem.OnPlayerTurn -= GetActivePlayerUnit;
-        battleSystem.OnEnemyTurn -= GetActiveEnemyUnit;
+        //battleSystem.OnEnemyTurn -= GetActiveEnemyUnit;
         RemoveListner();
     }
 
@@ -101,6 +101,7 @@ public class CharacterUI : MonoBehaviour
 
     public void GetActivePlayerUnit()
     {
+        curUnits.Clear();
         curUnits = battleSystem.GetActivePlayers();
         battleSystem.PlayerTurn = true;
         SetUI();
@@ -109,14 +110,24 @@ public class CharacterUI : MonoBehaviour
 
     public void GetActiveEnemyUnit()
     {
+        curUnits.Clear();
         curUnits = battleSystem.GetActiveEnemies();
         battleSystem.PlayerTurn = false;
     }
 
     public void SetUI()
     {
-        for (int i = 0; i < curUnits.Count; i++)
+        for (int i = 0; i < iconList.Count; i++)
         {
+            if (!iconList[i].gameObject.activeSelf)
+            {
+                iconList[i].gameObject.SetActive(true);
+            }
+            if( i >= curUnits.Count)
+            {
+                iconList[i].gameObject.SetActive(false);
+                continue;
+            }
             iconList[i].sprite = curUnits[i].visual.icon;
             RectTransform iconRect = iconList[i].GetComponent<RectTransform>();
             iconPos.Add(iconRect.anchoredPosition);
@@ -127,7 +138,7 @@ public class CharacterUI : MonoBehaviour
 
     public void NextCharacterIcon()
     {
-        for (int i = 0; i < iconList.Count; i++)
+        for (int i = 0; i < curUnits.Count; i++)
         {
             RectTransform curIconRect = iconList[i].GetComponent<RectTransform>();
             if (i <= battleSystem.TurnIndex)
@@ -144,7 +155,7 @@ public class CharacterUI : MonoBehaviour
 
     public void PreviousCharacterIcon()
     {
-        for (int i = 0; i < iconList.Count; i++)
+        for (int i = 0; i < curUnits.Count; i++)
         {
             RectTransform curIconRect = iconList[i].GetComponent<RectTransform>();
             if (i >= battleSystem.TurnIndex)
@@ -159,7 +170,7 @@ public class CharacterUI : MonoBehaviour
     {
         for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList.Length; i++)
         {
-            buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
+            //buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
         }
     }
 

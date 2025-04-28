@@ -49,7 +49,15 @@ public class CharacterSelectHUD : MonoBehaviour
             buttons[i].onClick.RemoveAllListeners();
         }
 
-        buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
+        if(SceneLoader.Instance.GetPre() == SceneState.YBK_Character)
+        {
+            buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
+        }
+        else
+        {
+            buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
+        }
+       
         buttons[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
         buttons[2].onClick.AddListener(SetDropdonw);
         buttons[3].onClick.AddListener(LevelOrder);

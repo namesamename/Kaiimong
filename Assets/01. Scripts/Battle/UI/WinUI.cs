@@ -26,15 +26,20 @@ public class WinUI : MonoBehaviour
         {
             if (IsClickOnRewardTab()) return;
 
-            StageManager.Instance.ToStageSelectScene();
+            if (Input.GetMouseButtonDown(0))
+            {
+                Time.timeScale = 1f;
+                StageManager.Instance.ToStageSelectScene();
+            }
         }
     }
 
     void SetWinUI()
     {
         CanClick = true;
-        characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
-        characterImage.SetNativeSize();
+        //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
+        //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
+        //characterImage.SetNativeSize();
         stageNameText.text = StageManager.Instance.CurrentStage.Name;
         playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
         playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
