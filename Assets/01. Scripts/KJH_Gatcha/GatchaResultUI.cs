@@ -9,6 +9,8 @@ public class GatchaResultUI : MonoBehaviour
     [SerializeField] private Button retryButton;   // 더 뽑기 버튼
     [SerializeField] private Button toLobbyButton; // 로비 이동 버튼
 
+    [SerializeField] private Image specialEffectImage;
+
     private void Start()
     {
         // 버튼은 연출이 끝나기 전까지 비활성화
@@ -20,6 +22,22 @@ public class GatchaResultUI : MonoBehaviour
 
     private IEnumerator ShowResults()  // 결과 캐릭터들을 순차적으로 보여주는 연출
     {
+        bool hasSGrade = false;
+        foreach (var character in GatchaResultHolder.results)
+        {
+            if (character.Grade == Grade.S)
+            {
+                hasSGrade = true;
+                break;
+            }
+        }
+        if (hasSGrade)
+        {
+            specialEffectImage.gameObject.SetActive(true);  // 노란색 이미지 띄우기
+            yield return new WaitForSeconds(1.0f);         // 1초 대기
+            specialEffectImage.gameObject.SetActive(false); // 다시 끄기
+        }
+
         GameObject prefab = Resources.Load<GameObject>("GatchaPrefab/CharacterResult");
         if (prefab == null)
         {

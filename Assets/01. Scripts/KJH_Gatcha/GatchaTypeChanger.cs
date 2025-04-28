@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using static GatchaManager;
 
 public class GatchaTypeChanger : MonoBehaviour
@@ -10,6 +11,7 @@ public class GatchaTypeChanger : MonoBehaviour
 
     [SerializeField] private Image Banner;
     [SerializeField] private GameObject PickUps;
+    [SerializeField] private TextMeshProUGUI BannerName;
 
     private Dictionary<Transform, Vector3> originalPositions = new();
 
@@ -41,6 +43,7 @@ public class GatchaTypeChanger : MonoBehaviour
         {
             case GatchaType.Pickup:
                 Banner.color = Color.red;
+                BannerName.text = "픽업배너입니다";
                 Debug.Log("픽업 배너 이미지 입니다");
                 PickUps.SetActive(true);
 
@@ -49,6 +52,7 @@ public class GatchaTypeChanger : MonoBehaviour
 
             case GatchaType.Standard:
                 Banner.color = Color.blue;
+                BannerName.text = "상시배너입니다";
                 Debug.Log("상시 배너 이미지 입니다");
                 PickUps.SetActive(false);
                 break;
