@@ -298,18 +298,20 @@ public class BattleSystem : MonoBehaviour
 
     public void RemoveTarget(CharacterCarrier target)
     {
-        foreach (SkillCommand command in CommandController.SkillCommands)
+        foreach (SkillCommand command in CommandController.SkillCommands.ToList())
         {
             command.targets.Remove(target);
             if (command.skillData.skillSO.isSingleAttack)
             {
                 if (command.skillData.skillSO.IsBuff)
                 {
-                    command.targets.Add(FindNewBuffTarget());
+                    var newBuffTarget = FindNewBuffTarget();
+                    command.targets.Add(newBuffTarget);
                 }
                 else
                 {
-                    command.targets.Add(FindNewAttackTarget());
+                    var newAttackTarget = FindNewAttackTarget();
+                    command.targets.Add(newAttackTarget);
                 }
             }
             if (command.targets.Count == 0)
