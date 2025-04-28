@@ -90,6 +90,7 @@ public class BattleSystem : MonoBehaviour
     {
         character.stat.OnDeath -= () => EmptyPlateOnUnitDeath(character);
         character.stat.OnDeath -= () => RemoveTarget(character);
+        character.stat.OnDeath -= () => CharacterDeath(character);
         character.stat.OnDeath -= CheckGameOver;
     }
 
@@ -203,6 +204,7 @@ public class BattleSystem : MonoBehaviour
                     playerLocations[i].isOccupied = true;
                     playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
                     playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
+                    playerUnit.stat.OnDeath += () => CharacterDeath(playerUnit);
                     playerUnit.stat.OnDeath += CheckGameOver;
                     activePlayers.Add(playerUnit);
                     Players.Remove(player);
@@ -236,6 +238,7 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
                     enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
+                    enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += CheckGameOver;
                     activeEnemies.Add(enemyUnit);
                     Enemies.Remove(enemy);
@@ -406,4 +409,15 @@ public class BattleSystem : MonoBehaviour
         nextPhase();
     }
 
+    private void CharacterDeath(CharacterCarrier character)
+    {
+        activePlayers.Remove(character);
+        Destroy(character);
+    }
+
+    private void EnemyDeath(CharacterCarrier enemy)
+    {
+        activeEnemies.Remove(enemy);
+        Destroy(enemy);
+    }
 }
