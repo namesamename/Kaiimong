@@ -111,10 +111,12 @@ public class BattleSystem : MonoBehaviour
 
         if (PlayerTurn)
         {
+            CheckGameOver();
             StartCoroutine(ChangePhase(EnemyTurnPhase));
         }
         else
         {
+            CheckGameOver();
             SetBattle();
             if (appearAnimComplete)
             {
