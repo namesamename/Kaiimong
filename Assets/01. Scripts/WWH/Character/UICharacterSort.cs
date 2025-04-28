@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Linq;
 using Unity.VisualScripting;
 public enum SortType { Level, Rarity }
 
@@ -30,41 +29,73 @@ public class UICharacterSort : MonoBehaviour
     // 캐릭터/세이브 데이터 쌍 리스트 정렬(레벨)
     public List<(Character character, CharacterSaveData saveData)> SortByLevel(List<(Character character, CharacterSaveData saveData)> levelList)
     {
-        // 레벨 기준 정렬 (동일 레벨이면 희귀도 내림차순)
+        // 원본 리스트는 그대로 두고 복사본을 생성
+        var sortedList = new List<(Character character, CharacterSaveData saveData)>(levelList);
+
         if (isLevelAscending)
         {
             Debug.Log("[Sort] 레벨 오름차순 → 희귀도 내림차순");
-            return levelList.OrderBy(x => x.saveData.Level)
-                            .ThenByDescending(y => y.character.Grade)
-                            .ToList();
+            sortedList.Sort((x, y) =>
+            {
+                // 레벨 오름차순 비교
+                int levelComparison = x.saveData.Level.CompareTo(y.saveData.Level);
+                if (levelComparison != 0)
+                    return levelComparison;
+                // 레벨이 같으면 희귀도 내림차순 비교
+                return y.character.Grade.CompareTo(x.character.Grade);
+            });
         }
         else
         {
             Debug.Log("[Sort] 레벨 내림차순 → 희귀도 내림차순");
-            return levelList.OrderByDescending(x => x.saveData.Level)
-                            .ThenByDescending(y => y.character.Grade)
-                            .ToList();
+            sortedList.Sort((x, y) =>
+            {
+                // 1) 레벨 내림차순 비교
+                int levelComparison = y.saveData.Level.CompareTo(x.saveData.Level);
+                if (levelComparison != 0)
+                    return levelComparison;
+                // 2) 레벨이 같으면 희귀도 내림차순 비교
+                return y.character.Grade.CompareTo(x.character.Grade);
+            });
         }
+
+        return sortedList;
     }
 
     // 캐릭터/세이브 데이터 쌍 리스트 정렬(희귀도)
     public List<(Character character, CharacterSaveData saveData)> SortByRarity(List<(Character character, CharacterSaveData saveData)> gradeList)
     {
-        // 희귀도 기준 정렬 (동일 희귀도면 레벨 내림차순)
+        // 원본 리스트는 그대로 두고 복사본을 생성
+        var sortedList = new List<(Character character, CharacterSaveData saveData)>(gradeList);
+
         if (isGradeAscending)
         {
             Debug.Log("[Sort] 희귀도 오름차순 → 레벨 내림차순");
-            return gradeList.OrderBy(x => x.character.Grade)
-                            .ThenByDescending(y => y.saveData.Level)
-                            .ToList();
+            sortedList.Sort((x, y) =>
+            {
+                // 희귀도 오름차순 비교
+                int gradeComparison = x.character.Grade.CompareTo(y.character.Grade);
+                if (gradeComparison != 0)
+                    return gradeComparison;
+                // 희귀도가 같으면 레벨 내림차순 비교
+                return y.saveData.Level.CompareTo(x.saveData.Level);
+            });
         }
         else
         {
             Debug.Log("[Sort] 희귀도 내림차순 → 레벨 내림차순");
-            return gradeList.OrderByDescending(x => x.character.Grade)
-                            .ThenByDescending(y => y.saveData.Level)
-                            .ToList();
+            sortedList.Sort((x, y) =>
+            {
+                // 희귀도 내림차순 비교
+                int gradeComparison = y.character.Grade.CompareTo(x.character.Grade);
+                if (gradeComparison != 0)
+                    return gradeComparison;
+                // 희귀도가 같으면 레벨 내림차순 비교
+                return y.saveData.Level.CompareTo(x.saveData.Level);
+            });
         }
+
+        return sortedList;
     }
 
     // 레벨 정렬 버튼
