@@ -52,6 +52,7 @@ public class CharacterSlot : MonoBehaviour
         GlobalDataTable.Instance.DataCarrier.SetCharacter(Character);
         if(SceneLoader.Instance.GetPre()  == SceneState.ProfileScene)
         {
+
             SceneLoader.Instance.ChangeScene(SceneState.ProfileScene);
         }
         else

@@ -45,6 +45,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 Button Backbutton = GetComponentInChildren<Button>();
                 Backbutton.onClick.RemoveAllListeners();
                 Backbutton.onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
+          
                 break;
             case CharacterInfoType.Main:
                 Button button = GetComponentInChildren<Button>();

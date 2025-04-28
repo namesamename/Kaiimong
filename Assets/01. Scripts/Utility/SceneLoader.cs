@@ -37,6 +37,10 @@ public class SceneLoader : Singleton<SceneLoader>
     }
 
 
+    public SceneState GetCur()
+    {
+        return sceneState;
+    }
     public SceneState GetPre()
     {
         return preSceneState;
