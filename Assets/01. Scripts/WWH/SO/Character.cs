@@ -27,7 +27,9 @@ public class Character : SO
     public float CriticalAttack;
     public CharacterAttackType CharacterType;
     public int CharacterItem;
-    public Sprite AttributeIcon;
+    public string SpritePath;
+    public string IconPath;
+    public string BattlePath;
 
 
 }
