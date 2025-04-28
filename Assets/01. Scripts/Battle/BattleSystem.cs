@@ -125,8 +125,8 @@ public class BattleSystem : MonoBehaviour
 
     private void CheckGameOver()
     {
-        if (Players.Count == 0 && activePlayers.Count == 0) StartCoroutine(ChangePhase(WinPhase));
-        if (Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(LosePhase));
+        if (Players.Count == 0 && activePlayers.Count == 0) StartCoroutine(ChangePhase(LosePhase));
+        if (Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(WinPhase));
     }
 
     public void StartBattle()
@@ -412,12 +412,12 @@ public class BattleSystem : MonoBehaviour
     private void CharacterDeath(CharacterCarrier character)
     {
         activePlayers.Remove(character);
-        Destroy(character);
+        Destroy(character.gameObject);
     }
 
     private void EnemyDeath(CharacterCarrier enemy)
     {
         activeEnemies.Remove(enemy);
-        Destroy(enemy);
+        Destroy(enemy.gameObject);
     }
 }
