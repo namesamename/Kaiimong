@@ -144,7 +144,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
           
             GameObject slotObj = Instantiate(SlotPrefabs, transform);       // 슬롯 생성 및 배치
 
-            slotObj.GetComponent<CharacterSlot>().SetSlot(saveData, character, false);
+            slotObj.GetComponent<CharacterSlot>().SetSlot(saveData, character);
 
 
             spawnedSlots.Add(slotObj);                               

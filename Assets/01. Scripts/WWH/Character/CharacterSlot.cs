@@ -26,7 +26,7 @@ public class CharacterSlot : MonoBehaviour
 
 
 
-    public void SetSlot(CharacterSaveData saveData, Character character, bool IsProfile)                
+    public void SetSlot(CharacterSaveData saveData, Character character)                
     {
         characterSaveData = saveData;
         Character = character;
@@ -36,14 +36,7 @@ public class CharacterSlot : MonoBehaviour
 
         button.onClick.RemoveAllListeners();
 
-        if(IsProfile)
-        {
-            button.onClick.AddListener(ChangeProfileCharacter);
-        }
-        else
-        {
-            button.onClick.AddListener(ChangeScene);
-        }
+       button.onClick.AddListener(ChangeScene);
 
 
 
@@ -52,19 +45,20 @@ public class CharacterSlot : MonoBehaviour
 
        
     }
-
-
-    public void ChangeProfileCharacter()
-    {
-        GlobalDataTable.Instance.DataCarrier.SetCharacter(Character);
-        SceneLoader.Instance.ChangeScene(SceneState.ProfileScene);
-    }
     public void ChangeScene()
     {
 
         GlobalDataTable.Instance.DataCarrier.SetSave(characterSaveData);
         GlobalDataTable.Instance.DataCarrier.SetCharacter(Character);
-        SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo);
+        if(SceneLoader.Instance.GetPre()  == SceneState.ProfileScene)
+        {
+            SceneLoader.Instance.ChangeScene(SceneState.ProfileScene);
+        }
+        else
+        {
+            SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo);
+        }
+
     }
 
 
