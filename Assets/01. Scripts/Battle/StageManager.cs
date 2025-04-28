@@ -10,8 +10,8 @@ public class StageManager : Singleton<StageManager>
 
     [Header("Stage Info")] // 선택창에서 받아온 데이터
     public Stage CurrentStage;
-    public List<CharacterCarrier> Players;
-    public List<CharacterCarrier> Enemies;
+    public List<Character> Players;
+    public List<Enemy> Enemies;
     public int CurrentRound;
     public int CurrentRoundEnemyCount; //없애도 될수도
 
@@ -27,8 +27,6 @@ public class StageManager : Singleton<StageManager>
     public Action OnWin;
     public Action OnLose;
 
-
-
     public void Initialize()
     {
         SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, SetBattleScene);
@@ -38,21 +36,23 @@ public class StageManager : Singleton<StageManager>
     private void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
     {
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
-        battleSystem = obj.GetComponent<BattleSystem>();
+        BattleSystem cursystem = obj.GetComponent<BattleSystem>();
+        battleSystem = cursystem;
         SetStageInfo();
         StageStart();
     }
+
+    public void BringBattleSystem(BattleSystem battleSystem)
+    {
+        this.battleSystem = battleSystem;
+    }
+
     private void SetStageInfo()
     {
         GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
         //background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
-        battleSystem.Players = new List<CharacterCarrier>(Players);
         CurrentRound = 1;
         //반환 행동력
-        if(CurrentStage == null)
-        {
-            Debug.Log("q");
-        }
         returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
         //플레이어 경험치
         userExp = CurrentStage.ActivityPoint * 20;
@@ -70,8 +70,9 @@ public class StageManager : Singleton<StageManager>
                 Enemy spawnEnemy = GlobalDataTable.Instance.character.enemyDic[enemy.EnemyID];
                 for (int i = 0; i < enemy.Count; i++)
                 {
-                    GameObject newEnemy = GlobalDataTable.Instance.character.EnemyInstanceSummon(spawnEnemy, enemy.Level, Vector3.zero);
-                    Enemies.Add(newEnemy.GetComponent<CharacterCarrier>());
+                    Enemy newEnemy = GlobalDataTable.Instance.character.GetEnemyToID(enemy.ID);
+                    //GameObject newEnemy = GlobalDataTable.Instance.character.EnemyInstanceSummon(spawnEnemy, enemy.Level, Vector3.zero);
+                    Enemies.Add(newEnemy);
                 }
             }
         }
@@ -79,11 +80,12 @@ public class StageManager : Singleton<StageManager>
 
     public void StageStart()
     {
+        battleSystem.Players = new List<Character>(Players);
         CreateEnemy();
         if (CurrentRound <= CurrentStage.Rounds)
         {
             battleSystem.Enemies.Clear();
-            battleSystem.Enemies = new List<CharacterCarrier>(Enemies);
+            battleSystem.Enemies = new List<Enemy>(Enemies);
             battleSystem.SetBattle();
             //if (CurrentRound == 1)
             //{
@@ -133,12 +135,12 @@ public class StageManager : Singleton<StageManager>
 
         //}
         //호감도 지급      
-        foreach (CharacterCarrier player in Players)
+        foreach (Character player in Players)
         {
-            CharacterManager.Instance.CharacterSaveDic[player.GetID()].Love += playerLove;
+            CharacterManager.Instance.CharacterSaveDic[player.ID].Love += playerLove;
             //player.CharacterSaveData.Love += playerLove;
             //저장
-            CharacterManager.Instance.SaveSingleData(player.GetID());
+            CharacterManager.Instance.SaveSingleData(player.ID);
             //player.SaveData();
         }
         //스테이지정보 업데이트
@@ -185,11 +187,11 @@ public class StageManager : Singleton<StageManager>
 
     private void UnSubscribeAllAction()
     {
-        foreach (CharacterCarrier carrier in Players)
+        foreach (CharacterCarrier carrier in battleSystem.GetActivePlayers())
         {
             battleSystem.UnSubscribeCharacterDeathAction(carrier);
         }
-        foreach (CharacterCarrier carrier in Enemies)
+        foreach (CharacterCarrier carrier in battleSystem.GetActiveEnemies())
         {
             battleSystem.UnSubscribeCharacterDeathAction(carrier);
         }

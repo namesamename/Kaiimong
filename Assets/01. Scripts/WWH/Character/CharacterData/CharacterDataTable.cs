@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterDataTable 
+public class CharacterDataTable
 {
-    public Dictionary<int , Character> characterDic = new Dictionary<int , Character>();  
-    public Dictionary<int, Enemy> enemyDic = new Dictionary<int , Enemy>();
+    public Dictionary<int, Character> characterDic = new Dictionary<int, Character>();
+    public Dictionary<int, Enemy> enemyDic = new Dictionary<int, Enemy>();
     public GameObject CharacterPrefabs;
     public GameObject EnemyPrefabs;
 
@@ -21,10 +21,10 @@ public class CharacterDataTable
             enemyDic[enemy.ID] = enemy;
         }
     }
-   
+
     public Character GetCharToID(int characterId)
     {
-        if (characterDic.ContainsKey(characterId) && characterDic[characterId] != null )
+        if (characterDic.ContainsKey(characterId) && characterDic[characterId] != null)
         {
             return characterDic[characterId];
         }
@@ -36,7 +36,7 @@ public class CharacterDataTable
     }
 
 
-    public Enemy GetEnemyToID(int characterId) 
+    public Enemy GetEnemyToID(int characterId)
     {
         if (enemyDic.ContainsKey(characterId) && enemyDic[characterId] != null)
         {
@@ -51,16 +51,17 @@ public class CharacterDataTable
     //캐릭터 아이디로 생성
     public GameObject CharacterInstanceSummon(Character character, Vector3 pos, Transform parent = null)
     {
-        GameObject CharacterObject = Object.Instantiate(CharacterPrefabs, pos, Quaternion.identity , parent);
+        GameObject CharacterPrefabs = Resources.Load("Character/FriendPrefabs") as GameObject;
+        GameObject CharacterObject = Object.Instantiate(CharacterPrefabs, pos, Quaternion.identity, parent);
 
-        if(CharacterObject.GetComponent<FriendCarrier>() == null) 
-        {   CharacterObject.AddComponent<FriendCarrier>();}
+        if (CharacterObject.GetComponent<FriendCarrier>() == null)
+        { CharacterObject.AddComponent<FriendCarrier>(); }
         CharacterObject.GetComponent<FriendCarrier>().Initialize(character.ID);
         return CharacterObject;
 
     }
     //캐릭터 세이브 정보로 생성
-    public GameObject CharacterInstanceSummonFromSaveData(CharacterSaveData saveData , Vector3 pos, Transform parent = null)
+    public GameObject CharacterInstanceSummonFromSaveData(CharacterSaveData saveData, Vector3 pos, Transform parent = null)
     {
         GameObject Character = CharacterInstanceSummon(GetCharToID(saveData.ID), pos, parent);
         return Character;
@@ -74,8 +75,9 @@ public class CharacterDataTable
     //    return game;
     //}
 
-    public GameObject EnemyInstanceSummon(Enemy character, int level,Vector3 pos, Transform parent = null)
+    public GameObject EnemyInstanceSummon(Enemy character, int level, Vector3 pos, Transform parent = null)
     {
+        GameObject EnemyPrefabs = Resources.Load("Character/EnemyPrefabs") as GameObject;
         GameObject CharacterObject = Object.Instantiate(EnemyPrefabs, pos, Quaternion.identity, parent);
 
         if (CharacterObject.GetComponent<EnemyCarrier>() == null)
