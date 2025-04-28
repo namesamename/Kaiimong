@@ -96,7 +96,7 @@ public class GameManager : Singleton<GameManager>
             uiManager.transform.SetParent(transform);
         }
 
-        chapterManager = GetComponentInChildren<ChapterManager>();
+        chapterManager = FindAnyObjectByType<ChapterManager>();
         if (chapterManager == null)
         {
             chapterManager = Instantiate(Resources.Load<GameObject>("Manager/ChapterManager")).GetComponent<ChapterManager>();

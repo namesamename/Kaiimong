@@ -53,7 +53,7 @@ public class CharacterStat : MonoBehaviour
             {StatType.CriticalAttack, criticalAttackStat},
         };
 
-
+   
 
     }
 
@@ -66,6 +66,7 @@ public class CharacterStat : MonoBehaviour
         //agilityStat.Value = character.Speed + level;
         criticalAttackStat.Value = character.CriticalAttack + (float)(Level * 0.01);
         criticalPerStat.Value = character.CriticalPer +  (float)(Level * 0.01);
+        healthStat.CurHealth = healthStat.Value;
     }
     public void SetEnemy(Enemy enemy, int Level)
     {
@@ -99,7 +100,7 @@ public class CharacterStat : MonoBehaviour
         //agilityStat.Value = character.Speed + level;
         criticalAttackStat.Value = (float)(Level * 0.01);
         criticalPerStat.Value = (float)(Level * 0.01);
-
+        healthStat.CurHealth = healthStat.Value;
 
 
 
@@ -125,7 +126,6 @@ public class CharacterStat : MonoBehaviour
     }
     public void OnDie()
     {
-        transform.parent.gameObject.SetActive(false);
         OnDeath?.Invoke();
     }
     
