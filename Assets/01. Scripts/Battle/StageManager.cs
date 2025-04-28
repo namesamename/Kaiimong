@@ -45,10 +45,14 @@ public class StageManager : Singleton<StageManager>
     private void SetStageInfo()
     {
         GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
-        background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
+        //background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
         battleSystem.Players = new List<CharacterCarrier>(Players);
         CurrentRound = 1;
         //반환 행동력
+        if(CurrentStage == null)
+        {
+            Debug.Log("q");
+        }
         returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
         //플레이어 경험치
         userExp = CurrentStage.ActivityPoint * 20;
@@ -207,4 +211,9 @@ public class StageManager : Singleton<StageManager>
         Enemies.Clear();
         CurrentStage = null;
     }
+
+    //public void RegisterStage(Stage stage)
+    //{
+    //    CurrentStage = stage;
+    //}
 }

@@ -78,10 +78,7 @@ public class ChapterManager : Singleton<ChapterManager>
         }
 
         StageSaveList[1].StageOpen = true;
-        SaveDataBase.Instance.SaveSingleData(StageSaveList[1]);
-
-
-        
+        SaveDataBase.Instance.SaveSingleData(StageSaveList[1]);        
     }
 
     public void RegisterChapter(Chapter chapter)
