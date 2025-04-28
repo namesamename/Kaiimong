@@ -110,7 +110,8 @@ public class GameManager : Singleton<GameManager>
             currencyManager.transform.SetParent(transform);
         }
 
-        stageManager = GetComponentInChildren<StageManager>();
+        //stageManager = GetComponentInChildren<StageManager>();
+        stageManager = FindObjectOfType<StageManager>();
         if (stageManager == null)
         {
             stageManager = Instantiate(Resources.Load<GameObject>("Manager/StageManager")).GetComponent<StageManager>();

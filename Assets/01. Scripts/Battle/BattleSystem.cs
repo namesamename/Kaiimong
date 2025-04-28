@@ -14,8 +14,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Transform enemyParent;
 
     [Header("Units")]
-    public List<CharacterCarrier> Players; //캐릭터 선택에서 가져오고
-    public List<CharacterCarrier> Enemies; //스테이지 데이터에서 가져오고
+    public List<Character> Players; //캐릭터 선택에서 가져오고
+    public List<Enemy> Enemies; //스테이지 데이터에서 가져오고
     [SerializeField] private List<CharacterCarrier> activePlayers = new List<CharacterCarrier>();    //현재 배치중인 유닛들 정보
     [SerializeField] private List<CharacterCarrier> activeEnemies = new List<CharacterCarrier>();
     public List<CharacterCarrier> GetActivePlayers() => activePlayers;
@@ -28,6 +28,7 @@ public class BattleSystem : MonoBehaviour
     private float betweenPhaseTime;
     public bool winFlag = false;
     public bool loseFlag = false;
+    public int CurrentSet = 1;
 
     [Header("Appear")]
     private bool appearAnimComplete = false;
@@ -55,6 +56,7 @@ public class BattleSystem : MonoBehaviour
         CommandController = GetComponent<CommandController>();
         CharacterSelector = GetComponent<CharacterSelector>();
         CharacterSelector.battleSystem = this;
+        //StageManager.Instance.BringBattleSystem(this);
         SetUI();
     }
 
@@ -156,7 +158,7 @@ public class BattleSystem : MonoBehaviour
     private void WinPhase()
     {
         winFlag = true;
-        if(StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
+        if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
         {
             StageManager.Instance.CurrentRound++;
             StageManager.Instance.StageStart();
@@ -182,47 +184,63 @@ public class BattleSystem : MonoBehaviour
 
     private void SetPlayer()
     {
-        List<CharacterCarrier> playerCopy = new List<CharacterCarrier>(Players);
+        List<Character> playerCopy = new List<Character>(Players);
         if (playerCopy.Count > 0)
         {
             for (int i = 0; i < playerLocations.Count; i++)
             {
-                CharacterCarrier player = playerCopy[i];
-                //player.stat.agilityStat.Value = i + 1;
+                if( i < playerCopy.Count)
+                {
+                    Character player = playerCopy[0];
+                    //player.stat.agilityStat.Value = i + 1;
 
-                if (playerLocations[i].isOccupied) continue;
+                    if (playerLocations[i].isOccupied) continue;
 
-                CharacterCarrier playerUnit = Instantiate(player, playerLocations[i].transform);
-                playerLocations[i].isOccupied = true;
-                playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
-                playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
-                playerUnit.stat.OnDeath += CheckGameOver;
-                activePlayers.Add(playerUnit);
-                Players.Remove(player);
+                    GameObject playerObject = GlobalDataTable.Instance.character.CharacterInstanceSummon(player, Vector3.zero);
+                    playerObject.transform.SetParent(playerLocations[i].transform, false);
+                    CharacterCarrier playerUnit = playerObject.GetComponent<CharacterCarrier>();
+                    playerLocations[i].isOccupied = true;
+                    playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
+                    playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
+                    playerUnit.stat.OnDeath += CheckGameOver;
+                    activePlayers.Add(playerUnit);
+                    Players.Remove(player);
+                }
+                else continue;
             }
         }
     }
 
     private void SetEnemy()
     {
-        List<CharacterCarrier> enemiesCopy = new List<CharacterCarrier>(Enemies);
+        List<Enemy> enemiesCopy = new List<Enemy>(Enemies);
         if (enemiesCopy.Count > 0)
         {
             for (int i = 0; i < enemyLocations.Count; i++)
             {
-                CharacterCarrier enemy = enemiesCopy[i];
-                //enemy.stat.agilityStat.Value = i + 1;
+                if (i < enemiesCopy.Count)
+                {
+                    Enemy enemy = enemiesCopy[0];
+                    //enemy.stat.agilityStat.Value = i + 1;
 
-                if (enemyLocations[i].isOccupied) continue;
+                    if (enemyLocations[i].isOccupied) continue;
 
-                CharacterCarrier enemyUnit = Instantiate(enemy, enemyLocations[i].transform);
-                enemyLocations[i].isOccupied = true;
-                enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
-                enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
-                enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
-                enemyUnit.stat.OnDeath += CheckGameOver;
-                activeEnemies.Add(enemyUnit);
-                Enemies.Remove(enemy);
+                    List<EnemySpawn> curEnemySpawnList = GlobalDataTable.Instance.EnemySpawn.EnemySpawnDic[StageManager.Instance.CurrentStage.ID];
+                    EnemySpawn curEnemySpawn = curEnemySpawnList.FirstOrDefault(x => x.Round == StageManager.Instance.CurrentRound && x.Set == CurrentSet);
+                    int enemyLevel = curEnemySpawn.Level;
+                    GameObject enemyObject = GlobalDataTable.Instance.character.EnemyInstanceSummon(enemy, enemyLevel, Vector3.zero);
+                    enemyObject.transform.SetParent(enemyLocations[i].transform, false);
+                    CharacterCarrier enemyUnit = enemyObject.GetComponent<CharacterCarrier>();
+                    enemyLocations[i].isOccupied = true;
+                    enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
+                    enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
+                    enemyUnit.stat.OnDeath += CheckGameOver;
+                    activeEnemies.Add(enemyUnit);
+                    Enemies.Remove(enemy);
+                }
+                else continue;
+
             }
         }
     }
