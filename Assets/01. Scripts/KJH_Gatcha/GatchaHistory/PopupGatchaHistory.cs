@@ -7,11 +7,18 @@ public class PopupGatchaHistory : UIPopup
     [SerializeField] private Transform contentRoot;
     [SerializeField] private GameObject itemPrefab;
 
+    [SerializeField] GameObject NoticePanel;
+    [SerializeField] GameObject HistoryPanel;
+
+
+
     private void Start()
     {
         Debug.Log($"[DEBUG] itemPrefab 할당 여부: {(itemPrefab == null ? "NULL" : "OK")}");
         Debug.Log($"[DEBUG] contentRoot 할당 여부: {(contentRoot == null ? "NULL" : "OK")}");
         ShowHistoryItems();
+        NoticePanel.SetActive(true);
+        HistoryPanel.SetActive(false);
     }
     private void ShowHistoryItems()
     {
@@ -32,5 +39,16 @@ public class PopupGatchaHistory : UIPopup
             var ui = go.GetComponent<UIHistoryItem>();
             ui.Setup(entry);
         }
+    }
+
+    public void PanelSettingNotice()
+    {
+        NoticePanel.SetActive(true);
+        HistoryPanel.SetActive(false);
+    }
+    public void PanelSettingHistory()
+    {
+        NoticePanel.SetActive(false);
+        HistoryPanel.SetActive(true);
     }
 }
