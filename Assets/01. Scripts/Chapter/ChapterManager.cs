@@ -34,6 +34,7 @@ public class ChapterManager : Singleton<ChapterManager>
                 // 저장된 데이터 로드
                 var savedData = foundData.Find(x => x.ID == chapterId);
                 newChapterData.ChapterOpen = savedData.ChapterOpen;
+                newChapterData.Savetype = SaveType.Chapter;
             }
             else
             {
@@ -65,6 +66,7 @@ public class ChapterManager : Singleton<ChapterManager>
                 var savedData = foundData.Find(x => x.ID == stageId);
                 newStageData.ClearedStage = savedData.ClearedStage;
                 newStageData.StageOpen = savedData.StageOpen;
+                newStageData.Savetype = SaveType.Stage;
             }
             else
             {

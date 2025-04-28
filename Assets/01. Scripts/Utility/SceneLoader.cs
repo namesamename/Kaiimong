@@ -37,6 +37,15 @@ public class SceneLoader : Singleton<SceneLoader>
     }
 
 
+    public SceneState GetCur()
+    {
+        return sceneState;
+    }
+    public SceneState GetPre()
+    {
+        return preSceneState;
+    }
+
     public void SetDic()
     {
         sceneContainer = new Dictionary<SceneState, Action>();

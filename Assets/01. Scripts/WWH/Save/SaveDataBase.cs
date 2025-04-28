@@ -153,6 +153,10 @@ public class SaveDataBase : Singleton<SaveDataBase>
 
     public void SaveSingleData(SaveInstance instance)
     {
+
+        //UnityEngine.Debug.Log(instance.Savetype);
+        //UnityEngine.Debug.Log(instance.ID);
+
         if (SaveDic.ContainsKey(instance.Savetype))
         {
             int Index = SaveDic[instance.Savetype].FindIndex(x => x.ID == instance.ID);

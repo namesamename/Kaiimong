@@ -235,7 +235,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5939163729232943128}
   - component: {fileID: 1650030761294025981}
-  - component: {fileID: 5977827108238415}
   m_Layer: 0
   m_Name: FirstSkill
   m_TagString: Untagged
@@ -259,19 +258,6 @@ Transform:
   m_Father: {fileID: 2418141978992063296}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1650030761294025981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2570512489852026491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillSO: {fileID: 0}
---- !u!114 &5977827108238415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -414,15 +400,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8a1810570d01e83449c7bc24ccac454b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7.65, y: 19.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &5660326570347862919
@@ -534,7 +520,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5162327815743759291}
   - component: {fileID: 7792878838815321778}
-  - component: {fileID: 1175826514544852470}
   m_Layer: 0
   m_Name: SecondSkill
   m_TagString: Untagged
@@ -570,19 +555,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillSO: {fileID: 0}
---- !u!114 &1175826514544852470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8295946277179289482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillSO: {fileID: 0}
 --- !u!1 &8536969667140408237
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +565,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7927545256478940563}
   - component: {fileID: 1496228676853315587}
-  - component: {fileID: 3329091636782227812}
   m_Layer: 0
   m_Name: ThridSkill
   m_TagString: Untagged
@@ -617,19 +588,6 @@ Transform:
   m_Father: {fileID: 2418141978992063296}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1496228676853315587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8536969667140408237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d996883860742d04eaa080f26a2a41fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillSO: {fileID: 0}
---- !u!114 &3329091636782227812
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

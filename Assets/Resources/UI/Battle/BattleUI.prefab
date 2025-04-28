@@ -1639,6 +1639,7 @@ MonoBehaviour:
   speedUpButton: {fileID: 7554898838746296251}
   currentSpeed: 1
   characterUI: {fileID: 1810356498555389243}
+  popupBattlePausePrefab: {fileID: 0}
   popupBattlePause: {fileID: 0}
 --- !u!1 &6196677942313435731
 GameObject:

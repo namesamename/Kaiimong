@@ -8,11 +8,15 @@ public class UIPartyList : MonoBehaviour
     DataCarrier Party;
     GameObject Prefabs;
     List<GameObject> SlotList = new List<GameObject>();
+    CharacterBattleSlots battleSlots;
+
+
 
     public int Index = 0;
     private void Awake()
     {
         Prefabs = Resources.Load<GameObject>("CharacterSlot/CharacterSlot");
+        battleSlots =FindAnyObjectByType<CharacterBattleSlots>();
     }
     private void Start()
     {
@@ -30,13 +34,14 @@ public class UIPartyList : MonoBehaviour
     {
         Index = 0;
         partyDown();
+
+        List<GameObject> slots = battleSlots.GetSlots();
         Party = GlobalDataTable.Instance.DataCarrier;
         foreach (int id in Party.GetCharacterIDList())
         {
             SlotList[Index].GetComponent<CharacterBattleSlot>().SetComponent();
             SlotList[Index].GetComponent<CharacterBattleSlot>().SetSlot(id);
-      
-   
+            slots[id - 1].GetComponent<CharacterBattleSlot>().Turnon(Index);
             Index++;
         }
     }

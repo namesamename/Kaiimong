@@ -48,9 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c25fe8abb541b46823920268df63ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterVisual: {fileID: 0}
-  characterSkillBook: {fileID: 0}
+  skillBook: {fileID: 0}
   stat: {fileID: 0}
+  visual: {fileID: 0}
   SelectEffect: {fileID: 7451456967520530533}
 --- !u!1 &989357611774087425
 GameObject:
@@ -252,15 +252,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8a1810570d01e83449c7bc24ccac454b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7.65, y: 19.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6069219909078329289

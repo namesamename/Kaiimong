@@ -14,7 +14,7 @@ public class ActiveSkillObject : MonoBehaviour
     }
     public void UseSkill(List<CharacterCarrier> targetcharacter)
     {
-        CharacterStat stat = GetComponentInParent<CharacterStat>();
+        CharacterStat stat = transform.parent.transform.parent.GetComponentInChildren<CharacterStat>();
         //추후 추가
         if (skillSO.Type == SkillType.debuff || skillSO.Type == SkillType.buff)
         {
@@ -30,16 +30,23 @@ public class ActiveSkillObject : MonoBehaviour
         else
         {
             Debug.Log("TakeDamage");
-            foreach (CharacterCarrier c in targetcharacter)
+
+            for (int i = 0; i < targetcharacter.Count; i++)
             {
+                CharacterCarrier character = targetcharacter[i];
+                if (skillSO == null)
+                {
+                    Debug.Log("SKill null");
+                }
                 float AllDamage = skillSO.Attack * stat.attackStat.GetStat();
                 if (stat.criticalPerStat.Value > Random.Range(0.000f, 1f))
                 {
                     AllDamage *= stat.criticalAttackStat.Value;
                     Debug.Log("크리티컬 뜸ㄷㄷ");
                 }
-                c.stat.TakeDamage( AllDamage);
+                character.stat.TakeDamage(AllDamage);
             }
+       
         }
         
     }

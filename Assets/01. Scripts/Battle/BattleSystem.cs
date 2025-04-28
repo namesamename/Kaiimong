@@ -29,6 +29,7 @@ public class BattleSystem : MonoBehaviour
     public bool winFlag = false;
     public bool loseFlag = false;
     public int CurrentSet = 1;
+    private bool canStartNextRound = false;
 
     [Header("Appear")]
     private bool appearAnimComplete = false;
@@ -50,6 +51,8 @@ public class BattleSystem : MonoBehaviour
     public Action OnPlayerTurn;
     public Action OnEnemyTurn;
     public Action SkillChanged;
+
+    private bool isPhaseChanging = false;
 
     private void Awake()
     {
@@ -88,9 +91,10 @@ public class BattleSystem : MonoBehaviour
 
     public void UnSubscribeCharacterDeathAction(CharacterCarrier character)
     {
+        //character.stat.OnDeath -= CheckGameOver;
         character.stat.OnDeath -= () => EmptyPlateOnUnitDeath(character);
         character.stat.OnDeath -= () => RemoveTarget(character);
-        character.stat.OnDeath -= CheckGameOver;
+        character.stat.OnDeath -= () => CharacterDeath(character);
     }
 
     public void SetUI()
@@ -110,22 +114,59 @@ public class BattleSystem : MonoBehaviour
 
         if (PlayerTurn)
         {
-            StartCoroutine(ChangePhase(EnemyTurnPhase));
+            CheckGameOver();
+            if (!isPhaseChanging) 
+            {
+                StartCoroutine(ChangePhase(EnemyTurnPhase));
+            }
         }
         else
         {
             SetBattle();
             if (appearAnimComplete)
             {
-                StartCoroutine(ChangePhase(PlayerTurnPhase));
+                CheckGameOver();
+                if (!isPhaseChanging)
+                {
+                    StartCoroutine(ChangePhase(PlayerTurnPhase));
+                }
             }
         }
-    }
+    
+}
 
     private void CheckGameOver()
     {
-        if (Players.Count == 0 && activePlayers.Count == 0) StartCoroutine(ChangePhase(WinPhase));
-        if (Enemies.Count == 0 && activeEnemies.Count == 0) StartCoroutine(ChangePhase(LosePhase));
+        if (isPhaseChanging) return;
+
+        isPhaseChanging = true;
+
+        Debug.Log($"CheckGameOver 호출됨: isPhaseChanging={isPhaseChanging}, Players={Players.Count}, activePlayers={activePlayers.Count}, Enemies={Enemies.Count}, activeEnemies={activeEnemies.Count}, CurrentRound={StageManager.Instance.CurrentRound}");
+
+        if (Players.Count == 0 && activePlayers.Count == 0)
+        {
+            StartCoroutine(ChangePhase(() => { isPhaseChanging = false; LosePhase(); }));
+            return;
+        }
+        if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
+        {
+            if (Enemies.Count == 0 && activeEnemies.Count == 0)
+            {
+                StartCoroutine(ChangePhase(() => { isPhaseChanging = false; NextRoundPhase(); }));
+                return;
+            }
+        }
+        else
+        {
+            if (Enemies.Count == 0 && activeEnemies.Count == 0)
+            {
+                Debug.Log("sadasd");
+                StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
+                return;
+            }
+        }
+
+        isPhaseChanging = false;
     }
 
     public void StartBattle()
@@ -157,15 +198,24 @@ public class BattleSystem : MonoBehaviour
 
     private void WinPhase()
     {
+
         winFlag = true;
+        StageManager.Instance.WinStage();
+      
+    }
+
+    private void NextRoundPhase()
+    {
         if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
         {
-            StageManager.Instance.CurrentRound++;
-            StageManager.Instance.StageStart();
-        }
-        else
-        {
-            StageManager.Instance.WinStage();
+            winFlag = false;
+            if (canStartNextRound)
+            {
+                canStartNextRound = false;
+                StageManager.Instance.CurrentRound++;
+                if (StageManager.Instance.CurrentRound == StageManager.Instance.CurrentStage.Rounds) winFlag = true;
+                StageManager.Instance.StageStart();
+            }
         }
     }
 
@@ -179,6 +229,7 @@ public class BattleSystem : MonoBehaviour
     {
         SetPlayer();
         SetEnemy();
+        canStartNextRound = true;
         StartCoroutine(AppearAnimTime(GetMaxAnimationTime()));
     }
 
@@ -189,7 +240,7 @@ public class BattleSystem : MonoBehaviour
         {
             for (int i = 0; i < playerLocations.Count; i++)
             {
-                if( i < playerCopy.Count)
+                if (i < playerCopy.Count)
                 {
                     Character player = playerCopy[0];
                     //player.stat.agilityStat.Value = i + 1;
@@ -199,12 +250,14 @@ public class BattleSystem : MonoBehaviour
                     GameObject playerObject = GlobalDataTable.Instance.character.CharacterInstanceSummon(player, Vector3.zero);
                     playerObject.transform.SetParent(playerLocations[i].transform, false);
                     CharacterCarrier playerUnit = playerObject.GetComponent<CharacterCarrier>();
+                    playerUnit.Initialize(GlobalDataTable.Instance.DataCarrier.GetCharacterIDToIndex(i));
                     playerLocations[i].isOccupied = true;
                     playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
                     playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
-                    playerUnit.stat.OnDeath += CheckGameOver;
+                    playerUnit.stat.OnDeath += () => CharacterDeath(playerUnit);
+                    //playerUnit.stat.OnDeath += CheckGameOver;
                     activePlayers.Add(playerUnit);
-                    Players.Remove(player);
+                    Players.RemoveAt(0);
                 }
                 else continue;
             }
@@ -235,9 +288,10 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
                     enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
-                    enemyUnit.stat.OnDeath += CheckGameOver;
+                    enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
+                    //enemyUnit.stat.OnDeath += CheckGameOver;
                     activeEnemies.Add(enemyUnit);
-                    Enemies.Remove(enemy);
+                    Enemies.RemoveAt(0);
                 }
                 else continue;
 
@@ -297,18 +351,20 @@ public class BattleSystem : MonoBehaviour
 
     public void RemoveTarget(CharacterCarrier target)
     {
-        foreach (SkillCommand command in CommandController.SkillCommands)
+        foreach (SkillCommand command in CommandController.SkillCommands.ToList())
         {
             command.targets.Remove(target);
             if (command.skillData.skillSO.isSingleAttack)
             {
                 if (command.skillData.skillSO.IsBuff)
                 {
-                    command.targets.Add(FindNewBuffTarget());
+                    var newBuffTarget = FindNewBuffTarget();
+                    command.targets.Add(newBuffTarget);
                 }
                 else
                 {
-                    command.targets.Add(FindNewAttackTarget());
+                    var newAttackTarget = FindNewAttackTarget();
+                    command.targets.Add(newAttackTarget);
                 }
             }
             if (command.targets.Count == 0)
@@ -356,12 +412,12 @@ public class BattleSystem : MonoBehaviour
             {
                 if (SelectedSkill.skillSO.isSingleAttack)
                 {
-                    int randomTarget = UnityEngine.Random.Range(0, activePlayers.Count);
-                    Targets.Add(activePlayers[i]);
+                    int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
+                    Targets.Add(activeEnemies[i]);
                 }
                 else
                 {
-                    foreach (CharacterCarrier units in activePlayers)
+                    foreach (CharacterCarrier units in activeEnemies)
                     {
                         Targets.Add(units);
                     }
@@ -371,12 +427,12 @@ public class BattleSystem : MonoBehaviour
             {
                 if (SelectedSkill.skillSO.isSingleAttack)
                 {
-                    int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
-                    Targets.Add(activeEnemies[i]);
+                    int randomTarget = UnityEngine.Random.Range(0, activePlayers.Count);
+                    Targets.Add(activePlayers[i]);
                 }
                 else
                 {
-                    foreach (CharacterCarrier units in activeEnemies)
+                    foreach (CharacterCarrier units in activePlayers)
                     {
                         Targets.Add(units);
                     }
@@ -400,7 +456,20 @@ public class BattleSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(betweenPhaseTime);
 
-        nextPhase();
+        nextPhase?.Invoke();
     }
 
+    private void CharacterDeath(CharacterCarrier character)
+    {
+        UnSubscribeCharacterDeathAction(character);
+        activePlayers.Remove(character);
+        Destroy(character.gameObject);
+    }
+
+    private void EnemyDeath(CharacterCarrier enemy)
+    {
+        UnSubscribeCharacterDeathAction(enemy);
+        activeEnemies.Remove(enemy);
+        Destroy(enemy.gameObject);
+    }
 }

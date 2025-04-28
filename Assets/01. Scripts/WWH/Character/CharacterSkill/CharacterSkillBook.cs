@@ -18,12 +18,15 @@ public class CharacterSkillBook : MonoBehaviour
 
     public void SkillSet(int ID)
     {
-        for (int i = 0; i < ActiveSkillList.Length; i++)
+        int Count = ID * 3;
+
+        for (int i = 0; i < 3; i++) 
         {
-            ActiveSkillList[i].SetSkill(ID + i);
-            //PassiveSkillList[i].SetSkill(ID + i);
+            int Skillid = Count - i;
+            ActiveSkillList[i].SetSkill(Skillid);
 
         }
+     
     }
 
     public void PassiveSkillOn(List<CharacterCarrier> characters)

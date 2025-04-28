@@ -42,22 +42,26 @@ public class StageInfoUI : MonoBehaviour
     {
         stage = slot.Stage;
         stageName.text = stage.Name;
+
         enterButton.onClick.AddListener(OnEnterButton);
     }
 
     private void OnEnterButton()
     {
-        StageManager.Instance.CurrentStage = stage;
-        List<int> playerID = new List<int>(GlobalDataTable.Instance.DataCarrier.GetCharacterIDList());
-        foreach(int id in playerID)
+        if (GlobalDataTable.Instance.DataCarrier.GetCharacterIDList().Count > 0)
         {
-            Character newCharacter = GlobalDataTable.Instance.character.GetCharToID(id);
-            //GameObject newGameObject = GlobalDataTable.Instance.character.CharacterInstanceSummon(newCharacter, Vector3.zero);
-            //CharacterCarrier newCharacterCarrier = newGameObject.GetComponent<CharacterCarrier>();
-            StageManager.Instance.Players.Add(newCharacter);
+            StageManager.Instance.CurrentStage = stage;
+            List<int> playerID = new List<int>(GlobalDataTable.Instance.DataCarrier.GetCharacterIDList());
+            foreach (int id in playerID)
+            {
+                Character newCharacter = GlobalDataTable.Instance.character.GetCharToID(id);
+                //GameObject newGameObject = GlobalDataTable.Instance.character.CharacterInstanceSummon(newCharacter, Vector3.zero);
+                //CharacterCarrier newCharacterCarrier = newGameObject.GetComponent<CharacterCarrier>();
+                StageManager.Instance.Players.Add(newCharacter);
+            }
+            RemoveListner();
+            SceneLoader.Instance.ChangeScene(SceneState.BattleScene);
         }
-        RemoveListner();
-        SceneLoader.Instance.ChangeScene(SceneState.BattleScene);
     }
 
     private void RemoveListner()
