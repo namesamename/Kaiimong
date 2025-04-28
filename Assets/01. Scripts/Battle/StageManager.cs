@@ -75,9 +75,12 @@ public class StageManager : Singleton<StageManager>
                 {
                     Enemy newEnemy = GlobalDataTable.Instance.character.GetEnemyToID(curEnemyList[i].EnemyID);
                     Enemies.Add(newEnemy);
+                    Debug.Log(Enemies.Count);
                 }
+                CurrentSet++;
             }
         }
+        CurrentSet = 1;
         //foreach (EnemySpawn enemy in curEnemyList)
         //{
         //    if (enemy.Round == CurrentRound)
