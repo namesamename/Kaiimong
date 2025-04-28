@@ -76,8 +76,10 @@ public class StageManager : Singleton<StageManager>
                     Enemy newEnemy = GlobalDataTable.Instance.character.GetEnemyToID(curEnemyList[i].EnemyID);
                     Enemies.Add(newEnemy);
                 }
+                CurrentSet++;
             }
         }
+        CurrentSet = 1;
         //foreach (EnemySpawn enemy in curEnemyList)
         //{
         //    if (enemy.Round == CurrentRound)
@@ -95,6 +97,8 @@ public class StageManager : Singleton<StageManager>
 
     public void StageStart()
     {
+        Debug.Log("¤µ¤µ");
+        Debug.Log(CurrentRound);
         Enemies.Clear();
         CreateEnemy();
         if (CurrentRound <= CurrentStage.Rounds)
