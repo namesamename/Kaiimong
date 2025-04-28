@@ -111,12 +111,10 @@ public class BattleSystem : MonoBehaviour
 
         if (PlayerTurn)
         {
-            CheckGameOver();
             StartCoroutine(ChangePhase(EnemyTurnPhase));
         }
         else
         {
-            CheckGameOver();
             SetBattle();
             if (appearAnimComplete)
             {
@@ -160,14 +158,16 @@ public class BattleSystem : MonoBehaviour
 
     private void WinPhase()
     {
-        winFlag = true;
+        
         if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
         {
+            winFlag = false;
             StageManager.Instance.CurrentRound++;
             StageManager.Instance.StageStart();
         }
         else
         {
+            winFlag = true;
             StageManager.Instance.WinStage();
         }
     }
@@ -243,7 +243,7 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += CheckGameOver;
                     activeEnemies.Add(enemyUnit);
-                    Enemies.Remove(enemy);
+                    Enemies.RemoveAt(0);
                 }
                 else continue;
 

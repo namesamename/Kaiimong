@@ -8,6 +8,6 @@ public class EnemySpawn : SO
     public int Round;
     public int Set;
     public int EnemyID;
-    public int Count;
+    public int EnemyCount;
     public int Level;
 }

@@ -23,5 +23,5 @@ MonoBehaviour:
   ItemID: 010000000200000003000000
   Gold: 200
   Dia: 200
-  UnlockID: 
+  UnlockStageID: 0c000000
   UnlockChapterID: ffffffff
