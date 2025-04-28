@@ -199,6 +199,7 @@ public class BattleSystem : MonoBehaviour
                     GameObject playerObject = GlobalDataTable.Instance.character.CharacterInstanceSummon(player, Vector3.zero);
                     playerObject.transform.SetParent(playerLocations[i].transform, false);
                     CharacterCarrier playerUnit = playerObject.GetComponent<CharacterCarrier>();
+                    playerUnit.Initialize(GlobalDataTable.Instance.DataCarrier.GetCharacterIDToIndex(i));
                     playerLocations[i].isOccupied = true;
                     playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
                     playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);

@@ -125,7 +125,7 @@ public class CharacterStat : MonoBehaviour
     }
     public void OnDie()
     {
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
         OnDeath?.Invoke();
     }
     
