@@ -90,8 +90,8 @@ public class BattleSystem : MonoBehaviour
     {
         character.stat.OnDeath -= () => EmptyPlateOnUnitDeath(character);
         character.stat.OnDeath -= () => RemoveTarget(character);
-        character.stat.OnDeath -= CheckGameOver;
         character.stat.OnDeath -= () => CharacterDeath(character);
+        character.stat.OnDeath -= CheckGameOver;
     }
 
     public void SetUI()
@@ -204,8 +204,8 @@ public class BattleSystem : MonoBehaviour
                     playerLocations[i].isOccupied = true;
                     playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
                     playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
-                    playerUnit.stat.OnDeath += CheckGameOver;
                     playerUnit.stat.OnDeath += () => CharacterDeath(playerUnit);
+                    playerUnit.stat.OnDeath += CheckGameOver;
                     activePlayers.Add(playerUnit);
                     Players.Remove(player);
                 }
@@ -238,8 +238,8 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
                     enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
-                    enemyUnit.stat.OnDeath += CheckGameOver;
                     enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
+                    enemyUnit.stat.OnDeath += CheckGameOver;
                     activeEnemies.Add(enemyUnit);
                     Enemies.Remove(enemy);
                 }
