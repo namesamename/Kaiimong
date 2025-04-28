@@ -115,7 +115,10 @@ public class BattleSystem : MonoBehaviour
         if (PlayerTurn)
         {
             CheckGameOver();
-            StartCoroutine(ChangePhase(EnemyTurnPhase));
+            if (!isPhaseChanging) 
+            {
+                StartCoroutine(ChangePhase(EnemyTurnPhase));
+            }
         }
         else
         {
@@ -123,10 +126,14 @@ public class BattleSystem : MonoBehaviour
             if (appearAnimComplete)
             {
                 CheckGameOver();
-                StartCoroutine(ChangePhase(PlayerTurnPhase));
+                if (!isPhaseChanging)
+                {
+                    StartCoroutine(ChangePhase(PlayerTurnPhase));
+                }
             }
         }
-    }
+    
+}
 
     private void CheckGameOver()
     {
@@ -153,6 +160,7 @@ public class BattleSystem : MonoBehaviour
         {
             if (Enemies.Count == 0 && activeEnemies.Count == 0)
             {
+                Debug.Log("sadasd");
                 StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
                 return;
             }
@@ -190,10 +198,10 @@ public class BattleSystem : MonoBehaviour
 
     private void WinPhase()
     {
-        if (winFlag)
-        {
-            StageManager.Instance.WinStage();
-        }
+
+        winFlag = true;
+        StageManager.Instance.WinStage();
+      
     }
 
     private void NextRoundPhase()
