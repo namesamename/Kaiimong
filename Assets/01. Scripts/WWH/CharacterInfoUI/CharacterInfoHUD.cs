@@ -88,7 +88,7 @@ public class CharacterInfoHUD : MonoBehaviour
                     Dolpaimages[i].enabled = false;
                 }
 
-                for (int i = 0;i < saveData.Recognition; i++)
+                for (int i = 0;i < saveData.Necessity; i++)
                 {
                     Dolpaimages[i].enabled = true;
                 }
