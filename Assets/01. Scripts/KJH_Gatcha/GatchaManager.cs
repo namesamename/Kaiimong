@@ -34,7 +34,7 @@ public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입 구분, 
             Destroy(gameObject); // 중복 생성된 GatchaManager 제거
             return;
         }
-
+        gatchaDrawCount = PlayerPrefs.GetInt("GatchaDrawCount", 0);
         //SetGachaType(GatchaType.Pickup);
         //Setting();
     }
@@ -42,7 +42,7 @@ public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입 구분, 
     {
         SetGachaType(GatchaType.Pickup);
         Setting();
-        gatchaDrawCount = PlayerPrefs.GetInt("GatchaDrawCount", 0);
+       // gatchaDrawCount = PlayerPrefs.GetInt("GatchaDrawCount", 0);
     }
     public void SetGachaType(GatchaType type) //기본 타입을 픽업으로 설정
     {

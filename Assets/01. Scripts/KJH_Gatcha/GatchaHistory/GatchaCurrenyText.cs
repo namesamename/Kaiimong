@@ -8,6 +8,9 @@ public class GatchaCurrenyText : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI crystaltxt;
     [SerializeField] private TextMeshProUGUI tickettxt;
+    [SerializeField] private TextMeshProUGUI GatchaCount;
+
+
     public int crystal;
     public int ticket;
 
@@ -24,6 +27,7 @@ public class GatchaCurrenyText : MonoBehaviour
 
         tickettxt.text = "Ticket : " + ticket.ToString();
         crystaltxt.text ="Crystal : " + crystal.ToString();
+        GatchaCount.text = GatchaManager.Instance.gatchaDrawCount.ToString() + " / 70¹øÂ° È¹µæ¿¡ Sµî±Þ È®Á¤!";
     }
 
 }
