@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb287211c10f4e47b40d017ac1f4975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gradeColor: {fileID: 51167566594702764}
+  Icon: {fileID: 3058753174822795333}
   IsSeted: 0
   IsSelected: 0
   Selected: {fileID: 0}

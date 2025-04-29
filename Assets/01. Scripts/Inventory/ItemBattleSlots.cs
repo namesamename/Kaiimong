@@ -7,61 +7,96 @@ using UnityEngine;
 public class ItemBattleSlots : MonoBehaviour
 {
     private GameObject Prefabs;
-    private List<ItemSaveData> saveDatas = new List<ItemSaveData>();
-    private List<GameObject> Slots = new List<GameObject>();
+    private List<ItemData> curStageItemList;
+    private Queue<GameObject> slotPool = new Queue<GameObject>();
+    private List<GameObject> activeSlots = new List<GameObject>();
     public List<ItemBattleSlot> ItemSlotList = new List<ItemBattleSlot>();
     private int index = 0;
 
     private void Awake()
     {
-        Prefabs = Resources.Load<GameObject>("Battle/Stage/ItemSlot");
+        Prefabs = Resources.Load<GameObject>("UI/Stage/ItemSlot");
     }
 
-    public List<GameObject> GetSlots()
+    //public List<GameObject> GetSlots()
+    //{
+    //    return Slots;
+    //}
+
+    public void SetItemList(int stageID)
     {
-        return Slots;
+        // 기존 슬롯 정리
+        foreach (var slot in activeSlots)
+        {
+            slot.GetComponent<ItemBattleSlot>().SlotClear();
+            slot.SetActive(false);
+            slotPool.Enqueue(slot);
+        }
+        activeSlots.Clear();
+
+        if (curStageItemList != null)
+        {
+            curStageItemList.Clear();
+        }
+        else
+        {
+            curStageItemList = new List<ItemData>();
+        }
+
+        // ChapterManager에서 아이템 리스트 확인
+        if (ChapterManager.Instance.StageItemList.ContainsKey(stageID))
+        {
+            foreach (var item in ChapterManager.Instance.StageItemList[stageID])
+            {
+                curStageItemList.Add(item);
+            }
+            CreateSlot();
+        }
     }
+
     public void CreateSlot()
     {
-        List<ItemSaveData> list = SaveDataBase.Instance.GetSaveInstanceList<ItemSaveData>(SaveType.Item);
-        if (Slots.Count >= list.Count)
+        foreach (ItemData item in curStageItemList)
         {
-            int index = 0;
-            foreach (GameObject gameObject in Slots)
+            GameObject slot;
+            if (slotPool.Count > 0)
             {
-                gameObject.SetActive(true);
-                gameObject.GetComponent<ItemBattleSlot>().SetComponent();
-                gameObject.GetComponent<ItemBattleSlot>().SetSlot(saveDatas[index].ID);
-                index++;
+                slot = slotPool.Dequeue();
+                slot.SetActive(true);
             }
-        }
-        else
-        {
-            foreach (ItemSaveData data in list)
+            else
             {
-                saveDatas.Add(data);
+                slot = Instantiate(Prefabs, transform);
             }
-            for (int i = 0; i < saveDatas.Count; i++)
-            {
-                GameObject slot = Instantiate(Prefabs, transform);
-                Slots.Add(slot);
-                slot.GetComponent<ItemBattleSlot>().SetComponent();
-                slot.GetComponent<ItemBattleSlot>().SetSlot(saveDatas[i].ID);
-            }
+
+            slot.GetComponent<ItemBattleSlot>().SetComponent();
+            slot.GetComponent<ItemBattleSlot>().SetSlot(item.ID);
+            activeSlots.Add(slot);
         }
     }
 
-    public void SelectSlot(ItemBattleSlot slot)
+    public void ClearSlots()
     {
-        if (!slot.IsSeted)
+        foreach (GameObject slot in activeSlots)
         {
-            slot.IsSeted = true;
-            ItemSlotList.Add(slot);
+            slot.GetComponent<ItemBattleSlot>().SlotClear();
+            slot.SetActive(false);
+            slotPool.Enqueue(slot);
         }
-        else
-        {
-            slot.IsSeted = false;
-            ItemSlotList.Remove(slot);
-        }
+        activeSlots.Clear();
     }
+
+    //public void SelectSlot(ItemBattleSlot slot)
+    //{
+    //    if (!slot.IsSeted)
+    //    {
+    //        slot.IsSeted = true;
+    //        ItemSlotList.Add(slot);
+    //    }
+    //    else
+    //    {
+    //        slot.IsSeted = false;
+    //        ItemSlotList.Remove(slot);
+    //    }
+    //}
 }

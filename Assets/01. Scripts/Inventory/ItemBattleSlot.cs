@@ -9,15 +9,9 @@ public class ItemBattleSlot : MonoBehaviour
     private ItemData item;
     private ItemSaveData Save;
 
-    public bool IsSeted = false;
-    public bool IsSelected = false;
-
-    [SerializeField] GameObject Selected;
     ItemBattleSlots battleSlots;
 
     private int ItemID = 0;
-    private int Index;
-
 
     public void SetComponent()
     {
