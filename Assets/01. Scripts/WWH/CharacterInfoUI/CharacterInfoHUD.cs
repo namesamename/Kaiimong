@@ -82,6 +82,17 @@ public class CharacterInfoHUD : MonoBehaviour
                 break;
              case CharacterInfoType.Dolpa:
                 Button DolpaButton = GetComponentInChildren<Button>();
+                Image[] Dolpaimages = GetComponentsInChildren<Image>();
+                for (int i = 0; i < Dolpaimages.Length; i++)
+                {
+                    Dolpaimages[i].enabled = false;
+                }
+
+                for (int i = 0;i < saveData.Recognition; i++)
+                {
+                    Dolpaimages[i].enabled = true;
+                }
+
                 DolpaButton.onClick.RemoveAllListeners();
                 DolpaButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("breakthroughPopUP"));
                 break;
