@@ -13,7 +13,6 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public ItemDataTable Item;
     public UpGradeTable Upgrade;
     public EnemySpawnDataTable EnemySpawn;
-
     public ChapterCategoryDataTable ChapterCategory;
 
 

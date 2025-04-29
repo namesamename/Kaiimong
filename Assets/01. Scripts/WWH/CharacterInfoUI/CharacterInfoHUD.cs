@@ -83,12 +83,13 @@ public class CharacterInfoHUD : MonoBehaviour
              case CharacterInfoType.Dolpa:
                 Button DolpaButton = GetComponentInChildren<Button>();
                 Image[] Dolpaimages = GetComponentsInChildren<Image>();
-                for (int i = 0; i < Dolpaimages.Length; i++)
+                Dolpaimages[0].enabled = true;
+                for (int i = 1; i < Dolpaimages.Length; i++)
                 {
                     Dolpaimages[i].enabled = false;
                 }
 
-                for (int i = 0;i < saveData.Necessity; i++)
+                for (int i = 1;i < saveData.Necessity; i++)
                 {
                     Dolpaimages[i].enabled = true;
                 }

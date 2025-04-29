@@ -9,9 +9,6 @@ public class UIPartyList : MonoBehaviour
     GameObject Prefabs;
     List<GameObject> SlotList = new List<GameObject>();
     CharacterBattleSlots battleSlots;
-
-
-
     public int Index = 0;
     private void Awake()
     {

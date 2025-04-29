@@ -96,7 +96,6 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
     }
     public bool IsIngiBreakOK(Dictionary<int, int> Data)
     {
-
         foreach(int ID in Data.Keys)
         {
             if (ID != 0 && ID != -1)
@@ -105,7 +104,7 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
                 {
                     if (Data.TryGetValue(ID, out int count))
                     {
-                        if (count >= ItemManager.Instance.GetSaveData(ID).Value)
+                        if (count > ItemManager.Instance.GetSaveData(ID).Value)
                         {
                             return false;
                         }
@@ -116,7 +115,7 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
             {
                 if (Data.TryGetValue(0, out int count))
                 {
-                    if (count >= CurrencyManager.Instance.GetCurrency(CurrencyType.Gold))
+                    if (count > CurrencyManager.Instance.GetCurrency(CurrencyType.Gold))
                     {
                         return false;
                     }
@@ -126,7 +125,7 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
             {
                 if (Data.TryGetValue(-1, out int count))
                 {
-                    if (count >=  GlobalDataTable.Instance.DataCarrier.GetSave().Level)
+                    if (count >   GlobalDataTable.Instance.DataCarrier.GetSave().Level)
                     {
                         return false;
                     }

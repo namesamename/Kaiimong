@@ -20,7 +20,7 @@ public class IngiBtn : MonoBehaviour, ISetPOPUp
         buttons[0].onClick.RemoveAllListeners();
         buttons[1].onClick.RemoveAllListeners();
 
-        if (ingiPOPUP.slot.IsIngiBreakOK(ingiPOPUP.slot.NeedTable) || GlobalDataTable.Instance.DataCarrier.GetSave().Recognition <= 3)
+        if (ingiPOPUP.slot.IsIngiBreakOK(ingiPOPUP.slot.NeedTable) && GlobalDataTable.Instance.DataCarrier.GetSave().Recognition <= 3)
         {
             buttons[0].interactable = true;
             buttons[0].onClick.AddListener(UpGrade);
