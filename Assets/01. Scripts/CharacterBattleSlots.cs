@@ -11,6 +11,7 @@ public class CharacterBattleSlots : MonoBehaviour
     List<GameObject> Slots = new List<GameObject>();
     public List<CharacterBattleSlot> BattleSlots = new List<CharacterBattleSlot>();
     int index = 0;
+
     private void Awake()
     {
         Prefabs = Resources.Load<GameObject>("CharacterSlot/CharacterSlot");

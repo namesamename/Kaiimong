@@ -10,6 +10,7 @@ public class StageInfoUI : MonoBehaviour
 {
     [SerializeField] private Button enterButton;
     [SerializeField] private TextMeshProUGUI stageName;
+    [SerializeField] private ItemBattleSlots ItemBattleSlots;
 
     private Stage stage;
     private RectTransform rect;
@@ -26,6 +27,7 @@ public class StageInfoUI : MonoBehaviour
 
     public void DisableUI()
     {
+        ItemBattleSlots.ClearSlots();
         RemoveListner();
         stage = null;
         rect.DOAnchorPos(new Vector3(0, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
@@ -42,7 +44,7 @@ public class StageInfoUI : MonoBehaviour
     {
         stage = slot.Stage;
         stageName.text = stage.Name;
-
+        ItemBattleSlots.SetItemList(stage.ID);
         enterButton.onClick.AddListener(OnEnterButton);
     }
 
