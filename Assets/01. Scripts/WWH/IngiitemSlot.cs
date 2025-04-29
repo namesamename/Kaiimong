@@ -25,7 +25,7 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
         item = newItem;
 
         ItemSavaData itemSava = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, item.ID);
-
+        SetColor(newItem);
         if (item != null)
         {
             iconImage[1].sprite = Resources.Load<Sprite>(item.IconPath);
@@ -53,7 +53,7 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
             }
 
 
-            outlineEffect.enabled = false;   // 슬롯 생성 시 외곽선 비활성화
+            //outlineEffect.enabled = false;   // 슬롯 생성 시 외곽선 비활성화
         }
         else
         {
@@ -65,7 +65,8 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
     public void SetGold(int NeedCount)
     {
         itemCount = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
-        iconImage[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
+        iconImage[0].color = Color.yellow;
+        //iconImage[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
         countText.text = $"{itemCount}/{NeedCount}";
         if (itemCount < NeedCount)
         {
@@ -106,6 +107,30 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
         {
             popupObj.Show(item, itemCount);  // 아이템 데이터 전달
         }
+    }
+
+
+    public void SetColor(ItemData itemData)
+    {
+        switch (itemData.Grade)
+        {
+            case ERarity.S:
+                iconImage[0].color = Color.yellow;
+                break;
+            case ERarity.A:
+                iconImage[0].color = Color.magenta;
+                break;
+            case ERarity.B:
+                iconImage[0].color = Color.blue;
+                break;
+            case ERarity.C:
+                iconImage[0].color = Color.green;
+                break;
+            case ERarity.D:
+                iconImage[0].color = Color.gray;
+                break;
+        }
+
     }
 }
 
