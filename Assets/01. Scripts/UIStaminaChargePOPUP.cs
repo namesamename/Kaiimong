@@ -25,6 +25,12 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
     }
 
 
+    private void Update()
+    {
+        textMesh[0].text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.Activity)}/{CurrencyManager.Instance.GetCurrency(CurrencyType.CurMaxStamina)}";
+    }
+
+
     private void Start()
     {
         for (int i = 0; i < Buttons.Length; i++) 
@@ -59,7 +65,7 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
 
     public void TextSet()
     {
-        textMesh[0].text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.Activity)}/{CurrencyManager.Instance.GetCurrency(CurrencyType.CurMaxStamina)}";
+       
         textMesh[2].text = ItemManager.Instance.GetItemSaveData(9).Value.ToString();
         textMesh[3].text = ItemManager.Instance.GetItemSaveData(10).Value.ToString();
         if(CurrencyManager.Instance.GetCurrency(CurrencyType.purchaseCount) <= 1) 
