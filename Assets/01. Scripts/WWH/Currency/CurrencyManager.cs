@@ -13,7 +13,6 @@ using UnityEngine;
 public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 {
     CurrencySaveData data;
-
     ActivityCurrencySO ActSO;
     float offTime;
     float Interval;
@@ -21,6 +20,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     string LastTimeExitKey = "Timekey";
 
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
+
+
 
   
     private void Update()
@@ -83,6 +84,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 GoldValue = 1000,
                 DIAValue = 99999,
                 CharacterEXP = 1000,
+                purchaseCount = 0,
                 ID = 0
             };
         }
@@ -126,9 +128,11 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         if (CurrencySaveDic[CurrencyType.Activity] + amount > GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount)
         {
             CurrencySaveDic[CurrencyType.Activity] = GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount;
+            Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
         }
         else
         {
+            Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
             CurrencySaveDic[CurrencyType.Activity] += amount;
         }
     }
@@ -191,6 +195,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         CurrencySaveDic[CurrencyType.Activity] = data.ActivityValue;
         CurrencySaveDic[CurrencyType.CharacterEXP] = data.CharacterEXP;
         CurrencySaveDic[CurrencyType.CurMaxStamina] = data.CurrentStaminaMax;
+        CurrencySaveDic[CurrencyType.purchaseCount] = data.purchaseCount;
     }
 
     public CurrencySaveData DicToSaveData()
@@ -204,6 +209,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             DIAValue = CurrencySaveDic[CurrencyType.Dia],
             ActivityValue = CurrencySaveDic[CurrencyType.Activity],
             CharacterEXP = CurrencySaveDic[CurrencyType.CharacterEXP],
+            CurrentStaminaMax = CurrencySaveDic[CurrencyType.CurMaxStamina],
+            purchaseCount = CurrencySaveDic[CurrencyType.purchaseCount],
             Savetype = SaveType.Currency,
             ID = 0
         };

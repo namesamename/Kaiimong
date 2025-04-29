@@ -97,11 +97,13 @@ public class ItemManager : Singleton<ItemManager>
                 // 历厘等 单捞磐 肺靛
                 var savedData = foundData.Find(x => x.ID == itemID);
                 newItemData.Value = savedData.Value;
-         
+                newItemData.Savetype = SaveType.Item;
+
             }
             else
             {
                 // 货 单捞磐 积己
+                newItemData.Value = 0;
                 newItemData.Savetype = SaveType.Item;
                 SaveDataBase.Instance.SaveSingleData(newItemData);
                 Debug.Log("item data NO");

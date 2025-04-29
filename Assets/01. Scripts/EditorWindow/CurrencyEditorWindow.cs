@@ -27,6 +27,7 @@ public class CurrencyEditorWindow : EditorWindow
 
     private void OnGUI()
     {
+        if(GameSaveSystem.Load(SaveType.Currency).Count != 0)
         currencySaveData = (CurrencySaveData)GameSaveSystem.Load(SaveType.Currency)[0];
 
 
@@ -44,6 +45,7 @@ public class CurrencyEditorWindow : EditorWindow
                 CurrentStaminaMax = 0,
                 UserLevel = 0,
                 UserEXP = 0,
+                purchaseCount = 0,
                 UserName = string.Empty,
             };
             list.Add(saveData);

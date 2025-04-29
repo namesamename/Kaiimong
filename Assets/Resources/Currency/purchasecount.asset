@@ -9,16 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 791d529bcd693234bade6a9d2586a971, type: 3}
-  m_Name: Activity
+  m_Script: {fileID: 11500000, guid: 3b12f012dd935d44b924601514827e3c, type: 3}
+  m_Name: purchasecount
   m_EditorClassIdentifier: 
-  ID: 5
+  ID: 8
   Name: 
   Description: 
   IconPath: 
-  MaxCount: 1000
+  MaxCount: 10
   Value: 0
-  CurrencyType: 4
+  CurrencyType: 8
   exchangeInfos: []
-  AutoRecoveryPerMinute: 600
-  CurrentLevelMaxCount: 0
