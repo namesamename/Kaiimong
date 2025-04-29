@@ -23,8 +23,17 @@ public class IngiBoard : MonoBehaviour, ISetPOPUp
 
     public void SetText(int Reco, List<CharacterUpgradeTable> list)
     {
-        Textmesh[1].text = list[Reco].Name;
-        Textmesh[2].text = list[Reco].Des;
+
+        if (Reco <= 2)
+        {
+            Textmesh[1].text = list[Reco].Name;
+            Textmesh[2].text = list[Reco].Des;
+        }
+        else
+        {
+            Textmesh[1].text = "Max";
+            Textmesh[2].text = "Max";
+        }
 
     }
 

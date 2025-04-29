@@ -26,8 +26,9 @@ public class UIBreakEffect : MonoBehaviour, ISetPOPUp
         for(int i = 0; i < Texts.Length; ++i) 
         {
             Texts[i].text = i.ToString();
+            Texts[i].color = Color.black;
         }
-        for (int i = Texts.Length-1; i >= GlobalDataTable.Instance.DataCarrier.GetSave().Recognition; i--) 
+        for (int i = Texts.Length-1; i >= GlobalDataTable.Instance.DataCarrier.GetSave().Necessity; i--) 
         {
             Texts[i].color = Color.gray;
         }

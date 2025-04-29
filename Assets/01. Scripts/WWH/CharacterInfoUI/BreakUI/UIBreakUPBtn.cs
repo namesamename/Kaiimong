@@ -25,7 +25,7 @@ public class UIBreakUPBtn : MonoBehaviour, ISetPOPUp
 
 
 
-        if (itemSavaData != null && itemSavaData.Value > 0 && characterSave.Recognition != 5)
+        if (itemSavaData != null && itemSavaData.Value > 0 && characterSave.Necessity < 5)
         {
             buttons[0].onClick.AddListener(() => UPBreak(itemSavaData, characterSave));
         }
