@@ -18,6 +18,7 @@ MonoBehaviour:
   Des: dsa
   Recognition: 1
   NeedGold: 1200
+  NeedLevel: 20
   ItemCount: 3
   FirstItemID: 1
   FirstItemCount: 2

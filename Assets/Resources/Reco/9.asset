@@ -18,6 +18,7 @@ MonoBehaviour:
   Des: ads
   Recognition: 3
   NeedGold: 1100
+  NeedLevel: 60
   ItemCount: 3
   FirstItemID: 1
   FirstItemCount: 2

@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum UpgradeType
+{
+    Item,
+    Level,
+    Gold
+
+}
+
 public class IngiSlots : MonoBehaviour, ISetPOPUp
 {
 
@@ -33,8 +42,10 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
   
         if (table.ItemCount >= 3)
         {
+            NeedTable[-1] = table.NeedLevel;
+            SlotInstantiate(0, UpgradeType.Level);
             NeedTable[0] = table.NeedGold;
-            SlotInstantiate(0, false);
+            SlotInstantiate(0, UpgradeType.Gold);
             NeedTable[table.FirstItemID] = table.FirstItemCount;
             SlotInstantiate(table.FirstItemID);
             NeedTable[table.SecondItemID] = table.SecondItemCount;
@@ -62,46 +73,60 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
             }
         }
     }
-    public void SlotInstantiate(int id, bool Isitem = true)
+    public void SlotInstantiate(int id, UpgradeType upgrade = UpgradeType.Item)
     {
-       
-     
-        if (Isitem)
-        {
-            ItemData item = GlobalDataTable.Instance.Item.GetItemDataToID(id);
-            GameObject Game = Instantiate(Slots, transform);
-            Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
-        }
-        else
-        {
-            GameObject Game = Instantiate(Slots, transform);
-            Game.GetComponent<IngiitemSlot>().SetGold(NeedTable[0]);
-        }
 
+        switch (upgrade)
+        {
+            case UpgradeType.Item:
+                ItemData item = GlobalDataTable.Instance.Item.GetItemDataToID(id);
+                GameObject Game = Instantiate(Slots, transform);
+                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
+                break;
+            case UpgradeType.Gold:
+                GameObject Goldslot = Instantiate(Slots, transform);
+                Goldslot.GetComponent<IngiitemSlot>().SetGold(NeedTable[0]);
+                break;
+            case UpgradeType.Level:
+               GameObject LevelSlot = Instantiate(Slots, transform);
+                LevelSlot.GetComponent<IngiitemSlot>().SetLevel(NeedTable[-1]);
+                break;
+
+        }
     }
     public bool IsIngiBreakOK(Dictionary<int, int> Data)
     {
 
         foreach(int ID in Data.Keys)
         {
-            if (ID != 0)
+            if (ID != 0 && ID != -1)
             {
                 if (ItemManager.Instance.GetSaveData(ID) != null)
                 {
                     if (Data.TryGetValue(ID, out int count))
                     {
-                        if (count > ItemManager.Instance.GetSaveData(ID).Value)
+                        if (count >= ItemManager.Instance.GetSaveData(ID).Value)
                         {
                             return false;
                         }
                     }
                 }
             }
-            else
+            else if(ID == 0)
             {
                 if (Data.TryGetValue(0, out int count))
                 {
-                    if (count > CurrencyManager.Instance.GetCurrency(CurrencyType.Gold))
+                    if (count >= CurrencyManager.Instance.GetCurrency(CurrencyType.Gold))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (Data.TryGetValue(-1, out int count))
+                {
+                    if (count >=  GlobalDataTable.Instance.DataCarrier.GetSave().Level)
                     {
                         return false;
                     }

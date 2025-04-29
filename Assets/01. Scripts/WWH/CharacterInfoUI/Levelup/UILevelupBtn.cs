@@ -49,7 +49,6 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
         }
         else
         {
-            // 레벨업 불가능
             buttons[5].interactable = false;
         }
 

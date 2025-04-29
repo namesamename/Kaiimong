@@ -62,6 +62,22 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
     }
 
 
+    public void SetLevel(int NeedCount)
+    {
+        itemCount = GlobalDataTable.Instance.DataCarrier.GetSave().Level;
+        iconImage[0].color = Color.yellow;
+        //iconImage[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
+        countText.text = $"{itemCount}/{NeedCount}";
+        if (itemCount < NeedCount)
+        {
+            countText.color = Color.red;
+        }
+        else
+        {
+            countText.color = Color.green;
+        }
+    }
+
     public void SetGold(int NeedCount)
     {
         itemCount = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);

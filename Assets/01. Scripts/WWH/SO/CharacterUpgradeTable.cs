@@ -9,6 +9,7 @@ public class CharacterUpgradeTable : SO
     public string Des;
     public int Recognition;
     public int NeedGold;
+    public int NeedLevel;
     public int ItemCount;
     public int FirstItemID;
     public int FirstItemCount;

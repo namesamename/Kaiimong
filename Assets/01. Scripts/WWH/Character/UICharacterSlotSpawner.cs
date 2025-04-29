@@ -62,7 +62,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
 
         if (saveDatas != null)
         {
-            List<CharacterSaveData> GradeSortList = saveDatas.OrderBy(item => item.Level).ThenBy(item => GlobalDataTable.Instance.character.GetCharToID(item.ID).Grade).ToList();
+            List<CharacterSaveData> GradeSortList = saveDatas.OrderBy(item => item.Level).ThenByDescending(item => GlobalDataTable.Instance.character.GetCharToID(item.ID).Grade).ToList();
 
             ISLevelOrder = !ISLevelOrder;
             SpawnFromSaveData(GradeSortList);
@@ -79,7 +79,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
 
         if (saveDatas != null)
         {
-            List<CharacterSaveData> GradeSortList = saveDatas.OrderByDescending(item => item.Level).ThenByDescending(item => GlobalDataTable.Instance.character.GetCharToID(item.ID).Grade).ToList();
+            List<CharacterSaveData> GradeSortList = saveDatas.OrderByDescending(item => item.Level).ThenBy(item => GlobalDataTable.Instance.character.GetCharToID(item.ID).Grade).ToList();
             ISLevelOrder = !ISLevelOrder;
             SpawnFromSaveData(GradeSortList);
 
@@ -109,7 +109,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
             }
 
             List<Character> GradeSortList = CharacterList.OrderBy(item => item.Grade).
-                ThenBy(Item => SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, Item.ID).Level).ToList();
+                ThenByDescending(Item => SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, Item.ID).Level).ToList();
 
             foreach (Character grade in GradeSortList)
             {

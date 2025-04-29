@@ -12,7 +12,7 @@ public static class LevelUpSystem
     public static int[] MaxLevel = new int[4] { 20, 40, 60, 90 };
     public static void Init()
     {
-        for (int i = 1; i <= 90; i++)
+        for (int i = 1; i <= 91; i++)
         {
             PlayerNeedExp.Add(i);
             needGold.Add(i);

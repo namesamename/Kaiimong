@@ -20,7 +20,7 @@ public static class Utility
             k = value / 1000;
            return $"{k}k";
         }
-        else if(value % 1000 != 0)
+        else if(value % 1000 != 0 && value > 1000)
         {
             k = value / 1000;
             comma = value % 1000;
