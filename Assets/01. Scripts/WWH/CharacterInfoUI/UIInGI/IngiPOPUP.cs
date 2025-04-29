@@ -19,13 +19,20 @@ public class IngiPOPUP : UIPopup
         board = GetComponentInChildren<IngiBoard>();
         slot = GetComponentInChildren<IngiSlots>();
         btn = GetComponentInChildren<IngiBtn>();
-        Initialize();
+    
     }
 
+    private void Start()
+    {
+        Initialize();
+    }
     public void Initialize()
     {
-
-        setPOPUps.Initialize();
+        for (int i = 0; i < setPOPUps.Length; i++)
+        {
+            setPOPUps[i].Initialize();
+        }
+      
     }
 
 

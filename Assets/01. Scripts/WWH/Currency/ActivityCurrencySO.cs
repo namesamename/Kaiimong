@@ -6,6 +6,5 @@ using UnityEngine;
 public class ActivityCurrencySO : CurrencySO
 {
     public int AutoRecoveryPerMinute;
-    public int CurrentLevelMaxCount;
 
 }

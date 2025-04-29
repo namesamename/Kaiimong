@@ -24,6 +24,7 @@ public class CurrencySaveData : SaveInstance
 {
 
     public string UserName = "JIHwan";
+    public int purchaseCount;
     public int UserLevel;
     public int UserEXP;
     public int CurrentStaminaMax;

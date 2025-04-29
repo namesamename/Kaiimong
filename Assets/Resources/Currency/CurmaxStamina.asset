@@ -9,16 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 791d529bcd693234bade6a9d2586a971, type: 3}
-  m_Name: Activity
+  m_Script: {fileID: 11500000, guid: a2abc69992e272543bd35b8315c16248, type: 3}
+  m_Name: CurmaxStamina
   m_EditorClassIdentifier: 
-  ID: 5
+  ID: 9
   Name: 
   Description: 
   IconPath: 
   MaxCount: 1000
   Value: 0
-  CurrencyType: 4
+  CurrencyType: 7
   exchangeInfos: []
-  AutoRecoveryPerMinute: 600
-  CurrentLevelMaxCount: 0

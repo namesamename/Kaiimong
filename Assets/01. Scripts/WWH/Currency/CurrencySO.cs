@@ -10,7 +10,8 @@ public enum CurrencyType
     Activity,
     Dia,
     CharacterEXP,
-    CurMaxStamina
+    CurMaxStamina,
+    purchaseCount,
 }
 
 public class CurrencySO : SO

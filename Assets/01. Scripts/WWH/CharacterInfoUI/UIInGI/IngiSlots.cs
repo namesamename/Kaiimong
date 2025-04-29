@@ -5,20 +5,23 @@ using UnityEngine;
 public class IngiSlots : MonoBehaviour, ISetPOPUp
 {
 
-    GameObject[] Slots;
+    public GameObject Slots;
 
     public Dictionary<int,int> NeedTable = new Dictionary<int,int>();
 
     private void Awake()
     {
-        Slots = Resources.LoadAll<GameObject>("ItemSlot");
+        Slots = Resources.Load<GameObject>("ItemSlot/ItemSlot");
     }
 
     public void Initialize()
     {
+
         int Rec = GlobalDataTable.Instance.DataCarrier.GetSave().Recognition;
         int Id = GlobalDataTable.Instance.DataCarrier.GetSave().ID;
-        List<CharacterUpgradeTable> list = GlobalDataTable.Instance.Upgrade.GetRecoList(GlobalDataTable.Instance.DataCarrier.GetSave().ID);
+        List<CharacterUpgradeTable> list = GlobalDataTable.Instance.Upgrade.GetRecoList(Id);
+
+        Debug.Log(list.Count);
         SetItemslot(list[Rec]);
     }
 
@@ -51,35 +54,12 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
         if (Isitem)
         {
             ItemData item = GlobalDataTable.Instance.Item.GetItemDataToID(id);
-            if (item.Grade == ERarity.S)
-            {
-                GameObject Game = Instantiate(Slots[4], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
-            }
-            else if (item.Grade == ERarity.A)
-            {
-                GameObject Game = Instantiate(Slots[0], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
-            }
-            else if (item.Grade == ERarity.B)
-            {
-                GameObject Game = Instantiate(Slots[1], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
-            }
-            else if (item.Grade == ERarity.C)
-            {
-                GameObject Game = Instantiate(Slots[2], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
-            }
-            else if (item.Grade == ERarity.D)
-            {
-                GameObject Game = Instantiate(Slots[3], transform);
-                Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
-            }
+            GameObject Game = Instantiate(Slots, transform);
+            Game.GetComponent<IngiitemSlot>().SetSlot(item, NeedTable[id]);
         }
         else
         {
-            GameObject Game = Instantiate(Slots[4], transform);
+            GameObject Game = Instantiate(Slots, transform);
             Game.GetComponent<IngiitemSlot>().SetGold(NeedTable[0]);
         }
 

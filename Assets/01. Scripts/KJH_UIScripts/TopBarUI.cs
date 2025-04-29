@@ -18,7 +18,7 @@ public class TopBarUI : MonoBehaviour
     private void Start()
     {
         UpdateResource();
-        ShowResource();
+
         // 시작 시 한 번 갱신해서 보이게
 
 
@@ -36,13 +36,11 @@ public class TopBarUI : MonoBehaviour
         playerstamina = CurrencyManager.Instance.GetCurrency(CurrencyType.Activity);
         playergold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
         playercrystal = CurrencyManager.Instance.GetCurrency(CurrencyType.Dia);
-    }
 
-    public void ShowResource()
-    {
         CountText = GetComponentsInChildren<TextMeshProUGUI>();
-        CountText[0].text = $"Stamina: {playerstamina} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount}";
+        CountText[0].text = $"Stamina: {playerstamina} / {CurrencyManager.Instance.GetCurrency(CurrencyType.CurMaxStamina)}";
         CountText[1].text = $"Gold: {playergold} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Gold].MaxCount}";
         CountText[2].text = $"Crystal: {playercrystal} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Dia].MaxCount}";
     }
+
 }
