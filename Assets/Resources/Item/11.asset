@@ -17,7 +17,7 @@ MonoBehaviour:
   Grade: 1
   ItemType: 2
   ConsumeID: 0
-  IconPath: asd
+  IconPath: ItemIcon/IconOne
   MaxStackCount: 999
   Description: "\u3141\u3134\u3147"
   ObtainLocation: "\u3141\u3134\u3147"

@@ -15,9 +15,6 @@ MonoBehaviour:
   ID: 2
   Name: 1-2
   Rounds: 2
-  EnemiesID: 0100000002000000010000000200000002000000
-  EnemyLevel: 5
-  EnemyCount: 0200000003000000
   BackgroundPath: Battle/BackGround/One
   ActivityPoint: 10
   ItemID: 040000000500000006000000

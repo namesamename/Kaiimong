@@ -9,11 +9,31 @@ public class ChapterManager : Singleton<ChapterManager>
 
     public Dictionary<int, ChapterSaveData> ChaptersSaveList = new Dictionary<int, ChapterSaveData>();
     public Dictionary<int, StageSaveData> StageSaveList = new Dictionary<int, StageSaveData>();
+    public Dictionary<int, List<ItemData>> StageItemList = new Dictionary<int, List<ItemData>>();
 
     public Chapter CurChapter;
 
     public Action OnChapterOpen;
 
+    private void Start()
+    {
+        foreach (var stages in GlobalDataTable.Instance.Stage.StageDic)
+        {
+            int stageID = stages.Key;
+            Stage stage = stages.Value;
+            List<ItemData> itemList = new List<ItemData>();
+
+            foreach(int itemID in stage.ItemID)
+            {
+                if (GlobalDataTable.Instance.Item.ItemDic.TryGetValue(itemID, out ItemData item))
+                {
+                    itemList.Add(item);
+                }
+            }
+
+            StageItemList[stageID] = itemList;
+        }
+    }
 
     public void Initailize()
     {
