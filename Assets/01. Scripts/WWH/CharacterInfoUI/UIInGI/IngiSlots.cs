@@ -21,12 +21,16 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
         int Id = GlobalDataTable.Instance.DataCarrier.GetSave().ID;
         List<CharacterUpgradeTable> list = GlobalDataTable.Instance.Upgrade.GetRecoList(Id);
 
-        Debug.Log(list.Count);
+        DeleteSlot();
+        if (Rec >= 3)
+            return;
+   
         SetItemslot(list[Rec]);
     }
 
     public void SetItemslot(CharacterUpgradeTable table )
     {
+  
         if (table.ItemCount >= 3)
         {
             NeedTable[0] = table.NeedGold;
@@ -48,9 +52,20 @@ public class IngiSlots : MonoBehaviour, ISetPOPUp
         }
     }
 
-
+    public void DeleteSlot()
+    {
+        if (transform.childCount > 0)
+        {
+            for (int i = transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+        }
+    }
     public void SlotInstantiate(int id, bool Isitem = true)
     {
+       
+     
         if (Isitem)
         {
             ItemData item = GlobalDataTable.Instance.Item.GetItemDataToID(id);

@@ -13,6 +13,8 @@ public class IngiPOPUP : UIPopup
    
     ISetPOPUp[] setPOPUps;
 
+    
+
     private void Awake()
     {
         setPOPUps = GetComponentsInChildren<ISetPOPUp>();
@@ -28,9 +30,17 @@ public class IngiPOPUP : UIPopup
     }
     public void Initialize()
     {
-        for (int i = 0; i < setPOPUps.Length; i++)
+
+        if (GlobalDataTable.Instance.DataCarrier.GetSave().Recognition <= 2)
         {
-            setPOPUps[i].Initialize();
+            for (int i = 0; i < setPOPUps.Length; i++)
+            {
+                setPOPUps[i].Initialize();
+            }
+        }
+        else
+        {
+            Destroy();
         }
       
     }

@@ -41,11 +41,12 @@ public class UIBreakUPBtn : MonoBehaviour, ISetPOPUp
     public void UPBreak(ItemSavaData itemSava , CharacterSaveData saveData)
     {
         itemSava.Value--;
-        saveData.Recognition += 1;
+        saveData.Necessity += 1;
         //레벨에 따라서 그 효과 열기 진행
         SaveDataBase.Instance.SaveSingleData(itemSava);
         SaveDataBase.Instance.SaveSingleData(saveData);
         breakPOPUP.Initialize();
+        CharacterInfoHUDManager.Instance.Initialize();
     }
 
 }

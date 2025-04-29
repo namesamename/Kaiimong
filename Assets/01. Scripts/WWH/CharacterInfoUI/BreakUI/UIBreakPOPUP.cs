@@ -23,11 +23,9 @@ public class UIBreakPOPUP : UIPopup
 
     public void Initialize()
     {
-        Debug.Log(setPOPUps.Length);
         for (int i = 0; i < setPOPUps.Length; i++)
         {
             setPOPUps[i].Initialize();
         }
     }
-
 }

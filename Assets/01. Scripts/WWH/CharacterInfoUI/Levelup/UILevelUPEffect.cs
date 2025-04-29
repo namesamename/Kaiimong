@@ -25,8 +25,8 @@ public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
 
     public void CurCurrencyTextSet()
     { 
-        textMeshPros[4].text = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold).ToString();
-        textMeshPros[5].text = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP).ToString();
+        textMeshPros[4].text = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold).ToKNumber();
+        textMeshPros[5].text = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP).ToKNumber();
 
     }
     public void SetImages()
@@ -59,11 +59,11 @@ public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
         textMeshPros[1].text = popUP.NextLevel.ToString();
 
         int requiredGold = LevelUpSystem.needGold[popUP.NextLevel];
-        textMeshPros[2].text = requiredGold.ToString();
+        textMeshPros[2].text = requiredGold.ToKNumber();
         popUP.UsingGlod = requiredGold;
 
         int requiredExp = LevelUpSystem.needamulet[popUP.NextLevel];
-        textMeshPros[3].text = requiredExp.ToString();
+        textMeshPros[3].text = requiredExp.ToKNumber();
         popUP.UsingAmulet = requiredExp;
 
         textMeshPros[6].text = $"Lv.{popUP.NextLevel}";
@@ -121,11 +121,11 @@ public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
 
 
         int requiredGold = popUP.NextLevel > popUP.CurLevel ? LevelUpSystem.needGold[popUP.NextLevel] : 0;
-        textMeshPros[2].text = requiredGold.ToString();
+        textMeshPros[2].text = requiredGold.ToKNumber();
         popUP.UsingGlod = requiredGold;
 
         int requiredExp = popUP.NextLevel > popUP.CurLevel ? LevelUpSystem.needamulet[popUP.NextLevel] : 0;
-        textMeshPros[3].text = requiredExp.ToString();
+        textMeshPros[3].text = requiredExp.ToKNumber();
         popUP.UsingAmulet = requiredExp;
 
 

@@ -36,11 +36,13 @@ public class TopBarUI : MonoBehaviour
         playerstamina = CurrencyManager.Instance.GetCurrency(CurrencyType.Activity);
         playergold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
         playercrystal = CurrencyManager.Instance.GetCurrency(CurrencyType.Dia);
-
         CountText = GetComponentsInChildren<TextMeshProUGUI>();
+ 
+
+
         CountText[0].text = $"Stamina: {playerstamina} / {CurrencyManager.Instance.GetCurrency(CurrencyType.CurMaxStamina)}";
-        CountText[1].text = $"Gold: {playergold} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Gold].MaxCount}";
-        CountText[2].text = $"Crystal: {playercrystal} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Dia].MaxCount}";
+        CountText[1].text = $"Gold: {playergold.ToKNumber()}";
+        CountText[2].text = $"Crystal: {playercrystal}";
     }
 
 }

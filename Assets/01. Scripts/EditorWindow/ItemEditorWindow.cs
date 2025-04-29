@@ -35,7 +35,7 @@ public class ItemEditorWindow : EditorWindow
                 ItemSavaData data = new ItemSavaData()
                 {
                     ID = i,
-                    Value = 2,
+                    Value = 100,
                     Savetype = SaveType.Item, 
                 };
                 Debug.Log($"{data.ID}의 ID를 가진 세이브 데이터 생성");

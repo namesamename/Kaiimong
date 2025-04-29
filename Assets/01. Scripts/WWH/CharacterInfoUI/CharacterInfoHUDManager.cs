@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterInfoHUDManager : MonoBehaviour
+public class CharacterInfoHUDManager : Singleton<CharacterInfoHUDManager>
 {
     private void Start()
     {

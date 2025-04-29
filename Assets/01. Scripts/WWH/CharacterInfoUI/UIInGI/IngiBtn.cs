@@ -52,8 +52,11 @@ public class IngiBtn : MonoBehaviour, ISetPOPUp
 
 
         SaveDataBase.Instance.SaveSingleData(GlobalDataTable.Instance.DataCarrier.GetSave());
-        Initialize();
 
+
+        ingiPOPUP.Initialize();
+
+        CharacterInfoHUDManager.Instance.Initialize();
 
     }
 }

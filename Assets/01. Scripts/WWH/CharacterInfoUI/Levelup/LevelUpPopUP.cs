@@ -18,11 +18,11 @@ public class LevelUpPopUP : UIPopup
 
     public ISetPOPUp[] setPOPUps;
 
-    public CharacterInfoHUDManager characterInfoHUDManager;
+
 
     private void Awake()
     {
-        characterInfoHUDManager = FindAnyObjectByType<CharacterInfoHUDManager>();
+       
         setPOPUps = GetComponentsInChildren<ISetPOPUp>();
         btn = GetComponentInChildren<UILevelupBtn>();
         effect = GetComponentInChildren<UILevelUPEffect>();
@@ -54,7 +54,7 @@ public class LevelUpPopUP : UIPopup
 
     public void UISet()
     {
-        characterInfoHUDManager.Initialize();
+      CharacterInfoHUDManager.Instance.Initialize();
     }
 
 

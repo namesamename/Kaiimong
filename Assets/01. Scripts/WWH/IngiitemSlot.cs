@@ -34,8 +34,8 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
             if (itemSava != null)
             {
 
-                countText.text = $"{itemCount}/{NeedCount}";
-                if (itemCount < NeedCount)
+                countText.text = $"{itemSava.Value}/{NeedCount}";
+                if (itemSava.Value < NeedCount)
                 {
                     countText.color = Color.red;
                 }
@@ -67,7 +67,7 @@ public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
         itemCount = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
         iconImage[0].color = Color.yellow;
         //iconImage[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
-        countText.text = $"{itemCount}/{NeedCount}";
+        countText.text = $"{itemCount.ToKNumber()}/{NeedCount.ToKNumber()}";
         if (itemCount < NeedCount)
         {
             countText.color = Color.red;

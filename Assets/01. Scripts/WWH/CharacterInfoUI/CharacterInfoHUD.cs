@@ -96,7 +96,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 TextMeshProUGUI Ingi = GetComponentInChildren<TextMeshProUGUI>();
                 Button IngiUpButton = GetComponentInChildren<Button>();
                 IngiUpButton.onClick.RemoveAllListeners();
-                Ingi.text = $"Ingi\n{saveData.Necessity}";
+                Ingi.text = $"Ingi\n{saveData.Recognition}";
                 IngiUpButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("IngiPopUp"));
                 break;
             case CharacterInfoType.ActiveSkill:

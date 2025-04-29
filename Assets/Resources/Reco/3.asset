@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 3
   CharacterID: 1
-  Name: sad
-  Des: asd
+  Name: 3
+  Des: 3
   Recognition: 3
   NeedGold: 1400
-  ItemCount: 3
+  ItemCount: 5
   FirstItemID: 1
   FirstItemCount: 2
   SecondItemID: 4
   SecondItemCount: 3
-  ThridItemID: 12
-  ThridItemCount: 123
-  FourthItemID: 123
-  FourthItemCount: 123
+  ThridItemID: 3
+  ThridItemCount: 4
+  FourthItemID: 4
+  FourthItemCount: 3
