@@ -37,24 +37,28 @@ public class ChapterCameraTarget : MonoBehaviour
             isDragging = false;
         }
 
-        if (Input.GetMouseButton(0))
+        if (!stageInfoUI.gameObject.activeSelf)
         {
-            Vector3 current = GetMouseWorldPosition();
-            Vector3 delta = dragStart - current;
-            delta.y = 0;
 
-            if (!isDragging && delta.magnitude > dragDistance)
+            if (Input.GetMouseButton(0))
             {
-                isDragging = true;
-                isStillClick = false;
-            }
+                Vector3 current = GetMouseWorldPosition();
+                Vector3 delta = dragStart - current;
+                delta.y = 0;
 
-            if (isDragging)
-            {
-                transform.position += delta;
-                float clamp = Mathf.Clamp(transform.position.x, camMin, camMax);
-                transform.position = new Vector3(clamp, transform.position.y, transform.position.z);
-                dragStart = current;
+                if (!isDragging && delta.magnitude > dragDistance)
+                {
+                    isDragging = true;
+                    isStillClick = false;
+                }
+
+                if (isDragging)
+                {
+                    transform.position += delta;
+                    float clamp = Mathf.Clamp(transform.position.x, camMin, camMax);
+                    transform.position = new Vector3(clamp, transform.position.y, transform.position.z);
+                    dragStart = current;
+                }
             }
         }
 
