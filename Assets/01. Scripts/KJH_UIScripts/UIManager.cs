@@ -61,5 +61,21 @@ public class UIManager : Singleton<UIManager>
 
     }
 
+
+    public GameObject CreatTransformPOPUP(string popupName, Transform transform)
+    {
+        var obj = POPS.Find(x => x.name == popupName);
+
+        GameObject game = Instantiate(obj);
+
+        int Ran = Random.Range(-4 , 4);
+
+        Vector3 vector3 = new Vector3(transform.position.x + Ran, transform.position.y + Ran + 3f,  transform.position.z);
+        game.transform.position = vector3;
+        game.transform.rotation = Quaternion.identity;
+
+        return game;
+    }
+
 }
 

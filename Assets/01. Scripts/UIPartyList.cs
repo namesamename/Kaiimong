@@ -17,6 +17,9 @@ public class UIPartyList : MonoBehaviour
     }
     private void Start()
     {
+        Party = GlobalDataTable.Instance.DataCarrier;
+        Party.RemoveAll();
+
         for (int i = 0; i < 4; i++)
         {
             GameObject game = Instantiate(Prefabs, transform);
@@ -33,7 +36,7 @@ public class UIPartyList : MonoBehaviour
         partyDown();
 
         List<GameObject> slots = battleSlots.GetSlots();
-        Party = GlobalDataTable.Instance.DataCarrier;
+        
         foreach (int id in Party.GetCharacterIDList())
         {
             SlotList[Index].GetComponent<CharacterBattleSlot>().SetComponent();

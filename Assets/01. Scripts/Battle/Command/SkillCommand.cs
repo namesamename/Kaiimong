@@ -1,4 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class SkillCommand
 {
@@ -15,7 +18,13 @@ public class SkillCommand
     public void Execute()
     {
         unit.skillBook.ActiveSkillUsing(skillData, targets);
+
+
+      
     }
+
+
+
 
     public void Undo()
     {

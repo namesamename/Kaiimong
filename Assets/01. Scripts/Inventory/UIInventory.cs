@@ -58,9 +58,7 @@ public class UIInventory : MonoBehaviour
 
     private List<ItemData> SortByRarity()           // Èñ±Íµµ ¼ø Á¤·Ä (S ¡æ D ¼ø)
     {
-
         List<ItemSavaData> HaveItem = ItemManager.Instance.GetSaveList();
-
         if (HaveItem != null)
         {
             List<ItemData> List = new List<ItemData>();

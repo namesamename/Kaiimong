@@ -29,8 +29,6 @@ public class CharacterVisual : MonoBehaviour
     {
         animator = GetComponentInParent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-
         switch (character)
         {
             case CharacterType.Friend:
@@ -46,7 +44,6 @@ public class CharacterVisual : MonoBehaviour
                 // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
                 break;
         }
-
         // 애니메이션 길이 계산
         if (animator != null)
         {
@@ -59,6 +56,11 @@ public class CharacterVisual : MonoBehaviour
             animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
             StartCoroutine(PlayAni());
         }
+    }
+
+    public float GetAnimationLength(int index)
+    {
+        return animationClips[index].length;
     }
 
     public void SetSprite(SpriteType sprite)

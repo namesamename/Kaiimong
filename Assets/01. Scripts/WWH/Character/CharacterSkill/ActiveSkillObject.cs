@@ -22,17 +22,20 @@ public class ActiveSkillObject : MonoBehaviour
     }
     public void UseSkill(List<CharacterCarrier> targetcharacter)
     {
-        if(skillSO.Id % 3 == 1)
+        if (animator != null)
         {
-            animator.SetTrigger("First");
-        }
-        else if(skillSO.Id % 3 == 2)
-        {
-            animator.SetTrigger("Second");
-        }
-        else
-        {
-            animator.SetTrigger("Thrid");
+            if (skillSO.Id % 3 == 1)
+            {
+                animator.SetTrigger("First");
+            }
+            else if (skillSO.Id % 3 == 2)
+            {
+                animator.SetTrigger("Second");
+            }
+            else
+            {
+                animator.SetTrigger("Thrid");
+            }
         }
 
         CharacterStat stat = transform.parent.transform.parent.GetComponentInChildren<CharacterStat>();
@@ -47,14 +50,8 @@ public class ActiveSkillObject : MonoBehaviour
         {
             foreach (CharacterCarrier c in targetcharacter)
             { 
-                
                 c.stat.healthStat.Heal(skillSO.Attack * stat.attackStat.GetStat());
-
-                UIPopup DamagePOP = UIManager.Instance.ShowPopup("DamagePOPUP");
-                
-
-       
-
+                GameObject DamagePOP = UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", c.transform);
                 DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(skillSO.Attack * stat.attackStat.GetStat(), false, c);
             }
         }
@@ -64,11 +61,7 @@ public class ActiveSkillObject : MonoBehaviour
 
             foreach (CharacterCarrier character in targetcharacter.ToList())
             {
-                UIPopup DamagePOP = UIManager.Instance.ShowPopup("DamagePOPUP");
-
-                Vector3 pos = Camera.main.WorldToScreenPoint(character.transform.parent.position);
-                DamagePOP.GetComponent<RectTransform>().anchoredPosition = pos;
-
+                GameObject DamagePOP = UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", character.transform);
                 if (skillSO == null)
                 {
                     Debug.Log("SKill null");
@@ -79,13 +72,15 @@ public class ActiveSkillObject : MonoBehaviour
                 {
                     AllDamage *= stat.criticalAttackStat.Value;
                     Debug.Log("Å©¸®Æ¼ÄÃ ¶ä¤§¤§");
+                    DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, true, character);
                     character.stat.TakeDamage(AllDamage);
-                    DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, true,character);
+                    
                 }
                 else
                 {
-                    character.stat.TakeDamage(AllDamage);
                     DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, false, character);
+                    character.stat.TakeDamage(AllDamage);
+                    
                 }
             }
 

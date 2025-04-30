@@ -28,7 +28,10 @@ public class DataCarrier
     {
         this.characterSaveData = characterSaveData;
     }
-
+    public void RemoveAll()
+    {
+        CharacterID.Clear();
+    }
     public void AddCharacterID(int Id)
     {
 

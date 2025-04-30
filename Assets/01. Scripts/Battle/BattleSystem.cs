@@ -48,6 +48,8 @@ public class BattleSystem : MonoBehaviour
     public BattleUI BattleUI;
 
 
+    
+
     public Action OnPlayerTurn;
     public Action OnEnemyTurn;
     public Action SkillChanged;
@@ -110,12 +112,15 @@ public class BattleSystem : MonoBehaviour
 
     private void AttackPhase()
     {
-        CommandController.ExecuteCommand();
+
+      
+     
+        CommandController.ExecuteCommnad();
 
         if (PlayerTurn)
         {
             CheckGameOver();
-            if (!isPhaseChanging) 
+            if (!isPhaseChanging)
             {
                 StartCoroutine(ChangePhase(EnemyTurnPhase));
             }
@@ -132,8 +137,32 @@ public class BattleSystem : MonoBehaviour
                 }
             }
         }
-    
-}
+
+    }
+
+    public void BattleEndCheck()
+    {
+        if (PlayerTurn)
+        {
+            CheckGameOver();
+            if (!isPhaseChanging)
+            {
+                StartCoroutine(ChangePhase(EnemyTurnPhase));
+            }
+        }
+        else
+        {
+            SetBattle();
+            if (appearAnimComplete)
+            {
+                CheckGameOver();
+                if (!isPhaseChanging)
+                {
+                    StartCoroutine(ChangePhase(PlayerTurnPhase));
+                }
+            }
+        }
+    }
 
     private void CheckGameOver()
     {
