@@ -1,5 +1,5 @@
 
-using static UnityEditor.Progress;
+
 
 public class GlobalDataTable : Singleton<GlobalDataTable>
 {

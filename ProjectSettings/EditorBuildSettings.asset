@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/04. Scenes/WWHScenes/CharacterInfo.unity
     guid: 7d01db35693c867449ad33abe8e5b579
-  - enabled: 1
+  - enabled: 0
     path: Assets/04. Scenes/WWHScenes/ChracterSelect.unity
     guid: 8aab703370d2751448e173e2cf488a5c
   - enabled: 1
