@@ -29,13 +29,16 @@ public class CharacterStat : MonoBehaviour
     public CriticalAttackStat criticalAttackStat;
     public Dictionary<StatType, BaseStat> statDict;
 
+    
+
     public Action OnDeath;
 
     private int BuffTurn = 0;
-
+    private Animator animator;
 
     private void Awake()
     {
+        
         attackStat = GetComponent<AttackStat>();
         defenseStat = GetComponent<DefenseStat>();
         agilityStat = GetComponent<AgilityStat>();
@@ -52,9 +55,11 @@ public class CharacterStat : MonoBehaviour
             {StatType.CriticalPer, criticalPerStat},
             {StatType.CriticalAttack, criticalAttackStat},
         };
+    }
 
-   
-
+    private void Start()
+    {
+        animator = transform.parent.GetComponentInChildren<Animator>();
     }
 
     public void SetCharacter(Character character, int Level)
@@ -109,7 +114,10 @@ public class CharacterStat : MonoBehaviour
 
     public void TakeDamage(float Amount)
     {
-        if(defenseStat.GetStat() - Amount <=0)
+        animator.SetTrigger("Hit");
+
+
+        if (defenseStat.GetStat() - Amount <=0)
         {
             healthStat.CurHealth -= 1f;
         }
@@ -126,6 +134,7 @@ public class CharacterStat : MonoBehaviour
     }
     public void OnDie()
     {
+        animator.SetTrigger("Death");
         OnDeath?.Invoke();
     }
     

@@ -56,8 +56,8 @@ public class CharacterVisual : MonoBehaviour
             AppearAnimationLength = stateInfo.length;
             //Debug.Log(AppearAnimationLength);
             //여기도 수정
-            //animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
-            //StartCoroutine(PlayAni());
+            animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
+            StartCoroutine(PlayAni());
         }
     }
 
