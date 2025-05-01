@@ -216,8 +216,8 @@ public class StageManager : Singleton<StageManager>
                 int rewardCount = 0;
                 for (int i = 0; i < battleCount; i++)
                 {
-                    int num = UnityEngine.Random.Range(1, 101);
-                    if (item.Probability <= num)
+                    int num = UnityEngine.Random.Range(0, 100);
+                    if (num < item.Probability)
                     {
                         rewardCount++;
                     }
