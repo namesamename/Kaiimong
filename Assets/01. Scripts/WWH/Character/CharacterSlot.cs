@@ -90,7 +90,7 @@ public class CharacterSlot : MonoBehaviour
         }
         images[0].enabled = true;
         images[1].enabled = true;
-        //images[1].sprite = Resources.Load<Sprite>(character.icon);
+        images[1].sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Illustration);
 
         for (int i = 0;i < saveData.Recognition; i++) 
         {

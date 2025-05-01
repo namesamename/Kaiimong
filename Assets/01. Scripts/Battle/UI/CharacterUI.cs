@@ -128,7 +128,7 @@ public class CharacterUI : MonoBehaviour
                 iconList[i].gameObject.SetActive(false);
                 continue;
             }
-            iconList[i].sprite = curUnits[i].visual.icon;
+            iconList[i].sprite = curUnits[i].visual.Getincon();
             RectTransform iconRect = iconList[i].GetComponent<RectTransform>();
             iconPos.Add(iconRect.anchoredPosition);
             iconSize.Add(iconRect.localScale);
@@ -190,10 +190,18 @@ public class CharacterUI : MonoBehaviour
     {
         targetConfirmButton.gameObject.SetActive(false);
         actionButton.gameObject.SetActive(true);
+        foreach(Button button in buttonList)
+        {
+            button.gameObject.SetActive(false);
+        }
     }
 
     public void DisableActionButton()
     {
+        foreach(Button button in buttonList)
+        {
+            button.gameObject.SetActive(true);
+        }
         targetConfirmButton.gameObject.SetActive(true);
         actionButton.gameObject.SetActive(false);
     }

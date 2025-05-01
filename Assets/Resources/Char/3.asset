@@ -23,6 +23,7 @@ MonoBehaviour:
   CriticalAttack: 1.45
   CharacterType: 0
   CharacterItem: 1
-  SpritePath: CharacterSprite
-  IconPath: CharacterSprite
-  BattlePath: CharacterSprite
+  SpritePath: CharacterSprite/1
+  BattlePath: CharacterBattleSD/1
+  RecognitionPath: RecognitionSprite/1
+  UpgradeBattlePath: UpgradeBattleSD/1

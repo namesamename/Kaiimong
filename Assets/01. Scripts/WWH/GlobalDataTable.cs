@@ -1,6 +1,8 @@
 
 
 
+using UnityEngine;
+
 public class GlobalDataTable : Singleton<GlobalDataTable>
 {
 
@@ -14,6 +16,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public UpGradeTable Upgrade;
     public EnemySpawnDataTable EnemySpawn;
     public ChapterCategoryDataTable ChapterCategory;
+    public SpriteDataBase Sprite;
 
 
     public void Initialize()
@@ -28,7 +31,9 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         ChapterCategory = new ChapterCategoryDataTable();
         Upgrade = new UpGradeTable();
         EnemySpawn = new EnemySpawnDataTable();
+        Sprite = new    SpriteDataBase();
 
+        Sprite.Initialize();
         Upgrade.Initialize();
         character.Initialize();
         skill.Initialize();
