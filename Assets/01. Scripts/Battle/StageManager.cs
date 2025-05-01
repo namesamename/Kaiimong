@@ -2,20 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class StageManager : Singleton<StageManager>
 {
     [Header("Stage Base")]
     [SerializeField] private BattleSystem battleSystem;
 
-    [Header("Stage Info")] // 선택창에서 받아온 데이터
+    [Header("Stage Info")]
     public Stage CurrentStage;
     public List<Character> Players;
     public List<Enemy> Enemies;
     public int CurrentRound;
     public int CurrentSet;
-    public int CurrentRoundEnemyCount; //없애도 될수도
 
     [Header("Reward and Returns")]
     public float returnActivityPoints;
@@ -81,19 +79,6 @@ public class StageManager : Singleton<StageManager>
             }
         }
         CurrentSet = 1;
-        //foreach (EnemySpawn enemy in curEnemyList)
-        //{
-        //    if (enemy.Round == CurrentRound)
-        //    {
-        //        //Enemy spawnEnemy = GlobalDataTable.Instance.character.enemyDic[enemy.EnemyID];
-        //        for (int i = 0; i < enemy.Count; i++)
-        //        {
-        //            Enemy newEnemy = GlobalDataTable.Instance.character.GetEnemyToID(enemy.EnemyID);
-        //            //GameObject newEnemy = GlobalDataTable.Instance.character.EnemyInstanceSummon(spawnEnemy, enemy.Level, Vector3.zero);
-        //            Enemies.Add(newEnemy);
-        //        }
-        //    }
-        //}
     }
 
     public void StageStart()
@@ -105,19 +90,6 @@ public class StageManager : Singleton<StageManager>
             battleSystem.Enemies.Clear();
             battleSystem.Enemies = new List<Enemy>(Enemies);
             battleSystem.SetBattle();
-            //if (CurrentRound == 1)
-            //{
-            //    CurrentRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
-            //    battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(0, CurrentRoundEnemyCount));
-            //    battleSystem.StartBattle();
-            //}
-            //else
-            //{
-            //    int nextRoundEnemyCount = CurrentStage.EnemyCount[CurrentRound - 1];
-            //    battleSystem.Enemies = new List<CharacterCarrier>(Enemies.GetRange(CurrentRoundEnemyCount, nextRoundEnemyCount));
-            //    CurrentRoundEnemyCount = nextRoundEnemyCount;
-            //    battleSystem.SetBattle();
-            //}
         }
         else return;
     }
@@ -236,9 +208,4 @@ public class StageManager : Singleton<StageManager>
         Enemies.Clear();
         CurrentStage = null;
     }
-
-    //public void RegisterStage(Stage stage)
-    //{
-    //    CurrentStage = stage;
-    //}
 }
