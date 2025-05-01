@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 
@@ -79,18 +75,18 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
 
     public void SetSlotColorAndCharacterImage(Character character)
     {
-        //images[1].sprite = Resources.Load<Sprite>(character.Icon);
+        images[1].sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Illustration);
         Grade grade = character.Grade;
         switch (grade)
         {
             case Grade.S:
-                images[0].color = Color.magenta;
+                images[0].color = new Color(229f / 255f, 156f / 255f, 42f / 255f);
                 break;
             case Grade.A:
-                images[0].color = Color.blue;
+                images[0].color = new Color(164f / 255f, 68f / 255f, 217f / 255f);
                 break;
             case Grade.B:
-                images[0].color = Color.red;
+                images[0].color = new Color(34f / 255f, 111f / 255f, 236f / 255f);
                 break;
         }
     }

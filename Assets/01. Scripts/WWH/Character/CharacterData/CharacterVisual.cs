@@ -19,10 +19,10 @@ public class CharacterVisual : MonoBehaviour
     public AnimationClip[] animationClips = new AnimationClip[7];
     public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
 
-    public Sprite Illustration;
+
     public Sprite BattleSprite;
     public Sprite Icon;
-    public Sprite RecoIlu;
+
     public Sprite RecoSD;
 
 
@@ -42,15 +42,13 @@ public class CharacterVisual : MonoBehaviour
         switch (character)
         {
             case CharacterType.Friend:
-                //icon = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
-                //BattleSprite = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
-                //Illustration = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
+                BattleSprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.BattleSprite);
+                Icon = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Icon);
+                RecoSD = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.RecoSD);
                 // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
                 break;
             case CharacterType.Enemy:
-                //icon = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
-                //BattleSprite = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
-                //Illustration = Resources.Load<Sprite>(GlobalDatatable.instance.character.getid(ID).iconPath);
+
                 // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
                 break;
         }
@@ -83,14 +81,8 @@ public class CharacterVisual : MonoBehaviour
             case SpriteType.RecoSD:
                 spriteRenderer.sprite = RecoSD;
                 break;  
-            case SpriteType.Recoilu:
-                spriteRenderer.sprite = RecoIlu;
-                break;
             case SpriteType.BattleSprite:
                 spriteRenderer.sprite = BattleSprite;
-                break;
-            case SpriteType.Illustration:
-                spriteRenderer.sprite = Illustration; 
                 break;
         }
 
@@ -131,30 +123,7 @@ public class CharacterVisual : MonoBehaviour
         }
         
     }
-    public Sprite GetIllustration()
-    {
-        if(Illustration != null)
-        {
-            return Illustration;
-        }
-        else
-        {
-            return null;
-        }
 
-    }
-    public Sprite GetRecoIllustration()
-    {
-        if(RecoIlu != null)
-        {
-            return RecoIlu;
-        }
-        else
-        {
-           return  null;
-        }
-   
-    }
 
     public IEnumerator PlayAni()
     {
