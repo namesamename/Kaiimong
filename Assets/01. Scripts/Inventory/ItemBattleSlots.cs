@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class ItemBattleSlots : MonoBehaviour
@@ -17,11 +14,6 @@ public class ItemBattleSlots : MonoBehaviour
     {
         Prefabs = Resources.Load<GameObject>("UI/Stage/ItemSlot");
     }
-
-    //public List<GameObject> GetSlots()
-    //{
-    //    return Slots;
-    //}
 
     public void SetItemList(int stageID)
     {
@@ -85,18 +77,4 @@ public class ItemBattleSlots : MonoBehaviour
         }
         activeSlots.Clear();
     }
-
-    //public void SelectSlot(ItemBattleSlot slot)
-    //{
-    //    if (!slot.IsSeted)
-    //    {
-    //        slot.IsSeted = true;
-    //        ItemSlotList.Add(slot);
-    //    }
-    //    else
-    //    {
-    //        slot.IsSeted = false;
-    //        ItemSlotList.Remove(slot);
-    //    }
-    //}
 }

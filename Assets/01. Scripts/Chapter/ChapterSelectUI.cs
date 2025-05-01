@@ -40,19 +40,13 @@ public class ChapterSelectUI : MonoBehaviour
         {
             int chapterDataID = CurChapterCategory.ChaptersID[i];
             Chapter chapterData = GlobalDataTable.Instance.Chapter.ChapterDic[chapterDataID];
-            //ChapterSlotUI reusableSlot = slots.Find(slot => slot.Chapter == chapterData);
-            //if (reusableSlot != null)
-            //{
-            //    reusableSlot.gameObject.SetActive(true);
-            //}
-            //else
-            {
-                GameObject obj = Resources.Load("UI/Chapter/ChapterSlotUI") as GameObject;
-                GameObject clone = Instantiate(obj, contentBox.transform);
-                ChapterSlotUI objSlot = clone.GetComponent<ChapterSlotUI>();
-                objSlot.Chapter = chapterData;
-                slots.Add(objSlot);
-            }
+
+            GameObject obj = Resources.Load("UI/Chapter/ChapterSlotUI") as GameObject;
+            GameObject clone = Instantiate(obj, contentBox.transform);
+            ChapterSlotUI objSlot = clone.GetComponent<ChapterSlotUI>();
+            objSlot.Chapter = chapterData;
+            slots.Add(objSlot);
+
         }
     }
 

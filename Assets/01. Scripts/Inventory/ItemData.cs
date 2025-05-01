@@ -28,19 +28,19 @@ public class ItemData : SO
         switch (Grade)
         {
             case ERarity.S:
-                Probability = 0.2F;
+                Probability = 20;
                 break;
             case ERarity.A:
-                Probability = 0.2F;
+                Probability = 20;
                 break;
             case ERarity.B:
-                Probability = 0.2F;
+                Probability = 20;
                 break;
             case ERarity.C:
-                Probability = 0.2F;
+                Probability = 20;
                 break;
             case ERarity.D:
-                Probability = 0.2F;
+                Probability = 20;
                 break;
         }
 

@@ -8,8 +8,7 @@ public class ChapterContent : MonoBehaviour
     private void Awake()
     {
         slots = GetComponentsInChildren<StageSlot>();
-        Chapter = GlobalDataTable.Instance.Chapter.ChapterDic[1];
-        //ChapterManager.Instance.InitializeChapter(Chapter.ID);
+        Chapter = ChapterManager.Instance.CurChapter;
     }
 
     void Start()
@@ -17,16 +16,10 @@ public class ChapterContent : MonoBehaviour
         InitializeStages();
     }
 
-    void Update()
-    {
-
-    }
-
     private void InitializeStages()
     {
         for (int i = 0; i < Chapter.StagesID.Length; i++)
         {
-            //slots[i].Initialize(Chapter.StagesID[i]);
             StageSaveData stageData = ChapterManager.Instance.GetStageSaveData(Chapter.StagesID[i]);
             if (stageData.StageOpen)
             {

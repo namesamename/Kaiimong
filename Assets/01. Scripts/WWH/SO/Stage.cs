@@ -10,5 +10,4 @@ public class Stage : SO
     public int Dia;
     public int[] UnlockStageID;
     public int[] UnlockChapterID;
-    //호감도 & 경험치는 사용된 행동력에 비례하게 주기
 }

@@ -2,7 +2,6 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,8 +56,6 @@ public class StageInfoUI : MonoBehaviour
             foreach (int id in playerID)
             {
                 Character newCharacter = GlobalDataTable.Instance.character.GetCharToID(id);
-                //GameObject newGameObject = GlobalDataTable.Instance.character.CharacterInstanceSummon(newCharacter, Vector3.zero);
-                //CharacterCarrier newCharacterCarrier = newGameObject.GetComponent<CharacterCarrier>();
                 StageManager.Instance.Players.Add(newCharacter);
             }
             RemoveListner();
