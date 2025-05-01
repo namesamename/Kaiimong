@@ -190,10 +190,18 @@ public class CharacterUI : MonoBehaviour
     {
         targetConfirmButton.gameObject.SetActive(false);
         actionButton.gameObject.SetActive(true);
+        foreach(Button button in buttonList)
+        {
+            button.gameObject.SetActive(false);
+        }
     }
 
     public void DisableActionButton()
     {
+        foreach(Button button in buttonList)
+        {
+            button.gameObject.SetActive(true);
+        }
         targetConfirmButton.gameObject.SetActive(true);
         actionButton.gameObject.SetActive(false);
     }
