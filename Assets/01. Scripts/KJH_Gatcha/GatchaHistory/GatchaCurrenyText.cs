@@ -5,11 +5,9 @@ using TMPro;
 
 public class GatchaCurrenyText : MonoBehaviour
 {
-
     [SerializeField] private TextMeshProUGUI crystaltxt;
     [SerializeField] private TextMeshProUGUI tickettxt;
     [SerializeField] private TextMeshProUGUI GatchaCount;
-
 
     public int crystal;
     public int ticket;

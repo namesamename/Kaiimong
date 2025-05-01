@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static GatchaManager;
-
 public class GatchaExecutor : MonoBehaviour
 {
     public void TryDrawOnce()
