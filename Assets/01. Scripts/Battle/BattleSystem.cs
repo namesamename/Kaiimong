@@ -170,8 +170,6 @@ public class BattleSystem : MonoBehaviour
 
         isPhaseChanging = true;
 
-        Debug.Log($"CheckGameOver 호출됨: isPhaseChanging={isPhaseChanging}, Players={Players.Count}, activePlayers={activePlayers.Count}, Enemies={Enemies.Count}, activeEnemies={activeEnemies.Count}, CurrentRound={StageManager.Instance.CurrentRound}");
-
         if (Players.Count == 0 && activePlayers.Count == 0)
         {
             StartCoroutine(ChangePhase(() => { isPhaseChanging = false; LosePhase(); }));
@@ -189,7 +187,6 @@ public class BattleSystem : MonoBehaviour
         {
             if (Enemies.Count == 0 && activeEnemies.Count == 0)
             {
-                Debug.Log("sadasd");
                 StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
                 return;
             }

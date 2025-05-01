@@ -16,11 +16,6 @@ public class ChapterContent : MonoBehaviour
         InitializeStages();
     }
 
-    void Update()
-    {
-
-    }
-
     private void InitializeStages()
     {
         for (int i = 0; i < Chapter.StagesID.Length; i++)

@@ -32,7 +32,6 @@ public class StageManager : Singleton<StageManager>
         SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, SetBattleScene);
     }
 
-
     private void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
     {
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
