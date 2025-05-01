@@ -87,3 +87,57 @@ public enum PassiveType
     Heal,
     Other
 }
+
+public enum GatchaType
+{
+    Pickup, //픽업뽑기를 위한 타입
+    Standard // 상시뽑기를 위한 타입
+}
+
+public enum EItemType
+{
+    None,
+    Item,            // 아이템
+    Consume       // 소모품
+}
+
+public enum EConsumableType //소모품 타입
+{
+    None,
+    EnergyItem,     // 활동력 충전 아이템
+    Currency,       // 픽업 재화
+    Box            // 아이템 박스
+}
+public enum ERarity
+{
+    S,  // S급
+    A,  // A급
+    B,  // B급
+    C,  // C급
+    D   // D급
+}
+// 씬 이름과 같아야함
+public enum SceneState
+{
+    StartScene,
+    LobbyScene,
+    PickupScene,
+    ProfileScene,
+    StageSelectScene,
+    BattleScene,
+    InventoryScene,
+    CharacterInfoScene,
+    CharacterSelectScene,
+    ChapterScene,
+    MessageScene,
+    QuestScene,
+    ShopScene,
+}
+public enum UpgradeType
+{
+    Item,
+    Level,
+    Gold
+
+}
+
