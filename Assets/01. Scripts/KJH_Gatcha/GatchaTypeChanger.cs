@@ -12,6 +12,11 @@ public class GatchaTypeChanger : MonoBehaviour
     [SerializeField] private Image Banner;
     [SerializeField] private GameObject PickUps;
     [SerializeField] private TextMeshProUGUI BannerName;
+    [SerializeField] private GameObject PickUpBannerImage;
+
+    [SerializeField] private GameObject PickUpPointer;
+    [SerializeField] private GameObject StandardPointer;
+
 
     private Dictionary<Transform, Vector3> originalPositions = new();
 
@@ -42,11 +47,13 @@ public class GatchaTypeChanger : MonoBehaviour
         switch (type)
         {
             case GatchaType.Pickup:
-                Banner.color = Color.red;
+                Banner.color = Color.gray;
                 BannerName.text = "픽업배너입니다";
                 Debug.Log("픽업 배너 이미지 입니다");
                 PickUps.SetActive(true);
-
+                PickUpBannerImage.SetActive(true);
+                PickUpPointer.SetActive(true);
+                StandardPointer.SetActive(false);
                 PlayPickUpAnimation();
                 break;
 
@@ -54,6 +61,9 @@ public class GatchaTypeChanger : MonoBehaviour
                 Banner.color = Color.blue;
                 BannerName.text = "상시배너입니다";
                 Debug.Log("상시 배너 이미지 입니다");
+                PickUpBannerImage.SetActive(false);
+                PickUpPointer.SetActive(false);
+                StandardPointer.SetActive(true);
                 PickUps.SetActive(false);
                 break;
 

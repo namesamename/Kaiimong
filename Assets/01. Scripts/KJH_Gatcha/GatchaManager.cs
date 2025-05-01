@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using static GatchaManager;
 
 public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입 구분, 뽑기 횟수 저장 매니저 
 {
@@ -35,14 +32,11 @@ public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입 구분, 
             return;
         }
         gatchaDrawCount = PlayerPrefs.GetInt("GatchaDrawCount", 0);
-        //SetGachaType(GatchaType.Pickup);
-        //Setting();
     }
     private void Start()
     {
         SetGachaType(GatchaType.Pickup);
         Setting();
-       // gatchaDrawCount = PlayerPrefs.GetInt("GatchaDrawCount", 0);
     }
     public void SetGachaType(GatchaType type) //기본 타입을 픽업으로 설정
     {

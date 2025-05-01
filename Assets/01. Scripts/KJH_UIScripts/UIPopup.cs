@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIPopup : MonoBehaviour //불러올 프리펩에 상속시킬 것들

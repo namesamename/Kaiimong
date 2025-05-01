@@ -24,7 +24,6 @@ public class TopBarUI : MonoBehaviour
 
     }
 
-
     public void ButtonSet()
     {
         button = GetComponentInChildren<Button>();

@@ -10,8 +10,6 @@ public class PopupGatchaHistory : UIPopup
     [SerializeField] GameObject NoticePanel;
     [SerializeField] GameObject HistoryPanel;
 
-
-
     private void Start()
     {
         Debug.Log($"[DEBUG] itemPrefab 할당 여부: {(itemPrefab == null ? "NULL" : "OK")}");
