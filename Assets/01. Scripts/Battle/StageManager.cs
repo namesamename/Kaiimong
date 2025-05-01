@@ -29,6 +29,9 @@ public class StageManager : Singleton<StageManager>
     public Action OnWin;
     public Action OnLose;
 
+
+    public bool IsBattleEnd = false;
+
     public void Initialize()
     {
         SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, SetBattleScene);

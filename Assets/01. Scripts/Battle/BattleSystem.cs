@@ -112,31 +112,33 @@ public class BattleSystem : MonoBehaviour
 
     private void AttackPhase()
     {
+        //CommandController.ExecuteCommnad();
 
-      
-     
-        CommandController.ExecuteCommnad();
+        CommandController.EndCheck = BattleEndCheck;
+        
+        StartCoroutine(CommandController.ExecuteCommandCoroutine());
+        //BattleEndCheck();
 
-        if (PlayerTurn)
-        {
-            CheckGameOver();
-            if (!isPhaseChanging)
-            {
-                StartCoroutine(ChangePhase(EnemyTurnPhase));
-            }
-        }
-        else
-        {
-            SetBattle();
-            if (appearAnimComplete)
-            {
-                CheckGameOver();
-                if (!isPhaseChanging)
-                {
-                    StartCoroutine(ChangePhase(PlayerTurnPhase));
-                }
-            }
-        }
+        //if (PlayerTurn)
+        //{
+        //    CheckGameOver();
+        //    if (!isPhaseChanging)
+        //    {
+        //        StartCoroutine(ChangePhase(EnemyTurnPhase));
+        //    }
+        //}
+        //else
+        //{
+        //    SetBattle();
+        //    if (appearAnimComplete)
+        //    {
+        //        CheckGameOver();
+        //        if (!isPhaseChanging)
+        //        {
+        //            StartCoroutine(ChangePhase(PlayerTurnPhase));
+        //        }
+        //    }
+        //}
 
     }
 
@@ -166,6 +168,7 @@ public class BattleSystem : MonoBehaviour
 
     private void CheckGameOver()
     {
+        Debug.Log(isPhaseChanging);
         if (isPhaseChanging) return;
 
         isPhaseChanging = true;
@@ -174,6 +177,7 @@ public class BattleSystem : MonoBehaviour
 
         if (Players.Count == 0 && activePlayers.Count == 0)
         {
+            StageManager.Instance.IsBattleEnd = true;
             StartCoroutine(ChangePhase(() => { isPhaseChanging = false; LosePhase(); }));
             return;
         }
@@ -181,7 +185,8 @@ public class BattleSystem : MonoBehaviour
         {
             if (Enemies.Count == 0 && activeEnemies.Count == 0)
             {
-                StartCoroutine(ChangePhase(() => { isPhaseChanging = false; NextRoundPhase(); }));
+                StageManager.Instance.IsBattleEnd = true;
+                StartCoroutine(ChangePhase(() => { isPhaseChanging = false; NextRoundPhase();  }));
                 return;
             }
         }
@@ -190,6 +195,7 @@ public class BattleSystem : MonoBehaviour
             if (Enemies.Count == 0 && activeEnemies.Count == 0)
             {
                 Debug.Log("sadasd");
+                StageManager.Instance.IsBattleEnd = true;
                 StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
                 return;
             }
@@ -235,15 +241,24 @@ public class BattleSystem : MonoBehaviour
 
     private void NextRoundPhase()
     {
+        CanAttack = false; 
+        TurnIndex = 0;   
+        Targets.Clear();
+        StageManager.Instance.StageStart(); StageManager.Instance.IsBattleEnd = false;
         if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
         {
+            
             winFlag = false;
+            
+            CommandController.ClearList();
+            StartCoroutine(ChangePhase(PlayerTurnPhase));
             if (canStartNextRound)
             {
                 canStartNextRound = false;
                 StageManager.Instance.CurrentRound++;
                 if (StageManager.Instance.CurrentRound == StageManager.Instance.CurrentStage.Rounds) winFlag = true;
                 StageManager.Instance.StageStart();
+
             }
         }
     }
@@ -366,6 +381,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (SelectedTarget)
         {
+            Debug.Log("EnemySkillSet");
             CommandController.AddCommand(new SkillCommand(activePlayers[TurnIndex], Targets, SelectedSkill));
             BattleUI.CharacterUI.NextCharacterIcon();
             TurnIndex++;
@@ -433,6 +449,9 @@ public class BattleSystem : MonoBehaviour
 
     void EnemyRandomCommand()
     {
+        CommandController.ClearList();
+
+
         for (int i = 0; i < activeEnemies.Count; i++)
         {
             int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillBook.ActiveSkillList.Length);
@@ -468,6 +487,7 @@ public class BattleSystem : MonoBehaviour
                 }
             }
 
+            Debug.Log("EnemySkillSet");
             CommandController.AddCommand(new SkillCommand(activeEnemies[i], Targets, SelectedSkill));
             Targets.Clear();
         }

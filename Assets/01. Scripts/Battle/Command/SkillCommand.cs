@@ -17,10 +17,14 @@ public class SkillCommand
     }
     public void Execute()
     {
-        unit.skillBook.ActiveSkillUsing(skillData, targets);
-
-
-      
+        if(skillData != null && unit != null && (targets != null || targets.Count > 0))
+        {
+            unit.skillBook.ActiveSkillUsing(skillData, targets);
+        }
+        else
+        {
+            return;
+        }
     }
 
 

@@ -38,6 +38,10 @@ public class CharacterSkillBook : MonoBehaviour
     }
     public void ActiveSkillUsing(ActiveSkillObject skill, List<CharacterCarrier> characters)
     {
+
+        if(skill == null) return;
+        if (characters == null) return;
+        
         //여러가지 처리
         //마나, 쿨타임, 사용 가능한가 불가능 한가
         if (!IsCoolTime(skill))

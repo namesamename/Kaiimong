@@ -38,8 +38,10 @@ public class ActiveSkillObject : MonoBehaviour
             }
         }
 
+
+
         CharacterStat stat = transform.parent.transform.parent.GetComponentInChildren<CharacterStat>();
-        //추후 추가
+
         if (skillSO.Type == SkillType.debuff || skillSO.Type == SkillType.buff)
         {
             Debug.Log("Use Buff");
@@ -49,7 +51,7 @@ public class ActiveSkillObject : MonoBehaviour
         else if (skillSO.Type == SkillType.heal)
         {
             foreach (CharacterCarrier c in targetcharacter)
-            { 
+            {
                 c.stat.healthStat.Heal(skillSO.Attack * stat.attackStat.GetStat());
                 GameObject DamagePOP = UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", c.transform);
                 DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(skillSO.Attack * stat.attackStat.GetStat(), false, c);
@@ -61,32 +63,34 @@ public class ActiveSkillObject : MonoBehaviour
 
             foreach (CharacterCarrier character in targetcharacter.ToList())
             {
-                GameObject DamagePOP = UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", character.transform);
-                if (skillSO == null)
+                if (character != null)  
                 {
-                    Debug.Log("SKill null");
-                }
+                    GameObject DamagePOP = UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", character.transform);
+                    if (skillSO == null)
+                    {
+                        Debug.Log("SKill null");
+                    }
 
-                float AllDamage = skillSO.Attack * stat.attackStat.GetStat();
-                if (stat.criticalPerStat.Value > Random.Range(0.000f, 1f))
-                {
-                    AllDamage *= stat.criticalAttackStat.Value;
-                    Debug.Log("크리티컬 뜸ㄷㄷ");
-                    DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, true, character);
-                    character.stat.TakeDamage(AllDamage);
-                    
+                    float AllDamage = skillSO.Attack * stat.attackStat.GetStat();
+                    if (stat.criticalPerStat.Value > Random.Range(0.000f, 1f))
+                    {
+                        AllDamage *= stat.criticalAttackStat.Value;
+                        Debug.Log("크리티컬 뜸ㄷㄷ");
+                        DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, true, character);
+                        character.stat.TakeDamage(AllDamage);
+
+                    }
+                    else
+                    {
+                        DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, false, character);
+                        character.stat.TakeDamage(AllDamage);
+
+                    }
                 }
-                else
-                {
-                    DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, false, character);
-                    character.stat.TakeDamage(AllDamage);
-                    
-                }
+         
             }
-
         }
-
-
+        //추후 추가
 
     }
 
