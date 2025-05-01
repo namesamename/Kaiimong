@@ -28,8 +28,10 @@ public class Character : SO
     public CharacterAttackType CharacterType;
     public int CharacterItem;
     public string SpritePath;
-    public string IconPath;
     public string BattlePath;
+    public string RecognitionPath;
+    public string UpgradeBattlePath;
+
 
 
 }

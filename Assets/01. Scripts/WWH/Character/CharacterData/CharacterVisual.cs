@@ -3,9 +3,11 @@ using System.Collections;
 
 public enum SpriteType
 {
-    Icon,
+    RecoSD,
+    Recoilu,
     BattleSprite,
     Illustration,
+    Icon,
 }
 
 public class CharacterVisual : MonoBehaviour
@@ -18,12 +20,20 @@ public class CharacterVisual : MonoBehaviour
     public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
 
     public Sprite Illustration;
-    public Sprite icon;
     public Sprite BattleSprite;
+    public Sprite Icon;
+    public Sprite RecoIlu;
+    public Sprite RecoSD;
 
 
     public GameObject SelectEffect;
     public float AppearAnimationLength;
+
+
+    private void Awake()
+    {
+        
+    }
 
     public void Initialize(int ID , CharacterType character )
     {
@@ -68,7 +78,13 @@ public class CharacterVisual : MonoBehaviour
         switch (sprite)
         {
             case SpriteType.Icon:
-                spriteRenderer.sprite = icon;
+                spriteRenderer.sprite = Icon;
+                break;
+            case SpriteType.RecoSD:
+                spriteRenderer.sprite = RecoSD;
+                break;  
+            case SpriteType.Recoilu:
+                spriteRenderer.sprite = RecoIlu;
                 break;
             case SpriteType.BattleSprite:
                 spriteRenderer.sprite = BattleSprite;
@@ -79,17 +95,65 @@ public class CharacterVisual : MonoBehaviour
         }
 
     }
+    public Sprite Getincon()
+    {
+        if (BattleSprite != null)
+        {
+            return Icon;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
     public Sprite GetBattleSprite()
     {
-        return BattleSprite;
+        if( BattleSprite != null)
+        {
+            return BattleSprite;
+        }
+        else
+        {
+            return null;
+        }
+        
     }
-    public Sprite GetIcon()
+    public Sprite GetIRecoSD()
     {
-        return icon;
+        if( RecoSD != null)
+        {
+            return RecoSD;
+        }
+        else
+        {
+            return null;
+        }
+        
     }
     public Sprite GetIllustration()
     {
-        return Illustration;
+        if(Illustration != null)
+        {
+            return Illustration;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+    public Sprite GetRecoIllustration()
+    {
+        if(RecoIlu != null)
+        {
+            return RecoIlu;
+        }
+        else
+        {
+           return  null;
+        }
+   
     }
 
     public IEnumerator PlayAni()

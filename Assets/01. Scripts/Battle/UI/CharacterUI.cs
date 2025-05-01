@@ -128,7 +128,7 @@ public class CharacterUI : MonoBehaviour
                 iconList[i].gameObject.SetActive(false);
                 continue;
             }
-            iconList[i].sprite = curUnits[i].visual.icon;
+            iconList[i].sprite = curUnits[i].visual.Getincon();
             RectTransform iconRect = iconList[i].GetComponent<RectTransform>();
             iconPos.Add(iconRect.anchoredPosition);
             iconSize.Add(iconRect.localScale);
