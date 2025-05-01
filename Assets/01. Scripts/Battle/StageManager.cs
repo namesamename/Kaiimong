@@ -34,6 +34,12 @@ public class StageManager : Singleton<StageManager>
 
     private void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
     {
+        // 기존 battleSystem이 있는지 확인
+        if (battleSystem != null)
+        {
+            // 이미 존재하는 battleSystem이 있다면 제거
+            Destroy(battleSystem.gameObject);
+        }
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
         BattleSystem cursystem = obj.GetComponent<BattleSystem>();
         battleSystem = cursystem;
