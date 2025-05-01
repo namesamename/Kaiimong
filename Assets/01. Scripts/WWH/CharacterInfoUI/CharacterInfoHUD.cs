@@ -57,7 +57,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 break;
             case CharacterInfoType.CharacterImage:
                 Image images = GetComponent<Image>();
-                //images.sprite = 이미지가 나와야함
+                images.sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(character.ID, SpriteType.Illustration);
                 break;
             case CharacterInfoType.Name:
                 TextMeshProUGUI[] textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
