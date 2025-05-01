@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
 public class CharacterManager : Singleton<CharacterManager>
 {
     public Dictionary<int, CharacterSaveData> CharacterSaveDic = new Dictionary<int, CharacterSaveData>();
@@ -85,7 +82,7 @@ public class CharacterManager : Singleton<CharacterManager>
     public void Initialize()
     {
         // 모든 아이템 초기화
-        for (int i = 1; i < GlobalDataTable.Instance.character.characterDic.Count + 1; i++)
+        for (int i = 1; i < GlobalDataTable.Instance.character.CharacterDic.Count + 1; i++)
         {
             int CharacterID = GlobalDataTable.Instance.character.GetCharToID(i).ID;
             CharacterSaveData newCharacterID = new CharacterSaveData();

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,7 +6,7 @@ using UnityEngine.UI;
 public class CharacterSelectHUD : MonoBehaviour
 {
 
-    UICharacterSlotSpawner slotSpawner;
+    UICharacterSelectSlotSpawner slotSpawner;
     Transform prefab;
     Button[] buttons;
     TextMeshProUGUI[] textMeshPros;
@@ -16,7 +15,7 @@ public class CharacterSelectHUD : MonoBehaviour
 
     private void Awake()
     {
-        slotSpawner = GetComponentInChildren<UICharacterSlotSpawner>();
+        slotSpawner = GetComponentInChildren<UICharacterSelectSlotSpawner>();
         buttons = GetComponentsInChildren<Button>(true);
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>(true);
         prefab = transform.GetChild(2).transform.GetChild(2).transform.GetChild(2);
@@ -38,10 +37,6 @@ public class CharacterSelectHUD : MonoBehaviour
         Setting();
         Textset();
     }
-
-
-
-
     public void Setting()
     {
         for (int i = 0; i < buttons.Length; i++) 
@@ -69,7 +64,7 @@ public class CharacterSelectHUD : MonoBehaviour
 
     public void GradeOrder()
     {
-        if(slotSpawner.ISGradeOrder)
+        if(slotSpawner.IsGradeOrder)
         {
             slotSpawner.GradeFilter(saveDatas);
         }
@@ -82,7 +77,7 @@ public class CharacterSelectHUD : MonoBehaviour
 
     public void LevelOrder()
     {
-        if (slotSpawner.ISLevelOrder)
+        if (slotSpawner.IsLevelOrder)
         {
             slotSpawner.LevelFilter(saveDatas);
         }

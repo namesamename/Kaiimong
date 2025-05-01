@@ -1,11 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-public interface ISetPOPUp
-{
-    public void Initialize();
-}
-
 public class UIBreakPOPUP : UIPopup
 {
 

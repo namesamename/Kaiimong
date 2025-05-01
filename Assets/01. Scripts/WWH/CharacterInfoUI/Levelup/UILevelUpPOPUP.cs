@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class LevelUpPopUP : UIPopup
+public class UILevelUpPOPUP : UIPopup
 {
 
     public int UsingGlod;
@@ -11,9 +7,9 @@ public class LevelUpPopUP : UIPopup
     public int NextLevel;
     public int LevelInterval;
 
-    public UILevelupBtn btn;
-    public UILevelUPEffect effect;
-    public UILevelupStatboard stat;
+    public UILevelupBtn Btn;
+    public UILevelUPEffect Effect;
+    public UILevelupStatboard Stat;
 
 
     public ISetPOPUp[] setPOPUps;
@@ -24,9 +20,9 @@ public class LevelUpPopUP : UIPopup
     {
        
         setPOPUps = GetComponentsInChildren<ISetPOPUp>();
-        btn = GetComponentInChildren<UILevelupBtn>();
-        effect = GetComponentInChildren<UILevelUPEffect>();
-        stat = GetComponentInChildren<UILevelupStatboard>();
+        Btn = GetComponentInChildren<UILevelupBtn>();
+        Effect = GetComponentInChildren<UILevelUPEffect>();
+        Stat = GetComponentInChildren<UILevelupStatboard>();
  
     }
     private void Start()

@@ -1,26 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-
-public enum SkillType
-{
-    attk,
-    debuff,
-    buff,
-    heal
-}
-
-public enum SkillTargetType
-{ 
-    enemy,
-    our
-}
-
-
-
 public class ActiveSkill : SO
 {
     public SkillType Type;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,13 +6,13 @@ public class UIBreakEffect : MonoBehaviour, ISetPOPUp
 {
 
     Image[] Images;
-    TextMeshProUGUI[] Texts;
+    TextMeshProUGUI[] texts;
 
 
     private void Awake()
     {
         Images = GetComponentsInChildren<Image>();
-        Texts = GetComponentsInChildren<TextMeshProUGUI>();
+        texts = GetComponentsInChildren<TextMeshProUGUI>();
     }
     public void Initialize()
     {
@@ -23,14 +21,14 @@ public class UIBreakEffect : MonoBehaviour, ISetPOPUp
         {
             //Images[i].sprite = 에셋생기면 추가;
         }
-        for(int i = 0; i < Texts.Length; ++i) 
+        for(int i = 0; i < texts.Length; ++i) 
         {
-            Texts[i].text = i.ToString();
-            Texts[i].color = Color.black;
+            texts[i].text = i.ToString();
+            texts[i].color = Color.black;
         }
-        for (int i = Texts.Length-1; i >= GlobalDataTable.Instance.DataCarrier.GetSave().Necessity; i--) 
+        for (int i = texts.Length-1; i >= GlobalDataTable.Instance.DataCarrier.GetSave().Necessity; i--) 
         {
-            Texts[i].color = Color.gray;
+            texts[i].color = Color.gray;
         }
 
 

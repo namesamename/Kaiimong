@@ -2,9 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
-
-//슬롯 하나 담당하는 스크립트
 
 public class IngiitemSlot : MonoBehaviour, IPointerClickHandler
 {

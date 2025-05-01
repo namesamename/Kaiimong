@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public class CharacterSlot : MonoBehaviour
+public class CharacterSelectSlot : MonoBehaviour
 {
     [Header("UI Reference")]
     TextMeshProUGUI[] textMeshPros;
@@ -13,7 +10,7 @@ public class CharacterSlot : MonoBehaviour
     Button button;
 
     CharacterSaveData characterSaveData;
-    Character Character;
+    Character character;
 
     private void Awake()
     {
@@ -21,15 +18,10 @@ public class CharacterSlot : MonoBehaviour
         images = GetComponentsInChildren<Image>();
         button = GetComponentInChildren<Button>();
     }
-
-                                 // 캐릭터 고유 ID 저장
-
-
-
     public void SetSlot(CharacterSaveData saveData, Character character)                
     {
         characterSaveData = saveData;
-        Character = character;
+        this.character = character;
         SetSlotColor(saveData, character);
         textMeshPros[1].text = character.Name;                // 캐릭터 이름 표시
         textMeshPros[0].text = $"Lv. {saveData.Level}";      // 캐릭터 레벨 표시
@@ -49,7 +41,7 @@ public class CharacterSlot : MonoBehaviour
     {
 
         GlobalDataTable.Instance.DataCarrier.SetSave(characterSaveData);
-        GlobalDataTable.Instance.DataCarrier.SetCharacter(Character);
+        GlobalDataTable.Instance.DataCarrier.SetCharacter(character);
         if(SceneLoader.Instance.GetPre()  == SceneState.ProfileScene)
         {
 

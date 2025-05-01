@@ -2,23 +2,21 @@ using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-
-
 public class DamagePOPUP : UIPopup
 {
-    TextMeshPro DamageText;
+    TextMeshPro damageText;
 
 
     private void Awake()
     {
-        DamageText =GetComponentInChildren<TextMeshPro>();
+        damageText =GetComponentInChildren<TextMeshPro>();
         //DamageRectTransform = GetComponent<RectTransform>();
     }
 
     public void SetPOPUP(float Damage, bool IsCri, CharacterCarrier character)
     {
-        DamageText.text = Damage.ToString();
-        DamageText.color = IsCri ? Color.red : Color.black;
+        damageText.text = Damage.ToString();
+        damageText.color = IsCri ? Color.red : Color.black;
 
         float ran = Random.Range(-1f, 1f);
 

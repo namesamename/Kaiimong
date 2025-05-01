@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CharacterDataTable
 {
-    public Dictionary<int, Character> characterDic = new Dictionary<int, Character>();
-    public Dictionary<int, Enemy> enemyDic = new Dictionary<int, Enemy>();
+    public Dictionary<int, Character> CharacterDic = new Dictionary<int, Character>();
+    public Dictionary<int, Enemy> EnemyDic = new Dictionary<int, Enemy>();
     public GameObject CharacterPrefabs;
     public GameObject EnemyPrefabs;
 
@@ -14,19 +14,19 @@ public class CharacterDataTable
         Enemy[] enemies = Resources.LoadAll<Enemy>("Enem");
         foreach (Character character in characters)
         {
-            characterDic[character.ID] = character;
+            CharacterDic[character.ID] = character;
         }
         foreach (Enemy enemy in enemies)
         {
-            enemyDic[enemy.ID] = enemy;
+            EnemyDic[enemy.ID] = enemy;
         }
     }
 
     public Character GetCharToID(int characterId)
     {
-        if (characterDic.ContainsKey(characterId) && characterDic[characterId] != null)
+        if (CharacterDic.ContainsKey(characterId) && CharacterDic[characterId] != null)
         {
-            return characterDic[characterId];
+            return CharacterDic[characterId];
         }
         else
         {
@@ -38,9 +38,9 @@ public class CharacterDataTable
 
     public Enemy GetEnemyToID(int characterId)
     {
-        if (enemyDic.ContainsKey(characterId) && enemyDic[characterId] != null)
+        if (EnemyDic.ContainsKey(characterId) && EnemyDic[characterId] != null)
         {
-            return enemyDic[characterId];
+            return EnemyDic[characterId];
         }
         else
         {

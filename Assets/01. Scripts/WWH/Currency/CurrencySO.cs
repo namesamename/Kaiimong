@@ -1,19 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-public enum CurrencyType
-{
-    UserLevel,
-    UserEXP,
-    Gold,
-    Gacha,
-    Activity,
-    Dia,
-    CharacterEXP,
-    CurMaxStamina,
-    purchaseCount,
-}
-
 public class CurrencySO : SO
 {
     public string Name;

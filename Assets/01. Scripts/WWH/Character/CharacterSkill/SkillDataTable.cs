@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+
 
 public class SkillDataTable
 {
-   public Dictionary<int, ActiveSkill> ActSkillDataDic = new Dictionary<int, ActiveSkill>();
-    public Dictionary<int, PassiveSkill> PasSkillDataDic = new Dictionary<int, PassiveSkill>();
-    public Dictionary<int, Buff> BuffskillDic = new Dictionary<int, Buff>();
-    public Dictionary<int, Debuff> DebuffskillDic = new Dictionary<int, Debuff>();
+    private Dictionary<int, ActiveSkill> ActSkillDataDic = new Dictionary<int, ActiveSkill>();
+    private Dictionary<int, PassiveSkill> PasSkillDataDic = new Dictionary<int, PassiveSkill>();
+    private Dictionary<int, Buff> BuffskillDic = new Dictionary<int, Buff>();
+    private Dictionary<int, Debuff> DebuffskillDic = new Dictionary<int, Debuff>();
     public void Initialize()
     {
         ActiveSkill[] ActSO = Resources.LoadAll<ActiveSkill>("ActS");

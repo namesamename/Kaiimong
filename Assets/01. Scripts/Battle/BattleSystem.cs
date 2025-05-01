@@ -381,9 +381,9 @@ public class BattleSystem : MonoBehaviour
         foreach (SkillCommand command in CommandController.SkillCommands.ToList())
         {
             command.targets.Remove(target);
-            if (command.skillData.skillSO.isSingleAttack)
+            if (command.skillData.SkillSO.isSingleAttack)
             {
-                if (command.skillData.skillSO.IsBuff)
+                if (command.skillData.SkillSO.IsBuff)
                 {
                     var newBuffTarget = FindNewBuffTarget();
                     command.targets.Add(newBuffTarget);
@@ -435,9 +435,9 @@ public class BattleSystem : MonoBehaviour
         {
             int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillBook.ActiveSkillList.Length);
             SelectedSkill = activeEnemies[i].skillBook.ActiveSkillList[randomSkill];
-            if (SelectedSkill.skillSO.IsBuff)
+            if (SelectedSkill.SkillSO.IsBuff)
             {
-                if (SelectedSkill.skillSO.isSingleAttack)
+                if (SelectedSkill.SkillSO.isSingleAttack)
                 {
                     int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
                     Targets.Add(activeEnemies[i]);
@@ -452,7 +452,7 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
-                if (SelectedSkill.skillSO.isSingleAttack)
+                if (SelectedSkill.SkillSO.isSingleAttack)
                 {
                     int randomTarget = UnityEngine.Random.Range(0, activePlayers.Count);
                     Targets.Add(activePlayers[i]);

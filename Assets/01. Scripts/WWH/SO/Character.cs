@@ -1,19 +1,4 @@
 
-using UnityEngine;
-
-public enum Grade
-{
-    S,
-    A,
-    B
-}
-
-public enum CharacterAttackType
-{
-    Spirit,
-    Physics
-}
-
 
 public class Character : SO
 {

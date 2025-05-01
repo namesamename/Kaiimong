@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class IngiBoard : MonoBehaviour, ISetPOPUp
+public class UIIngiBoard : MonoBehaviour, ISetPOPUp
 {
     TextMeshProUGUI[] Textmesh;
     private void Awake()

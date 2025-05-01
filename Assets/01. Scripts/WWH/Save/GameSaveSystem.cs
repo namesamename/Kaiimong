@@ -3,19 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
 using System;
-using System.Linq;
 
-public enum SaveType
-{
-
-    //저장목록들
-    Character,
-    Currency,
-    Stage,
-    Chapter,
-    Item,
-
-}
 public static class GameSaveSystem
 {
     public static void Save( SaveType saveType ,List<SaveInstance> saves)

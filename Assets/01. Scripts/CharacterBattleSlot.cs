@@ -19,16 +19,16 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
 
     [SerializeField] GameObject Selected;
     UIPartyList partyList;
-    CharacterBattleSlots battleSlots;
+    CharacterBattleSlotSpawner battleSlots;
 
-    int CharacterID = 0;
-    int Index;
+    int characterID = 0;
+    int index;
 
 
     public void SetComponent()
     {
         partyList = FindAnyObjectByType<UIPartyList>();
-        battleSlots = GetComponentInParent<CharacterBattleSlots>();
+        battleSlots = GetComponentInParent<CharacterBattleSlotSpawner>();
         images = GetComponentsInChildren<Image>();
         LV = GetComponentInChildren<TextMeshProUGUI>();
         INGI = new Image[3] { images[2], images[3], images[4] };
@@ -38,7 +38,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
 
     public void SetSlot(int ID)
     {
-        CharacterID = ID;
+        characterID = ID;
         Button[] buttons = GetComponentsInChildren<Button>();
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -122,14 +122,14 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         Selected.SetActive(true);
         TextMeshProUGUI text = Selected.GetComponentInChildren<TextMeshProUGUI>();
         text.text = (index + 1).ToString();
-        Index = index;
+        this.index = index;
     }
 
     public void TurnDown()
     {
         TextMeshProUGUI text = Selected.GetComponentInChildren<TextMeshProUGUI>();
         text.text = string.Empty;
-        Index = 0;
+        index = 0;
         Selected.SetActive(false);
 
     }
@@ -142,7 +142,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
             {
                 if (eventData.button == PointerEventData.InputButton.Left)
                 {
-                    GlobalDataTable.Instance.DataCarrier.RemoveIndex(Index);
+                    GlobalDataTable.Instance.DataCarrier.RemoveIndex(index);
                     battleSlots.SelectSlot(this);
                     battleSlots.SlotIdexSet();
                     partyList.Partyset();
@@ -164,8 +164,8 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            GlobalDataTable.Instance.DataCarrier.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(CharacterID));
-            GlobalDataTable.Instance.DataCarrier.SetSave(SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, CharacterID));
+            GlobalDataTable.Instance.DataCarrier.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(characterID));
+            GlobalDataTable.Instance.DataCarrier.SetSave(SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, characterID));
 
             SceneLoader.Instance.ChangeScene(SceneState.CharacterInfo);
         }

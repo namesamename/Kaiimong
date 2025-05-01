@@ -4,16 +4,16 @@ using System.Linq;
 using UnityEngine;
 
 
-public class UICharacterSlotSpawner : MonoBehaviour
+public class UICharacterSelectSlotSpawner : MonoBehaviour
 {
 
 
-    public GameObject SlotPrefabs;
+    private GameObject SlotPrefabs;
     private List<GameObject> spawnedSlots = new List<GameObject>(); // 생성된 슬롯들 추적
 
 
-    public bool ISGradeOrder = false;
-    public bool ISLevelOrder = false;  
+    public bool IsGradeOrder = false;
+    public bool IsLevelOrder = false;  
 
     private void Awake()
     {
@@ -46,7 +46,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
                 var Characterdata = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, grade.ID);
                 EndList.Add(Characterdata);
             }
-            ISGradeOrder = !ISGradeOrder;
+            IsGradeOrder = !IsGradeOrder;
             SpawnFromSaveData(EndList);
         }
         else
@@ -63,7 +63,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
         {
             List<CharacterSaveData> GradeSortList = saveDatas.OrderBy(item => item.Level).ThenByDescending(item => GlobalDataTable.Instance.character.GetCharToID(item.ID).Grade).ToList();
 
-            ISLevelOrder = !ISLevelOrder;
+            IsLevelOrder = !IsLevelOrder;
             SpawnFromSaveData(GradeSortList);
  
         }
@@ -79,7 +79,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
         if (saveDatas != null)
         {
             List<CharacterSaveData> GradeSortList = saveDatas.OrderByDescending(item => item.Level).ThenBy(item => GlobalDataTable.Instance.character.GetCharToID(item.ID).Grade).ToList();
-            ISLevelOrder = !ISLevelOrder;
+            IsLevelOrder = !IsLevelOrder;
             SpawnFromSaveData(GradeSortList);
 
         }
@@ -115,7 +115,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
                 var Characterdata = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, grade.ID);
                 EndList.Add(Characterdata);
             }
-            ISGradeOrder = !ISGradeOrder;
+            IsGradeOrder = !IsGradeOrder;
             SpawnFromSaveData(EndList);
         }
         else
@@ -143,7 +143,7 @@ public class UICharacterSlotSpawner : MonoBehaviour
           
             GameObject slotObj = Instantiate(SlotPrefabs, transform);       // 슬롯 생성 및 배치
 
-            slotObj.GetComponent<CharacterSlot>().SetSlot(saveData, character);
+            slotObj.GetComponent<CharacterSelectSlot>().SetSlot(saveData, character);
 
 
             spawnedSlots.Add(slotObj);                               

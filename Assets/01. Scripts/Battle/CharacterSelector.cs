@@ -30,9 +30,9 @@ public class CharacterSelector : MonoBehaviour
     {
         if (battleSystem.CanSelectTarget)
         {
-            if(!battleSystem.SelectedSkill.skillSO.IsBuff)
+            if(!battleSystem.SelectedSkill.SkillSO.IsBuff)
             {
-                if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
+                if (!battleSystem.SelectedSkill.SkillSO.isSingleAttack)
                 {
                     SelectAll(battleSystem.GetActiveEnemies());
                 }
@@ -43,7 +43,7 @@ public class CharacterSelector : MonoBehaviour
             }
             else
             {
-                if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
+                if (!battleSystem.SelectedSkill.SkillSO.isSingleAttack)
                 {
                     SelectAll(battleSystem.GetActivePlayers());
                 }
@@ -57,7 +57,7 @@ public class CharacterSelector : MonoBehaviour
 
     private void SelectAll(List<CharacterCarrier> units)
     {
-        if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
+        if (!battleSystem.SelectedSkill.SkillSO.isSingleAttack)
         {
             foreach (CharacterCarrier unit in units)
             {
@@ -135,7 +135,7 @@ public class CharacterSelector : MonoBehaviour
         battleSystem.SelectedTarget = true;
         battleSystem.CanSelectTarget = false;
         // 선택된 캐릭터를 Targets 리스트에 추가
-        if (!battleSystem.SelectedSkill.skillSO.isSingleAttack)
+        if (!battleSystem.SelectedSkill.SkillSO.isSingleAttack)
         {
             foreach (CharacterCarrier units in battleSystem.GetActiveEnemies())
             {
@@ -143,7 +143,7 @@ public class CharacterSelector : MonoBehaviour
                 SelectedEffect(units, false);
             }
         }
-        if (battleSystem.SelectedSkill.skillSO.isSingleAttack)
+        if (battleSystem.SelectedSkill.SkillSO.isSingleAttack)
         {
             battleSystem.Targets.Add(selectedCharacter);
             SelectedEffect(selectedCharacter, false);

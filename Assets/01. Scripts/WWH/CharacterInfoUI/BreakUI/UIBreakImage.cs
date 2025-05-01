@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIBreakImage : MonoBehaviour, ISetPOPUp
 {
-    Image[] Images;
+    Image[] images;
     TextMeshProUGUI textMesh;
     private void Awake()
     {
-        Images =GetComponentsInChildren<Image>();
+        images =GetComponentsInChildren<Image>();
         textMesh = GetComponentInChildren<TextMeshProUGUI>();
 
     }

@@ -1,15 +1,4 @@
-
-using System.Data.Common;
 using UnityEngine;
-
-
-public enum CharacterType
-{
-    Friend,
-    Enemy
-}
-
-
 public abstract class CharacterCarrier : MonoBehaviour 
 {
 

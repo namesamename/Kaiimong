@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class CharacterBattleSlots : MonoBehaviour
+public class CharacterBattleSlotSpawner : MonoBehaviour
 {
     GameObject Prefabs;
     List<CharacterSaveData> saveDatas = new List<CharacterSaveData>();
@@ -17,12 +14,6 @@ public class CharacterBattleSlots : MonoBehaviour
         Prefabs = Resources.Load<GameObject>("CharacterSlot/CharacterSlot");
         CreatSlot();
     }
-
-    private void Start()
-    {
-   
-    }
-
     public List<GameObject> GetSlots()
     {
         return Slots;

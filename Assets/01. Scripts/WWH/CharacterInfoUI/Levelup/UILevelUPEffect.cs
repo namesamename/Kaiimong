@@ -56,7 +56,7 @@ public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
 
         popUP.LevelInterval += levelToAdd;
         popUP.NextLevel = popUP.CurLevel + popUP.LevelInterval;
-        popUP.stat.Statset(popUP.LevelInterval);
+        popUP.Stat.Statset(popUP.LevelInterval);
 
         int curGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
         int curExp = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);
@@ -115,7 +115,7 @@ public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
         popUP.LevelInterval -= levelToSubtract;
         popUP.LevelInterval = Mathf.Max(0, popUP.LevelInterval);
         popUP.NextLevel = popUP.CurLevel + popUP.LevelInterval;
-        popUP.stat.Statset(popUP.LevelInterval);
+        popUP.Stat.Statset(popUP.LevelInterval);
 
         int curGold = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
         int curExp = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP);

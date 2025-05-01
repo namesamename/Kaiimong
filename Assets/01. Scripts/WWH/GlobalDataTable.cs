@@ -1,8 +1,3 @@
-
-
-
-using UnityEngine;
-
 public class GlobalDataTable : Singleton<GlobalDataTable>
 {
 

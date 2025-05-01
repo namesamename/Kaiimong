@@ -1,8 +1,3 @@
-using System.Collections;
-public interface ISavable
-{
-    public void Save();
-}
 [System.Serializable]
 public class SaveInstance 
 {

@@ -25,8 +25,8 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
     }
     public void OnMax()
     {
-        int MaxEXP = popUP.effect.CalculateMaxCurrency(CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP), false);
-        int MaxGold = popUP.effect.CalculateMaxCurrency(CurrencyManager.Instance.GetCurrency(CurrencyType.Gold), true);
+        int MaxEXP = popUP.Effect.CalculateMaxCurrency(CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP), false);
+        int MaxGold = popUP.Effect.CalculateMaxCurrency(CurrencyManager.Instance.GetCurrency(CurrencyType.Gold), true);
 
         int maxPossibleLevels = Mathf.Min(MaxGold, MaxEXP);
 
@@ -34,7 +34,7 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
 
         if (maxPossibleLevels > 0)
         {
-            bool canLevelUp = popUP.effect.SetPlus(maxPossibleLevels);
+            bool canLevelUp = popUP.Effect.SetPlus(maxPossibleLevels);
 
             if (canLevelUp)
             {
@@ -59,7 +59,7 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
         popUP.LevelInterval = 0;
         buttons[5].onClick.RemoveAllListeners();
 
-        if (popUP.effect.SetPlus(1))
+        if (popUP.Effect.SetPlus(1))
         {
             buttons[5].onClick.AddListener(Excute);
             buttons[5].interactable = true;
@@ -75,7 +75,7 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
 
         buttons[5].onClick.RemoveAllListeners();
 
-        if(popUP.effect.SetPlus(1))
+        if(popUP.Effect.SetPlus(1))
         {
             buttons[5].onClick.AddListener(Excute);
             buttons[5].interactable = true;
@@ -91,7 +91,7 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
     {
 
         buttons[5].onClick.RemoveAllListeners();
-        if (popUP.effect.SetMinus(1))
+        if (popUP.Effect.SetMinus(1))
         {
             buttons[5].onClick.AddListener(Excute);
             buttons[5].interactable = true;

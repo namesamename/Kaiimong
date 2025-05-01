@@ -5,7 +5,7 @@ using UnityEngine;
 public class IngiPOPUP : UIPopup
 {
     [HideInInspector]
-    public IngiBoard board;
+    public UIIngiBoard board;
     [HideInInspector]
     public IngiSlots slot;
     [HideInInspector]
@@ -18,7 +18,7 @@ public class IngiPOPUP : UIPopup
     private void Awake()
     {
         setPOPUps = GetComponentsInChildren<ISetPOPUp>();
-        board = GetComponentInChildren<IngiBoard>();
+        board = GetComponentInChildren<UIIngiBoard>();
         slot = GetComponentInChildren<IngiSlots>();
         btn = GetComponentInChildren<IngiBtn>();
     

@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
 public class DataCarrier
 {
-    List<int> CharacterID = new List<int>();
+    List<int> characterID = new List<int>();
 
     Character character;
     CharacterSaveData characterSaveData;
@@ -30,32 +27,32 @@ public class DataCarrier
     }
     public void RemoveAll()
     {
-        CharacterID.Clear();
+        characterID.Clear();
     }
     public void AddCharacterID(int Id)
     {
 
-        if(CharacterID.Count >= 4)
+        if(characterID.Count >= 4)
         {
             return;
         }
-        CharacterID.Add(Id);
+        characterID.Add(Id);
     }
     public void RemoveLast()
     {
-        CharacterID.RemoveAt(CharacterID.Count - 1);
+        characterID.RemoveAt(characterID.Count - 1);
     }
 
     public void RemoveIndex(int index)
     {
-        CharacterID.RemoveAt(index);
+        characterID.RemoveAt(index);
     }
     public List<int> GetCharacterIDList()
     {
-        return CharacterID;
+        return characterID;
     }
     public int GetCharacterIDToIndex(int index)
     {
-        return CharacterID[index];
+        return characterID[index];
     }
 }

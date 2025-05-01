@@ -1,39 +1,22 @@
 using UnityEngine;
 using System.Collections;
-
-public enum SpriteType
-{
-    RecoSD,
-    Recoilu,
-    BattleSprite,
-    Illustration,
-    Icon,
-}
-
 public class CharacterVisual : MonoBehaviour
 {
     private Animator animator;
     public Animator Animator { get { return animator; } }
     private SpriteRenderer spriteRenderer;
-    public RuntimeAnimatorController runtimeController;
-    public AnimationClip[] animationClips = new AnimationClip[7];
+    public RuntimeAnimatorController RuntimeController;
+    public AnimationClip[] AnimationClips = new AnimationClip[7];
     public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
 
 
-    public Sprite BattleSprite;
-    public Sprite Icon;
-
-    public Sprite RecoSD;
+    Sprite BattleSprite;
+    Sprite Icon;
+    Sprite RecoSD;
 
 
     public GameObject SelectEffect;
     public float AppearAnimationLength;
-
-
-    private void Awake()
-    {
-        
-    }
 
     public void Initialize(int ID , CharacterType character )
     {
@@ -55,20 +38,20 @@ public class CharacterVisual : MonoBehaviour
         // 애니메이션 길이 계산
         if (animator != null)
         {
-            runtimeController = animator.runtimeAnimatorController;
+            RuntimeController = animator.runtimeAnimatorController;
             // 등장 애니메이션 길이 계산 (Appear 애니메이션 사용)
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             AppearAnimationLength = stateInfo.length;
             //Debug.Log(AppearAnimationLength);
             //여기도 수정
-            animationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
+            AnimationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
             StartCoroutine(PlayAni());
         }
     }
 
     public float GetAnimationLength(int index)
     {
-        return animationClips[index].length;
+        return AnimationClips[index].length;
     }
 
     public void SetSprite(SpriteType sprite)
@@ -133,14 +116,14 @@ public class CharacterVisual : MonoBehaviour
 
     public void ChangeAnimation()
     {
-        AnimatorOverrideController controller = new AnimatorOverrideController(runtimeController);
-        controller["Appeared"] = animationClips[0];
-        controller["Idle"] = animationClips[1];
-        controller["FirstSkill"] = animationClips[2];
-        controller["SecondSkill"] = animationClips[3];
-        controller["ThirdSkill"] = animationClips[4];
-        controller["Hit"] = animationClips[5];
-        controller["Death"] = animationClips[6];
+        AnimatorOverrideController controller = new AnimatorOverrideController(RuntimeController);
+        controller["Appeared"] = AnimationClips[0];
+        controller["Idle"] = AnimationClips[1];
+        controller["FirstSkill"] = AnimationClips[2];
+        controller["SecondSkill"] = AnimationClips[3];
+        controller["ThirdSkill"] = AnimationClips[4];
+        controller["Hit"] = AnimationClips[5];
+        controller["Death"] = AnimationClips[6];
         animator.runtimeAnimatorController = controller;
     }
 

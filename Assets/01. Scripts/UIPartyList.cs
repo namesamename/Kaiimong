@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,12 +6,12 @@ public class UIPartyList : MonoBehaviour
     DataCarrier Party;
     GameObject Prefabs;
     List<GameObject> SlotList = new List<GameObject>();
-    CharacterBattleSlots battleSlots;
+    CharacterBattleSlotSpawner battleSlots;
     public int Index = 0;
     private void Awake()
     {
         Prefabs = Resources.Load<GameObject>("CharacterSlot/CharacterSlot");
-        battleSlots =FindAnyObjectByType<CharacterBattleSlots>();
+        battleSlots =FindAnyObjectByType<CharacterBattleSlotSpawner>();
     }
     private void Start()
     {

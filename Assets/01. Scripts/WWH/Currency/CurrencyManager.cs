@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -13,9 +11,9 @@ using UnityEngine;
 public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 {
     CurrencySaveData data;
-    ActivityCurrencySO ActSO;
+    ActivityCurrencySO actSO;
     float offTime;
-    float Interval;
+    float interval;
     public float TimeWhenNextCharge;
     string LastTimeExitKey = "Timekey";
 
@@ -28,13 +26,13 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
         {
-            if (CurrencySaveDic[CurrencyType.Activity] < ActSO.MaxCount)
+            if (CurrencySaveDic[CurrencyType.Activity] < actSO.MaxCount)
             {
-                Interval += Time.deltaTime;
-                if (Interval > ActSO.AutoRecoveryPerMinute)
+                interval += Time.deltaTime;
+                if (interval > actSO.AutoRecoveryPerMinute)
                 {
-                    TimeWhenNextCharge = ActSO.AutoRecoveryPerMinute - Interval;
-                    Interval -= ActSO.AutoRecoveryPerMinute;
+                    TimeWhenNextCharge = actSO.AutoRecoveryPerMinute - interval;
+                    interval -= actSO.AutoRecoveryPerMinute;
                     SetCurrency(CurrencyType.Activity, 1);
                     //Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
                 }
@@ -51,8 +49,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public IEnumerator StartStamina()
     {
-        ActSO = GlobalDataTable.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
-        yield return new WaitUntil(() => ActSO != null);
+        actSO = GlobalDataTable.Instance.currency.GetCurrencySOToEnum<ActivityCurrencySO>(CurrencyType.Activity);
+        yield return new WaitUntil(() => actSO != null);
         if (PlayerPrefs.HasKey(LastTimeExitKey))
         {
             Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
@@ -111,10 +109,10 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void DisableAutoCharge(float offTime)
     {
-        CurrencySaveDic[CurrencyType.Activity] += (int)(offTime / ActSO.AutoRecoveryPerMinute);
-        if (CurrencySaveDic[CurrencyType.Activity] >= ActSO.MaxCount)
+        CurrencySaveDic[CurrencyType.Activity] += (int)(offTime / actSO.AutoRecoveryPerMinute);
+        if (CurrencySaveDic[CurrencyType.Activity] >= actSO.MaxCount)
         {
-            CurrencySaveDic[CurrencyType.Activity] = ActSO.MaxCount;
+            CurrencySaveDic[CurrencyType.Activity] = actSO.MaxCount;
         }
     }
 

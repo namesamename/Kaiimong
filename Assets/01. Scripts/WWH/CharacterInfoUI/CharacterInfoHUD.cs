@@ -1,25 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum CharacterInfoType
-{
-    Back,
-    Main,
-    Skin,
-    CharacterImage,
-    Name,
-    Stat,
-    Dolpa,
-    Levelup,
-    IngiUp,
-    ActiveSkill,
-    PassiveSkill,
 
-}
 
 
 public class CharacterInfoHUD : MonoBehaviour
