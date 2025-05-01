@@ -116,12 +116,11 @@ public class StageManager : Singleton<StageManager>
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
         //아이템
+        RewardListUp();
         //for(int i = 0; i < CurrentStage.ItemID.Length; i++)
         //{
         //    int itemID = CurrentStage.ItemID[i];
         //    ItemSavaData itemSaveData = ItemManager.Instance.GetItemSaveData(itemID);
-
-
         //}
         //호감도 지급      
         foreach (Character player in Players)
@@ -206,5 +205,30 @@ public class StageManager : Singleton<StageManager>
         Players.Clear();
         Enemies.Clear();
         CurrentStage = null;
+    }
+
+    public void RewardListUp(int battleCount = 1)
+    {
+        if (ChapterManager.Instance.StageItemList.ContainsKey(CurrentStage.ID))
+        {
+            foreach (var item in ChapterManager.Instance.StageItemList[CurrentStage.ID])
+            {
+                int rewardCount = 0;
+                for (int i = 0; i < battleCount; i++)
+                {
+                    int num = UnityEngine.Random.Range(1, 101);
+                    if (item.Probability <= num)
+                    {
+                        rewardCount++;
+                    }
+
+                }
+                if(rewardCount > 0)
+                {
+                    WinUI.SetRewardSlot(item.ID, rewardCount);
+                    ItemManager.Instance.SetitemCount(item.ID, rewardCount);
+                }
+            }
+        }
     }
 }
