@@ -16,6 +16,10 @@ public class GatchaResultUI : MonoBehaviour
         // 버튼은 연출이 끝나기 전까지 비활성화
         retryButton.interactable = false;
         toLobbyButton.interactable = false;
+        toLobbyButton.onClick.RemoveAllListeners();
+        toLobbyButton.onClick.AddListener(OnGoToLobby);
+
+
 
         StartCoroutine(ShowResults());
     }
@@ -57,6 +61,8 @@ public class GatchaResultUI : MonoBehaviour
         // 모든 캐릭터 연출이 끝난 후 버튼 활성화
         retryButton.interactable = true;
         toLobbyButton.interactable = true;
+
+
     }
 
     public void OnDrawMore()
@@ -100,6 +106,6 @@ public class GatchaResultUI : MonoBehaviour
 
     public void OnGoToLobby()
     {
-        SceneManager.LoadScene("MainScene"); // 원하는 씬 이름으로 수정 가능
+        SceneLoader.Instance.ChangeScene(SceneState.PickupScene);
     }
 }

@@ -532,7 +532,6 @@ GameObject:
   - component: {fileID: 756425137}
   - component: {fileID: 756425136}
   - component: {fileID: 756425135}
-  - component: {fileID: 756425138}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -604,7 +603,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 756425138}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonSceneLoader, Assembly-CSharp
         m_MethodName: SceneLoad
         m_Mode: 5
@@ -654,18 +653,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756425133}
   m_CullTransparentMesh: 1
---- !u!114 &756425138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756425133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ff04fe972964a140bfa9f2deecd7cd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1022552137
 GameObject:
   m_ObjectHideFlags: 0

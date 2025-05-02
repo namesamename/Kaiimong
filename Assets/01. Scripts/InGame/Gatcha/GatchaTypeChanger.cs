@@ -17,14 +17,18 @@ public class GatchaTypeChanger : MonoBehaviour
     [SerializeField] private GameObject PickUpPointer;
     [SerializeField] private GameObject StandardPointer;
 
+    [SerializeField] private Button button;
 
     private Dictionary<Transform, Vector3> originalPositions = new();
 
+ 
     private void Start()
     {
         _gatchaManager = GatchaManager.Instance;
         SaveOriginalPositions();
         UpdateBannerImage(_gatchaManager.currentGachaType);
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
     }
 
     private void SaveOriginalPositions()
