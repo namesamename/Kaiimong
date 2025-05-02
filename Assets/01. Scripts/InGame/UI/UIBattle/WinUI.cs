@@ -58,6 +58,7 @@ public class WinUI : MonoBehaviour
         stageNameText.text = StageManager.Instance.CurrentStage.Name;
         playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
         playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
+        expBar.value = (float)CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP) / GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
         earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
     }
 
