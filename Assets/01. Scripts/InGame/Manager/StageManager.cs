@@ -110,8 +110,8 @@ public class StageManager : Singleton<StageManager>
     public void WinStage()
     {
         WinUI.gameObject.SetActive(true);
-        OnWin?.Invoke();
         OnStageWin();
+        OnWin?.Invoke();
         StartCoroutine(BeforeWinChangeDelay());
     }
 
