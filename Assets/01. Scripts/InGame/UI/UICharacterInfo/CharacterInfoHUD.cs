@@ -72,7 +72,7 @@ public class CharacterInfoHUD : MonoBehaviour
                     Dolpaimages[i].enabled = false;
                 }
 
-                for (int i = 1;i < saveData.Necessity; i++)
+                for (int i = 1;i < saveData.Necessity+1; i++)
                 {
                     Dolpaimages[i].enabled = true;
                 }
@@ -91,7 +91,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 TextMeshProUGUI Ingi = GetComponentInChildren<TextMeshProUGUI>();
                 Button IngiUpButton = GetComponentInChildren<Button>();
                 IngiUpButton.onClick.RemoveAllListeners();
-                Ingi.text = $"Ingi\n{saveData.Recognition}";
+                Ingi.text = $"ÀÎÁö\n{saveData.Recognition}";
                 IngiUpButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("IngiPopUp"));
                 break;
             case CharacterInfoType.ActiveSkill:

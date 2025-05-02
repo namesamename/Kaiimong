@@ -39,9 +39,9 @@ public class TopBarUI : MonoBehaviour
  
 
 
-        CountText[0].text = $"Stamina: {playerstamina} / {CurrencyManager.Instance.GetCurrency(CurrencyType.CurMaxStamina)}";
-        CountText[1].text = $"Gold: {playergold.ToKNumber()}";
-        CountText[2].text = $"Crystal: {playercrystal}";
+        CountText[0].text = $"행동력: {playerstamina} / {CurrencyManager.Instance.GetCurrency(CurrencyType.CurMaxStamina)}";
+        CountText[1].text = $"엽전: {playergold.ToKNumber()}";
+        CountText[2].text = $"유리구슬: {playercrystal}";
     }
 
 }
