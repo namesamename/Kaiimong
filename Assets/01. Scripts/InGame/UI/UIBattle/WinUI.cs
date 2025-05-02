@@ -46,9 +46,10 @@ public class WinUI : MonoBehaviour
     {
         CanClick = true;
         //sprite¡ÿ∫Ò æ»µ 
-        int RandomCharacter = GlobalDataTable.Instance.DataCarrier.GetCharacterIDList()[Random.Range(0, GlobalDataTable.Instance.DataCarrier.GetCharacterIDList().Count)];
-        Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacter, SpriteType.Illustration);
-
+        int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
+        //int RandomCharacter = GlobalDataTable.Instance.DataCarrier.GetCharacterIDList()[Random.Range(0, GlobalDataTable.Instance.DataCarrier.GetCharacterIDList().Count)];
+        Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
+        
         characterImage.sprite = sprite;
         //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
         //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;

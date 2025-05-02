@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b94ea0fc2f49ae46990bead76e6a06e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterImage: {fileID: 0}
+  characterImage: {fileID: 589082044621591502}
   stageNameText: {fileID: 5914321604780634731}
   expBar: {fileID: 3273836761767934229}
   playerLevelText: {fileID: 6062969284439011031}

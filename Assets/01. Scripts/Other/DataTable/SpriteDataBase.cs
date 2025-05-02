@@ -43,7 +43,7 @@ public class SpriteDataBase
     {
         if(SpriteDic.ContainsKey(sprite))
         {
-            var Sprite = SpriteDic[sprite].Find(x => x.name.Contains($"{ID}"));
+            var Sprite = SpriteDic[sprite].Find(x => x.name.Contains($"{ID}"))as Sprite;
 
             if (Sprite == null)
             {
