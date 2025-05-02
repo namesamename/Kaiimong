@@ -75,7 +75,17 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
 
     public void SetSlotColorAndCharacterImage(Character character)
     {
-        images[1].sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Illustration);
+
+        Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(character.ID, SpriteType.Illustration);
+        if(sprite != null) 
+        {
+            images[1].sprite = sprite;
+        }
+        else
+        {
+            images[1].sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Illustration);
+        }
+       
         Grade grade = character.Grade;
         switch (grade)
         {

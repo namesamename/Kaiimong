@@ -82,7 +82,15 @@ public class CharacterSelectSlot : MonoBehaviour
         }
         images[0].enabled = true;
         images[1].enabled = true;
-        images[1].sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Illustration);
+
+        
+        Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(character.ID, SpriteType.Illustration);
+
+        if (sprite == null ) 
+        {
+            sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Illustration);
+        }
+        images[1].sprite = sprite;
         images[10].enabled = true;
         for (int i = 0;i < saveData.Recognition; i++) 
         {

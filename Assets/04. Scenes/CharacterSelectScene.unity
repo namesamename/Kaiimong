@@ -208,12 +208,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 96839779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65dd62c24032e8f49a7b3db00b681d04, type: 3}
+  m_Script: {fileID: 11500000, guid: fdc6b2da1bfd0be4db60ef2b2da9e75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotPrefabs: {fileID: 0}
-  ISGradeOrder: 0
-  ISLevelOrder: 0
+  IsGradeOrder: 0
+  IsLevelOrder: 0
 --- !u!1 &133271587
 GameObject:
   m_ObjectHideFlags: 0

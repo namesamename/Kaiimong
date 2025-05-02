@@ -5,7 +5,7 @@ public class UIRecognitionPOPUP : UIPOPUP
     [HideInInspector]
     public UIRecognitionBoard board;
     [HideInInspector]
-    public UIRecognitionSlots slot;
+    public UIRecognitionSlotSpawner slot;
     [HideInInspector]
     public UIRecognitionBtn btn;
    
@@ -17,7 +17,7 @@ public class UIRecognitionPOPUP : UIPOPUP
     {
         setPOPUps = GetComponentsInChildren<ISetPOPUp>();
         board = GetComponentInChildren<UIRecognitionBoard>();
-        slot = GetComponentInChildren<UIRecognitionSlots>();
+        slot = GetComponentInChildren<UIRecognitionSlotSpawner>();
         btn = GetComponentInChildren<UIRecognitionBtn>();
     
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIRecognitionSlots : MonoBehaviour, ISetPOPUp
+public class UIRecognitionSlotSpawner : MonoBehaviour, ISetPOPUp
 {
 
     public GameObject Slots;

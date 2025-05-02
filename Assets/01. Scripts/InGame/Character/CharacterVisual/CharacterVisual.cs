@@ -25,9 +25,9 @@ public class CharacterVisual : MonoBehaviour
         switch (character)
         {
             case CharacterType.Friend:
-                BattleSprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.BattleSprite);
-                Icon = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Icon);
-                RecoSD = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.RecoSD);
+                BattleSprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(ID, SpriteType.BattleSprite);
+                Icon = GlobalDataTable.Instance.Sprite.GetSpriteToID(ID, SpriteType.Icon);
+                RecoSD = GlobalDataTable.Instance.Sprite.GetSpriteToID(ID, SpriteType.RecoSD);
                 // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
                 break;
             case CharacterType.Enemy:
