@@ -100,6 +100,16 @@ public class StageManager : Singleton<StageManager>
     }
     public void EndUISet()
     {
+        if (WinUI != null)
+        {
+            Destroy(WinUI.gameObject);
+            WinUI = null;
+        }
+        if (LoseUI != null)
+        {
+            Destroy(LoseUI.gameObject);
+            LoseUI = null;
+        }
         GameObject canvas = GameObject.Find("Canvas");
         GameObject uiwinPrefab = Instantiate(Resources.Load("UI/Battle/WinUI"), canvas.transform) as GameObject;
         GameObject uilosePrefab = Instantiate(Resources.Load("UI/Battle/LoseUI"), canvas.transform) as GameObject;
@@ -112,13 +122,13 @@ public class StageManager : Singleton<StageManager>
         WinUI.gameObject.SetActive(true);
         OnStageWin();
         OnWin?.Invoke();
+        StageWinExp();
         StartCoroutine(BeforeWinChangeDelay());
     }
 
     private void OnStageWin()
     {
-        //경험치, 골드,유료재화 지급 
-        CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
+        //골드,유료재화 지급 
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
         //아이템
@@ -154,6 +164,11 @@ public class StageManager : Singleton<StageManager>
                 ChapterManager.Instance.SaveChapterSingleData(CurrentStage.UnlockChapterID[i]);
             }
         }
+    }
+
+    private void StageWinExp()
+    {
+        CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
     }
 
     public void LoseStage()
@@ -211,6 +226,8 @@ public class StageManager : Singleton<StageManager>
         Players.Clear();
         Enemies.Clear();
         CurrentStage = null;
+        WinUI = null;
+        LoseUI = null;
     }
 
     public void RewardListUp(int battleCount = 1)

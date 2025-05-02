@@ -21,6 +21,7 @@ public class WinUI : MonoBehaviour
     private void Awake()
     {
         rewardPrefabs = Resources.Load<GameObject>("UI/Battle/ItemRewardSlot");
+        StageManager.Instance.OnWin -= SetWinUI;
         StageManager.Instance.OnWin += SetWinUI;
     }
 
@@ -36,20 +37,18 @@ public class WinUI : MonoBehaviour
                 StageManager.Instance.ToStageSelectScene();
             }
         }
-
-        if(StageManager.Instance.OnWin == null)
-        {
-            StageManager.Instance.OnWin += SetWinUI;
-        }
     }
 
     public void SetWinUI()
     {
+        StageManager.Instance.WinUI = this;
+        expBar.value = (float)CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP) / GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
+        
         CanClick = true;
         int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
-        Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
-        //Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
-        
+        //Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
+        Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
+
         //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
         //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
         characterImage.sprite = sprite;
@@ -58,13 +57,11 @@ public class WinUI : MonoBehaviour
         stageNameText.text = StageManager.Instance.CurrentStage.Name;
         playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
         playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
-        expBar.value = (float)CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP) / GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
         earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
     }
 
     public void UnSubscribeWinUI()
     {
-        characterImage.sprite = null;
         CanClick = false;
         StageManager.Instance.OnWin -= SetWinUI;
     }

@@ -10,6 +10,7 @@ public class LoseUI : MonoBehaviour
 
     void Awake()
     {
+        StageManager.Instance.OnLose -= SetLoseUI;
         StageManager.Instance.OnLose += SetLoseUI;
     }
 
