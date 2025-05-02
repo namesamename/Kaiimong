@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -42,7 +43,6 @@ public class WinUI : MonoBehaviour
     public void SetWinUI()
     {
         StageManager.Instance.WinUI = this;
-        expBar.value = (float)CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP) / GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
         
         CanClick = true;
         int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
@@ -58,6 +58,17 @@ public class WinUI : MonoBehaviour
         playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
         playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
         earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
+
+        StartCoroutine(DelaySetExpBar());
+    }
+
+    private IEnumerator DelaySetExpBar()
+    {
+        yield return null; // 한 프레임 대기 (UI 그래픽 업데이트 이후)
+
+        float userExp = CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP);
+        float maxExp = GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
+        expBar.value = userExp / maxExp;
     }
 
     public void UnSubscribeWinUI()
