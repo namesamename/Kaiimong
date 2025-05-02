@@ -8,7 +8,7 @@ public class LoseUI : MonoBehaviour
     [SerializeField] private Image activityImage;
     public bool CanClick = false;
 
-    void Start()
+    void Awake()
     {
         StageManager.Instance.OnLose += SetLoseUI;
     }

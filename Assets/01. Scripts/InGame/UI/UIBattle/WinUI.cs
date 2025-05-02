@@ -21,10 +21,6 @@ public class WinUI : MonoBehaviour
     private void Awake()
     {
         rewardPrefabs = Resources.Load<GameObject>("UI/Battle/ItemRewardSlot");
-    }
-
-    void Start()
-    {
         StageManager.Instance.OnWin += SetWinUI;
     }
 
@@ -40,20 +36,24 @@ public class WinUI : MonoBehaviour
                 StageManager.Instance.ToStageSelectScene();
             }
         }
+
+        if(StageManager.Instance.OnWin == null)
+        {
+            StageManager.Instance.OnWin += SetWinUI;
+        }
     }
 
-    void SetWinUI()
+    public void SetWinUI()
     {
         CanClick = true;
-        //sprite¡ÿ∫Ò æ»µ 
         int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
-        //int RandomCharacter = GlobalDataTable.Instance.DataCarrier.GetCharacterIDList()[Random.Range(0, GlobalDataTable.Instance.DataCarrier.GetCharacterIDList().Count)];
         Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
+        //Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
         
-        characterImage.sprite = sprite;
-        //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
         //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
-        //characterImage.SetNativeSize();
+        //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
+        characterImage.sprite = sprite;
+        characterImage.SetNativeSize();
 
         stageNameText.text = StageManager.Instance.CurrentStage.Name;
         playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
@@ -63,8 +63,9 @@ public class WinUI : MonoBehaviour
 
     public void UnSubscribeWinUI()
     {
+        characterImage.sprite = null;
         CanClick = false;
-        StageManager.Instance.OnWin += SetWinUI;
+        StageManager.Instance.OnWin -= SetWinUI;
     }
 
     private bool IsClickOnRewardTab()
