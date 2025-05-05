@@ -61,7 +61,7 @@ public class SheetInfoSOEditor : Editor
 
             foreach (var data in datas)
             {
-                var path = instance.OutPath + "/" + Directory + data["ID"] + ".asset";
+                var path = instance.OutPath + "/" + Directory + FileName(type.ToString(), data["ID"]) + ".asset";
                 var dt = (ScriptableObject)AssetDatabase.LoadAssetAtPath(path, type);
                 if (dt == null)
                 {
@@ -79,8 +79,63 @@ public class SheetInfoSOEditor : Editor
     public ScriptableObject DicToClass(Type type, Dictionary<string, string> data)
     {
         var dt = CreateInstance(type);
-        AssetDatabase.CreateAsset(dt, instance.OutPath+"/"+ Directory+ data["ID"] + ".asset");
+        AssetDatabase.CreateAsset(dt, instance.OutPath+"/"+ Directory+ FileName(type.ToString(),data["ID"]) + ".asset");
         return TSVParser.DicToSOData(type, dt, data);
+    }
+    public string FileName(string fileName, string ID)
+    {
+        if (fileName == "Character")
+        {
+            return "Character_" + ID;
+        }
+        else if (fileName == "ActiveSkill")
+        {
+            return "ActiveSkill_" + ID;
+        }
+        else if (fileName == "Debuff")
+        {
+            return "Debuff_" + ID;
+        }
+        else if (fileName == "Buff")
+        {
+            return "Buff_" + ID;
+        }
+        else if (fileName == "ItemData")
+        {
+            return "Item_" + ID;
+        }
+        else if (fileName == "Consume")
+        {
+            return "ConsumeItem_" + ID;
+        }
+        else if (fileName == "Chapter")
+        {
+            return "Chapter_" + ID;
+        }
+        else if (fileName == "ChapterCategory")
+        {
+            return "ChapterCategory_" + ID;
+        }
+        else if (fileName == "Stage")
+        {
+            return "Stage_" + ID;
+        }
+        else if (fileName == "CharacterUpgradeTable")
+        {
+            return "CharacterUpgradeTable_" + ID;
+        }
+        else if (fileName == "Enemy")
+        {
+            return "Enemy_" + ID;
+        }
+        else if (fileName == "EnemySpawn")
+        {
+            return "EnemySpawn_" + ID;
+        }
+        else
+        {
+            return fileName;
+        }
     }
 
 
