@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: 
   Description: 
   IconPath: 
-  MaxCount: 9999
+  MaxCount: 99999
   Value: 0
   CurrencyType: 2
   exchangeInfos: []

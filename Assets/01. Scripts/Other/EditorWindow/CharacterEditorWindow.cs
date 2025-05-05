@@ -98,11 +98,16 @@ public class CharacterEditorWindow : EditorWindow
         }
         GUILayout.Space(55);
         ID = EditorGUILayout.IntField("ID", ID);
-        if (GUI.Button(new Rect(0, 260, 250, 50), "Delete Character"))
+        if (GUI.Button(new Rect(0, 260, 250, 50), "Delete Stage"))
+        {
+            GameSaveSystem.Delete(SaveType.Stage);
+        }
+
+
+        if (GUI.Button(new Rect(0, 310, 250, 50), "Delete Character"))
         {
             GameSaveSystem.Delete(SaveType.Character);
         }
-
 
 
     }
