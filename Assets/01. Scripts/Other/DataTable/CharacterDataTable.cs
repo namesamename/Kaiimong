@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,6 +15,9 @@ public class CharacterDataTable
 
     public Dictionary<int, Enemy> EnemySODIc = new Dictionary<int, Enemy>();
 
+
+    public bool IsEnemyLoaded = false;
+    public bool IsFriendLoaded = false;
 
 
     public List<Character> CharacterList = new List<Character>();
@@ -62,6 +66,8 @@ public class CharacterDataTable
         }
 
         Debug.Log("캐릭터 로딩 완료");
+        IsEnemyLoaded = true;
+
 
     }
 
@@ -107,6 +113,7 @@ public class CharacterDataTable
         }
 
         Debug.Log("캐릭터 로딩 완료");
+        IsFriendLoaded = true;
 
 
 
@@ -117,6 +124,11 @@ public class CharacterDataTable
 
     public Character GetCharToID(int characterId)
     {
+        if(!IsFriendLoaded)
+        {
+            Debug.Log("아직 로드 안됨");
+            return null;
+        }
         if (CharacterSODIc.ContainsKey(characterId) && CharacterSODIc[characterId] != null)
         {
             return CharacterSODIc[characterId];
@@ -131,6 +143,11 @@ public class CharacterDataTable
 
     public Enemy GetEnemyToID(int characterId)
     {
+        if (!IsEnemyLoaded)
+        {
+            Debug.Log("아직 로드 안됨");
+            return null;
+        }
         if (EnemySODIc.ContainsKey(characterId) && EnemySODIc[characterId] != null)
         {
             return EnemySODIc[characterId];
@@ -174,7 +191,11 @@ public class CharacterDataTable
     }
     public  GameObject CharacterInstanceSummon(Character character, Vector3 pos, Transform parent = null)
     {
-
+        if (!IsFriendLoaded)
+        {
+            Debug.Log("아직 로드 안됨");
+            return null;
+        }
         GameObject CharacterObject = null;
         var task = GetPrefabs(false);
         task.ContinueWith(t =>
@@ -220,6 +241,11 @@ public class CharacterDataTable
 
     public GameObject EnemyInstanceSummon(Enemy character, int level, Vector3 pos, Transform parent = null)
     {
+        if (!IsEnemyLoaded)
+        {
+            Debug.Log("아직 로드 안됨");
+            return null;
+        }
         GameObject CharacterObject = null;
         var task = GetPrefabs(true);
         task.ContinueWith(t =>
