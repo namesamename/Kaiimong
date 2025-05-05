@@ -1,15 +1,67 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class CurrencyDataTable 
 {
     public Dictionary<CurrencyType, CurrencySO> CurrencyDic = new Dictionary<CurrencyType, CurrencySO>();
-    public void Initialize()
+    public List<CurrencySO> Lists = new List<CurrencySO>();
+    public async void Initialize()
     {
-        CurrencySO[] currencySOs = Resources.LoadAll<CurrencySO>("Currency");
-        for (int i = 0; i < currencySOs.Length; i++)
+        var handle = Addressables.LoadAssetsAsync<CurrencySO>("Currency", Cur =>
         {
-            CurrencyDic[currencySOs[i].CurrencyType] = currencySOs[i];
+            Lists.Add(Cur);
+        });
+
+        await handle.Task;
+
+        if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+        {
+            foreach (var item in Lists) 
+            {
+                if(item is DIaCurrencySO)
+                {
+                    CurrencyDic[CurrencyType.Dia] = (DIaCurrencySO)item;
+                }
+               else if (item is GoldCurrencySO)
+                {
+                    CurrencyDic[CurrencyType.Gold] = (GoldCurrencySO)item;
+                }
+                else if (item is ActivityCurrencySO)
+                {
+                    CurrencyDic[CurrencyType.Activity] = (ActivityCurrencySO)item;
+                }
+                else if (item is GachaCurrencySO)
+                {
+                    CurrencyDic[CurrencyType.Gacha] = (GachaCurrencySO)item;
+                }
+                else if (item is CurMaxStaminaCurrency)
+                {
+                    CurrencyDic[CurrencyType.CurMaxStamina] = (CurMaxStaminaCurrency)item;
+                }
+                else if (item is CharacterEXPSO)
+                {
+                    CurrencyDic[CurrencyType.CharacterEXP] = (CharacterEXPSO)item;
+                }
+                else if (item is UserLevelSO)
+                {
+                    CurrencyDic[CurrencyType.UserLevel] = (UserLevelSO)item;
+                }
+                else if (item is UserEXPSO)
+                {
+                    CurrencyDic[CurrencyType.UserEXP] = (UserEXPSO)item;
+                }
+                else if (item is PurchaseCurrencySO)
+                {
+                    CurrencyDic[CurrencyType.purchaseCount] = (PurchaseCurrencySO)item;
+                }
+
+            }
+        }
+        else
+        {
+            Debug.Log("½ÇÆÐ");
         }
     }
 

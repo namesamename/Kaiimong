@@ -41,7 +41,7 @@ public class CharacterSkillBook : MonoBehaviour
         //마나, 쿨타임, 사용 가능한가 불가능 한가
         if (!IsCoolTime(skill))
             return;
-        skill.UseSkill(characters);
+        skill.UseSkillAsync(characters);
     }
 
     public bool IsCoolTime(ActiveSkillObject skill)

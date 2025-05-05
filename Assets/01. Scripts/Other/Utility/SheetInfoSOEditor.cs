@@ -58,10 +58,10 @@ public class SheetInfoSOEditor : Editor
 
     public void GetDatas(Type type, List<Dictionary<string, string>> datas)
     {
-
+    
             foreach (var data in datas)
             {
-                var path = instance.OutPath + "/" + Directory + data["ID"] + ".asset";
+                var path = instance.OutPath + "/" + Directory + FileName(type.ToString(), data["ID"]) + ".asset";
                 var dt = (ScriptableObject)AssetDatabase.LoadAssetAtPath(path, type);
                 if (dt == null)
                 {
@@ -79,25 +79,81 @@ public class SheetInfoSOEditor : Editor
     public ScriptableObject DicToClass(Type type, Dictionary<string, string> data)
     {
         var dt = CreateInstance(type);
-        AssetDatabase.CreateAsset(dt, instance.OutPath+"/"+ Directory+ data["ID"] + ".asset");
+        AssetDatabase.CreateAsset(dt, instance.OutPath+"/"+ Directory+ FileName(type.ToString(),data["ID"]) + ".asset");
         return TSVParser.DicToSOData(type, dt, data);
     }
 
+
+
+    public string FileName(string fileName, string ID)
+    {
+        if (fileName == "Character")
+        {
+            return "Character_" + ID;
+        }
+        else if (fileName == "ActiveSkill")
+        {
+            return "ActiveSkill_" + ID;
+        }
+        else if (fileName == "Debuff")
+        {
+            return "Debuff_" + ID;
+        }
+        else if (fileName == "Buff")
+        {return "Buff_" + ID;
+        }
+        else if (fileName == "ItemData")
+        {
+            return "Item_" + ID;
+        }
+        else if (fileName == "Consume")
+        {
+            return "ConsumeItem_" + ID;
+        }
+        else if (fileName == "Chapter")
+        {
+            return "Chapter_" + ID;
+        }
+        else if (fileName == "ChapterCategory")
+        {
+            return "ChapterCategory_" + ID;
+        }
+        else if (fileName == "Stage")
+        {
+            return "Stage_" + ID;
+        }
+        else if (fileName == "CharacterUpgradeTable")
+        {
+            return "CharacterUpgradeTable_" + ID;
+        }
+        else if (fileName == "Enemy")
+        {
+            return "Enemy_" + ID;
+        }
+        else if (fileName == "EnemySpawn")
+        {
+            return "EnemySpawn_" + ID;
+        }
+        else
+        {
+            return fileName;
+        }
+    }
 
     public void Pathcheck(string SheetId)
     {
   
         if (SheetId == "Character")
         {
-            Directory = "Char/";
+            Directory = "CharacterSO/";
         }
         else if (SheetId == "ActiveSkill")
         {
-            Directory = "ActS/";
+            Directory = "ActSkill/";
         }
         else if (SheetId == "Debuff")
         {
-            Directory = "Debu/";
+            Directory = "Debuff/";
         }
         else if (SheetId == "Buff")
         {
@@ -109,7 +165,7 @@ public class SheetInfoSOEditor : Editor
         }
         else if (SheetId == "Consume")
         {
-            Directory = "Cons/";
+            Directory = "Consumable/";
         }
         else if (SheetId == "Chapter")
         {
@@ -125,11 +181,11 @@ public class SheetInfoSOEditor : Editor
         }
         else if (SheetId == "CharacterUpgradeTable")
         {
-            Directory = "Reco/";
+            Directory = "RecongnitionSO/";
         }
         else if (SheetId == "Enemy")
         {
-            Directory = "Enem/";
+            Directory = "Enemy/";
         }
         else if (SheetId == "EnemySpawn")
         {

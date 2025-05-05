@@ -57,7 +57,7 @@ public class GameManager : Singleton<GameManager>
         currencyManager.InitialIze();
 
         stageManager.Initialize();
-        uiManager.Initialize();
+       
         chapterManager.Initailize();
     
 

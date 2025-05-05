@@ -24,7 +24,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
   
     private void Update()
     {
-        if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
+        if (CurrencySaveDic.ContainsKey(CurrencyType.Activity) && actSO != null)
         {
             if (CurrencySaveDic[CurrencyType.Activity] < actSO.MaxCount)
             {

@@ -1,39 +1,36 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 
 public class UIManager : Singleton<UIManager>
 {
 
 
-    List<GameObject> POPS = new List<GameObject>();
-    public void Initialize()
-    {
-        GameObject[] POPs = Resources.LoadAll<GameObject>("Popups");
-
-        for (int i = 0; i < POPs.Length; i++) 
-        {
-            POPS.Add(POPs[i]);
-        }
-
-    }
+ 
 
     public T ShowPopup<T>() where T : UIPOPUP
     {
         return ShowPopup(typeof(T).Name) as T;
     }
 
-    public UIPOPUP ShowPopup(string popupName)
+    public async Task<UIPOPUP> ShowPopup(string popupName)
     {
-        
-        var obj = POPS.Find(x => x.name == popupName);
-        //var obj = Resources.Load($"Popups/{popupName}", typeof(GameObject)) as GameObject;
-        if (obj == null)
+       var OBj =  Addressables.LoadAssetAsync<GameObject>($"Popups/{popupName}");
+
+        await OBj.Task;
+        if (OBj.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+        {
+            GameObject popupPrefab = OBj.Result;
+            return ShowPopupWithPrefab(popupPrefab);
+        }
+        else
         {
             Debug.LogWarning($"Failed to ShowPopup({popupName})");
             return null;
         }
-        return ShowPopupWithPrefab(obj);
     }
 
     private UIPOPUP ShowPopupWithPrefab(GameObject prefab)
@@ -58,19 +55,30 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-    public GameObject CreatTransformPOPUP(string popupName, Transform transform)
+    public async Task<GameObject> CreatTransformPOPUP(string popupName, Transform transform)
     {
-        var obj = POPS.Find(x => x.name == popupName);
+        var OBj = Addressables.LoadAssetAsync<GameObject>($"Popups/{popupName}");
 
-        GameObject game = Instantiate(obj);
+        await OBj.Task;
+        if (OBj.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+        {
+            GameObject game = Instantiate(OBj.Result);
 
-        int Ran = Random.Range(-4 , 4);
+            int Ran = Random.Range(-4, 4);
 
-        Vector3 vector3 = new Vector3(transform.position.x + Ran, transform.position.y + Ran + 3f,  transform.position.z);
-        game.transform.position = vector3;
-        game.transform.rotation = Quaternion.identity;
+            Vector3 vector3 = new Vector3(transform.position.x + Ran, transform.position.y + Ran + 3f, transform.position.z);
+            game.transform.position = vector3;
+            game.transform.rotation = Quaternion.identity;
 
-        return game;
+            return game;
+        }
+        else
+        {
+            Debug.LogWarning($"Failed to ShowPopup({popupName})");
+            return null;
+        }
+
+    
     }
 
 }

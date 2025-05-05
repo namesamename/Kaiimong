@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37670e058308cdd47b823e72ffc15d08, type: 3}
+  m_Name: Character_7
+  m_EditorClassIdentifier: 
+  ID: 7
+  Name: "\uC0AC"
+  Grade: 0
+  Health: 1300
+  Attack: 235
+  Defence: 117
+  Speed: 101
+  CriticalPer: 0.062
+  CriticalAttack: 1.4
+  CharacterType: 0
+  CharacterItem: 1
+  SpritePath: CharacterSprite/1
+  BattlePath: CharacterBattleSD/1
+  RecognitionPath: RecognitionSprite/1
+  UpgradeBattlePath: UpgradeBattleSD/1

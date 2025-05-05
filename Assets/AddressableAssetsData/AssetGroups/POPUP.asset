@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: POPUP
+  m_EditorClassIdentifier: 
+  m_GroupName: POPUP
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c94ec4520a483924bba1c355bdf751a2
+  m_SerializeEntries:
+  - m_GUID: a5f665cf7836d8b4083d5bb072d1bfe2
+    m_Address: Popups/breakthroughPopUP
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c51922ca401bbd9458aa4acaaff7aa6d
+    m_Address: Popups/DamagePOPUP
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b96fb75d8a27bdb4ba707ead012a8064
+    m_Address: Popups/IngiPopUp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c485e7e9ebafe740ac2c4ad11adba1b
+    m_Address: Popups/ItemInfoPopup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86814271d75405c41bea7b1467ae4b47
+    m_Address: Popups/ItemPopupPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d16fdd4baa6f01445934a4fced4e6350
+    m_Address: Popups/LevelupPopUp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0b845d29241aee408ee5944d01722ea
+    m_Address: Popups/PopupBattlePause
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f093891514a3894c988f9e37dfc432e
+    m_Address: Popups/PopupCurrencyLack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e76833457824d14cad2497ea495dc74
+    m_Address: Popups/PopupGatchaConfirm
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69889b61ada7b5b4d8f43bbed94e5ded
+    m_Address: Popups/PopupGatchaHistory
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 04dac215fead7e94bb4caab0a9b23867
+    m_Address: Popups/SkillInfoPopup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b491dea303f39f4aa0bd396229bdd77
+    m_Address: Popups/StaminaChargePOPUP
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc6245c6f8a20db4c933046a71ad8b27
+    m_Address: Popups/UIHistoryItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: fb9026b68d64d2a4b83528c8283221f8, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1bd7bae9b9ba3cb44a50956bd572b781, type: 2}
+    - {fileID: 11400000, guid: 651a42abce303784eab0f325f2571503, type: 2}

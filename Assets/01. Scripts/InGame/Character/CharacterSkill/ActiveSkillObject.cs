@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -19,7 +20,7 @@ public class ActiveSkillObject : MonoBehaviour
     {
         SkillSO = GlobalDataTable.Instance.skill.GetActSkillSOToID(id);
     }
-    public void UseSkill(List<CharacterCarrier> targetcharacter)
+    public async Task UseSkillAsync(List<CharacterCarrier> targetcharacter)
     {
         if (animator != null)
         {
@@ -50,7 +51,7 @@ public class ActiveSkillObject : MonoBehaviour
             foreach (CharacterCarrier c in targetcharacter)
             { 
                 c.stat.healthStat.Heal(SkillSO.Attack * stat.attackStat.GetStat());
-                GameObject DamagePOP = UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", c.transform);
+                GameObject DamagePOP = await UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", c.transform);
                 DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(SkillSO.Attack * stat.attackStat.GetStat(), false, c);
             }
         }
@@ -60,7 +61,7 @@ public class ActiveSkillObject : MonoBehaviour
 
             foreach (CharacterCarrier character in targetcharacter.ToList())
             {
-                GameObject DamagePOP = UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", character.transform);
+                GameObject DamagePOP = await UIManager.Instance.CreatTransformPOPUP("DamagePOPUP", character.transform);
                 if (SkillSO == null)
                 {
                     Debug.Log("SKill null");
