@@ -66,17 +66,6 @@ public enum SkillTargetType
 }
 public enum AddreassablesType
 {
-    Character,
-    ActiveSkill,
-    PassiveSkill,
-    Debuff,
-    Buff,
-    Currency,
-    Enemy,
-    EnemySpawn,
-    Item,
-    CharacterUpGradeTable,
-    ConsumItem,
     CharacterIcon,
     BattleSD,
     Illustration,

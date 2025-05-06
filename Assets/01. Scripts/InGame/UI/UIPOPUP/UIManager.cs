@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -23,10 +24,11 @@ public class UIManager : Singleton<UIManager>
         return ShowPopup(typeof(T).Name) as T;
     }
 
-    public UIPOPUP ShowPopup(string popupName)
+    public async Task<UIPOPUP> ShowPopup(string popupName)
     {
+       
         
-        var obj = POPS.Find(x => x.name == popupName);
+        var obj = await AddressableManager.Instance.LoadAsset(popupName);
         //var obj = Resources.Load($"Popups/{popupName}", typeof(GameObject)) as GameObject;
         if (obj == null)
         {
@@ -38,6 +40,9 @@ public class UIManager : Singleton<UIManager>
 
     private UIPOPUP ShowPopupWithPrefab(GameObject prefab)
     {
+
+
+
         var obj = Instantiate(prefab, GameObject.Find("Canvas").transform);
         return ShowPopup(obj);
     }

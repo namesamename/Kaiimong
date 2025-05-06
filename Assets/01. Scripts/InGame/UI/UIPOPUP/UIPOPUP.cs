@@ -21,6 +21,10 @@ public class UIPOPUP : MonoBehaviour //불러올 프리펩에 상속시킬 것들
     public void Destroy()
     {
         Destroy(gameObject);
+        AddressableManager.Instance.UnLoad(gameObject.name);
+
+
+
     }
 }
 

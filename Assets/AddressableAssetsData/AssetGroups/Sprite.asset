@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Sprite
+  m_EditorClassIdentifier: 
+  m_GroupName: Sprite
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b6d11640275de9e49a954d0850972630
+  m_SerializeEntries:
+  - m_GUID: 7cbafba7a4be42f4b91b8f012fce21de
+    m_Address: CharacterBattleSD/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf3f5a8eb4826df4c91a9a669c957854
+    m_Address: CharacterBattleSD/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d70cfaeb44e3a3b46a54d706ad1e8cce
+    m_Address: CharacterBattleSD/Char_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 19c576a626544994baf1e78175f7b9f1
+    m_Address: CharacterBattleSD/Char_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 638837c0f01d0fc4e84568cfeae635f7
+    m_Address: CharacterSprite/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47a0c9c3d98e67d46893fbe696048358
+    m_Address: CharacterSprite/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30ddb09ef0d1f534b81d8d2a0f7d9393
+    m_Address: CharacterSprite/Char_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5ed75d4b50150546a1c13476b2cb009
+    m_Address: CharacterSprite/Char_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b524e72c0dab534e8920180360b3f7b
+    m_Address: RecognitionSD/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendRecognitionSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30b2ca911928fcf4983528c10bbec28a
+    m_Address: RecognitionSD/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendRecognitionSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3956127ee7f61847915ffe64542fa94
+    m_Address: RecognitionSD/Char_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendRecognitionSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41a5010ded066dc4ebf87bf14fbba2b2
+    m_Address: RecognitionSD/Char_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendRecognitionSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e81ea372e1cb2024a992f178cd998f41
+    m_Address: RecognitionSprite/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendRecognitionIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e8529696eae3b44d94700ee527ec07b
+    m_Address: RecognitionSprite/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendRecognitionIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e5b6e387b102644281134a4dbe91b1b
+    m_Address: Icon/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIcon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40e567ef3fe51ab469e96e45b97f91f7
+    m_Address: Icon/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIcon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f84c4b1a8c5bf96499a803ab05b32903
+    m_Address: Icon/Char_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIcon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c50fbc10fc340842b50570dffeaeeab
+    m_Address: Icon/Char_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIcon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1785ebb8e4cf694458dbf2667f53058f
+    m_Address: EnemySprite/Enemy_001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b5ef66ceee36a1a4e8afa545291e9dec, type: 2}
+    - {fileID: 11400000, guid: bd3623311c28f0744a0cf5e724bc762c, type: 2}

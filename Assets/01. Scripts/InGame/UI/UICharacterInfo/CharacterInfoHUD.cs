@@ -78,21 +78,21 @@ public class CharacterInfoHUD : MonoBehaviour
                 }
 
                 DolpaButton.onClick.RemoveAllListeners();
-                DolpaButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("breakthroughPopUP"));
+                DolpaButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("breakthroughPopUP"));
                 break;
             case CharacterInfoType.Levelup:
                 TextMeshProUGUI Level = GetComponentInChildren<TextMeshProUGUI>();
                 Button LevelUpButton = GetComponentInChildren<Button>();
                 LevelUpButton.onClick.RemoveAllListeners();
                 Level.text = $"Level\n{saveData.Level}";
-                LevelUpButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("LevelupPopUp"));
+                LevelUpButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("LevelupPopUp"));
                 break;
             case CharacterInfoType.IngiUp:
                 TextMeshProUGUI Ingi = GetComponentInChildren<TextMeshProUGUI>();
                 Button IngiUpButton = GetComponentInChildren<Button>();
                 IngiUpButton.onClick.RemoveAllListeners();
                 Ingi.text = $"ÀÎÁö\n{saveData.Recognition}";
-                IngiUpButton.onClick.AddListener(() => UIManager.Instance.ShowPopup("IngiPopUp"));
+                IngiUpButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("IngiPopUp"));
                 break;
             case CharacterInfoType.ActiveSkill:
                 Button[] buttons = GetComponentsInChildren<Button>();
@@ -112,9 +112,9 @@ public class CharacterInfoHUD : MonoBehaviour
     }
 
     
-    public void SetSkillPopup(int index)
+    public async void SetSkillPopup(int index)
     {
-        UIPOPUP game = UIManager.Instance.ShowPopup("SkillInfoPopup");
+        UIPOPUP game = await UIManager.Instance.ShowPopup("SkillInfoPopup");
         game.GetComponent<SkillInfoPoPUP>().SetPopup(GlobalDataTable.Instance.DataCarrier.GetCharacter(), index);
     }
 

@@ -5,19 +5,11 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class AddressableManager : MonoBehaviour
+public class AddressableManager : Singleton<AddressableManager>
 {
-
-
-
-
-public class AddressablesManager : Singleton<AddressablesManager>
-{
-
-
     Dictionary<(AddreassablesType, int), AsyncOperationHandle> Tracer = new Dictionary<(AddreassablesType, int), AsyncOperationHandle>();
 
-
+    List<AsyncOperationHandle> PrefabTracer=  new List<AsyncOperationHandle>();
     public async Task<T> LoadAsset<T>(AddreassablesType type, int id) where T : class
     {
         var key = (type, id);
@@ -44,42 +36,39 @@ public class AddressablesManager : Singleton<AddressablesManager>
     }
 
 
+    public async Task<GameObject> LoadAsset(string name)
+    {
+        var handle = Addressables.LoadAssetAsync<GameObject>($"Popups/{name}");
+
+        await handle.Task;
+        if(handle.Status == AsyncOperationStatus.Succeeded) 
+        {
+            PrefabTracer.Add(handle);
+            return handle.Result;
+        }
+        else
+        {
+            return default;
+        }
+
+    }
+    
     public string TypeChanger(AddreassablesType type)
     {
         switch (type)
         {
-            case AddreassablesType.Character:
-                return "CharacterSO/Character_";
-            case AddreassablesType.ActiveSkill:
-                return "ActSkill/ActiveSkill_";
-            case AddreassablesType.PassiveSkill:
-                return "PassiveSkill/PassiveSkill_";
-            case AddreassablesType.Debuff:
-                return "Debuff/Debuff_";
-            case AddreassablesType.Buff:
-                return "Buff/Buff_";
-            case AddreassablesType.Enemy:
-                return "Enemy/Enemy_";
-            case AddreassablesType.EnemySpawn:
-                return "EnemySpawn/EnemySpawn_";
-            case AddreassablesType.Item:
-                return "Item/Item_";
-            case AddreassablesType.ConsumItem:
-                return "Consumable/ConsumeItem_";
-            case AddreassablesType.CharacterUpGradeTable:
-                return "RecongnitionSO/CharacterUpgradeTable_";
             case AddreassablesType.EnemyBattleSD:
                 return "EnemySprite/Enemy_";
             case AddreassablesType.BattleSD:
-                return "CharacterSD/char_";
+                return "CharacterBattleSD/Char_";
             case AddreassablesType.Illustration:
-                return "Illustration/char_";
+                return "CharacterSprite/Char_";
             case AddreassablesType.RecognitionSD:
-                return "RecognitionSD/char_";
+                return "RecognitionSD/Char_";
             case AddreassablesType.RecognitionIllustration:
-                return "RecognitionIllustration/char_";
+                return "RecognitionSprite/Char_";
             case AddreassablesType.CharacterIcon:
-                return "CharIcon/char_";
+                return "Icon/Char_";
             default:
                 return string.Empty;
 
@@ -93,6 +82,18 @@ public class AddressablesManager : Singleton<AddressablesManager>
             Addressables.Release(handle);
             Tracer.Remove((type, ID));
         }
+    }
+
+    public void UnLoad(string name)
+    {
+        foreach(AsyncOperationHandle handle in PrefabTracer)
+        {
+            if(handle.Result.GetType().ToString() .Equals(name))
+            {
+                Addressables.Release(handle);
+            }
+        }
+
     }
 
     public void UnloadType(AddreassablesType type)
@@ -113,8 +114,4 @@ public class AddressablesManager : Singleton<AddressablesManager>
             Tracer.Remove(key);
         }
     }
-
-
-}
-
 }

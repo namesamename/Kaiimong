@@ -7,7 +7,7 @@ public class CharacterBattleSlotSpawner : MonoBehaviour
     List<CharacterSaveData> saveDatas = new List<CharacterSaveData>();
     List<GameObject> Slots = new List<GameObject>();
     public List<CharacterBattleSlot> BattleSlots = new List<CharacterBattleSlot>();
-    int index = 0;
+ 
 
     private void Awake()
     {
