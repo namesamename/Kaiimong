@@ -36,7 +36,7 @@ public class AddressableManager : Singleton<AddressableManager>
     }
 
 
-    public async Task<GameObject> LoadAsset(string name)
+    public async Task<GameObject> LoadPOPUPAsset(string name)
     {
         var handle = Addressables.LoadAssetAsync<GameObject>($"Popups/{name}");
 

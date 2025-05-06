@@ -73,19 +73,21 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void SetSlotColorAndCharacterImage(Character character)
+    public async void SetSlotColorAndCharacterImage(Character character)
     {
 
-        Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(character.ID, SpriteType.Illustration);
-        if(sprite != null) 
+        Sprite sprite = null;
+        if(character.ID > 4) 
         {
-            images[1].sprite = sprite;
+            sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, 1);
+
         }
         else
         {
-            images[1].sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Illustration);
+            sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
         }
-       
+        images[1].sprite = sprite;
+
         Grade grade = character.Grade;
         switch (grade)
         {

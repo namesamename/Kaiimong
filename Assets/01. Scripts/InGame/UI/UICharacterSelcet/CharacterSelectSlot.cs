@@ -46,17 +46,20 @@ public class CharacterSelectSlot : MonoBehaviour
         {
 
             SceneLoader.Instance.ChangeScene(SceneState.ProfileScene);
+   
+
         }
         else
         {
             SceneLoader.Instance.ChangeScene(SceneState.CharacterInfoScene);
+
         }
 
     }
 
 
 
-    public void SetSlotColor(CharacterSaveData saveData, Character character)
+    public async void SetSlotColor(CharacterSaveData saveData, Character character)
     {
 
         for (int i = 0; i < images.Length; i++) 
@@ -83,13 +86,19 @@ public class CharacterSelectSlot : MonoBehaviour
         images[0].enabled = true;
         images[1].enabled = true;
 
-        
-        Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(character.ID, SpriteType.Illustration);
 
-        if (sprite == null ) 
+        Sprite sprite = null;
+
+        if (character.ID > 4)
         {
-            sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(1, SpriteType.Illustration);
+            sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, 1);
+        }else
+        {
+            sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
         }
+      
+
+    
         images[1].sprite = sprite;
         images[10].enabled = true;
         for (int i = 0;i < saveData.Recognition; i++) 
@@ -100,6 +109,10 @@ public class CharacterSelectSlot : MonoBehaviour
         {
             images[i + 5].enabled = true;
         }
+
+
+
+       
 
 
 

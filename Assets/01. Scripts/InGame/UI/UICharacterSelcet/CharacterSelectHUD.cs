@@ -53,10 +53,19 @@ public class CharacterSelectHUD : MonoBehaviour
             buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
         }
        
-        buttons[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
+        buttons[1].onClick.AddListener(AddressDown);
         buttons[2].onClick.AddListener(SetDropdonw);
         buttons[3].onClick.AddListener(LevelOrder);
         buttons[4].onClick.AddListener(GradeOrder);
+
+    }
+
+
+    public void AddressDown()
+    {
+        SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
+        AddressableManager.Instance.UnloadType(AddreassablesType.Illustration);
+        AddressableManager.Instance.UnloadType(AddreassablesType.RecognitionIllustration);
 
     }
 

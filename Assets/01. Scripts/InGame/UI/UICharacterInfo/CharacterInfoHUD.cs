@@ -9,7 +9,7 @@ public class CharacterInfoHUD : MonoBehaviour
 {
     public CharacterInfoType CharacterInfoType;
 
-    public void InitialIze(Character character , CharacterSaveData saveData)
+    public async void InitialIze(Character character , CharacterSaveData saveData)
     {
 
         if(character == null)
@@ -33,6 +33,8 @@ public class CharacterInfoHUD : MonoBehaviour
             case CharacterInfoType.Main:
                 Button button = GetComponentInChildren<Button>();
                 button.onClick.RemoveAllListeners();
+
+                SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, ()=>AddressableManager.Instance.UnloadType(AddreassablesType.Illustration)); 
                 button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
                 break;
             case CharacterInfoType.Skin:
@@ -40,7 +42,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 break;
             case CharacterInfoType.CharacterImage:
                 Image images = GetComponent<Image>();
-                images.sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(character.ID, SpriteType.Illustration);
+                images.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
                 break;
             case CharacterInfoType.Name:
                 TextMeshProUGUI[] textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();

@@ -18,16 +18,16 @@ public class CharacterVisual : MonoBehaviour
     public GameObject SelectEffect;
     public float AppearAnimationLength;
 
-    public void Initialize(int ID , CharacterType character )
+    public async void Initialize(int ID , CharacterType character )
     {
         animator = GetComponentInParent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         switch (character)
         {
             case CharacterType.Friend:
-                BattleSprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(ID, SpriteType.BattleSprite);
-                Icon = GlobalDataTable.Instance.Sprite.GetSpriteToID(ID, SpriteType.Icon);
-                RecoSD = GlobalDataTable.Instance.Sprite.GetSpriteToID(ID, SpriteType.RecoSD);
+                BattleSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.BattleSD, ID);
+                Icon = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, ID);
+                RecoSD = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.RecognitionSD, ID);
                 // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
                 break;
             case CharacterType.Enemy:

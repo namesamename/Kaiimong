@@ -126,7 +126,7 @@ MonoBehaviour:
     - FriendIcon
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1785ebb8e4cf694458dbf2667f53058f
-    m_Address: EnemySprite/Enemy_001
+    m_Address: EnemySprite/Enemy_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyBattleSD

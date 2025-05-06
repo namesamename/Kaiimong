@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class CharacterDataTable
 {
@@ -8,8 +9,35 @@ public class CharacterDataTable
     public GameObject CharacterPrefabs;
     public GameObject EnemyPrefabs;
 
-    public void Initialize()
+    public async void Initialize()
     {
+        var handle = Addressables.LoadAssetAsync<GameObject>("Character/EnemyPrefabs");
+
+        await handle.Task;
+        if(handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+        {
+            EnemyPrefabs = handle.Result;
+        }
+        else
+        {
+            Debug.Log("적 프리펩 로드 실패");
+        }
+
+        var handles = Addressables.LoadAssetAsync<GameObject>("Character/FriendPrefabs");
+
+        await handles.Task;
+        if (handles.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+        {
+            CharacterPrefabs = handles.Result;
+        }
+        else
+        {
+            Debug.Log("아군 프리펩 로드 실패");
+        }
+
+
+
+
         Character[] characters = Resources.LoadAll<Character>("CharacterSO");
         Enemy[] enemies = Resources.LoadAll<Enemy>("Enemy");
         foreach (Character character in characters)
@@ -51,7 +79,7 @@ public class CharacterDataTable
     //캐릭터 아이디로 생성
     public GameObject CharacterInstanceSummon(Character character, Vector3 pos, Transform parent = null)
     {
-        GameObject CharacterPrefabs = Resources.Load("Character/FriendPrefabs") as GameObject;
+    
         GameObject CharacterObject = Object.Instantiate(CharacterPrefabs, pos, Quaternion.identity, parent);
 
         if (CharacterObject.GetComponent<FriendCarrier>() == null)
@@ -77,7 +105,7 @@ public class CharacterDataTable
 
     public GameObject EnemyInstanceSummon(Enemy character, int level, Vector3 pos, Transform parent = null)
     {
-        GameObject EnemyPrefabs = Resources.Load("Character/EnemyPrefabs") as GameObject;
+        
         GameObject CharacterObject = Object.Instantiate(EnemyPrefabs, pos, Quaternion.identity, parent);
 
         if (CharacterObject.GetComponent<EnemyCarrier>() == null)

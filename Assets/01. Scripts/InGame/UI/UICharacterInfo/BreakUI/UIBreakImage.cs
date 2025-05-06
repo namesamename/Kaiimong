@@ -12,10 +12,10 @@ public class UIBreakImage : MonoBehaviour, ISetPOPUp
         textMesh = GetComponentInChildren<TextMeshProUGUI>();
 
     }
-    public void Initialize()
+    public async void Initialize()
     {
         //Images[0].sprite = Resources.Load<Sprite>(ImsiGameManager.Instance.GetCharacter().chracterpath);
-        images[1].sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(GlobalDataTable.Instance.DataCarrier.GetCharacter().ID, SpriteType.Illustration);
+        images[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, GlobalDataTable.Instance.DataCarrier.GetCharacter().ID);
 
         ItemSavaData itemSava = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, GlobalDataTable.Instance.DataCarrier.GetCharacter().CharacterItem);
 

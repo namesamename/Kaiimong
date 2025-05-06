@@ -28,7 +28,7 @@ public class UIManager : Singleton<UIManager>
     {
        
         
-        var obj = await AddressableManager.Instance.LoadAsset(popupName);
+        var obj = await AddressableManager.Instance.LoadPOPUPAsset(popupName);
         //var obj = Resources.Load($"Popups/{popupName}", typeof(GameObject)) as GameObject;
         if (obj == null)
         {
