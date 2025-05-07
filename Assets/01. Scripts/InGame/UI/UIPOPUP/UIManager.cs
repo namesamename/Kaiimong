@@ -19,9 +19,10 @@ public class UIManager : Singleton<UIManager>
 
     }
 
-    public T ShowPopup<T>() where T : UIPOPUP
+    public async Task<T> ShowPopup<T>() where T : UIPOPUP
     {
-        return ShowPopup(typeof(T).Name) as T;
+        var popup = await ShowPopup(typeof(T).Name);
+        return popup as T;
     }
 
     public async Task<UIPOPUP> ShowPopup(string popupName)

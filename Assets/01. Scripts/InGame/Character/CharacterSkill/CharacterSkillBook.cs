@@ -5,6 +5,9 @@ public class CharacterSkillBook : MonoBehaviour
 {
     public ActiveSkillObject[] ActiveSkillList = new ActiveSkillObject[3];
     public List<PassiveSkillObjcet> passiveSkillObjcets = new List<PassiveSkillObjcet>();
+
+    int SkillGauge;
+    int maxSkillGauge;
     // public PassiveSkillObject[] PassiveSkillList = new PassiveSkillObject[3];
     private void Awake()
     {
@@ -14,6 +17,7 @@ public class CharacterSkillBook : MonoBehaviour
 
     public void SkillSet(int ID, CharacterType type)
     {
+        maxSkillGauge = 7;
         int Count = ID * 3;
         for (int i = 2; i >= 0; i--) 
         {
@@ -57,18 +61,53 @@ public class CharacterSkillBook : MonoBehaviour
             passiveSkill.UseSkill(characters);
         }
 
+
+
         //여러가지 처리
         //마나, 쿨타임, 사용 가능한가 불가능 한가
         if (!IsCoolTime(skill))
             return;
+        if(!IsFullCharage(skill)) 
+            return;
+
+        SetSkillGauge(skill.SkillSO.UltimateGauge);
         skill.UseSkill(characters);
     }
 
 
-    //public bool IsFullCharage()
-    //{
+    public void SetSkillGauge(int Gauge)
+    {
+        SkillGauge += Gauge;
 
-    //}
+        if(SkillGauge > maxSkillGauge)
+        {
+            SkillGauge = maxSkillGauge;
+        }
+   
+    }
+
+
+    public bool IsFullCharage(ActiveSkillObject skill)
+    {
+        if(skill.SkillSO.Id % 3 == 0)
+        {
+            if(SkillGauge == maxSkillGauge)
+            {
+                SkillGauge = 0;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        }
+ 
+
+    }
 
     public bool IsCoolTime(ActiveSkillObject skill)
     {

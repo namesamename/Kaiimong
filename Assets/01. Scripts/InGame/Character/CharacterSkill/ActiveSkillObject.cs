@@ -33,6 +33,8 @@ public class ActiveSkillObject : MonoBehaviour
             }
             else
             {
+
+
                 animator.SetTrigger("Thrid");
             }
         }

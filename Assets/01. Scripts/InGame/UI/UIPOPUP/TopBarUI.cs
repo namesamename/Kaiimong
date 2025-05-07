@@ -28,7 +28,7 @@ public class TopBarUI : MonoBehaviour
     {
         button = GetComponentInChildren<Button>();
         button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(() => UIManager.Instance.ShowPopup("StaminaChargePOPUP"));
+        button.onClick.AddListener(async () =>  await UIManager.Instance.ShowPopup("StaminaChargePOPUP"));
     }
     public void UpdateResource() // 추후 매개변수를 제거하고 받아온 데이터를 가지고 이동시키기
     {

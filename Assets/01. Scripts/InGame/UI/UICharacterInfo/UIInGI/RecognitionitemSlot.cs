@@ -110,11 +110,11 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
         return itemCount;
     }
 
-    public void OnPointerClick(PointerEventData eventData)    // 슬롯 클릭 시 팝업 호출
+    public async  void OnPointerClick(PointerEventData eventData)    // 슬롯 클릭 시 팝업 호출
     {
         if (item == null) return;                             // 아이템이 비어있으면 무시
 
-        var popupObj = UIManager.Instance.ShowPopup<ItemInfoPopup>();    // UIManager의 ShowPopup 함수 호출
+        var popupObj = await UIManager.Instance.ShowPopup<ItemInfoPopup>();    // UIManager의 ShowPopup 함수 호출
 
         if (popupObj != null)
         {

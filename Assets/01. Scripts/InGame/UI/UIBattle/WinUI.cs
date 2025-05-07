@@ -45,8 +45,16 @@ public class WinUI : MonoBehaviour
     {
         if (!setComplete)
         {
-            setComplete = true;
-            StageManager.Instance.WinUI = this;
+
+        StageManager.Instance.WinUI = this;
+        
+        CanClick = true;
+        int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
+        //Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
+        
+        Sprite sp = AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, RandomCharacterID).Result;
+        
+        //Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
 
             CanClick = true;
             int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
@@ -72,7 +80,7 @@ public class WinUI : MonoBehaviour
 
     private IEnumerator DelaySetExpBar()
     {
-        yield return null; // ÇÑ ÇÁ·¹ÀÓ ´ë±â (UI ±×·¡ÇÈ ¾÷µ¥ÀÌÆ® ÀÌÈÄ)
+        yield return null; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (UI ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½)
 
         float userExp = CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP);
         float maxExp = GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
