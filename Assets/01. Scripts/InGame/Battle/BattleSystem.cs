@@ -274,8 +274,8 @@ public class BattleSystem : MonoBehaviour
                     GameObject playerObject = GlobalDataTable.Instance.character.CharacterInstanceSummon(player, Vector3.zero);
                     playerObject.transform.SetParent(playerLocations[i].transform, false);
                     CharacterCarrier playerUnit = playerObject.GetComponent<CharacterCarrier>();
-                    playerUnit.Initialize(GlobalDataTable.Instance.DataCarrier.GetCharacterIDToIndex(i));
                     playerUnit.visual.SetSprite(SpriteType.BattleSprite);
+                    playerUnit.Initialize(GlobalDataTable.Instance.DataCarrier.GetCharacterIDToIndex(i));
                     playerLocations[i].isOccupied = true;
                     playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
                     playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
@@ -496,5 +496,12 @@ public class BattleSystem : MonoBehaviour
         UnSubscribeCharacterDeathAction(enemy);
         activeEnemies.Remove(enemy);
         Destroy(enemy.gameObject);
+
+
+        if (activeEnemies.Count == 0 && Enemies.Count == 0)
+        {
+            Debug.Log("All enemies defeated, checking game state");
+            CheckGameOver();
+        }
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 public class CharacterVisual : MonoBehaviour
 {
     private Animator animator;
@@ -10,13 +11,16 @@ public class CharacterVisual : MonoBehaviour
     public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
 
 
-    Sprite BattleSprite;
-    Sprite Icon;
-    Sprite RecoSD;
+    public Sprite BattleSprite;
+    public Sprite Icon;
+    public Sprite RecoSD;
 
 
     public GameObject SelectEffect;
     public float AppearAnimationLength;
+
+    public Action action;
+
 
     public async void Initialize(int ID , CharacterType character )
     {
@@ -47,15 +51,25 @@ public class CharacterVisual : MonoBehaviour
             AnimationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
             StartCoroutine(PlayAni());
         }
+
+        action?.Invoke();
+
+
     }
 
+    public void SetSprite(SpriteType sprite)
+    {
+        action += () => SetSpritefun(sprite);
+    }
+
+    
     public float GetAnimationLength(int index)
     {
         Debug.Log(AnimationClips[index].length);
         return AnimationClips[index].length;
     }
 
-    public void SetSprite(SpriteType sprite)
+    public void SetSpritefun(SpriteType sprite)
     {
         switch (sprite)
         {
@@ -64,7 +78,7 @@ public class CharacterVisual : MonoBehaviour
                 break;
             case SpriteType.RecoSD:
                 spriteRenderer.sprite = RecoSD;
-                break;  
+                break;
             case SpriteType.BattleSprite:
                 spriteRenderer.sprite = BattleSprite;
                 break;

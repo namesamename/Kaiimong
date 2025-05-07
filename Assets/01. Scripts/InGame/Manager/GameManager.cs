@@ -17,6 +17,9 @@ public class GameManager : Singleton<GameManager>
     GlobalDataTable GlobalDataTable;
     SaveDataBase SaveData;
     CharacterManager characterManager;
+    AddressableManager addressableManager;
+
+
 
     GameObject[] ManagersPrefabs;
 
@@ -68,8 +71,17 @@ public class GameManager : Singleton<GameManager>
 
     public void GetCompo()
     {
+        addressableManager = GetComponentInChildren<AddressableManager>();
+        if(addressableManager != null)
+        {
+            addressableManager = Instantiate(Resources.Load<GameObject>("Manager/AddressableManager")).GetComponent<AddressableManager>();
+            addressableManager.transform.SetParent(transform);  // 부모 설정 (필요 시)
+        }
+
+
+
         characterManager = GetComponentInChildren<CharacterManager>();
-        if( characterManager == null )
+        if (characterManager == null)
         {
             characterManager = Instantiate(Resources.Load<GameObject>("Manager/CharacterManager")).GetComponent<CharacterManager>();
             characterManager.transform.SetParent(transform);  // 부모 설정 (필요 시)

@@ -141,11 +141,16 @@ public class StageManager : Singleton<StageManager>
         //호감도 지급      
         foreach (Character player in Players)
         {
-            CharacterManager.Instance.CharacterSaveDic[player.ID].Love += playerLove;
-            //player.CharacterSaveData.Love += playerLove;
-            //저장
-            CharacterManager.Instance.SaveSingleData(player.ID);
-            //player.SaveData();
+            CharacterSaveData save = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, player.ID);
+            save.Love += playerLove;
+            SaveDataBase.Instance.SaveSingleData(save);
+
+
+            //CharacterManager.Instance.CharacterSaveDic[player.ID].Love += playerLove;
+            ////player.CharacterSaveData.Love += playerLove;
+            ////저장
+            //CharacterManager.Instance.SaveSingleData(player.ID);
+            ////player.SaveData();
         }
         //스테이지정보 업데이트
         ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;

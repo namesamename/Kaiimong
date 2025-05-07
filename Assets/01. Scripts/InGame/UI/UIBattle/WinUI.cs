@@ -47,11 +47,14 @@ public class WinUI : MonoBehaviour
         CanClick = true;
         int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
         //Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
+        
+        Sprite sp = AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, RandomCharacterID).Result;
+        
         Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
 
         //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
         //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
-        characterImage.sprite = sprite;
+        characterImage.sprite = sp;
         characterImage.SetNativeSize();
 
         stageNameText.text = StageManager.Instance.CurrentStage.Name;
