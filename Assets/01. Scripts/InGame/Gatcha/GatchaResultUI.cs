@@ -5,41 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class GatchaResultUI : MonoBehaviour
 {
-    [SerializeField] private Transform resultGrid; // 프리팹이 나올 위치
-    [SerializeField] private Button retryButton;   // 더 뽑기 버튼
-    [SerializeField] private Button toLobbyButton; // 로비 이동 버튼
+    [SerializeField] private Transform resultGrid;         // 프리팹이 나올 위치
+    [SerializeField] private Button retryButton;           // 더 뽑기 버튼
+    [SerializeField] private Button toLobbyButton;         // 로비 이동 버튼
+    [SerializeField] private Button skipButton;            // 연출 스킵 버튼
+    [SerializeField] private GameObject sCountTextObj;     // 천장 카운트 텍스트
+    [SerializeField] private Image specialEffectImage;     // S등급 연출용 이미지
 
-    [SerializeField] private Image specialEffectImage;
+    private bool isSkipped = false;
 
     private void Start()
     {
-        // 버튼은 연출이 끝나기 전까지 비활성화
         retryButton.interactable = false;
         toLobbyButton.interactable = false;
+        sCountTextObj.SetActive(false);
+
         toLobbyButton.onClick.RemoveAllListeners();
         toLobbyButton.onClick.AddListener(OnGoToLobby);
 
-
+        skipButton.onClick.RemoveAllListeners();
+        skipButton.onClick.AddListener(SkipResults);
+        skipButton.gameObject.SetActive(true);
 
         StartCoroutine(ShowResults());
     }
 
-    private IEnumerator ShowResults()  // 결과 캐릭터들을 순차적으로 보여주는 연출
+    private IEnumerator ShowResults()
     {
-        bool hasSGrade = false;
-        foreach (var character in GatchaResultHolder.results)
-        {
-            if (character.Grade == Grade.S)
-            {
-                hasSGrade = true;
-                break;
-            }
-        }
+        bool hasSGrade = GatchaResultHolder.results.Exists(c => c.Grade == Grade.S);
+
         if (hasSGrade)
         {
-            specialEffectImage.gameObject.SetActive(true);  // 노란색 이미지 띄우기
-            yield return new WaitForSeconds(1.0f);         // 1초 대기
-            specialEffectImage.gameObject.SetActive(false); // 다시 끄기
+            specialEffectImage.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1.0f);
+            specialEffectImage.gameObject.SetActive(false);
         }
 
         GameObject prefab = Resources.Load<GameObject>("GatchaPrefab/CharacterResult");
@@ -55,14 +54,51 @@ public class GatchaResultUI : MonoBehaviour
             var ui = obj.GetComponent<UICharacterResult>();
             ui.Setup(character);
 
-            yield return new WaitForSeconds(0.3f); // 캐릭터 순차 출력 간격
+            if (!isSkipped)
+                yield return new WaitForSeconds(0.3f);  // 연출 간격
         }
 
-        // 모든 캐릭터 연출이 끝난 후 버튼 활성화
+        FinishResultDisplay();
+    }
+
+    private void SkipResults()
+    {
+        if (isSkipped) return;
+
+        isSkipped = true;
+        StopAllCoroutines();
+
+        // 기존 캐릭터 UI 제거
+        foreach (Transform child in resultGrid)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 프리팹 다시 로드
+        GameObject prefab = Resources.Load<GameObject>("GatchaPrefab/CharacterResult");
+        if (prefab == null)
+        {
+            Debug.LogError("CharacterResult 프리팹 로드 실패!");
+            return;
+        }
+
+        // 전체 결과 즉시 출력
+        foreach (var character in GatchaResultHolder.results)
+        {
+            var obj = Instantiate(prefab, resultGrid);
+            var ui = obj.GetComponent<UICharacterResult>();
+            ui.Setup(character);
+        }
+
+        FinishResultDisplay();
+    }
+
+    private void FinishResultDisplay()
+    {
         retryButton.interactable = true;
         toLobbyButton.interactable = true;
-
-
+        sCountTextObj.SetActive(true);
+        skipButton.gameObject.SetActive(false);
     }
 
     public async void OnDrawMore()
@@ -74,26 +110,25 @@ public class GatchaResultUI : MonoBehaviour
         {
             var results = executor.DrawWithSession(session);
 
-            // 재화 부족 등으로 실패했을 경우
             if (results == null || results.Result.Count == 0)
             {
                 Debug.LogWarning("재화 부족 또는 뽑기 실패!");
-                await UIManager.Instance.ShowPopup<PopupCurrencyLack>(); // 재화 부족 팝업 표시
+                await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
                 return;
             }
 
-            // 결과 갱신 및 UI 재구성
             GatchaResultHolder.results = results.Result;
 
-            // 기존 결과 오브젝트 제거
             foreach (Transform child in resultGrid)
             {
                 Destroy(child.gameObject);
             }
 
-            // 버튼 다시 잠그고 연출 재시작
             retryButton.interactable = false;
             toLobbyButton.interactable = false;
+            sCountTextObj.SetActive(false);
+            isSkipped = false;
+            skipButton.gameObject.SetActive(true);
 
             StopAllCoroutines();
             StartCoroutine(ShowResults());
