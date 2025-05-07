@@ -33,3 +33,7 @@ MonoBehaviour:
     sheetId: 126858498
   - className: EnemySpawn
     sheetId: 1014318209
+  - className: Quest
+    sheetId: 416094174
+  - className: QuestReward
+    sheetId: 480557962

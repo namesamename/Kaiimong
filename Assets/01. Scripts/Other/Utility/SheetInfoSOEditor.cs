@@ -88,6 +88,14 @@ public class SheetInfoSOEditor : Editor
         {
             return "Character_" + ID;
         }
+        else if(fileName == "Quest")
+        {
+            return "Quest_" + ID;
+        }
+        else if (fileName == "QuestReward")
+        {
+            return "QuestReward_" + ID;
+        }
         else if (fileName == "ActiveSkill")
         {
             return "ActiveSkill_" + ID;
@@ -144,15 +152,23 @@ public class SheetInfoSOEditor : Editor
   
         if (SheetId == "Character")
         {
-            Directory = "Char/";
+            Directory = "CharacterSO/";
         }
         else if (SheetId == "ActiveSkill")
         {
-            Directory = "ActS/";
+            Directory = "ActSkill/";
+        }
+        else if (SheetId == "Quest")
+        {
+            Directory = "Quest/";
+        }
+        else if (SheetId == "QuestReward")
+        {
+            Directory = "QuestReward/";
         }
         else if (SheetId == "Debuff")
         {
-            Directory = "Debu/";
+            Directory = "Debuff/";
         }
         else if (SheetId == "Buff")
         {
@@ -164,7 +180,7 @@ public class SheetInfoSOEditor : Editor
         }
         else if (SheetId == "Consume")
         {
-            Directory = "Cons/";
+            Directory = "Consumable/";
         }
         else if (SheetId == "Chapter")
         {
@@ -180,11 +196,11 @@ public class SheetInfoSOEditor : Editor
         }
         else if (SheetId == "CharacterUpgradeTable")
         {
-            Directory = "Reco/";
+            Directory = "RecongnitionSO/";
         }
         else if (SheetId == "Enemy")
         {
-            Directory = "Enem/";
+            Directory = "Enemy/";
         }
         else if (SheetId == "EnemySpawn")
         {

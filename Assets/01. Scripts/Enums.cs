@@ -47,6 +47,7 @@ public enum SaveType
     Stage,
     Chapter,
     Item,
+    Quest,
 
 }
 
@@ -156,9 +157,16 @@ public enum UpgradeType
 public enum QuestType
 {
     StageClear = 0,
-    UseCurrency = 1,
+    UseGold = 1,
     LevelUp = 2,
     KillMonster = 3,
+    Recognition,
+    CharacterInteraction,
+    Gacha,
+    UseSkill,
+    UseItem,
+    UseStamina,
+
 }
 
 public enum RewardType
@@ -167,7 +175,10 @@ public enum RewardType
     Gold = 1,
     Ticket = 2,
     Crystal,
-    Stanmina,
+    Stamina,
+    UserEXP,
+    CharacterEXP
+
 
 }
 
