@@ -65,7 +65,7 @@ public class GatchaResultUI : MonoBehaviour
 
     }
 
-    public void OnDrawMore()
+    public async void OnDrawMore()
     {
         var executor = FindObjectOfType<GatchaExecutor>();
         var session = GatchaResultHolder.session;
@@ -75,15 +75,15 @@ public class GatchaResultUI : MonoBehaviour
             var results = executor.DrawWithSession(session);
 
             // 재화 부족 등으로 실패했을 경우
-            if (results == null || results.Count == 0)
+            if (results == null || results.Result.Count == 0)
             {
                 Debug.LogWarning("재화 부족 또는 뽑기 실패!");
-                UIManager.Instance.ShowPopup<PopupCurrencyLack>(); // 재화 부족 팝업 표시
+                await UIManager.Instance.ShowPopup<PopupCurrencyLack>(); // 재화 부족 팝업 표시
                 return;
             }
 
             // 결과 갱신 및 UI 재구성
-            GatchaResultHolder.results = results;
+            GatchaResultHolder.results = results.Result;
 
             // 기존 결과 오브젝트 제거
             foreach (Transform child in resultGrid)

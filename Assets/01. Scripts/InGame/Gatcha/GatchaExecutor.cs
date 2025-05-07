@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using static GatchaManager;
 public class GatchaExecutor : MonoBehaviour
@@ -6,13 +8,13 @@ public class GatchaExecutor : MonoBehaviour
     public void TryDrawOnce()
     {
         string message = GetConfirmMessage(1);
-        ShowConfirmPopup<PopupGatchaConfirm>(message, () => Draw(1));
+        ShowConfirmPopupAsync<PopupGatchaConfirm>(message, () => Draw(1));
     }
 
     public void TryDrawTen()
     {
         string message = GetConfirmMessage(10);
-        ShowConfirmPopup<PopupGatchaConfirm>(message, () => Draw(10));
+        ShowConfirmPopupAsync<PopupGatchaConfirm>(message, () => Draw(10));
     }
     private string GetConfirmMessage(int count) // 뽑기를 확인하는 메세지 
     {
@@ -24,14 +26,19 @@ public class GatchaExecutor : MonoBehaviour
         return $"{mgr.currentGachaType} Gatcha {count}time :\n" +
                $"ticket {useTicket} + crystal {needCrystal} use \nDo it?";
     }
-    private void ShowConfirmPopup<T>(string message, System.Action confirmAction) where T : PopupGatchaConfirm
+    private async void ShowConfirmPopupAsync<T>(string message, System.Action confirmAction) where T : PopupGatchaConfirm
     {
-        var popup = UIManager.Instance.ShowPopup<T>();
+        var popup =  await UIManager.Instance.ShowPopup<T>();
         if (popup != null)
         {
             popup.Setup(message, confirmAction);
         }
+
+
     }
+
+
+
 
     private List<Character> results = new();
 
@@ -158,7 +165,7 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
         else return Grade.A;  // A 또는 S만 반환됨
     }
 
-    public List<Character> DrawWithSession(GatchaSessionData session)
+    public async Task<List<Character>> DrawWithSession(GatchaSessionData session)
     {
         var mgr = GatchaManager.Instance;
         var curManager = CurrencyManager.Instance;
@@ -170,7 +177,7 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
         if (mgr.crystal < needCrystal)
         {
             Debug.LogWarning("크리스탈이 부족합니다!");
-            UIManager.Instance.ShowPopup<PopupCurrencyLack>();
+           await   UIManager.Instance.ShowPopup<PopupCurrencyLack>();
             return results;
         }
 
