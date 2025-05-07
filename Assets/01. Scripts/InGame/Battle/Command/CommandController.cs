@@ -7,6 +7,10 @@ public class CommandController : MonoBehaviour
 {
     [SerializeField] private List<SkillCommand> skillCommands = new List<SkillCommand>();
     public int Index = 0;
+    public bool IsExecutingCommands = false;
+    private bool commandsStopped = false;
+    public bool CommandsStopped { get { return commandsStopped; } }
+    private Coroutine currentExecuteCoroutine = null;
 
     public Action EndCheck;
 
@@ -20,17 +24,63 @@ public class CommandController : MonoBehaviour
 
     public IEnumerator ExecuteCommandCoroutine()
     {
+        IsExecutingCommands = true;
+        commandsStopped = false;
+
+        // 실행 전 다시 한번 상태 체크
+        if (StageManager.Instance.BattleSystem.GetActivePlayers().Count == 0 ||
+            StageManager.Instance.BattleSystem.GetActiveEnemies().Count == 0)
+        {
+            Debug.Log("No active players or enemies. Clearing commands before execution.");
+            skillCommands.Clear();
+            IsExecutingCommands = false;
+            EndCheck?.Invoke();
+            yield break;
+        }
+
         List<SkillCommand> commandsToExecute = new List<SkillCommand>(skillCommands);
 
         foreach (SkillCommand command in commandsToExecute)
         {
+            // 커맨드가 중지되었는지 체크
+            if (commandsStopped)
+            {
+                break;
+            }
+
+            // 각 명령 실행 전 다시 상태 체크
+            if (StageManager.Instance.BattleSystem.GetActivePlayers().Count == 0 ||
+                StageManager.Instance.BattleSystem.GetActiveEnemies().Count == 0)
+            {
+                skillCommands.Clear();
+                commandsToExecute.Clear();
+                break;
+            }
+
             yield return command.Execute();
-            //yield return new WaitForSeconds(Wait(command) + 3f);
-            //EndCheck.Invoke();
+            yield return new WaitForSeconds(1);
+
             RemoveCommand(command);
         }
+
+        IsExecutingCommands = false;
+        commandsStopped = false;
+        //EndCheck?.Invoke();
     }
 
+    public void StopAllCommands()
+    {
+        commandsStopped = true;
+        ClearList();
+
+        if (currentExecuteCoroutine != null)
+        {
+            StopCoroutine(currentExecuteCoroutine);
+            currentExecuteCoroutine = null;
+        }
+
+        IsExecutingCommands = false;
+    }
 
     //public void ExecuteCommnad()
     //{

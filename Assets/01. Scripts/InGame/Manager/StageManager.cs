@@ -8,6 +8,8 @@ public class StageManager : Singleton<StageManager>
     [Header("Stage Base")]
     [SerializeField] private BattleSystem battleSystem;
 
+    public BattleSystem BattleSystem {  get { return battleSystem; } }
+
     [Header("Stage Info")]
     public Stage CurrentStage;
     public List<Character> Players;

@@ -18,6 +18,7 @@ public class WinUI : MonoBehaviour
     [SerializeField] private GameObject itemRewardSlots;
 
     public bool CanClick = false;
+    private bool setComplete = false;
 
     private void Awake()
     {
@@ -42,27 +43,31 @@ public class WinUI : MonoBehaviour
 
     public void SetWinUI()
     {
-        StageManager.Instance.WinUI = this;
-        
-        CanClick = true;
-        int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
-        //Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
-        
-        Sprite sp = AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, RandomCharacterID).Result;
-        
-        Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
+        if (!setComplete)
+        {
+            setComplete = true;
+            StageManager.Instance.WinUI = this;
 
-        //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
-        //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
-        characterImage.sprite = sp;
-        characterImage.SetNativeSize();
+            CanClick = true;
+            int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
+            //Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
 
-        stageNameText.text = StageManager.Instance.CurrentStage.Name;
-        playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
-        playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
-        earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
+            Sprite sp = AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, RandomCharacterID).Result;
 
-        StartCoroutine(DelaySetExpBar());
+            Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
+
+            //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
+            //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
+            characterImage.sprite = sp;
+            characterImage.SetNativeSize();
+
+            stageNameText.text = StageManager.Instance.CurrentStage.Name;
+            playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
+            playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
+            earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
+
+            StartCoroutine(DelaySetExpBar());
+        }
     }
 
     private IEnumerator DelaySetExpBar()
@@ -90,7 +95,7 @@ public class WinUI : MonoBehaviour
         var results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerData, results);
 
-        foreach(var result in results)
+        foreach (var result in results)
         {
             if (result.gameObject.CompareTag("Reward"))
             {

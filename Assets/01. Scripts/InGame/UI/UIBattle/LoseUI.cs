@@ -7,6 +7,7 @@ public class LoseUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI returnActivityText;
     [SerializeField] private Image activityImage;
     public bool CanClick = false;
+    private bool setComplete = false;
 
     void Awake()
     {
@@ -29,9 +30,13 @@ public class LoseUI : MonoBehaviour
 
     public void SetLoseUI()
     {
-        CanClick = false;
-        returnActivityText.text = $": 행동력 반환 +{StageManager.Instance.returnActivityPoints}";
-        //activityImage =
+        if (!setComplete)
+        {
+            setComplete = true;
+            CanClick = false;
+            returnActivityText.text = $": 행동력 반환 +{StageManager.Instance.returnActivityPoints}";
+            //activityImage =
+        }
     }
 
     public void UnSubscribeLoseUI()

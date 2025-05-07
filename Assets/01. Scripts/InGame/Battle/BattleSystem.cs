@@ -25,7 +25,7 @@ public class BattleSystem : MonoBehaviour
     public int TurnIndex = 0;
     public ActiveSkillObject SelectedSkill;
     public List<CharacterCarrier> Targets;
-    private float betweenPhaseTime;
+    private float betweenPhaseTime = 1f;
     public bool winFlag = false;
     public bool loseFlag = false;
     public int CurrentSet = 1;
@@ -48,7 +48,7 @@ public class BattleSystem : MonoBehaviour
     public BattleUI BattleUI;
 
 
-    
+
 
     public Action OnPlayerTurn;
     public Action OnEnemyTurn;
@@ -68,6 +68,7 @@ public class BattleSystem : MonoBehaviour
     void Start()
     {
         //StartBattle();
+        CommandController.EndCheck += CheckGameOver;
     }
 
     void Update()
@@ -112,8 +113,13 @@ public class BattleSystem : MonoBehaviour
 
     private void AttackPhase()
     {
+        StartCoroutine(AttackPhaseCoroutine());
+    }
+
+    private IEnumerator AttackPhaseCoroutine()
+    {
         //CommandController.ExecuteCommnad();
-        StartCoroutine(CommandController.ExecuteCommandCoroutine());
+        yield return StartCoroutine(CommandController.ExecuteCommandCoroutine());
 
         if (PlayerTurn)
         {
@@ -168,28 +174,42 @@ public class BattleSystem : MonoBehaviour
 
         isPhaseChanging = true;
 
+        bool isExecutingCommands = CommandController.IsExecutingCommands;
+
         if (Players.Count == 0 && activePlayers.Count == 0)
         {
+            // 플레이어가 모두 죽었을 때 (패배)
+            if (isExecutingCommands)
+            {
+                Debug.Log("모든 플레이어가 죽음: 현재 실행 중인 커맨드 중단");
+                CommandController.StopAllCommands();
+            }
             StartCoroutine(ChangePhase(() => { isPhaseChanging = false; LosePhase(); }));
             return;
         }
-        if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
-        {
-            if (Enemies.Count == 0 && activeEnemies.Count == 0)
-            {
-                StartCoroutine(ChangePhase(() => { isPhaseChanging = false; NextRoundPhase(); }));
-                return;
-            }
-        }
-        else
-        {
-            if (Enemies.Count == 0 && activeEnemies.Count == 0)
-            {
-                StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
-                return;
-            }
-        }
 
+        if (Enemies.Count == 0 && activeEnemies.Count == 0)
+        {
+            // 적이 모두 죽었을 때
+            if (isExecutingCommands)
+            {
+                Debug.Log("모든 적이 죽음: 현재 실행 중인 커맨드 중단");
+                CommandController.StopAllCommands();
+            }
+
+            if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
+            {
+                // 다음 라운드가 있는 경우
+                PlayerTurn = false;
+                StartCoroutine(ChangePhase(() => { isPhaseChanging = false; NextRoundPhase(); }));
+            }
+            else
+            {
+                // 마지막 라운드인 경우 (승리)
+                StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
+            }
+            return;
+        }
         isPhaseChanging = false;
     }
 
@@ -202,22 +222,28 @@ public class BattleSystem : MonoBehaviour
 
     private void EnemyTurnPhase()
     {
+        if (PlayerTurn)
+        {
+            Debug.Log("enemyturn");
+            activeEnemies = activeEnemies.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+            //activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+            CommandController.ClearList();
+            EnemyRandomCommand();
+        }
         PlayerTurn = false;
-        Debug.Log("enemyturn");
-        activeEnemies = activeEnemies.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
-        //activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
-        CommandController.ClearList();
-        EnemyRandomCommand();
     }
 
     private void PlayerTurnPhase()
     {
+        if (!PlayerTurn)
+        {
+            Debug.Log("playerturn");
+            activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+            //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+            OnPlayerTurn?.Invoke();
+            CommandController.ClearList();
+        }
         PlayerTurn = true;
-        Debug.Log("playerturn");
-        activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
-        //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
-        OnPlayerTurn?.Invoke();
-        CommandController.ClearList();
     }
 
     private void WinPhase()
@@ -225,11 +251,18 @@ public class BattleSystem : MonoBehaviour
 
         winFlag = true;
         StageManager.Instance.WinStage();
-      
+
     }
 
     private void NextRoundPhase()
     {
+        StartCoroutine(NextRoundPhaseCoroutine());
+    }
+
+    private IEnumerator NextRoundPhaseCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+
         if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
         {
             winFlag = false;
