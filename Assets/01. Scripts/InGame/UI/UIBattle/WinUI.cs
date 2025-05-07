@@ -50,7 +50,7 @@ public class WinUI : MonoBehaviour
         
         Sprite sp = AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, RandomCharacterID).Result;
         
-        Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
+        //Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
 
         //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
         //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);

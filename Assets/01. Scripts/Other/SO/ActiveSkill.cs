@@ -19,6 +19,8 @@ public class ActiveSkill : SO
     public Sprite icon;
 
 
+    public int UltimateGauge;
+
     public bool IsMuti;
     public bool IsHeal;
     public bool IsBuff;
