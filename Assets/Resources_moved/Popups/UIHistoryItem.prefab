@@ -53,6 +53,7 @@ MonoBehaviour:
   grade: {fileID: 2596609721991713256}
   type: {fileID: 8901270831291813344}
   time: {fileID: 6377812471144243080}
+  backgroundImage: {fileID: 6786970172819840730}
 --- !u!1 &5984687553975952668
 GameObject:
   m_ObjectHideFlags: 0
