@@ -72,7 +72,7 @@ public class GameManager : Singleton<GameManager>
     public void GetCompo()
     {
         addressableManager = GetComponentInChildren<AddressableManager>();
-        if(addressableManager != null)
+        if(addressableManager == null)
         {
             addressableManager = Instantiate(Resources.Load<GameObject>("Manager/AddressableManager")).GetComponent<AddressableManager>();
             addressableManager.transform.SetParent(transform);  // 부모 설정 (필요 시)
