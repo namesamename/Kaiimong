@@ -153,3 +153,21 @@ public enum UpgradeType
 
 }
 
+public enum QuestType
+{
+    StageClear = 0,
+    UseCurrency = 1,
+    LevelUp = 2,
+    KillMonster = 3,
+}
+
+public enum RewardType
+{
+    Item = 0,
+    Gold = 1,
+    Ticket = 2,
+    Crystal,
+    Stanmina,
+
+}
+

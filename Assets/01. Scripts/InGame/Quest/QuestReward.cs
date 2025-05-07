@@ -6,4 +6,9 @@ public class QuestReward : MonoBehaviour
 {
     public RewardType Type;
 
+    public int ItemID;
+    public int ItemCount;
+    public int CurrencyValue;
+
+
 }
