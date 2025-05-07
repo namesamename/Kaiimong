@@ -72,7 +72,8 @@ public enum AddreassablesType
     RecognitionSD,
     RecognitionIllustration,
     EnemyBattleSD,
-
+    POPUP,
+    Passive,
 
 }
 public enum Grade

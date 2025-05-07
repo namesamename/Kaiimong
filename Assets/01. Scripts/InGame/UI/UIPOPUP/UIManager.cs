@@ -28,7 +28,7 @@ public class UIManager : Singleton<UIManager>
     {
        
         
-        var obj = await AddressableManager.Instance.LoadPOPUPAsset(popupName);
+        var obj = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.POPUP,popupName);
         //var obj = Resources.Load($"Popups/{popupName}", typeof(GameObject)) as GameObject;
         if (obj == null)
         {
@@ -63,15 +63,22 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-    public GameObject CreatTransformPOPUP(string popupName, Transform transform)
+    public async Task<GameObject> GetPOPUPPrefab(string popupName)
     {
-        var obj = POPS.Find(x => x.name == popupName);
+         var obj = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.POPUP, popupName);
+            
+        return obj;
+    }
+
+    public async Task<GameObject> CreatTransformPOPUPAsync(string popupName, Transform transform)
+    {
+        var obj = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.POPUP, popupName);
 
         GameObject game = Instantiate(obj);
 
-        int Ran = Random.Range(-4 , 4);
+        int Ran = Random.Range(-4, 4);
 
-        Vector3 vector3 = new Vector3(transform.position.x + Ran, transform.position.y + Ran + 3f,  transform.position.z);
+        Vector3 vector3 = new Vector3(transform.position.x + Ran, transform.position.y + Ran + 3f, transform.position.z);
         game.transform.position = vector3;
         game.transform.rotation = Quaternion.identity;
 

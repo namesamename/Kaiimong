@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,23 +17,25 @@ public class BattleUI : MonoBehaviour
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
     public CharacterUI CharacterUI { get { return characterUI; } }
 
-    private void Awake()
-    {
-        GameObject popupPause = Resources.Load("Popups/PopupBattlePause") as GameObject;
-        popupBattlePausePrefab = popupPause;
-    }
+
+
+
 
     private void Start()
     {
         characterUI.BattleSystem = battleSystem;
-        pauseButton.onClick.AddListener(OnPauseButton);
+        pauseButton.onClick.AddListener(OnPauseButtonAsync);
         speedDownButton.onClick.AddListener(OnSpeedDownButton);
         speedUpButton.onClick.AddListener(OnSpeedUpButton);
     }
 
-    private void OnPauseButton()
+    private async void OnPauseButtonAsync()
     {
         Time.timeScale = 0;
+
+        popupBattlePausePrefab = await UIManager.Instance.GetPOPUPPrefab("PopupBattlePause");
+       
+
         GameObject instance = Instantiate(popupBattlePausePrefab, this.transform);
         popupBattlePause = instance.GetComponent<PopupBattlePause>();
         popupBattlePause.OnCancel += OnCancelButton;

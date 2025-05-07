@@ -17,6 +17,4 @@ public class Character : SO
     public string RecognitionPath;
     public string UpgradeBattlePath;
 
-
-
 }

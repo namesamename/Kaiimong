@@ -29,4 +29,6 @@ public class PopupBattlePause : UIPOPUP
         OnConfirm = null;
         Destroy();
     }
+
+ 
 }

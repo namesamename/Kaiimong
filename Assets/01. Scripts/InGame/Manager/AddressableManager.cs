@@ -36,9 +36,9 @@ public class AddressableManager : Singleton<AddressableManager>
     }
 
 
-    public async Task<GameObject> LoadPOPUPAsset(string name)
+    public async Task<GameObject> LoadPrefabs(AddreassablesType type, string name)
     {
-        var handle = Addressables.LoadAssetAsync<GameObject>($"Popups/{name}");
+        var handle = Addressables.LoadAssetAsync<GameObject>(TypeChanger(type)+name);
 
         await handle.Task;
         if(handle.Status == AsyncOperationStatus.Succeeded) 
@@ -57,6 +57,7 @@ public class AddressableManager : Singleton<AddressableManager>
     {
         switch (type)
         {
+            
             case AddreassablesType.EnemyBattleSD:
                 return "EnemySprite/Enemy_";
             case AddreassablesType.BattleSD:
@@ -69,6 +70,10 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "RecognitionSprite/Char_";
             case AddreassablesType.CharacterIcon:
                 return "Icon/Char_";
+            case AddreassablesType.POPUP:
+                return "Popups/";
+            case AddreassablesType.Passive:
+                return "Popups/";
             default:
                 return string.Empty;
 
