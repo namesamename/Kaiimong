@@ -24,9 +24,9 @@ public class CommandController : MonoBehaviour
 
         foreach (SkillCommand command in commandsToExecute)
         {
-            command.Execute();
-            yield return new WaitForSeconds(Wait(command) + 3f);
-            EndCheck.Invoke();
+            yield return command.Execute();
+            //yield return new WaitForSeconds(Wait(command) + 3f);
+            //EndCheck.Invoke();
             RemoveCommand(command);
         }
     }
@@ -44,12 +44,12 @@ public class CommandController : MonoBehaviour
     //}
 
 
-    public float Wait(SkillCommand skillCommand)
-    {
-        int id = skillCommand.skillData.SkillSO.ID % 3;
-        int animIndex = id == 1 ? 3 : id == 2 ? 4 : 5;
-        return skillCommand.unit.visual.GetAnimationLength(animIndex);
-    }
+    //public float Wait(SkillCommand skillCommand)
+    //{
+    //    int id = skillCommand.skillData.SkillSO.ID % 3;
+    //    int animIndex = id == 1 ? 3 : id == 2 ? 4 : 5;
+    //    return skillCommand.unit.visual.GetAnimationLength(animIndex);
+    //}
 
 
     public void RemoveCommand(SkillCommand command)
