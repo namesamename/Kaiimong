@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SkillCommand
 {
@@ -12,9 +14,18 @@ public class SkillCommand
         this.unit = unit;
         this.skillData = skillData;
     }
-    public void Execute()
+    public IEnumerator Execute()
     {
         unit.skillBook.ActiveSkillUsing(skillData, targets);
+
+        float waitTime = 0f;
+
+        int id = skillData.SkillSO.ID % 3;
+        int animIndex = id == 1 ? 3 : id == 2 ? 4 : 5;
+
+        waitTime = unit.visual.GetAnimationLength(animIndex);
+
+        yield return new WaitForSeconds(waitTime + 0.5f);
     }
 
     public void Undo()

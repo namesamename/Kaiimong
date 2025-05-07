@@ -112,10 +112,8 @@ public class BattleSystem : MonoBehaviour
 
     private void AttackPhase()
     {
-
-      
-     
-        CommandController.ExecuteCommnad();
+        //CommandController.ExecuteCommnad();
+        StartCoroutine(CommandController.ExecuteCommandCoroutine());
 
         if (PlayerTurn)
         {

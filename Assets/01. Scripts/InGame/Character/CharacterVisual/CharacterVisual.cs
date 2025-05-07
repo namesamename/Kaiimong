@@ -65,6 +65,7 @@ public class CharacterVisual : MonoBehaviour
     
     public float GetAnimationLength(int index)
     {
+        Debug.Log(AnimationClips[index].length);
         return AnimationClips[index].length;
     }
 

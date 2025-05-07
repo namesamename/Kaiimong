@@ -18,47 +18,37 @@ public class CommandController : MonoBehaviour
         Debug.Log($"Command added: {command}, Total commands: {skillCommands.Count}");
     }
 
-    //public IEnumerator ExecuteCommandCoroutine()
+    public IEnumerator ExecuteCommandCoroutine()
+    {
+        List<SkillCommand> commandsToExecute = new List<SkillCommand>(skillCommands);
+
+        foreach (SkillCommand command in commandsToExecute)
+        {
+            yield return command.Execute();
+            //yield return new WaitForSeconds(Wait(command) + 3f);
+            //EndCheck.Invoke();
+            RemoveCommand(command);
+        }
+    }
+
+
+    //public void ExecuteCommnad()
     //{
     //    List<SkillCommand> commandsToExecute = new List<SkillCommand>(skillCommands);
 
     //    foreach (SkillCommand command in commandsToExecute)
     //    {
     //        command.Execute();
-    //        yield return new WaitForSeconds(Wait(command) + 3f);
-    //        EndCheck.Invoke();
     //        RemoveCommand(command);
     //    }
     //}
 
 
-    public void ExecuteCommnad()
-    {
-        List<SkillCommand> commandsToExecute = new List<SkillCommand>(skillCommands);
-
-        foreach (SkillCommand command in commandsToExecute)
-        {
-            command.Execute();
-            RemoveCommand(command);
-        }
-    }
-    
-
     //public float Wait(SkillCommand skillCommand)
     //{
-    //    if (skillCommand.skillData.skillSO.ID % 3 == 1)
-    //    {
-    //        return skillCommand.unit.visual.GetAnimationLength(3);
-    //    }
-    //    else if (skillCommand.skillData.skillSO.ID % 3 == 2)
-    //    {
-    //        return skillCommand.unit.visual.GetAnimationLength(4);
-    //    }
-    //    else
-    //    {
-    //        return skillCommand.unit.visual.GetAnimationLength(5);
-    //    }
-
+    //    int id = skillCommand.skillData.SkillSO.ID % 3;
+    //    int animIndex = id == 1 ? 3 : id == 2 ? 4 : 5;
+    //    return skillCommand.unit.visual.GetAnimationLength(animIndex);
     //}
 
 
