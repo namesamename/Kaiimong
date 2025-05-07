@@ -42,7 +42,7 @@ public class GatchaExecutor : MonoBehaviour
 
     private List<Character> results = new();
 
-    private void Draw(int count)  //뽑기 창에서 뽑기를 실행하는 메서드 , 중요
+    private async void Draw(int count)  //뽑기 창에서 뽑기를 실행하는 메서드 , 중요
     {
         var mgr = GatchaManager.Instance;  //가챠 매니저 가져오기
         var curManager = CurrencyManager.Instance; //재화 매니져 가져오기
@@ -54,7 +54,7 @@ public class GatchaExecutor : MonoBehaviour
         if (mgr.crystal < needCrystal)
         {
             Debug.LogWarning("크리스탈이 부족합니다!");
-            UIManager.Instance.ShowPopup<PopupCurrencyLack>();
+            await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
             return;
         }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ButtonGatchaHistory : MonoBehaviour
 {
-    public void PopupHistory()
+    public async void PopupHistory()
     {
-        UIManager.Instance.ShowPopup<PopupGatchaHistory>();
+       await  UIManager.Instance.ShowPopup<PopupGatchaHistory>();
     }
 }
