@@ -56,7 +56,7 @@ public class CharacterSkillBook : MonoBehaviour
     //}
     public void ActiveSkillUsing(ActiveSkillObject skill, List<CharacterCarrier> characters)
     {
-        foreach(PassiveSkillObjcet passiveSkill in passiveSkillObjcets)
+        foreach (PassiveSkillObjcet passiveSkill in passiveSkillObjcets)
         {
             passiveSkill.UseSkill(characters);
         }
@@ -67,8 +67,8 @@ public class CharacterSkillBook : MonoBehaviour
         //마나, 쿨타임, 사용 가능한가 불가능 한가
         if (!IsCoolTime(skill))
             return;
-        if(!IsFullCharage(skill)) 
-            return;
+        //if(!IsFullCharage(skill)) 
+        //    return;
 
         SetSkillGauge(skill.SkillSO.UltimateGauge);
         skill.UseSkill(characters);
