@@ -12,6 +12,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public EnemySpawnDataTable EnemySpawn;
     public ChapterCategoryDataTable ChapterCategory;
     public SpriteDataBase Sprite;
+    public QuestDataTable Quest;
 
 
     public void Initialize()
@@ -28,6 +29,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         EnemySpawn = new EnemySpawnDataTable();
         Sprite = new    SpriteDataBase();
 
+        Quest.Initialize();
         Sprite.Initialize();
         Upgrade.Initialize();
         character.Initialize();

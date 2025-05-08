@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fefef063f42b7a4d89c1a62d3326fe8, type: 3}
+  m_Name: ActiveSkill_2
+  m_EditorClassIdentifier: 
+  ID: 2
+  Type: 0
+  Target: 0
+  TargetCount: 1
+  Attack: 1
+  BuffID: 0
+  Name: 
+  Description: 
+  IconPath: 
+  isSingleAttack: 0
+  attackCount: 0
+  damage: 
+  hitTiming: []
+  icon: {fileID: 0}
+  UltimateGauge: 0
+  IsMuti: 0
+  IsHeal: 0
+  IsBuff: 0
+  Id: 0

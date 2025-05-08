@@ -47,6 +47,7 @@ public enum SaveType
     Stage,
     Chapter,
     Item,
+    Quest
 
 }
 
@@ -151,5 +152,37 @@ public enum UpgradeType
     Level,
     Gold
 
+}
+
+public enum QuestType
+{
+    StageClear,
+    LevelUp,
+    KillMonster,
+    Recognition,
+    CharacterInteraction,
+    Gacha,
+    UseSkill,
+    UesItem,
+    UseGold,
+    UseStamina,
+}
+
+public enum RewardType
+{
+    Item,
+    Gold,
+    Ticket,
+    Cystal,
+    Stamina,
+    UserEXP,
+    CharacterEXP,
+}
+
+public enum TimeType
+{
+    Daily,
+    Weekly,
+    Monthly
 }
 
