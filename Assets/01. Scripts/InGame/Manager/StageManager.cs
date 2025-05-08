@@ -8,7 +8,7 @@ public class StageManager : Singleton<StageManager>
     [Header("Stage Base")]
     [SerializeField] private BattleSystem battleSystem;
 
-    public BattleSystem BattleSystem {  get { return battleSystem; } }
+    public BattleSystem BattleSystem { get { return battleSystem; } }
 
     [Header("Stage Info")]
     public Stage CurrentStage;
@@ -28,6 +28,8 @@ public class StageManager : Singleton<StageManager>
 
     public Action OnWin;
     public Action OnLose;
+
+    private bool finishedStage = false;
 
     public void Initialize()
     {
@@ -121,11 +123,15 @@ public class StageManager : Singleton<StageManager>
 
     public void WinStage()
     {
-        WinUI.gameObject.SetActive(true);
-        OnStageWin();
-        OnWin?.Invoke();
-        StageWinExp();
-        StartCoroutine(BeforeWinChangeDelay());
+        if (!finishedStage)
+        {
+            finishedStage = true;
+            WinUI.gameObject.SetActive(true);
+            OnStageWin();
+            OnWin?.Invoke();
+            StageWinExp();
+            StartCoroutine(BeforeWinChangeDelay());
+        }
     }
 
     private void OnStageWin()
@@ -180,10 +186,14 @@ public class StageManager : Singleton<StageManager>
 
     public void LoseStage()
     {
-        LoseUI.gameObject.SetActive(true);
-        OnLose?.Invoke();
-        OnStageLose();
-        StartCoroutine(BeforeLoseChangeDelay());
+        if (!finishedStage)
+        {
+            finishedStage = true;
+            LoseUI.gameObject.SetActive(true);
+            OnLose?.Invoke();
+            OnStageLose();
+            StartCoroutine(BeforeLoseChangeDelay());
+        }
     }
 
     private void OnStageLose()
@@ -253,7 +263,7 @@ public class StageManager : Singleton<StageManager>
                     }
 
                 }
-                if(rewardCount > 0)
+                if (rewardCount > 0)
                 {
                     WinUI.SetRewardSlot(item.ID, rewardCount);
                     ItemManager.Instance.SetitemCount(item.ID, rewardCount);
