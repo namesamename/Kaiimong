@@ -27,7 +27,9 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         ChapterCategory = new ChapterCategoryDataTable();
         Upgrade = new UpGradeTable();
         EnemySpawn = new EnemySpawnDataTable();
-        Sprite = new    SpriteDataBase();
+        Sprite = new  SpriteDataBase();
+        Quest = new QuestDataTable();
+
 
         Quest.Initialize();
         Sprite.Initialize();

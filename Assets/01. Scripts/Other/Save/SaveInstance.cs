@@ -50,6 +50,7 @@ public class QuestSaveData : SaveInstance
     public int CurValue;
     public QuestType QuestType;
     public bool IsComplete;
+    public bool IsCan;
 }
 
 

@@ -21,12 +21,16 @@ public class QuestManager : MonoBehaviour
                 newQuestData.IsComplete = savedData.IsComplete;
                 newQuestData.Savetype = SaveType.Quest;
                 newQuestData.QuestType = savedData.QuestType;
+                newQuestData.IsCan = savedData.IsCan;
             }
             else
             { 
                 newQuestData.CurValue = 0;
                 newQuestData.Savetype = SaveType.Quest;
                 newQuestData.QuestType = GlobalDataTable.Instance.Quest.GetQuestToID(QuestID).QuestType;
+                newQuestData.IsCan = false;
+                newQuestData.IsComplete = false;
+
                 SaveDataBase.Instance.SaveSingleData(newQuestData);
                 Debug.Log("Quest data NO");
             }
