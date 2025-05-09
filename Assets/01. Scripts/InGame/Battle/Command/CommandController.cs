@@ -60,12 +60,13 @@ public class CommandController : MonoBehaviour
             yield return command.Execute();
             yield return new WaitForSeconds(1);
 
+            StartCoroutine(StageManager.Instance.BattleSystem.TargetDeathCheck(command.targets));
+
             RemoveCommand(command);
         }
 
         IsExecutingCommands = false;
         commandsStopped = false;
-        //EndCheck?.Invoke();
     }
 
     public void StopAllCommands()

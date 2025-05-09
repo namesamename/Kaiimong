@@ -537,4 +537,27 @@ public class BattleSystem : MonoBehaviour
             CheckGameOver();
         }
     }
+
+    public IEnumerator TargetDeathCheck(List<CharacterCarrier> targets)
+    {
+        float maxWaitTime = 0f;
+        List<CharacterCarrier> deadCharacter = new List<CharacterCarrier>();
+
+        foreach (CharacterCarrier target in targets)
+        {
+            if(target.stat.healthStat.CurHealth <= 0)
+            {
+                deadCharacter.Add(target);
+            }
+            float waitTime = target.visual.GetAnimationLength(6);
+            maxWaitTime = Mathf.Max(maxWaitTime, waitTime);
+        }
+
+        foreach(CharacterCarrier dead in deadCharacter)
+        {
+            dead.stat.OnDie();
+        }
+
+        yield return new WaitForSeconds(maxWaitTime + 0.5f);
+    }
 }

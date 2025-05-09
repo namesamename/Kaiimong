@@ -126,12 +126,14 @@ public class CharacterStat : MonoBehaviour
             healthStat.CurHealth -= defenseStat.GetStat() - Amount;
         }
         
-        if(healthStat.CurHealth<=0)
-        {
-            OnDie();
-        }
+        //if(healthStat.CurHealth<=0)
+        //{
+        //    OnDie();
+        //}
      
     }
+
+
     public void OnDie()
     {
         animator.SetTrigger("Death");
