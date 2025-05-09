@@ -16,6 +16,7 @@ public class SkillCommand
     }
     public IEnumerator Execute()
     {
+        Debug.Log("µü´ë");
         unit.skillBook.ActiveSkillUsing(skillData, targets);
 
         float waitTime = 0f;
