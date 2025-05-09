@@ -9,6 +9,10 @@ public class UIInventory : MonoBehaviour
 {
     public static UIInventory Instance { get; private set; }          // 싱글톤 접근용
 
+
+    public GameObject SlotPrefab;
+
+
     [Header("Inventory Panels")]
     [SerializeField] private GameObject itemInventoryButton;        // 아이템 탭 UI 패널
     [SerializeField] private GameObject consumableInventoryButton;  // 소모품 탭 UI 패널
@@ -46,6 +50,9 @@ public class UIInventory : MonoBehaviour
         }
         button = GetComponentsInChildren<Button>();
         Instance = this;
+        SlotPrefab = Resources.Load<GameObject>("ItemSlot/Slot");
+
+
     }
 
     private void Start()
@@ -117,16 +124,16 @@ public class UIInventory : MonoBehaviour
 
         if (existingItem != null && existingItem.Value > 1)
         {
-            // 현재 스택에 추가 가능한지 확인
+
             int newCount = existingItem.Value + count;
             if (newCount <= itemData.MaxStackCount)
             {
-                // 기존 아이템에 수량 추가
-                existingItem.Value = newCount;
+        
+                existingItem.Value += newCount;
             }
             else
             {
-                // 최대 스택을 초과하면 새 슬롯 생성
+ 
                 var remainingCount = newCount - itemData.MaxStackCount;
                 existingItem.Value = itemData.MaxStackCount;
 
@@ -237,8 +244,7 @@ public class UIInventory : MonoBehaviour
 
         foreach (var Item  in items)
         {
-            GameObject prefab = GetSlotPrefabByRarity(Item.Grade);
-            GameObject slotObj = Instantiate(prefab, parentPanel);
+            GameObject slotObj = Instantiate(SlotPrefab, parentPanel);
 
             InventorySlot slot = slotObj.GetComponent<InventorySlot>();
             slot.SetSlot(Item, ItemManager.Instance.GetItemSaveData(Item.ID).Value);  // 아이템과 수량 전달
@@ -273,26 +279,26 @@ public class UIInventory : MonoBehaviour
 
     }
 
-    private GameObject GetSlotPrefabByRarity(ERarity rarity)           // 희귀도에 따라 슬롯 프리팹 반환
-    {
-        int index = EnumToIndex(rarity);                                      // enum을 정수(int) 인덱스로 사용
-        if (index < 0 || index >= slotPrefabs.Length)
-        {
-            Debug.LogWarning($"[경고] slotPrefabs 배열에 '{rarity}'에 해당하는 슬롯 프리팹이 없습니다. 기본 프리팹(S)을 사용합니다.");
-            return slotPrefabs[0];
-        }
-        if (slotPrefabs[index] == null)
-        {
-            Debug.LogWarning($"[경고] 희귀도 {rarity} 슬롯 프리팹이 null입니다. 기본 프리팹(S)을 사용합니다.");
-            return slotPrefabs[0];
-        }
-        return slotPrefabs[index];                                     // 정상 범위면 해당 프리팹 반환
-    }
+    //private GameObject GetSlotPrefabByRarity(ERarity rarity)           // 희귀도에 따라 슬롯 프리팹 반환
+    //{
+    //    int index = EnumToIndex(rarity);                                      // enum을 정수(int) 인덱스로 사용
+    //    if (index < 0 || index >= slotPrefabs.Length)
+    //    {
+    //        Debug.LogWarning($"[경고] slotPrefabs 배열에 '{rarity}'에 해당하는 슬롯 프리팹이 없습니다. 기본 프리팹(S)을 사용합니다.");
+    //        return slotPrefabs[0];
+    //    }
+    //    if (slotPrefabs[index] == null)
+    //    {
+    //        Debug.LogWarning($"[경고] 희귀도 {rarity} 슬롯 프리팹이 null입니다. 기본 프리팹(S)을 사용합니다.");
+    //        return slotPrefabs[0];
+    //    }
+    //    return slotPrefabs[index];                                     // 정상 범위면 해당 프리팹 반환
+    //}
 
-    private int EnumToIndex(ERarity rarity)                         // ERarity → int 인덱스로 안전하게 변환
-    {
-        return (int)rarity;
-    }
+    //private int EnumToIndex(ERarity rarity)                         // ERarity → int 인덱스로 안전하게 변환
+    //{
+    //    return (int)rarity;
+    //}
 
 
 }

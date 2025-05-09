@@ -19,7 +19,10 @@ public class ItemData : SO
 
     [Header("È¹µæ °æ·Î")]
     public string Description;        // ¼³¸í
-    public string ObtainLocation;     // È¹µæ °æ·Î
+    public int ObtainLocationCount;     // È¹µæ °æ·Î
+    public string FirstLocation;
+    public string SecondLocation;
+    public string ThridLocation;
     public float Probability;              // µå¶ø È®·ü
 
 

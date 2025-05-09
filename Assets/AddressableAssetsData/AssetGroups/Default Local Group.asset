@@ -32,11 +32,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7c485e7e9ebafe740ac2c4ad11adba1b
-    m_Address: Popups/ItemInfoPopup
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86814271d75405c41bea7b1467ae4b47
     m_Address: Popups/ItemPopupPrefab
     m_ReadOnly: 0
@@ -94,6 +89,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a2d324288e2dff3429e9b25d7edb1623
     m_Address: Quest/Quest
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c485e7e9ebafe740ac2c4ad11adba1b
+    m_Address: Assets/Resources_moved/Popups/ItemInfoPopup.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

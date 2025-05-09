@@ -77,6 +77,7 @@ public enum AddreassablesType
     POPUP,
     Passive,
     Quest,
+    ItemSlot,
 
 }
 public enum Grade
