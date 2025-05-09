@@ -1529,8 +1529,8 @@ RectTransform:
   - {fileID: 674049749}
   - {fileID: 1395633352}
   - {fileID: 1479151352}
-  - {fileID: 1045177640}
   - {fileID: 1549761759}
+  - {fileID: 1045177640}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1553,9 +1553,9 @@ MonoBehaviour:
   resultGrid: {fileID: 81976154}
   retryButton: {fileID: 674049750}
   toLobbyButton: {fileID: 756425135}
-  skipButton: {fileID: 1549761756}
   sCountTextObj: {fileID: 1479151351}
   specialEffectImage: {fileID: 1045177641}
+  skipButton: {fileID: 1549761756}
 --- !u!1 &1839768202
 GameObject:
   m_ObjectHideFlags: 0
