@@ -25,7 +25,7 @@ public class BattleSystem : MonoBehaviour
     public int TurnIndex = 0;
     public ActiveSkillObject SelectedSkill;
     public List<CharacterCarrier> Targets;
-    private float betweenPhaseTime = 1f;
+    [SerializeField] private float betweenPhaseTime = 0.5f;
     public bool winFlag = false;
     public bool loseFlag = false;
     public int CurrentSet = 1;
