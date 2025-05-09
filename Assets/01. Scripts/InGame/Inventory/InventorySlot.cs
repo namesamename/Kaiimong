@@ -40,6 +40,40 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
+
+    public void SetSlotCurrency(CurrencyType currency, int Count)
+    {
+
+
+        iconImage.enabled = true;        // 아이콘  활성화
+        if (itemCount > 1)
+        {
+            countText.text = Count.ToString();
+        }
+        else
+        {
+            countText.text = string.Empty;
+        }
+
+        switch (currency) 
+        {
+            case CurrencyType.UserEXP:
+                break;
+            case CurrencyType.Gold:
+                break;
+            case CurrencyType.Gacha:
+                break;
+            case CurrencyType.Activity:
+                break;
+            case CurrencyType.Dia:
+                break;
+            case CurrencyType.CharacterEXP:
+                break;
+
+
+        }
+    }
+
     public void ClearSlot()                 // 슬롯 비우기
     {
         item = null;                        // 아이템 제거

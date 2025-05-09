@@ -45,3 +45,12 @@ public class ItemSavaData : SaveInstance
     public int Value;
 }
 
+public class QuestSaveData : SaveInstance
+{
+    public int CurValue;
+    public QuestType QuestType;
+    public bool IsComplete;
+    public bool IsCan;
+}
+
+

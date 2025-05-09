@@ -47,6 +47,7 @@ public enum SaveType
     Stage,
     Chapter,
     Item,
+    Quest
 
 }
 
@@ -74,6 +75,7 @@ public enum AddreassablesType
     EnemyBattleSD,
     POPUP,
     Passive,
+    Quest,
 
 }
 public enum Grade
@@ -152,4 +154,38 @@ public enum UpgradeType
     Gold
 
 }
+
+public enum QuestType
+{
+    StageClear,
+    LevelUp,
+    KillMonster,
+    Recognition,
+    CharacterInteraction,
+    Gacha,
+    UseSkill,
+    UesItem,
+    UseGold,
+    UseStamina,
+}
+
+public enum RewardType
+{
+    Item,
+    Gold,
+    Ticket,
+    Cystal,
+    Stamina,
+    UserEXP,
+    CharacterEXP,
+}
+
+public enum TimeType
+{
+    Daily,
+    Weekly,
+    Monthly
+}
+
+
 
