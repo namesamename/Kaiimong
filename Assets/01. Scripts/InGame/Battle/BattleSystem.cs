@@ -42,6 +42,8 @@ public class BattleSystem : MonoBehaviour
     [Header("AttackPhase")]
     public bool CanAttack = false;
     public bool AttackEnded = false;
+    private bool sortedOnce = false;
+    private bool settingBattle = false;
 
     public CommandController CommandController { get; private set; }
     public CharacterSelector CharacterSelector { get; private set; }
@@ -75,7 +77,9 @@ public class BattleSystem : MonoBehaviour
     {
         if (appearAnimComplete)
         {
+            Debug.Log("finish");
             appearAnimComplete = false;
+            PlayerTurn = true;
             StartCoroutine(ChangePhase(PlayerTurnPhase));
         }
 
@@ -126,54 +130,66 @@ public class BattleSystem : MonoBehaviour
             CheckGameOver();
             if (!isPhaseChanging)
             {
-                StartCoroutine(ChangePhase(EnemyTurnPhase));
+                StartCoroutine(ChangePhase(PlayerTurnPhase));
             }
         }
         else
         {
-            SetBattle();
-            if (appearAnimComplete)
+            Debug.Log("들어감");
+            if (settingBattle)
+            {
+                SetBattle();
+                if (appearAnimComplete)
+                {
+                    CheckGameOver();
+                    if (!isPhaseChanging)
+                    {
+                        StartCoroutine(ChangePhase(EnemyTurnPhase));
+                    }
+                }
+            }
+            else
             {
                 CheckGameOver();
                 if (!isPhaseChanging)
                 {
-                    StartCoroutine(ChangePhase(PlayerTurnPhase));
+                    StartCoroutine(ChangePhase(EnemyTurnPhase));
                 }
             }
         }
 
     }
 
-    public void BattleEndCheck()
-    {
-        if (PlayerTurn)
-        {
-            CheckGameOver();
-            if (!isPhaseChanging)
-            {
-                StartCoroutine(ChangePhase(EnemyTurnPhase));
-            }
-        }
-        else
-        {
-            SetBattle();
-            if (appearAnimComplete)
-            {
-                CheckGameOver();
-                if (!isPhaseChanging)
-                {
-                    StartCoroutine(ChangePhase(PlayerTurnPhase));
-                }
-            }
-        }
-    }
+    //public void BattleEndCheck()
+    //{
+    //    if (PlayerTurn)
+    //    {
+    //        CheckGameOver();
+    //        if (!isPhaseChanging)
+    //        {
+    //            StartCoroutine(ChangePhase(PlayerTurnPhase));
+    //        }
+    //    }
+    //    else
+    //    {
+    //        SetBattle();
+    //        if (appearAnimComplete)
+    //        {
+    //            CheckGameOver();
+    //            if (!isPhaseChanging)
+    //            {
+    //                StartCoroutine(ChangePhase(EnemyTurnPhase));
+    //            }
+    //        }
+    //    }
+    //}
 
     private void CheckGameOver()
     {
         if (isPhaseChanging) return;
 
         isPhaseChanging = true;
-
+        Debug.Log(isPhaseChanging);
         bool isExecutingCommands = CommandController.IsExecutingCommands;
 
         if (Players.Count == 0 && activePlayers.Count == 0)
@@ -190,6 +206,9 @@ public class BattleSystem : MonoBehaviour
 
         if (Enemies.Count == 0 && activeEnemies.Count == 0)
         {
+            PlayerTurn = false;
+            sortedOnce = false;
+            BattleUI.CharacterUI.PlayerTurnEnd();
             // 적이 모두 죽었을 때
             if (isExecutingCommands)
             {
@@ -200,7 +219,7 @@ public class BattleSystem : MonoBehaviour
             if (StageManager.Instance.CurrentRound < StageManager.Instance.CurrentStage.Rounds)
             {
                 // 다음 라운드가 있는 경우
-                PlayerTurn = false;
+                PlayerTurn = true;
                 StartCoroutine(ChangePhase(() => { isPhaseChanging = false; NextRoundPhase(); }));
             }
             else
@@ -222,28 +241,33 @@ public class BattleSystem : MonoBehaviour
 
     private void EnemyTurnPhase()
     {
-        if (PlayerTurn)
+        if (!PlayerTurn)
         {
+            PlayerTurn = true;
             Debug.Log("enemyturn");
             activeEnemies = activeEnemies.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
             //activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
             CommandController.ClearList();
             EnemyRandomCommand();
         }
-        PlayerTurn = false;
     }
 
     private void PlayerTurnPhase()
     {
-        if (!PlayerTurn)
+        if (PlayerTurn)
         {
             Debug.Log("playerturn");
-            activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
-            //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
-            OnPlayerTurn?.Invoke();
-            CommandController.ClearList();
+            if (!sortedOnce)
+            {
+                sortedOnce = true;
+                Debug.Log("playerturn");
+                activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+                //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
+                OnPlayerTurn?.Invoke();
+                CommandController.ClearList();
+            }
+            BattleUI.CharacterUI.SkillButtonAble();
         }
-        PlayerTurn = true;
     }
 
     private void WinPhase()
@@ -287,6 +311,7 @@ public class BattleSystem : MonoBehaviour
         SetPlayer();
         SetEnemy();
         canStartNextRound = true;
+        settingBattle = false;
         StartCoroutine(AppearAnimTime(GetMaxAnimationTime()));
     }
 
@@ -399,12 +424,16 @@ public class BattleSystem : MonoBehaviour
             BattleUI.CharacterUI.NextCharacterIcon();
             TurnIndex++;
             Targets.Clear();
+            //BattleUI.CharacterUI.SetActionButton();
         }
 
         if (TurnIndex == activePlayers.Count)
         {
-            BattleUI.CharacterUI.SetActionButton();
+            PlayerTurn = false;
+            sortedOnce = false;
+            BattleUI.CharacterUI.PlayerTurnEnd();
         }
+        CanAttack = true;
     }
 
     public void RemoveTarget(CharacterCarrier target)
@@ -522,6 +551,10 @@ public class BattleSystem : MonoBehaviour
         UnSubscribeCharacterDeathAction(character);
         activePlayers.Remove(character);
         Destroy(character.gameObject);
+        if (Enemies.Count > 0)
+        {
+            settingBattle = true;
+        }
     }
 
     private void EnemyDeath(CharacterCarrier enemy)
@@ -545,7 +578,7 @@ public class BattleSystem : MonoBehaviour
 
         foreach (CharacterCarrier target in targets)
         {
-            if(target.stat.healthStat.CurHealth <= 0)
+            if (target.stat.healthStat.CurHealth <= 0)
             {
                 deadCharacter.Add(target);
             }
@@ -553,7 +586,7 @@ public class BattleSystem : MonoBehaviour
             maxWaitTime = Mathf.Max(maxWaitTime, waitTime);
         }
 
-        foreach(CharacterCarrier dead in deadCharacter)
+        foreach (CharacterCarrier dead in deadCharacter)
         {
             dead.stat.OnDie();
         }

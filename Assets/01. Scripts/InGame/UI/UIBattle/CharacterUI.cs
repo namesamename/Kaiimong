@@ -18,7 +18,7 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private List<Vector3> iconSize = new List<Vector3>();
     [SerializeField] private List<Button> buttonList = new List<Button>();
     [SerializeField] private Button targetConfirmButton;
-    [SerializeField] private Button cancelButton;
+    //[SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
     public Action OnConfirmButton;
 
@@ -46,7 +46,7 @@ public class CharacterUI : MonoBehaviour
             button.onClick.AddListener(() => OnClickSkillButton(button));
         }
         targetConfirmButton.onClick.AddListener(OnClickTargetConfirmButton);
-        cancelButton.onClick.AddListener(OnSkillCancelButton);
+        //cancelButton.onClick.AddListener(OnSkillCancelButton);
         actionButton.onClick.AddListener(OnActionButton);
     }
 
@@ -57,34 +57,60 @@ public class CharacterUI : MonoBehaviour
             button.onClick.RemoveAllListeners();
         }
         targetConfirmButton.onClick.RemoveAllListeners();
-        cancelButton.onClick.RemoveAllListeners();
+        //cancelButton.onClick.RemoveAllListeners();
         actionButton.onClick.RemoveAllListeners();
     }
 
+    void SkillButtonDisable()
+    {
+        foreach (Button button in buttonList)
+        {
+            button.enabled = false;
+        }
+        targetConfirmButton.enabled = false;
+    }
+
+    public void SkillButtonAble()
+    {
+        foreach (Button button in buttonList)
+        {
+            button.enabled = true;
+        }
+        targetConfirmButton.enabled = true;
+    }
+
     void OnActionButton()
+    {
+        //DisableActionButton();
+        //DIsableUI();
+        //battleSystem.TurnIndex = 0;
+        //PreviousCharacterIcon();
+        battleSystem.CanAttack = true;
+    }
+
+    public void PlayerTurnEnd()
     {
         DisableActionButton();
         DIsableUI();
         battleSystem.TurnIndex = 0;
         PreviousCharacterIcon();
-        battleSystem.CanAttack = true;
     }
 
-    void OnSkillCancelButton()
-    {
-        if (battleSystem.CommandController.SkillCommands.Count == 0) return;
-        if (battleSystem.TurnIndex == battleSystem.GetActivePlayers().Count)
-        {
-            DisableActionButton();
-        }
-        battleSystem.CommandController.RemoveCommand(battleSystem.CommandController.SkillCommands[battleSystem.CommandController.SkillCommands.Count - 1]);
-        battleSystem.TurnIndex--;
-        PreviousCharacterIcon();
-        battleSystem.SkillChanged?.Invoke();
-        battleSystem.SelectedSkill = null;
-        battleSystem.CanSelectTarget = false;
-        battleSystem.SelectedTarget = false;
-    }
+    //void OnSkillCancelButton()
+    //{
+    //    if (battleSystem.CommandController.SkillCommands.Count == 0) return;
+    //    if (battleSystem.TurnIndex == battleSystem.GetActivePlayers().Count)
+    //    {
+    //        DisableActionButton();
+    //    }
+    //    battleSystem.CommandController.RemoveCommand(battleSystem.CommandController.SkillCommands[battleSystem.CommandController.SkillCommands.Count - 1]);
+    //    battleSystem.TurnIndex--;
+    //    PreviousCharacterIcon();
+    //    battleSystem.SkillChanged?.Invoke();
+    //    battleSystem.SelectedSkill = null;
+    //    battleSystem.CanSelectTarget = false;
+    //    battleSystem.SelectedTarget = false;
+    //}
 
     void OnClickSkillButton(Button button)
     {
@@ -97,6 +123,7 @@ public class CharacterUI : MonoBehaviour
     void OnClickTargetConfirmButton()
     {
         OnConfirmButton?.Invoke();
+        SkillButtonDisable();
     }
 
     public void GetActivePlayerUnit()
@@ -108,12 +135,12 @@ public class CharacterUI : MonoBehaviour
         EnableUI();
     }
 
-    public void GetActiveEnemyUnit()
-    {
-        curUnits.Clear();
-        curUnits = battleSystem.GetActiveEnemies();
-        battleSystem.PlayerTurn = false;
-    }
+    //public void GetActiveEnemyUnit()
+    //{
+    //    curUnits.Clear();
+    //    curUnits = battleSystem.GetActiveEnemies();
+    //    battleSystem.PlayerTurn = false;
+    //}
 
     public void SetUI()
     {

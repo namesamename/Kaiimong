@@ -1130,7 +1130,6 @@ MonoBehaviour:
   - {fileID: 7738615381726839361}
   - {fileID: 9061735938808594036}
   targetConfirmButton: {fileID: 4473708971227630173}
-  cancelButton: {fileID: 932472732925984998}
   actionButton: {fileID: 8841756218176965592}
 --- !u!1 &4379831685209278209
 GameObject:
@@ -1641,6 +1640,8 @@ MonoBehaviour:
   characterUI: {fileID: 1810356498555389243}
   popupBattlePausePrefab: {fileID: 0}
   popupBattlePause: {fileID: 0}
+  roundsText: {fileID: 5442056365618209741}
+  turnText: {fileID: 8620434563014902074}
 --- !u!1 &6196677942313435731
 GameObject:
   m_ObjectHideFlags: 0
