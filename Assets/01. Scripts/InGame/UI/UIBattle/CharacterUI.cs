@@ -30,6 +30,7 @@ public class CharacterUI : MonoBehaviour
         battleSystem.OnPlayerTurn += GetActivePlayerUnit;
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
+        targetConfirmButton.enabled = false;
     }
 
     public void UnSubscribeCharacterUI()
@@ -76,6 +77,10 @@ public class CharacterUI : MonoBehaviour
         {
             button.enabled = true;
         }
+    }
+
+    public void ActionButtonAble()
+    {
         targetConfirmButton.enabled = true;
     }
 
