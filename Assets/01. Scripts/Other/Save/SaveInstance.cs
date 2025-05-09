@@ -1,3 +1,5 @@
+using System;
+
 [System.Serializable]
 public class SaveInstance 
 {
@@ -52,5 +54,14 @@ public class QuestSaveData : SaveInstance
     public bool IsComplete;
     public bool IsCan;
 }
+
+public class TimeSaveData : SaveInstance
+{
+    public DateTime lastDailyReset;
+    public DateTime lastWeeklyReset;
+
+
+}
+
 
 

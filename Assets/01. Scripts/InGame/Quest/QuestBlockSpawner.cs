@@ -46,6 +46,11 @@ public class QuestBlockSpawner : MonoBehaviour
             ThenByDescending(Item => Item.GetComponent<QuestBlock>().GetSave().IsCan).
             ToList();
 
+        for (int i = 0; i < QuestBlocks.Count; i++)
+        {
+            QuestBlocks[i].transform.SetSiblingIndex(i);
+        }
+
     }
 
 

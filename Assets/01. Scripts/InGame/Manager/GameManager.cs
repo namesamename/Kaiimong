@@ -154,4 +154,13 @@ public class GameManager : Singleton<GameManager>
 
 
 
+    public void OnApplicationQuit()
+    {
+        if(questManager != null)
+        questManager.TimeCheck();
+    }
+
+
+
+
 }

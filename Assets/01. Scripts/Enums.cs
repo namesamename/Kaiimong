@@ -47,7 +47,8 @@ public enum SaveType
     Stage,
     Chapter,
     Item,
-    Quest
+    Quest,
+    Time
 
 }
 

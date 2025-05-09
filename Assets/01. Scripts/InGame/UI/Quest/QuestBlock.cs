@@ -166,7 +166,7 @@ public class QuestBlock : MonoBehaviour
             button.onClick.AddListener(() => Getitem(questReward, SecondReward));
 
         }
-        else if(!QuestSave.IsCan && QuestSave.IsComplete)
+        else if(!QuestSave.IsCan && !QuestSave.IsComplete)
         {
             textMeshPros[0].text = "Find";
             button.interactable = true;
@@ -176,7 +176,7 @@ public class QuestBlock : MonoBehaviour
 
     public void FindQuest()
     {
-        button.onClick.RemoveAllListeners();
+ 
         switch(questSO.QuestType) 
         {
             case QuestType.StageClear:
