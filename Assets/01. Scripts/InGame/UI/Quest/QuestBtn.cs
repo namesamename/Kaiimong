@@ -18,7 +18,21 @@ public class QuestBtn : MonoBehaviour
             buttons[i].onClick.RemoveAllListeners();
         }
 
-        buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
-        buttons[1].onClick.AddListener(SceneLoader.Instance.ChanagePreScene);
+        buttons[0].onClick.AddListener(UnloadAndChangeScene);
+        buttons[1].onClick.AddListener(UnloadAndChangePreScene);
     }
+
+    public void UnloadAndChangeScene()
+    {
+        AddressableManager.Instance.UnLoad("Quest");
+        SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
+    }
+
+    public void UnloadAndChangePreScene()
+    {
+        AddressableManager.Instance.UnLoad("Quest");
+        SceneLoader.Instance.ChanagePreScene();
+    }
+
+
 }

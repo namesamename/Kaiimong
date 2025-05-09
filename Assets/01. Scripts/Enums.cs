@@ -75,6 +75,7 @@ public enum AddreassablesType
     EnemyBattleSD,
     POPUP,
     Passive,
+    Quest,
 
 }
 public enum Grade
@@ -185,4 +186,6 @@ public enum TimeType
     Weekly,
     Monthly
 }
+
+
 

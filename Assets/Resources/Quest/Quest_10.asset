@@ -15,8 +15,8 @@ MonoBehaviour:
   ID: 10
   QuestName: "\uC2A4\uD0DC\uBBF8\uB098 \uC0AC\uC6A9"
   QuestDescription: "\uC2A4\uD0DC\uBBF8\uB098 \uC0AC\uC6A9"
-  QuestType: 9
+  QuestType: 0
   RequiredCount: 100
   RewardTableID: 4
   SecondRewardTableID: 5
-  TimeType: 2
+  TimeType: 1

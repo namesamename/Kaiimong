@@ -15,14 +15,27 @@ public class QuestBlock : MonoBehaviour
     QuestReward SecondReward;
     Quest questSO;
     QuestSaveData QuestSave;
+
+    QuestScroll QuestScroll;
     private void Awake()
     {
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
         images = GetComponentsInChildren<Image>();
         button = GetComponentInChildren<Button>();
         ItemSlot = Resources.Load<GameObject>("ItemSlot/Slot");
+        QuestScroll =GetComponentInParent<QuestScroll>();
     }
 
+
+    public QuestSaveData GetSave()
+    {
+        return QuestSave;
+    }
+
+    public Quest GetQuset()
+    {
+        return questSO;
+    }
 
     public void SetBlock(int ID)
     {
@@ -96,9 +109,10 @@ public class QuestBlock : MonoBehaviour
             GetClear(quest);
         }
 
-
+        
         QuestSave.IsComplete = true;
         Setting();
+        QuestScroll.SetCurrentSetting();
         SaveDataBase.Instance.SaveSingleData(QuestSave);
 
     }
@@ -156,7 +170,7 @@ public class QuestBlock : MonoBehaviour
         {
             textMeshPros[0].text = "Find";
             button.interactable = true;
-            FindQuest();
+            button.onClick.AddListener(() => FindQuest());
         }
     }
 

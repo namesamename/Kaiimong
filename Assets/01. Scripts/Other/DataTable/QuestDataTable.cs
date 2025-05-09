@@ -27,7 +27,31 @@ public class QuestDataTable
         }
     }
 
-
+    public List<Quest> GetQuestList(TimeType time)
+    {
+        List<Quest> Daily = new List<Quest>();
+        List<Quest> Weekly = new List<Quest>();
+        foreach (Quest quest in QuestDic.Values)
+        {
+            if (quest.TimeType == TimeType.Daily)
+            {
+                Daily.Add(quest);
+            }
+            else if(quest.TimeType == TimeType.Weekly)
+            {
+                Weekly.Add(quest);
+            }
+        }
+        switch (time) 
+        {
+            case TimeType.Daily:
+                return Daily;
+            case TimeType.Weekly:
+                return Weekly;
+            default:
+                return null;
+        }
+    }
 
     public Quest GetQuestToID(int ID)
     {
