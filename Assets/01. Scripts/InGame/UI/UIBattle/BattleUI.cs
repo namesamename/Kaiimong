@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -20,9 +21,6 @@ public class BattleUI : MonoBehaviour
 
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
     public CharacterUI CharacterUI { get { return characterUI; } }
-
-
-
 
 
     private void Start()
@@ -65,5 +63,11 @@ public class BattleUI : MonoBehaviour
     private void OnCancelButton()
     {
         Time.timeScale = currentSpeed;
+    }
+
+    public void SetUI()
+    {
+        roundsText.text = $"라운드 {StageManager.Instance.CurrentRound.ToString()} / {StageManager.Instance.CurrentStage.Rounds}";
+        turnText.text = $"턴 {StageManager.Instance.CurrentTurn.ToString()} / 20";
     }
 }
