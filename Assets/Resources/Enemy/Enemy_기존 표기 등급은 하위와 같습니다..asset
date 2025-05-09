@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97e06bd7541eb7e45b0d34c397f275d0, type: 3}
-  m_Name: Enemy_1
+  m_Name: "Enemy_\uAE30\uC874 \uD45C\uAE30 \uB4F1\uAE09\uC740 \uD558\uC704\uC640
+    \uAC19\uC2B5\uB2C8\uB2E4."
   m_EditorClassIdentifier: 
-  ID: 1
-  Name: "\uBAAC1"
-  HP: 500
-  Att: 22
-  Def: 10
-  Speed: 101
-  Cri: 3
-  SkillID: 1
+  ID: 0
+  Name: 
+  HP: 0
+  Att: 0
+  Def: 0
+  Speed: 0
+  Cri: 0
+  SkillID: 0

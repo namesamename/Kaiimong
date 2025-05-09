@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : Singleton<QuestManager>
 {
 
     Dictionary<int, QuestSaveData> QuestData = new Dictionary<int, QuestSaveData>();

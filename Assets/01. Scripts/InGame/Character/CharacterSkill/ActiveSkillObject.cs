@@ -21,6 +21,7 @@ public class ActiveSkillObject : MonoBehaviour
     }
     public async void UseSkill(List<CharacterCarrier> targetcharacter)
     {
+        QuestManager.Instance.QuestTypeValueUP(1, QuestType.UseSkill);
         if (animator != null)
         {
             if (SkillSO.Id % 3 == 1)

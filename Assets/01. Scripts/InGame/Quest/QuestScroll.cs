@@ -18,15 +18,15 @@ public class QuestScroll : MonoBehaviour
         spawner = GetComponentInChildren<QuestBlockSpawner>();
         insideBtn = GetComponentInChildren<QuestInsideBtn>();
         slider = GetComponentInChildren<QuestSlider>();
+        spawner.SetAction(() => DailySetting());
         spawner.GetPrefabs();
+
     }
 
 
     private void Start()
     {
-        DailySetting();
         insideBtn.SetBtn(() => DailySetting(), () => WeeklySetting());
-
     }
 
 

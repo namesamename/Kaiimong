@@ -207,6 +207,7 @@ public class BattleSystem : MonoBehaviour
             {
                 // 마지막 라운드인 경우 (승리)
                 StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
+                QuestManager.Instance.QuestTypeValueUP(1, QuestType.StageClear);
             }
             return;
         }
@@ -347,6 +348,7 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
                     enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
+                    enemyUnit.stat.OnDeath += () => QuestManager.Instance.QuestTypeValueUP(1, QuestType.KillMonster);
                     //enemyUnit.stat.OnDeath += CheckGameOver;
                     activeEnemies.Add(enemyUnit);
                     Enemies.RemoveAt(0);

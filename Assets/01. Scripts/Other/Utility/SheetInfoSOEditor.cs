@@ -92,7 +92,7 @@ public class SheetInfoSOEditor : Editor
         {
             return "Quest_" + ID;
         }
-        else if(fileName == "QusetReward")
+        else if(fileName == "QuestReward")
         {
             return "QuestReward_" + ID;
         }

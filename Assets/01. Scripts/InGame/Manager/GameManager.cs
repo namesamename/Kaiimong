@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager>
     SaveDataBase SaveData;
     CharacterManager characterManager;
     AddressableManager addressableManager;
-
+    QuestManager questManager;
 
 
     GameObject[] ManagersPrefabs;
@@ -58,13 +58,13 @@ public class GameManager : Singleton<GameManager>
         characterManager.Initialize();
         itemManager.Initialize();
         currencyManager.InitialIze();
-
+        questManager.Initialize();
         stageManager.Initialize();
         uiManager.Initialize();
         chapterManager.Initailize();
-    
 
 
+        
         loader.Initialize();
 
     }
@@ -76,6 +76,13 @@ public class GameManager : Singleton<GameManager>
         {
             addressableManager = Instantiate(Resources.Load<GameObject>("Manager/AddressableManager")).GetComponent<AddressableManager>();
             addressableManager.transform.SetParent(transform);  // 부모 설정 (필요 시)
+        }
+
+        questManager = GetComponentInChildren<QuestManager>();
+        if (questManager == null)
+        {
+            questManager = Instantiate(Resources.Load<GameObject>("Manager/QuestManager")).GetComponent<QuestManager>();
+            questManager.transform.SetParent(transform);  // 부모 설정 (필요 시)
         }
 
 
