@@ -1,20 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class ShopTabSlider : MonoBehaviour
+public class ShopTabSlider : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private int tabCount = 4;
     [SerializeField] private float snapDuration = 0.3f;
 
-    private float[] positions;
+    private float[] positions;      // 각 탭의 위치
     private bool isDragging = false;
 
     private void Awake()
     {
         positions = new float[tabCount];
         float step = 1f / (tabCount - 1);
+
         for (int i = 0; i < tabCount; i++)
         {
             positions[i] = step * i;
@@ -28,26 +30,34 @@ public class ShopTabSlider : MonoBehaviour
         if (index < 0 || index >= tabCount) return;
 
         float target = positions[index];
+
+        // 이동 중 드래그 방지
+        scrollRect.enabled = false;
+
         DOTween.To(() => scrollRect.horizontalNormalizedPosition,
                    value => scrollRect.horizontalNormalizedPosition = value,
-                   target, snapDuration).SetEase(Ease.OutCubic);
+                   target, snapDuration)
+            .SetEase(Ease.OutCubic)
+            .OnComplete(() => {
+                scrollRect.enabled = true;
+            });
     }
+
 
     private void OnScroll(Vector2 pos)
     {
-        // 드래그가 끝났을 때만 스냅 적용
         if (!isDragging)
         {
             SnapToNearest();
         }
     }
 
-    public void OnBeginDrag()
+    public void OnBeginDrag(PointerEventData eventData)
     {
         isDragging = true;
     }
 
-    public void OnEndDrag()
+    public void OnEndDrag(PointerEventData eventData)
     {
         isDragging = false;
         SnapToNearest();
