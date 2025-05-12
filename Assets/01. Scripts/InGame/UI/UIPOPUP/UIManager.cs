@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 public class UIManager : Singleton<UIManager>
 {
+    UICharacterIDSaveData characterID;
+    public UICharacterIDType characterIDType;
 
 
     List<GameObject> POPS = new List<GameObject>();
@@ -17,6 +20,76 @@ public class UIManager : Singleton<UIManager>
             POPS.Add(POPs[i]);
         }
 
+        var CharacterID = SaveDataBase.Instance.GetSaveDataToID<UICharacterIDSaveData>(SaveType.UICharacterID, 0);
+        if(characterID != null)
+        {
+            characterID = CharacterID;
+            SaveDataBase.Instance.SaveSingleData(characterID);
+        }
+        else
+        {
+            characterID = new UICharacterIDSaveData()
+            {
+                ID = 0,
+                Savetype = SaveType.UICharacterID,
+                 Lobby = 1,
+                 FirstProfile = 0,
+                 SecondProfile = 0,
+                 ThirdProfile = 0,
+                 FourthProfile = 0,
+            };
+
+            SaveDataBase.Instance.SaveSingleData(characterID);
+        }
+
+
+
+    }
+
+    public int GetCharacterID(UICharacterIDType uI)
+    {
+        switch (uI)
+        {
+            case UICharacterIDType.Lobby:
+                return characterID.Lobby;
+            case UICharacterIDType.First:
+                return characterID.FirstProfile;
+            case UICharacterIDType.Second:
+                return characterID.SecondProfile;
+            case UICharacterIDType.Thrid:
+                return characterID.ThirdProfile;
+            case UICharacterIDType.Fourth:
+                return characterID.FourthProfile;
+            default:
+                return 0;
+              
+        }
+    }
+
+
+    public void SetCharacterID( int ID)
+    {
+        switch (characterIDType)
+        {
+            case UICharacterIDType.Lobby:
+                characterID.Lobby = ID;
+                break;
+            case UICharacterIDType.First:
+                characterID.FirstProfile = ID;
+                break;
+            case UICharacterIDType.Second:
+                characterID.SecondProfile = ID;
+                break;
+            case UICharacterIDType.Thrid:
+                characterID.ThirdProfile = ID;
+                break;
+            case UICharacterIDType.Fourth:
+                characterID.FourthProfile = ID;
+                break;
+            default:
+                break;
+
+        }
     }
 
     public async Task<T> ShowPopup<T>() where T : UIPOPUP

@@ -34,7 +34,7 @@ public class UILocationDes : MonoBehaviour
             GameObject game = Instantiate(BtnPrefab, transform.GetChild(2));
             if(GotoStage(item.FirstLocation))
             {
-                game.GetComponent<UILocationBtn>().SetBtn(item.FirstLocation, () => GotoStage(item.FirstLocation));
+                game.GetComponent<UILocationBtn>().SetBtn(item.FirstLocation, () => Goto(item.FirstLocation));
             }
             
         }
@@ -62,7 +62,10 @@ public class UILocationDes : MonoBehaviour
 
     public bool GotoStage(string Location)
     {
-        int ChapterID =int.Parse( Location.Substring(0));
+        Debug.Log(Location);
+        Debug.Log(Location.Substring(0));
+        Debug.Log(Location.Substring(2));
+        int ChapterID =int.Parse(Location.Substring(0, 1));
         int StageID = int .Parse( Location.Substring(2));
         
         Chapter chapter = GlobalDataTable.Instance.Chapter.ChapterDic[ChapterID];
@@ -91,12 +94,12 @@ public class UILocationDes : MonoBehaviour
     public void Goto(string Location)
     {
 
-        int ChapterID = int.Parse(Location.Substring(0));
+        int ChapterID = int.Parse(Location.Substring(0,1));
         int StageID = int.Parse(Location.Substring(2));
         Chapter chapter = GlobalDataTable.Instance.Chapter.ChapterDic[ChapterID];
         Stage stage = GlobalDataTable.Instance.Stage.StageDic[StageID];
         ChapterManager.Instance.RegisterChapter(chapter);
-        StageManager.Instance.CurrentStage = stage;
+        //StageManager.Instance.CurrentStage = stage;
         SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
 
     }

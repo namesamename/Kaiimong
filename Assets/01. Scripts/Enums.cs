@@ -48,7 +48,8 @@ public enum SaveType
     Chapter,
     Item,
     Quest,
-    Time
+    Time,
+    UICharacterID
 
 }
 
@@ -187,6 +188,17 @@ public enum TimeType
     Daily,
     Weekly,
     Monthly
+}
+
+public enum UICharacterIDType
+{
+    Lobby,
+    First,
+    Second,
+    Thrid,
+    Fourth,
+    None,
+   
 }
 
 

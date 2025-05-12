@@ -14,7 +14,7 @@ public class LobbyBTns : MonoBehaviour
         }
         buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ChapterScene));
         buttons[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.InventoryScene));
-        buttons[2].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.CharacterSelectScene));
+        buttons[2].onClick.AddListener(() => { SceneLoader.Instance.ChangeScene(SceneState.CharacterSelectScene);  UIManager.Instance.characterIDType = UICharacterIDType.None; });
         buttons[3].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.PickupScene));
         buttons[4].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ShopScene));
         buttons[5].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.QuestScene));

@@ -37,3 +37,5 @@ MonoBehaviour:
     sheetId: 416094174
   - className: QuestReward
     sheetId: 480557962
+  - className: CharacterDialogue
+    sheetId: 1579207779

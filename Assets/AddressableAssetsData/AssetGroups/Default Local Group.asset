@@ -93,7 +93,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c485e7e9ebafe740ac2c4ad11adba1b
-    m_Address: Assets/Resources_moved/Popups/ItemInfoPopup.prefab
+    m_Address: Popups/ItemInfoPopup
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

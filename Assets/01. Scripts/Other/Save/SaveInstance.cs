@@ -59,9 +59,17 @@ public class TimeSaveData : SaveInstance
 {
     public DateTime lastDailyReset;
     public DateTime lastWeeklyReset;
-
-
 }
+
+public class UICharacterIDSaveData : SaveInstance
+{
+    public int Lobby;
+    public int FirstProfile;
+    public int SecondProfile;
+    public int ThirdProfile;
+    public int FourthProfile;
+}
+
 
 
 
