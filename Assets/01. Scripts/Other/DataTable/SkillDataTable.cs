@@ -10,7 +10,7 @@ public class SkillDataTable
     private Dictionary<int, Debuff> DebuffskillDic = new Dictionary<int, Debuff>();
     public void Initialize()
     {
-        ActiveSkill[] ActSO = Resources.LoadAll<ActiveSkill>("ActSkill");
+        ActiveSkill[] ActSO = Resources.LoadAll<ActiveSkill>("ActiveSkill");
         PassiveSkill[] PasSO = Resources.LoadAll<PassiveSkill>("PasS");
         Debuff[] DebuffSO = Resources.LoadAll<Debuff>("Debuff");
         Buff[] BuffSO = Resources.LoadAll<Buff>("Buff");

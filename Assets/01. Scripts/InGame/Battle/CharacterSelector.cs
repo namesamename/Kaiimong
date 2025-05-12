@@ -64,6 +64,7 @@ public class CharacterSelector : MonoBehaviour
                 SelectedEffect(unit, true);
                 selectedCharacter = unit;
             }
+            battleSystem.BattleUI.CharacterUI.ActionButtonAble();
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -94,6 +95,7 @@ public class CharacterSelector : MonoBehaviour
                 CharacterCarrier unit = hit.collider.GetComponent<CharacterCarrier>();
                 if (unit != null && units.Contains(unit))
                 {
+                    battleSystem.BattleUI.CharacterUI.ActionButtonAble();
                     OnCharacterClicked(unit);
                 }
             }

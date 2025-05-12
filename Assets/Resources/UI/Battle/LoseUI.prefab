@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cb491cca8cc9f4c91e3858c4cef19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  returnActivityText: {fileID: 0}
+  returnActivityText: {fileID: 53755992692531401}
   activityImage: {fileID: 0}
   CanClick: 0
 --- !u!1 &6022135560129352244

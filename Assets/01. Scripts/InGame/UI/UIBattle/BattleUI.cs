@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +16,11 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private PopupBattlePause popupBattlePause;
     private BattleSystem battleSystem;
 
+    [SerializeField] private TextMeshProUGUI roundsText;
+    [SerializeField] private TextMeshProUGUI turnText;
+
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
     public CharacterUI CharacterUI { get { return characterUI; } }
-
-
-
 
 
     private void Start()
@@ -31,15 +33,21 @@ public class BattleUI : MonoBehaviour
 
     private async void OnPauseButtonAsync()
     {
-        Time.timeScale = 0;
-
         popupBattlePausePrefab = await UIManager.Instance.GetPOPUPPrefab("PopupBattlePause");
-       
-
         GameObject instance = Instantiate(popupBattlePausePrefab, this.transform);
         popupBattlePause = instance.GetComponent<PopupBattlePause>();
+
+        Debug.Log("z");
+        popupBattlePause.OnCancel -= OnCancelButton;
+        popupBattlePause.OnConfirm -= StageManager.Instance.LoseStage;
+
+        Time.timeScale = 0;
+        Debug.Log("x");
+
         popupBattlePause.OnCancel += OnCancelButton;
         popupBattlePause.OnConfirm += StageManager.Instance.LoseStage;
+        Debug.Log("y");
+
     }
 
     private void OnSpeedDownButton()
@@ -61,5 +69,11 @@ public class BattleUI : MonoBehaviour
     private void OnCancelButton()
     {
         Time.timeScale = currentSpeed;
+    }
+
+    public void SetUI()
+    {
+        roundsText.text = $"라운드 {StageManager.Instance.CurrentRound.ToString()} / {StageManager.Instance.CurrentStage.Rounds}";
+        turnText.text = $"턴 {StageManager.Instance.CurrentTurn.ToString()} / 20";
     }
 }

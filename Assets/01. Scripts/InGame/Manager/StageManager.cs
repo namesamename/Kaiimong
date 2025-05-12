@@ -15,6 +15,7 @@ public class StageManager : Singleton<StageManager>
     public List<Character> Players;
     public List<Enemy> Enemies;
     public int CurrentRound;
+    public int CurrentTurn;
     public int CurrentSet;
 
     [Header("Reward and Returns")]
@@ -48,6 +49,7 @@ public class StageManager : Singleton<StageManager>
         BattleSystem cursystem = obj.GetComponent<BattleSystem>();
         battleSystem = cursystem;
         battleSystem.Players = new List<Character>(Players);
+        finishedStage = false;
         SetStageInfo();
         StageStart();
     }
@@ -62,11 +64,12 @@ public class StageManager : Singleton<StageManager>
         GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
         //background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
         CurrentRound = 1;
+        CurrentTurn = 0;
         CurrentSet = 1;
         //반환 행동력
-        returnActivityPoints = CurrentStage.ActivityPoint * 0.9f;
+        returnActivityPoints = CurrentStage.ActivityPoint * 1f;
         //플레이어 경험치
-        userExp = CurrentStage.ActivityPoint * 20;
+        userExp = CurrentStage.ActivityPoint * 10;
         playerLove = CurrentStage.ActivityPoint;
     }
 
@@ -189,7 +192,10 @@ public class StageManager : Singleton<StageManager>
         if (!finishedStage)
         {
             finishedStage = true;
+            Debug.Log("d");
             LoseUI.gameObject.SetActive(true);
+            Debug.Log("a");
+
             OnLose?.Invoke();
             OnStageLose();
             StartCoroutine(BeforeLoseChangeDelay());

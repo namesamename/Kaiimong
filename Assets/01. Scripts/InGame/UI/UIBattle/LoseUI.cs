@@ -34,7 +34,8 @@ public class LoseUI : MonoBehaviour
         {
             setComplete = true;
             CanClick = false;
-            returnActivityText.text = $": 행동력 반환 +{StageManager.Instance.returnActivityPoints}";
+            int returnPoint = (int)StageManager.Instance.returnActivityPoints;
+            returnActivityText.text = $": 행동력 반환 +{returnPoint}";
             //activityImage =
         }
     }
