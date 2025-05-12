@@ -770,6 +770,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a726f93142191418b9e643da0ac2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cancleButton: {fileID: 4327098347500590936}
+  purchaseButton: {fileID: 5994908660462743132}
+  currencyType: 0
 --- !u!1 &6011645522986690345
 GameObject:
   m_ObjectHideFlags: 0

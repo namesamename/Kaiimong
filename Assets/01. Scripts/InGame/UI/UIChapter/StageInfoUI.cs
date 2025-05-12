@@ -60,6 +60,7 @@ public class StageInfoUI : MonoBehaviour
             {
                 PopupCurrencyLack popup = await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
                 popup.currencyType = CurrencyType.Activity;
+                popup.SetDelegate(stageSelectSceneUI.SetUI);
             }
             else
             {

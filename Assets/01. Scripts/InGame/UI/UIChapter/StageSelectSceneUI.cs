@@ -6,13 +6,22 @@ public class StageSelectSceneUI : MonoBehaviour
 {
     [SerializeField] private Button backButton;
     [SerializeField] private Button mainButton;
+    [SerializeField] private Button addButton;
     [SerializeField] private TextMeshProUGUI activityPointText;
 
     void Start()
     {
         backButton.onClick.AddListener(OnBackButton);
         mainButton.onClick.AddListener(OnMainButton);
+        addButton.onClick.AddListener(OnAddButton);
         SetUI();
+    }
+
+    private async void OnAddButton()
+    {
+        UIStaminaChargePOPUP popup = await UIManager.Instance.ShowPopup("StaminaChargePOPUP") as UIStaminaChargePOPUP;
+        popup.ClearAction();
+        popup.OnChargeStamina += SetUI;
     }
 
     private void OnBackButton()
