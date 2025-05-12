@@ -31,7 +31,6 @@ public class CommandController : MonoBehaviour
         if (StageManager.Instance.BattleSystem.GetActivePlayers().Count == 0 ||
             StageManager.Instance.BattleSystem.GetActiveEnemies().Count == 0)
         {
-            Debug.Log("No active players or enemies. Clearing commands before execution.");
             skillCommands.Clear();
             IsExecutingCommands = false;
             EndCheck?.Invoke();

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private GameObject popupBattlePausePrefab;
     [SerializeField] private PopupBattlePause popupBattlePause;
     private BattleSystem battleSystem;
+
+    [SerializeField] private TextMeshProUGUI roundsText;
+    [SerializeField] private TextMeshProUGUI turnText;
 
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
     public CharacterUI CharacterUI { get { return characterUI; } }
