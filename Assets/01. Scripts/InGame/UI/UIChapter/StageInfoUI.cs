@@ -11,6 +11,7 @@ public class StageInfoUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI stageName;
     [SerializeField] private TextMeshProUGUI stageActivityPointText;
     [SerializeField] private ItemBattleSlots ItemBattleSlots;
+    [SerializeField] private StageSelectSceneUI stageSelectSceneUI;
 
     private Stage stage;
     private RectTransform rect;
@@ -44,7 +45,7 @@ public class StageInfoUI : MonoBehaviour
     {
         stage = slot.Stage;
         stageName.text = stage.Name;
-        stageActivityPointText.text = stage.ActivityPoint.ToString();
+        stageActivityPointText.text = $"-{stage.ActivityPoint}";
         ItemBattleSlots.SetItemList(stage.ID);
         enterButton.onClick.AddListener(OnEnterButton);
     }
@@ -62,8 +63,8 @@ public class StageInfoUI : MonoBehaviour
             }
             else
             {
-                curActPoint -= stage.ActivityPoint;
-                CurrencyManager.Instance.SetCurrency(CurrencyType.Activity, curActPoint);
+                CurrencyManager.Instance.SetCurrency(CurrencyType.Activity, -stage.ActivityPoint);
+                stageSelectSceneUI.SetUI();
 
                 StageManager.Instance.CurrentStage = stage;
                 List<int> playerID = new List<int>(GlobalDataTable.Instance.DataCarrier.GetCharacterIDList());
