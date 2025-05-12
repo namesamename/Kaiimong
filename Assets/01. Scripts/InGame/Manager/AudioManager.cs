@@ -20,7 +20,7 @@ public class AudioManager : Singleton<AudioManager>
 
     [SerializeField][Range(0f, 1f)] private float sfxPitchVariance; // 효과음 피치 변동 범위
 
-    public AudioSource soundSourcePrefab; // 효과음 재생을 위한 사운드 소스 프리팹
+    public AudioSource audioSourcePrefab; // 효과음 재생을 위한 사운드 소스 프리팹
 
     [SerializeField] private bool isMuted; // 음소거 설정 여부
 
@@ -64,7 +64,7 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (Instance.isMuted || !clip) return;
 
-        AudioSource obj = Instantiate(Instance.soundSourcePrefab); // 새로운 사운드 소스 오브젝트 생성
+        AudioSource obj = Instantiate(Instance.audioSourcePrefab); // 새로운 사운드 소스 오브젝트 생성
         AudioSource soundSource = obj.GetComponent<AudioSource>(); // 사운드 소스 가져오기
         soundSource.Play(clip, Instance.sfxVolume, Instance.sfxPitchVariance); // 효과음 재생
     }
