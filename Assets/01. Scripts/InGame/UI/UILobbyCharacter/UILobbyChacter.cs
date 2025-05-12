@@ -36,7 +36,6 @@ public class UILobbyChacter : MonoBehaviour
     {
         characterImage.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, UIManager.Instance.GetCharacterID(UICharacterIDType.Lobby));
         characterImage.enabled = true;
-
         LoadOk?.Invoke();
     }
 

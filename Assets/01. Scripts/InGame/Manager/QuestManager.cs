@@ -6,9 +6,6 @@ using UnityEngine;
 public class QuestManager : Singleton<QuestManager>
 {
     TimeSpan resetTime = new TimeSpan(5, 0, 0);
-
-
-
     Dictionary<int, QuestSaveData> QuestData = new Dictionary<int, QuestSaveData>();
 
 
@@ -58,7 +55,6 @@ public class QuestManager : Singleton<QuestManager>
 
         if (timeSave != null)
         {
-
             DateTime now = DateTime.Now;
             DateTime thisTime = GetMonday() + resetTime;
             DateTime lastTime = thisTime.AddDays(-7);
@@ -66,7 +62,6 @@ public class QuestManager : Singleton<QuestManager>
             if (now >= thisTime && lastWeekly < thisTime || (now < thisTime && lastWeekly < lastTime))
             {
                 ResetQuest(TimeType.Weekly);
-
             }
         }
         else
@@ -91,12 +86,9 @@ public class QuestManager : Singleton<QuestManager>
         if(timeSave != null)
         {
             DateTime now = DateTime.Now;  
-
             DateTime lastDaily = timeSave.lastDailyReset; 
             DateTime todayResetTime = DateTime.Today + resetTime;  
             DateTime yesterdayResetTime = todayResetTime.AddDays(-1);
-
-  
             if ((now >= todayResetTime && lastDaily < todayResetTime) ||(now < todayResetTime && lastDaily < yesterdayResetTime))
             {
                 ResetQuest(TimeType.Daily);
@@ -113,8 +105,6 @@ public class QuestManager : Singleton<QuestManager>
                 lastDailyReset = DateTime.Now,
                 lastWeeklyReset = DateTime.Now,
             };
-
-
             SaveDataBase.Instance.SaveSingleData(newtimeSave);
         }
 
@@ -136,36 +126,28 @@ public class QuestManager : Singleton<QuestManager>
     {
         if (timeType == TimeType.Daily)
         {
-
-
             foreach (Quest quest in GlobalDataTable.Instance.Quest.GetQuestList(TimeType.Daily))
             {
-
                 if (SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID) != null)
                 {
                     QuestSaveData questSave = SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID);
                     questSave.IsCan = false;
                     questSave.CurValue = 0;
                     questSave.IsComplete = false;
-
                 }
-
             }
         }
         else
         {
             foreach (Quest quest in GlobalDataTable.Instance.Quest.GetQuestList(TimeType.Weekly))
             {
-
                 if (SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID) != null)
                 {
                     QuestSaveData questSave = SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID);
                     questSave.IsCan = false;
                     questSave.CurValue = 0;
                     questSave.IsComplete = false;
-
                 }
-
             }
         }
     }
@@ -177,7 +159,7 @@ public class QuestManager : Singleton<QuestManager>
         TimeSaveData timeSave = SaveDataBase.Instance.GetSaveDataToID<TimeSaveData>(SaveType.Time, 0);
         timeSave.lastWeeklyReset = DateTime.Now;
         timeSave.lastDailyReset = DateTime.Now;
-
+        SaveDataBase.Instance.SaveSingleData(timeSave);
     }
 
 

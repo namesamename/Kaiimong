@@ -91,6 +91,11 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
             CrystalValue = 200;
             textMesh[4].text = CrystalValue.ToString();
         }
+        else
+        {
+            Buttons[4].enabled = false;
+            textMesh[4].text = "Today MAX";
+        }
 
 
 
