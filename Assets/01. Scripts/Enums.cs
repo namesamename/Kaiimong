@@ -149,6 +149,7 @@ public enum SceneState
     MessageScene,
     QuestScene,
     ShopScene,
+    OptionScene,
 }
 public enum UpgradeType
 {

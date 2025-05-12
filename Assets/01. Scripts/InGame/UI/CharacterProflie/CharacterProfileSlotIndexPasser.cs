@@ -17,6 +17,7 @@ public class CharacterProfileSlotIndexPasser : MonoBehaviour
         for (int i = 0; i < profileSlots.Length; i++) 
         {
             profileSlots[i].SetIndex(i+1);
+            profileSlots[i].SetSlot();
         }
     }
 

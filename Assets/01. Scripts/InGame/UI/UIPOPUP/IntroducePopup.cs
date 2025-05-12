@@ -1,18 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class IntroducePopup : MonoBehaviour
+public class IntroducePopup : UIPOPUP
 {
-    // Start is called before the first frame update
-    void Start()
+    InputField input;
+
+    Button[] buttons;
+
+
+    CharacterProfileStatusMessage statusMessage;
+
+    private void Awake()
     {
-        
+        input = GetComponentInChildren<InputField>();
+
+        buttons = GetComponentsInChildren<Button>();
+        statusMessage = FindAnyObjectByType<CharacterProfileStatusMessage>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void SetBtn()
     {
-        
+        for (int i = 0; i < buttons.Length; i++) 
+        {
+            buttons[i].onClick.RemoveAllListeners();
+        }
+
+        buttons[0].onClick.AddListener(Destroy);
+        buttons[1].onClick.AddListener(Confirm);
+        buttons[2].onClick.AddListener(Destroy);
+
+
     }
+
+
+    public void Confirm()
+    {
+        statusMessage.SetIntroduce(input.text);
+        Destroy();
+       
+    }
+
+
+
+
 }
