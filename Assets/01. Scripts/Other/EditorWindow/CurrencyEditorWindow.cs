@@ -63,7 +63,7 @@ public class CurrencyEditorWindow : EditorWindow
         value = EditorGUILayout.IntField("Value", value);
         if(GUI.Button(new Rect(0, 110, 250, 50), "Set Resource"))
         {
-            CurrencyManager.Instance.SetCurrency(currencyType, value);
+            CurrencyManager.Instance.SetCurrency(currencyType, -value);
         }
         GUILayout.Space(50);
 

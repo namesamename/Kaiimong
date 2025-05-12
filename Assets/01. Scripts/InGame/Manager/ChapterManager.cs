@@ -11,6 +11,8 @@ public class ChapterManager : Singleton<ChapterManager>
     public Dictionary<int, StageSaveData> StageSaveList = new Dictionary<int, StageSaveData>();
     public Dictionary<int, List<ItemData>> StageItemList = new Dictionary<int, List<ItemData>>();
 
+    public GameObject SpawnedChapter;
+
     public Chapter CurChapter;
 
     public Action OnChapterOpen;
@@ -111,7 +113,12 @@ public class ChapterManager : Singleton<ChapterManager>
   
     private void SetChapter()
     {
-        GameObject obj = Instantiate(Resources.Load(CurChapter.ContentPrefabPath) as GameObject);
+        if(SpawnedChapter != null)
+        {
+            Destroy(SpawnedChapter);
+        }
+
+        SpawnedChapter = Instantiate(Resources.Load(CurChapter.ContentPrefabPath) as GameObject);
         
         OnChapterOpen?.Invoke();
     }
