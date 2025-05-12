@@ -5,7 +5,7 @@ public class AudioSource : MonoBehaviour
 {
     private UnityEngine.AudioSource _audioSource; // 오디오 소스 컴포넌트
 
-    public void Play(AudioClip clip, float soundEffectVolume, float soundEffectPitchVariance)
+    public void Play(AudioClip clip, float soundEffectVolume, float soundEffectPitchVariance = 0)
     {
         if (_audioSource == null)
             _audioSource = gameObject.GetOrAddComponent<UnityEngine.AudioSource>(); // 오디오 소스 가져오기 (초기화)

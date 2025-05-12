@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     SaveDataBase SaveData;
     CharacterManager characterManager;
     AddressableManager addressableManager;
+    AudioManager audioManager;
 
 
 
@@ -143,8 +144,12 @@ public class GameManager : Singleton<GameManager>
             SaveData = Instantiate(Resources.Load<GameObject>("Manager/SaveDataBase")).GetComponent<SaveDataBase>();
             SaveData.transform.SetParent(transform);
         }
+
+        audioManager = GetComponentInChildren<AudioManager>();
+        if (audioManager == null)
+        {
+            audioManager = Instantiate(Resources.Load<GameObject>("Manager/AudioManager")).GetComponent<AudioManager>();
+            audioManager.transform.SetParent(transform);
+        }
     }
-
-
-
 }
