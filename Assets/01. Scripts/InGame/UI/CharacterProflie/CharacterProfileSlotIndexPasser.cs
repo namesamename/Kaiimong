@@ -12,11 +12,18 @@ public class CharacterProfileSlotIndexPasser : MonoBehaviour
     }
 
 
-    private void Start()
+    public void Initialize()
     {
-        for (int i = 0; i < profileSlots.Length; i++) 
+        SetSlot();
+    }
+
+   
+
+    public void SetSlot()
+    {
+        for (int i = 0; i < profileSlots.Length; i++)
         {
-            profileSlots[i].SetIndex(i+1);
+            profileSlots[i].SetIndex(i + 1);
             profileSlots[i].SetSlot();
         }
     }

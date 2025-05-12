@@ -1,23 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
+using TMPro;
+
 using UnityEngine.UI;
 
 public class IntroducePopup : UIPOPUP
 {
-    InputField input;
+    TMP_InputField input;
 
     Button[] buttons;
 
 
-    CharacterProfileStatusMessage statusMessage;
+   
+
+    CharacterProfileHUD hUD;
 
     private void Awake()
     {
-        input = GetComponentInChildren<InputField>();
-
+        input = GetComponentInChildren<TMP_InputField>();
         buttons = GetComponentsInChildren<Button>();
-        statusMessage = FindAnyObjectByType<CharacterProfileStatusMessage>();
+       
+
+       
+    }
+
+
+    private void Start()
+    {
+
+        hUD = FindAnyObjectByType<CharacterProfileHUD>();
+        SetBtn();
     }
 
 
@@ -38,8 +49,10 @@ public class IntroducePopup : UIPOPUP
 
     public void Confirm()
     {
-        statusMessage.SetIntroduce(input.text);
+        UIManager.Instance.SetText(input.text);
+        hUD.Initialize();
         Destroy();
+
        
     }
 

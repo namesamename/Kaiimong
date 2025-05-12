@@ -65,13 +65,13 @@ public class GameManager : Singleton<GameManager>
         currencyManager.InitialIze();
         questManager.Initialize();
         stageManager.Initialize();
-        uiManager.Initialize();
+
         chapterManager.Initailize();
 
 
         
         loader.Initialize();
-
+        uiManager.Initialize();
     }
 
     public void GetCompo()

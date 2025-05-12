@@ -7,34 +7,31 @@ public class CharacterProfileStatusMessage : MonoBehaviour
     TextMeshProUGUI[] text;
     Button button;
 
-
-    string Introduce;
-
     private void Awake()
     {
         text = GetComponentsInChildren<TextMeshProUGUI>();
+        button = GetComponentInChildren<Button>();
         button.onClick.RemoveAllListeners();
     }
 
     public void Initialize()
     {
-        SetBtn();
+        button.onClick.AddListener(SetBtn);
+        SetText();
     }
 
 
     public async void SetBtn()
     {
        await UIManager.Instance.ShowPopup("IntroducePopup");
-
-        SetText();
     }
 
 
     public void SetText()
     {
-        if(Introduce != string.Empty) 
+        if(UIManager.Instance.GetText() !=  string.Empty) 
         {
-            text[0].text = Introduce;
+            text[0].text = UIManager.Instance.GetText();
         }
         else
         {
@@ -44,12 +41,6 @@ public class CharacterProfileStatusMessage : MonoBehaviour
 
     }
 
-
-    public void SetIntroduce(string intro)
-    {
-        Introduce = intro;
-    }
-   
-
+  
 
 }

@@ -83,7 +83,10 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 DIAValue = 99999,
                 CharacterEXP = 1000,
                 purchaseCount = 0,
-                ID = 0
+                ID = 0,
+                date = DateTime.UtcNow,
+                
+
             };
         }
         DicSet();

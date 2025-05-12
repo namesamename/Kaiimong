@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.TextCore.Text;
 
 
 public class UIManager : Singleton<UIManager>
@@ -20,25 +21,29 @@ public class UIManager : Singleton<UIManager>
             POPS.Add(POPs[i]);
         }
 
-        var CharacterID = SaveDataBase.Instance.GetSaveDataToID<UICharacterIDSaveData>(SaveType.UICharacterID, 0);
-        if(characterID != null)
+        characterID = new UICharacterIDSaveData()
         {
+            ID = 0,
+            Savetype = SaveType.UICharacterID,
+            Lobby = 1,
+            FirstProfile = 0,
+            SecondProfile = 0,
+            ThirdProfile = 0,
+            FourthProfile = 0,
+            IntroduceText = "Hi",
+        };
+
+        var CharacterID = SaveDataBase.Instance.GetSaveDataToID<UICharacterIDSaveData>(SaveType.UICharacterID, 0);
+        if(CharacterID != null)
+        {
+            characterID.ID = CharacterID.ID;
+            characterID.Savetype = SaveType.UICharacterID;
             characterID = CharacterID;
             SaveDataBase.Instance.SaveSingleData(characterID);
         }
         else
         {
-            characterID = new UICharacterIDSaveData()
-            {
-                ID = 0,
-                Savetype = SaveType.UICharacterID,
-                 Lobby = 1,
-                 FirstProfile = 0,
-                 SecondProfile = 0,
-                 ThirdProfile = 0,
-                 FourthProfile = 0,
-            };
-
+        
             SaveDataBase.Instance.SaveSingleData(characterID);
         }
 
@@ -73,23 +78,39 @@ public class UIManager : Singleton<UIManager>
         {
             case UICharacterIDType.Lobby:
                 characterID.Lobby = ID;
+                SaveDataBase.Instance.SaveSingleData(characterID);
                 break;
             case UICharacterIDType.First:
                 characterID.FirstProfile = ID;
+                SaveDataBase.Instance.SaveSingleData(characterID);
                 break;
             case UICharacterIDType.Second:
                 characterID.SecondProfile = ID;
+                SaveDataBase.Instance.SaveSingleData(characterID);
                 break;
             case UICharacterIDType.Thrid:
                 characterID.ThirdProfile = ID;
+                SaveDataBase.Instance.SaveSingleData(characterID);
                 break;
             case UICharacterIDType.Fourth:
                 characterID.FourthProfile = ID;
+                SaveDataBase.Instance.SaveSingleData(characterID);
                 break;
             default:
                 break;
 
         }
+    }
+
+    public void SetText(string Set)
+    {
+        characterID.IntroduceText = Set;
+        SaveDataBase.Instance.SaveSingleData(characterID);
+    }
+
+    public string GetText()
+    {
+        return characterID.IntroduceText;
     }
 
     public async Task<T> ShowPopup<T>() where T : UIPOPUP

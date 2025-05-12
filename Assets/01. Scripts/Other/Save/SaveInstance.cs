@@ -30,6 +30,8 @@ public class CurrencySaveData : SaveInstance
     public int DIAValue;
     public int GachaValue;
     public int ActivityValue;
+    public DateTime date;
+
 }
 
 public class StageSaveData : SaveInstance
@@ -68,6 +70,7 @@ public class UICharacterIDSaveData : SaveInstance
     public int SecondProfile;
     public int ThirdProfile;
     public int FourthProfile;
+    public string IntroduceText;
 }
 
 

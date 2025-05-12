@@ -12,6 +12,11 @@ public class CharacterProfileBtn : MonoBehaviour
         buttons = GetComponentsInChildren<Button>();
     }
 
+    public void Initialize()
+    {
+        BtnSet();
+    }
+
 
     public void BtnSet()
     {

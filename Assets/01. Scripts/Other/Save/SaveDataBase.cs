@@ -164,6 +164,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
             {
                 SaveDic[instance.Savetype].Add(instance);
             }
+            UnityEngine.Debug.Log(instance.Savetype);
             GameSaveSystem.Save(instance.Savetype, SaveDic[instance.Savetype]);
         }
         else
