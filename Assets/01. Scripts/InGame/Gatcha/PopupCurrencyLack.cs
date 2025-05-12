@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class PopupCurrencyLack : UIPOPUP
     [SerializeField] private Button purchaseButton;
 
     public CurrencyType currencyType;
+    Action setUI;
 
     private void Start()
     {
@@ -21,10 +23,16 @@ public class PopupCurrencyLack : UIPOPUP
         switch (currencyType)
         {
             case CurrencyType.Activity:
-                await UIManager.Instance.ShowPopup<UIStaminaChargePOPUP>();
+                UIStaminaChargePOPUP popup = await UIManager.Instance.ShowPopup("StaminaChargePOPUP") as UIStaminaChargePOPUP;
+                popup.ClearAction();
+                popup.OnChargeStamina += setUI;
                 Destroy();
                 break;
         }
+    }
 
+    public void SetDelegate(Action action)
+    {
+        setUI = action;
     }
 }

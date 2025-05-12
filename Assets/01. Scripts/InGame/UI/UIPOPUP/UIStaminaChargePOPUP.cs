@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
 
     TopBarUI topBarUI;
 
+    public Action OnChargeStamina;
 
     int CrystalValue = 40;
 
@@ -128,6 +130,7 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
         CurrencyManager.Instance.HealStamina((GlobalDataTable.Instance.Item.GetConsume(1).Value));
         ItemManager.Instance.SetitemCount(9, -1);
         TextSet();
+        OnChargeStamina?.Invoke();
         PurchaseButtonReset();
         topBarUI.UpdateResource();
     }
@@ -156,6 +159,7 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
         CurrencyManager.Instance.HealStamina((GlobalDataTable.Instance.Item.GetConsume(2).Value));
         ItemManager.Instance.SetitemCount(10, -1);
         TextSet();
+        OnChargeStamina?.Invoke();
         PurchaseButtonReset();
         topBarUI.UpdateResource();
     }
@@ -190,10 +194,16 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
         CurrencyManager.Instance.SetCurrency(CurrencyType.Dia, -CrystalValue);
         CurrencyManager.Instance.SetCurrency(CurrencyType.purchaseCount, 1);
         TextSet();
+        if (OnChargeStamina == null) Debug.Log("null");
+        OnChargeStamina?.Invoke();
         PurchaseButtonReset();
         transform.GetChild(8).gameObject.SetActive(false);
         topBarUI.UpdateResource();
     }
 
+    public void ClearAction()
+    {
+        OnChargeStamina = null;
+    }
 
 }

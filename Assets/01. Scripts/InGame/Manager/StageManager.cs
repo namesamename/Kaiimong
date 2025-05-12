@@ -192,9 +192,7 @@ public class StageManager : Singleton<StageManager>
         if (!finishedStage)
         {
             finishedStage = true;
-            Debug.Log("d");
             LoseUI.gameObject.SetActive(true);
-            Debug.Log("a");
 
             OnLose?.Invoke();
             OnStageLose();
