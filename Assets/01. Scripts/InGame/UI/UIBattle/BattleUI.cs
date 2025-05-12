@@ -33,15 +33,21 @@ public class BattleUI : MonoBehaviour
 
     private async void OnPauseButtonAsync()
     {
-        Time.timeScale = 0;
-
         popupBattlePausePrefab = await UIManager.Instance.GetPOPUPPrefab("PopupBattlePause");
-       
-
         GameObject instance = Instantiate(popupBattlePausePrefab, this.transform);
         popupBattlePause = instance.GetComponent<PopupBattlePause>();
+
+        Debug.Log("z");
+        popupBattlePause.OnCancel -= OnCancelButton;
+        popupBattlePause.OnConfirm -= StageManager.Instance.LoseStage;
+
+        Time.timeScale = 0;
+        Debug.Log("x");
+
         popupBattlePause.OnCancel += OnCancelButton;
         popupBattlePause.OnConfirm += StageManager.Instance.LoseStage;
+        Debug.Log("y");
+
     }
 
     private void OnSpeedDownButton()

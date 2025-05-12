@@ -49,6 +49,7 @@ public class StageManager : Singleton<StageManager>
         BattleSystem cursystem = obj.GetComponent<BattleSystem>();
         battleSystem = cursystem;
         battleSystem.Players = new List<Character>(Players);
+        finishedStage = false;
         SetStageInfo();
         StageStart();
     }
@@ -191,7 +192,10 @@ public class StageManager : Singleton<StageManager>
         if (!finishedStage)
         {
             finishedStage = true;
+            Debug.Log("d");
             LoseUI.gameObject.SetActive(true);
+            Debug.Log("a");
+
             OnLose?.Invoke();
             OnStageLose();
             StartCoroutine(BeforeLoseChangeDelay());
