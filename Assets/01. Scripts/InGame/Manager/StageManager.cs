@@ -37,18 +37,34 @@ public class StageManager : Singleton<StageManager>
         SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, SetBattleScene);
     }
 
-    private void SetBattleScene() //SceneLoader¿¡¼­ ·Îµå È®ÀÎ ÈÄ setbattlescene
+    private void SetBattleScene() //SceneLoaderì—ì„œ ë¡œë“œ í™•ì¸ í›„ setbattlescene
     {
-        // ±âÁ¸ battleSystemÀÌ ÀÖ´ÂÁö È®ÀÎ
-        if (battleSystem != null)
+        // CurrentStageê°€ nullì´ë©´ ë¦¬í„´
+        if (CurrentStage == null)
         {
-            // ÀÌ¹Ì Á¸ÀçÇÏ´Â battleSystemÀÌ ÀÖ´Ù¸é Á¦°Å
-            Destroy(battleSystem.gameObject);
+            Debug.LogWarning("CurrentStage is null. Cannot set battle scene.");
+            return;
         }
+
+        // ì”¬ì— ìˆëŠ” ëª¨ë“  BattleSystem ì°¾ê¸°
+        BattleSystem[] existingBattleSystems = FindObjectsOfType<BattleSystem>();
+        foreach (BattleSystem existingSystem in existingBattleSystems)
+        {
+            Destroy(existingSystem.gameObject);
+        }
+        battleSystem = null;
+
+        // Resources í´ë”ì—ì„œ BattleSystem í”„ë¦¬íŒ¹ì„ ì°¾ì•„ì„œ ìƒì„±
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
         BattleSystem cursystem = obj.GetComponent<BattleSystem>();
         battleSystem = cursystem;
-        battleSystem.Players = new List<Character>(Players);
+        
+        // ìƒˆë¡œìš´ ë°°í‹€ì‹œìŠ¤í…œì— í”Œë ˆì´ì–´ ë°ì´í„° ì„¤ì •
+        if (Players != null && Players.Count > 0)
+        {
+            battleSystem.Players = new List<Character>(Players);
+        }
+        
         finishedStage = false;
         SetStageInfo();
         StageStart();
@@ -61,19 +77,32 @@ public class StageManager : Singleton<StageManager>
 
     private void SetStageInfo()
     {
+        // CurrentStageê°€ nullì´ë©´ ë¦¬í„´
+        if (CurrentStage == null)
+        {
+            Debug.LogWarning("CurrentStage is null. Cannot set stage info.");
+            return;
+        }
+
+        // ê¸°ì¡´ ë°°ê²½ì´ ìˆëŠ”ì§€ í™•ì¸í•˜ê³  ì œê±°
+        GameObject[] existingBackground = GameObject.FindGameObjectsWithTag("Background");
+        foreach (GameObject backgrounds in existingBackground)
+        {
+            Destroy(backgrounds.gameObject);
+        }
+
+        // ìƒˆë¡œìš´ ë°°ê²½ ìƒì„±
         GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
-        //background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
+        background.name = "Background";
+        
         CurrentRound = 1;
         CurrentTurn = 0;
         CurrentSet = 1;
-        //¹İÈ¯ Çàµ¿·Â
         returnActivityPoints = CurrentStage.ActivityPoint * 1f;
-        //ÇÃ·¹ÀÌ¾î °æÇèÄ¡
         userExp = CurrentStage.ActivityPoint * 10;
         playerLove = CurrentStage.ActivityPoint;
     }
 
-    //CurrentStage.EnemiesID·Î Àû °´Ã¼ »ı¼º ÈÄ ¸®½ºÆ®¾÷ÇÏ±â
     private void CreateEnemy()
     {
         List<EnemySpawn> curEnemyList = new List<EnemySpawn>(GlobalDataTable.Instance.EnemySpawn.EnemySpawnDic[CurrentStage.ID]);
@@ -139,17 +168,14 @@ public class StageManager : Singleton<StageManager>
 
     private void OnStageWin()
     {
-        //°ñµå,À¯·áÀçÈ­ Áö±Ş 
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
-        //¾ÆÀÌÅÛ
         RewardListUp();
         //for(int i = 0; i < CurrentStage.ItemID.Length; i++)
         //{
         //    int itemID = CurrentStage.ItemID[i];
         //    ItemSavaData itemSaveData = ItemManager.Instance.GetItemSaveData(itemID);
         //}
-        //È£°¨µµ Áö±Ş      
         foreach (Character player in Players)
         {
             CharacterSaveData save = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, player.ID);
@@ -159,11 +185,9 @@ public class StageManager : Singleton<StageManager>
 
             //CharacterManager.Instance.CharacterSaveDic[player.ID].Love += playerLove;
             ////player.CharacterSaveData.Love += playerLove;
-            ////ÀúÀå
             //CharacterManager.Instance.SaveSingleData(player.ID);
             ////player.SaveData();
         }
-        //½ºÅ×ÀÌÁöÁ¤º¸ ¾÷µ¥ÀÌÆ®
         ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;
         ChapterManager.Instance.SaveStageSingleData(CurrentStage.ID);
         for (int i = 0; i < CurrentStage.UnlockStageID.Length; i++)
@@ -202,7 +226,7 @@ public class StageManager : Singleton<StageManager>
 
     private void OnStageLose()
     {
-        //returnActivityPoints ¹İÈ¯ÇÏ±â
+        //returnActivityPoints ï¿½ï¿½È¯ï¿½Ï±ï¿½
         CurrencyManager.Instance.SetCurrency(CurrencyType.Activity, (int)returnActivityPoints);
     }
 

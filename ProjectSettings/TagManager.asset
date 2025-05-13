@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Reward
   - Stage
+  - Background
   layers:
   - Default
   - TransparentFX
