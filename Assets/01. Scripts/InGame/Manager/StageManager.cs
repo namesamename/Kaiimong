@@ -17,9 +17,10 @@ public class StageManager : Singleton<StageManager>
     public int CurrentRound;
     public int CurrentTurn;
     public int CurrentSet;
+    public GameObject Background;
 
     [Header("Reward and Returns")]
-    public float returnActivityPoints;
+    public int returnActivityPoints;
     public int userExp;
     public int playerLove;
 
@@ -31,6 +32,7 @@ public class StageManager : Singleton<StageManager>
     public Action OnLose;
 
     private bool finishedStage = false;
+    private bool setStage = false;
 
     public void Initialize()
     {
@@ -45,11 +47,14 @@ public class StageManager : Singleton<StageManager>
             // 이미 존재하는 battleSystem이 있다면 제거
             Destroy(battleSystem.gameObject);
         }
+        GameObject obj1 = GameObject.Find("BattleSystem");
+        if (obj1 != null) Destroy(obj1.gameObject);
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
         BattleSystem cursystem = obj.GetComponent<BattleSystem>();
         battleSystem = cursystem;
         battleSystem.Players = new List<Character>(Players);
         finishedStage = false;
+        setStage = false;
         SetStageInfo();
         StageStart();
     }
@@ -61,16 +66,23 @@ public class StageManager : Singleton<StageManager>
 
     private void SetStageInfo()
     {
-        GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
-        //background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
-        CurrentRound = 1;
-        CurrentTurn = 0;
-        CurrentSet = 1;
-        //반환 행동력
-        returnActivityPoints = CurrentStage.ActivityPoint * 1f;
-        //플레이어 경험치
-        userExp = CurrentStage.ActivityPoint * 10;
-        playerLove = CurrentStage.ActivityPoint;
+        if (!setStage)
+        {
+            setStage = true;
+            if(Background != null) Destroy(Background.gameObject);
+            GameObject obj = GameObject.Find("Background");
+            if(obj != null) Destroy(obj.gameObject);
+            Background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
+            //background.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(CurrentStage.BackgroundPath);
+            CurrentRound = 1;
+            CurrentTurn = 0;
+            CurrentSet = 1;
+            //반환 행동력
+            returnActivityPoints = CurrentStage.ActivityPoint;
+            //플레이어 경험치
+            userExp = CurrentStage.ActivityPoint * 10;
+            playerLove = CurrentStage.ActivityPoint;
+        }
     }
 
     //CurrentStage.EnemiesID로 적 객체 생성 후 리스트업하기
