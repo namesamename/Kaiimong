@@ -172,11 +172,11 @@ public class QuestManager : Singleton<QuestManager>
             {
                 item.CurValue += value;
                 SaveDataBase.Instance.SaveSingleData(item);
-                Debug.Log("OK");
+               //
             }
             else
             {
-                Debug.Log("NoOk");
+                //Debug.Log("NoOk");
             }
         }
     }

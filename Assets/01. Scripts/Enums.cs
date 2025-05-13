@@ -79,6 +79,7 @@ public enum AddreassablesType
     Passive,
     Quest,
     ItemSlot,
+    SkillEffect,
 
 }
 public enum Grade
@@ -199,7 +200,17 @@ public enum UICharacterIDType
     Thrid,
     Fourth,
     None,
-   
+
+}
+
+public enum SkillEffectType
+{
+    Self,
+    AllEnemy,
+    AllFriend,
+    SingleEnemy,
+    SingleFriend,
+    BattleField
 }
 
 

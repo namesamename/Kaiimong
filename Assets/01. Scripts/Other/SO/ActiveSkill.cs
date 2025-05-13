@@ -1,30 +1,28 @@
 using UnityEngine;
 public class ActiveSkill : SO
 {
-    public SkillType Type;
-    public SkillTargetType Target;
-    public int TargetCount;
-    public float Attack;
-    public int BuffID;
-
-
     public string Name;
     public string Description;
-    public string IconPath;
+    //public string IconPath;
 
+    public float Attack;
     public bool isSingleAttack;
-    public int attackCount;
-    public int[] damage;
-    public float[] hitTiming;
-    public Sprite icon;
-
-
     public int UltimateGauge;
 
-    public bool IsMuti;
-    public bool IsHeal;
+    public SkillType Type;
     public bool IsBuff;
-    public int Id;
+    public int BuffID;
+
+    public SkillEffectType EffectType;
+
+
+  
+  
+
+
+
+
+
 
 }
 

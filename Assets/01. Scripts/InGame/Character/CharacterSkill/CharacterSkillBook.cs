@@ -21,7 +21,20 @@ public class CharacterSkillBook : MonoBehaviour
         int Count = ID * 3;
         for (int i = 2; i >= 0; i--) 
         {
-            ActiveSkillList[i].SetSkill(Count - i);
+            Debug.Log(Count - i);
+
+            if((Count - i) % 3 == 0)
+            {
+                ActiveSkillList[2].SetSkill(Count - i);
+            }
+            else if ((Count - i) % 3 == 1)
+            {
+                ActiveSkillList[0].SetSkill(Count - i);
+            }
+            else if ((Count - i) % 3 == 2)
+            {
+                ActiveSkillList[1].SetSkill(Count - i);
+            }
         }
         if(type == CharacterType.Friend)
         {
@@ -89,7 +102,7 @@ public class CharacterSkillBook : MonoBehaviour
 
     public bool IsFullCharage(ActiveSkillObject skill)
     {
-        if(skill.SkillSO.Id % 3 == 0)
+        if(skill.SkillSO.ID % 3 == 0)
         {
             if(SkillGauge == maxSkillGauge)
             {
