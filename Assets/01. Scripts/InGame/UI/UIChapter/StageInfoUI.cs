@@ -67,7 +67,10 @@ public class StageInfoUI : MonoBehaviour
                 CurrencyManager.Instance.SetCurrency(CurrencyType.Activity, -stage.ActivityPoint);
                 stageSelectSceneUI.SetUI();
 
+                Debug.Log($"Stage OK? :{stage}");
+
                 StageManager.Instance.CurrentStage = stage;
+                Debug.Log($"[StageInfoUI] Set CurrentStage: {StageManager.Instance.CurrentStage?.Name}");
                 List<int> playerID = new List<int>(GlobalDataTable.Instance.DataCarrier.GetCharacterIDList());
                 foreach (int id in playerID)
                 {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,23 @@ public class AddressableManager : Singleton<AddressableManager>
     Dictionary<(AddreassablesType, int), AsyncOperationHandle> Tracer = new Dictionary<(AddreassablesType, int), AsyncOperationHandle>();
 
     List<AsyncOperationHandle> PrefabTracer=  new List<AsyncOperationHandle>();
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
     public async Task<T> LoadAsset<T>(AddreassablesType type, int id) where T : class
     {
         var key = (type, id);
@@ -19,6 +37,8 @@ public class AddressableManager : Singleton<AddressableManager>
         }
 
         var handle = Addressables.LoadAssetAsync<T>(TypeChanger(type) + id);
+
+    
         Tracer[(type, id)] = handle;
 
 
@@ -34,7 +54,6 @@ public class AddressableManager : Singleton<AddressableManager>
             return default;
         }
     }
-
 
     public async Task<GameObject> LoadPrefabs(AddreassablesType type, string name)
     {

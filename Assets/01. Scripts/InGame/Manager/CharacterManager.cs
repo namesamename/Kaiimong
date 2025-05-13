@@ -2,6 +2,30 @@ using System.Collections.Generic;
 public class CharacterManager : Singleton<CharacterManager>
 {
     public Dictionary<int, CharacterSaveData> CharacterSaveDic = new Dictionary<int, CharacterSaveData>();
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+ 
+    }
+
+    private void Start()
+    {
+        Initialize();
+    }
+
     public CharacterSaveData GetItemSaveData(int itemID)
     {
         if (CharacterSaveDic.ContainsKey(itemID))

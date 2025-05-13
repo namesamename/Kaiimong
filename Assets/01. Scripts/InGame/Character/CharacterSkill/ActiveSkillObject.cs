@@ -155,7 +155,6 @@ public class ActiveSkillObject : MonoBehaviour
         switch (skillEffect)
         {
             case SkillEffectType.Self:
-                Debug.Log("왜 안나오냐");
                 GameObject skill  = Instantiate(SkillEffectPrefab, transform.position, Quaternion.identity);
                 skill.GetComponent<SkillEffect>().Play();
                 break;

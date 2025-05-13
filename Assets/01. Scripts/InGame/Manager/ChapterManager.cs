@@ -16,9 +16,26 @@ public class ChapterManager : Singleton<ChapterManager>
     public Chapter CurChapter;
 
     public Action OnChapterOpen;
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
 
+      
+    }
     private void Start()
     {
+        Initailize();
         foreach (var stages in GlobalDataTable.Instance.Stage.StageDic)
         {
             int stageID = stages.Key;

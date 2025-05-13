@@ -8,9 +8,26 @@ public class QuestManager : Singleton<QuestManager>
     TimeSpan resetTime = new TimeSpan(5, 0, 0);
     Dictionary<int, QuestSaveData> QuestData = new Dictionary<int, QuestSaveData>();
 
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
 
+    
+    }
     private void Start()
     {
+        Initialize();
         CheckDaily();
         CheckWeekly();
     }
@@ -92,6 +109,7 @@ public class QuestManager : Singleton<QuestManager>
             if ((now >= todayResetTime && lastDaily < todayResetTime) ||(now < todayResetTime && lastDaily < yesterdayResetTime))
             {
                 ResetQuest(TimeType.Daily);
+                CurrencyManager.Instance.ResetPurchaseCount();
                 timeSave.lastDailyReset = now;
                 SaveDataBase.Instance.SaveSingleData(timeSave);
             }

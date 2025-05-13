@@ -26,6 +26,21 @@ public class AudioManager : Singleton<AudioManager>
 
     private Coroutine fadeCoroutine; // 현재 활성화된 페이드 코루틴
 
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
     protected void Start()
     {
         bgmSource = gameObject.GetOrAddComponent<UnityEngine.AudioSource>();

@@ -31,10 +31,39 @@ public class StageManager : Singleton<StageManager>
     public Action OnLose;
 
     private bool finishedStage = false;
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
 
+        Initialize();
+    }
     public void Initialize()
     {
+        Debug.Log("Stage Initialize OK");
         SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, SetBattleScene);
+    }
+
+    private void Update()
+    {
+        if(CurrentStage == null)
+        {
+            Debug.Log("null");
+        }
+        else
+        {
+            Debug.Log(CurrentStage.Name);
+        }
     }
 
     private void SetBattleScene() //SceneLoader에서 로드 확인 후 setbattlescene
@@ -42,10 +71,14 @@ public class StageManager : Singleton<StageManager>
         // 기존 battleSystem이 있는지 확인
         if (battleSystem != null)
         {
+            Debug.Log("베틀 처리");
             // 이미 존재하는 battleSystem이 있다면 제거
             Destroy(battleSystem.gameObject);
+
         }
+        Debug.Log($"[StageManager] SetBattleScene() called. CurrentStage: {CurrentStage?.Name}");
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
+        Debug.Log("배틀 생성");
         BattleSystem cursystem = obj.GetComponent<BattleSystem>();
         battleSystem = cursystem;
         battleSystem.Players = new List<Character>(Players);
@@ -67,6 +100,11 @@ public class StageManager : Singleton<StageManager>
         CurrentTurn = 0;
         CurrentSet = 1;
         //반환 행동력
+
+        if(CurrentStage ==  null)
+        {
+            Debug.Log("sadasd");
+        }
         returnActivityPoints = CurrentStage.ActivityPoint * 1f;
         //플레이어 경험치
         userExp = CurrentStage.ActivityPoint * 10;

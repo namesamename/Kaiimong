@@ -4,6 +4,28 @@ using UnityEngine;
 public class ItemManager : Singleton<ItemManager>
 {
     public Dictionary<int, ItemSavaData> ItemDatasSaveDic = new Dictionary<int, ItemSavaData>();
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+     
+    }
+    private void Start()
+    {
+        Initialize();
+    }
     public ItemSavaData GetItemSaveData(int itemID)
     {
         if (ItemDatasSaveDic.ContainsKey(itemID))

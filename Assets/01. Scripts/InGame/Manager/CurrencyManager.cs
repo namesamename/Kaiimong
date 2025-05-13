@@ -19,9 +19,29 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
 
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+ 
+    }
+    private void Start()
+    {
+        InitialIze();
+    }
 
 
-  
     private void Update()
     {
         if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
@@ -221,6 +241,13 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public void Save()
     {
         SaveDataBase.Instance.SaveSingleData(DicToSaveData());
+    }
+
+    public void ResetPurchaseCount()
+    {
+        HaveData();
+        CurrencySaveDic[CurrencyType.purchaseCount] = 0;
+        DicToSaveData();
     }
 
 }

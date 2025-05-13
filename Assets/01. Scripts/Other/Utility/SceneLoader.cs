@@ -11,6 +11,38 @@ public class SceneLoader : Singleton<SceneLoader>
     private Dictionary<SceneState, Action> sceneContainer;
     [SerializeField] private SceneState sceneState;
     [SerializeField] private SceneState preSceneState;
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+     
+    }
+    private void Start()
+    {
+        Initialize();
+    }
+    private void Update()
+    {
+        if(sceneContainer.ContainsKey(SceneState.BattleScene))
+        {
+            if(sceneContainer[SceneState.BattleScene] != null)
+            {
+                Debug.Log(sceneContainer[SceneState.BattleScene].ToString());
+            }
+            
+        }
+    }
     public void Initialize()
     {
         SetDic();
@@ -30,6 +62,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public void SetDic()
     {
+        Debug.Log("신로더 초기화 완료");
         sceneContainer = new Dictionary<SceneState, Action>();
 
         foreach (SceneState state in Enum.GetValues(typeof(SceneState)))
@@ -57,6 +90,7 @@ public class SceneLoader : Singleton<SceneLoader>
             SetDic();
         }
 
+        
         // 싱글톤 LoadSceneAsync 이 실행되고 난 후에 실행 
         // 다음 씬 이벤트 시작
         if (sceneContainer.ContainsKey(sceneState))
@@ -88,6 +122,11 @@ public class SceneLoader : Singleton<SceneLoader>
     // 씬 전환
     public void ChangeScene(SceneState nextState)
     {
+       if(sceneContainer == null)
+        {
+            Debug.Log("신 컨테이너가 널");
+        }
+
         if (!sceneContainer.ContainsKey(nextState))
         {
             Debug.LogError($"씬 상태 {nextState}에 대한 동작이 딕셔너리에 없습니다.");
@@ -114,17 +153,17 @@ public class SceneLoader : Singleton<SceneLoader>
 
         // 비동기화 로드 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-
+        
         // 끝날때까지 기다리기
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-
+        //GameManager.Instance.Initialize();
         // 다음 씬 이벤트 시작
-        // if (sceneContainer.ContainsKey(sceneState)) 
-        // {
-        //     sceneContainer[sceneState]?.Invoke();
-        // }
+        if (sceneContainer.ContainsKey(sceneState))
+        {
+            sceneContainer[sceneState]?.Invoke();
+        }
     }
 }

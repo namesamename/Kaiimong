@@ -15,7 +15,23 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public QuestDataTable Quest;
     public CharacterDialogueTable Dialogue;
 
-
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+        LevelUpSystem.Init();
+        Initialize();
+    }
     public void Initialize()
     {
         character = new CharacterDataTable();

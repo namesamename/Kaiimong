@@ -12,6 +12,24 @@ public class UIManager : Singleton<UIManager>
 
 
     List<GameObject> POPS = new List<GameObject>();
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        Initialize();
+    }
     public void Initialize()
     {
         GameObject[] POPs = Resources.LoadAll<GameObject>("Popups");
@@ -47,7 +65,7 @@ public class UIManager : Singleton<UIManager>
             SaveDataBase.Instance.SaveSingleData(characterID);
         }
 
-
+        characterIDType = UICharacterIDType.None;
 
     }
 
