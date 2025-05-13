@@ -40,6 +40,10 @@ public class SceneLoader : Singleton<SceneLoader>
             {
                 Debug.Log(sceneContainer[SceneState.BattleScene].ToString());
             }
+            else
+            {
+                Debug.Log("no Contain Action");
+            }
             
         }
     }
