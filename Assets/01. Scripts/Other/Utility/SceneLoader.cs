@@ -25,18 +25,19 @@ public class SceneLoader : Singleton<SceneLoader>
                 Destroy(gameObject);
             }
         }
+        Initialize();
 
-     
+
     }
     private void Start()
     {
-        Initialize();
+
     }
     private void Update()
     {
-        if(sceneContainer.ContainsKey(SceneState.BattleScene))
+        if (sceneContainer.ContainsKey(SceneState.BattleScene))
         {
-            if(sceneContainer[SceneState.BattleScene] != null)
+            if (sceneContainer[SceneState.BattleScene] != null)
             {
                 Debug.Log(sceneContainer[SceneState.BattleScene].ToString());
             }
@@ -44,7 +45,7 @@ public class SceneLoader : Singleton<SceneLoader>
             {
                 Debug.Log("no Contain Action");
             }
-            
+
         }
     }
     public void Initialize()
@@ -89,12 +90,12 @@ public class SceneLoader : Singleton<SceneLoader>
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("씬이 로드될 때 호출되는 함수 현재 씬 이름 :" + scene.name + "\n / 현재 씬 state" + sceneState);
-        if(sceneContainer == null)
+        if (sceneContainer == null)
         {
             SetDic();
         }
 
-        
+
         // 싱글톤 LoadSceneAsync 이 실행되고 난 후에 실행 
         // 다음 씬 이벤트 시작
         if (sceneContainer.ContainsKey(sceneState))
@@ -126,7 +127,7 @@ public class SceneLoader : Singleton<SceneLoader>
     // 씬 전환
     public void ChangeScene(SceneState nextState)
     {
-       if(sceneContainer == null)
+        if (sceneContainer == null)
         {
             Debug.Log("신 컨테이너가 널");
         }
@@ -157,7 +158,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
         // 비동기화 로드 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        
+
         // 끝날때까지 기다리기
         while (!asyncLoad.isDone)
         {

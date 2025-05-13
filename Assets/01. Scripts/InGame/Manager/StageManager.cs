@@ -46,6 +46,9 @@ public class StageManager : Singleton<StageManager>
             }
         }
 
+    }
+    private void Start()
+    {
         Initialize();
     }
     public void Initialize()
