@@ -88,11 +88,15 @@ public class SheetInfoSOEditor : Editor
         {
             return "Character_" + ID;
         }
+        else if (fileName == "CharacterDialogue")
+        {
+            return "CharacterDialogue_" + ID;
+        }
         else if( fileName == "Quest")
         {
             return "Quest_" + ID;
         }
-        else if(fileName == "QusetReward")
+        else if(fileName == "QuestReward")
         {
             return "QuestReward_" + ID;
         }
@@ -169,6 +173,10 @@ public class SheetInfoSOEditor : Editor
         else if (SheetId == "ItemData")
         {
             Directory = "Item/";
+        }
+        else if (SheetId == "CharacterDialogue")
+        {
+            Directory = "CharacterDialogue/";
         }
         else if (SheetId == "Consume")
         {

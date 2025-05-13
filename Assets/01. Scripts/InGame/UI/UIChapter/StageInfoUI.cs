@@ -9,7 +9,9 @@ public class StageInfoUI : MonoBehaviour
 {
     [SerializeField] private Button enterButton;
     [SerializeField] private TextMeshProUGUI stageName;
+    [SerializeField] private TextMeshProUGUI stageActivityPointText;
     [SerializeField] private ItemBattleSlots ItemBattleSlots;
+    [SerializeField] private StageSelectSceneUI stageSelectSceneUI;
 
     private Stage stage;
     private RectTransform rect;
@@ -43,23 +45,38 @@ public class StageInfoUI : MonoBehaviour
     {
         stage = slot.Stage;
         stageName.text = stage.Name;
+        stageActivityPointText.text = $"-{stage.ActivityPoint}";
         ItemBattleSlots.SetItemList(stage.ID);
         enterButton.onClick.AddListener(OnEnterButton);
     }
 
-    private void OnEnterButton()
+    private async void OnEnterButton()
     {
+        int curActPoint = CurrencyManager.Instance.GetCurrency(CurrencyType.Activity);
+
         if (GlobalDataTable.Instance.DataCarrier.GetCharacterIDList().Count > 0)
         {
-            StageManager.Instance.CurrentStage = stage;
-            List<int> playerID = new List<int>(GlobalDataTable.Instance.DataCarrier.GetCharacterIDList());
-            foreach (int id in playerID)
+            if (curActPoint < stage.ActivityPoint)
             {
-                Character newCharacter = GlobalDataTable.Instance.character.GetCharToID(id);
-                StageManager.Instance.Players.Add(newCharacter);
+                PopupCurrencyLack popup = await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
+                popup.currencyType = CurrencyType.Activity;
+                popup.SetDelegate(stageSelectSceneUI.SetUI);
             }
-            RemoveListner();
-            SceneLoader.Instance.ChangeScene(SceneState.BattleScene);
+            else
+            {
+                CurrencyManager.Instance.SetCurrency(CurrencyType.Activity, -stage.ActivityPoint);
+                stageSelectSceneUI.SetUI();
+
+                StageManager.Instance.CurrentStage = stage;
+                List<int> playerID = new List<int>(GlobalDataTable.Instance.DataCarrier.GetCharacterIDList());
+                foreach (int id in playerID)
+                {
+                    Character newCharacter = GlobalDataTable.Instance.character.GetCharToID(id);
+                    StageManager.Instance.Players.Add(newCharacter);
+                }
+                RemoveListner();
+                SceneLoader.Instance.ChangeScene(SceneState.BattleScene);
+            }
         }
     }
 

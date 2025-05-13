@@ -39,6 +39,7 @@ public class UIRecognitionBtn : MonoBehaviour, ISetPOPUp
             if(ID == 0)
             {
                 CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, -ingiPOPUP.slot.NeedTable[ID]);
+                QuestManager.Instance.QuestTypeValueUP(ingiPOPUP.slot.NeedTable[ID], QuestType.UseGold);
             }
             else if(ID !=  0 && ID != -1)
             {
@@ -48,7 +49,7 @@ public class UIRecognitionBtn : MonoBehaviour, ISetPOPUp
         }
         GlobalDataTable.Instance.DataCarrier.GetSave().Recognition += 1;
 
-
+        QuestManager.Instance.QuestTypeValueUP(1, QuestType.Recognition);
         SaveDataBase.Instance.SaveSingleData(GlobalDataTable.Instance.DataCarrier.GetSave());
 
 

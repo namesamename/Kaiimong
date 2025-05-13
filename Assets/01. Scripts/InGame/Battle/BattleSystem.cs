@@ -226,6 +226,7 @@ public class BattleSystem : MonoBehaviour
             {
                 // 마지막 라운드인 경우 (승리)
                 StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
+                QuestManager.Instance.QuestTypeValueUP(1, QuestType.StageClear);
             }
             return;
         }
@@ -241,6 +242,10 @@ public class BattleSystem : MonoBehaviour
 
     private void EnemyTurnPhase()
     {
+        if(StageManager.Instance.CurrentTurn == 20)
+        {
+            StartCoroutine(ChangePhase(() => { isPhaseChanging = false; LosePhase(); }));
+        }
         if (!PlayerTurn)
         {
             PlayerTurn = true;
@@ -262,6 +267,8 @@ public class BattleSystem : MonoBehaviour
                 sortedOnce = true;
                 Debug.Log("playerturn");
                 activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+                StageManager.Instance.CurrentTurn++;
+                BattleUI.SetUI();
                 //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
                 OnPlayerTurn?.Invoke();
                 CommandController.ClearList();
@@ -294,6 +301,7 @@ public class BattleSystem : MonoBehaviour
             {
                 canStartNextRound = false;
                 StageManager.Instance.CurrentRound++;
+                BattleUI.SetUI();
                 if (StageManager.Instance.CurrentRound == StageManager.Instance.CurrentStage.Rounds) winFlag = true;
                 StageManager.Instance.StageStart();
             }
@@ -372,6 +380,7 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
                     enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
+                    enemyUnit.stat.OnDeath += () => QuestManager.Instance.QuestTypeValueUP(1, QuestType.KillMonster);
                     //enemyUnit.stat.OnDeath += CheckGameOver;
                     activeEnemies.Add(enemyUnit);
                     Enemies.RemoveAt(0);

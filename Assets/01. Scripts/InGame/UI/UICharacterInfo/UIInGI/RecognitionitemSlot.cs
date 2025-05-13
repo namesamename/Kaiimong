@@ -118,7 +118,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
 
         if (popupObj != null)
         {
-            popupObj.Show(item, itemCount);  // 아이템 데이터 전달
+           popupObj.ShowItem(item);  // 아이템 데이터 전달
         }
     }
 

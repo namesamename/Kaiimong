@@ -19,17 +19,22 @@ public class GameManager : Singleton<GameManager>
     CharacterManager characterManager;
     AddressableManager addressableManager;
 
+    QuestManager questManager;
+
+    AudioManager audioManager;
+
+
 
 
     GameObject[] ManagersPrefabs;
 
 
 
-    //¸Å´ÏÀúµé ¼ø¼­¸¸ ÃÊ±âÈ­
-    //°¢ ¸Å´ÏÀúµéÀÌ ´Ù¸¥ ¸Å´ÏÀú¸¦ ÂüÁ¶ÇØ¾ßÇÒ ¶§ Çãºê ¿ªÇÒ
+    //ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+    //ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void Awake()
     {
-        //°¢ ¸Å´ÏÀúµé ÃÊ±âÈ­
+        //ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         if (_instance == null)
         {
             _instance = this;
@@ -58,15 +63,15 @@ public class GameManager : Singleton<GameManager>
         characterManager.Initialize();
         itemManager.Initialize();
         currencyManager.InitialIze();
-
+        questManager.Initialize();
         stageManager.Initialize();
-        uiManager.Initialize();
+
         chapterManager.Initailize();
-    
 
 
+        
         loader.Initialize();
-
+        uiManager.Initialize();
     }
 
     public void GetCompo()
@@ -75,7 +80,14 @@ public class GameManager : Singleton<GameManager>
         if(addressableManager == null)
         {
             addressableManager = Instantiate(Resources.Load<GameObject>("Manager/AddressableManager")).GetComponent<AddressableManager>();
-            addressableManager.transform.SetParent(transform);  // ºÎ¸ð ¼³Á¤ (ÇÊ¿ä ½Ã)
+            addressableManager.transform.SetParent(transform);  // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ê¿ï¿½ ï¿½ï¿½)
+        }
+
+        questManager = GetComponentInChildren<QuestManager>();
+        if (questManager == null)
+        {
+            questManager = Instantiate(Resources.Load<GameObject>("Manager/QuestManager")).GetComponent<QuestManager>();
+            questManager.transform.SetParent(transform);  // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ê¿ï¿½ ï¿½ï¿½)
         }
 
 
@@ -84,14 +96,14 @@ public class GameManager : Singleton<GameManager>
         if (characterManager == null)
         {
             characterManager = Instantiate(Resources.Load<GameObject>("Manager/CharacterManager")).GetComponent<CharacterManager>();
-            characterManager.transform.SetParent(transform);  // ºÎ¸ð ¼³Á¤ (ÇÊ¿ä ½Ã)
+            characterManager.transform.SetParent(transform);  // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ê¿ï¿½ ï¿½ï¿½)
         }
 
         itemManager = GetComponentInChildren<ItemManager>();
         if (itemManager == null)
         {
             itemManager = Instantiate(Resources.Load<GameObject>("Manager/ItemManager")).GetComponent<ItemManager>();
-            itemManager.transform.SetParent(transform);  // ºÎ¸ð ¼³Á¤ (ÇÊ¿ä ½Ã)
+            itemManager.transform.SetParent(transform);  // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ê¿ï¿½ ï¿½ï¿½)
         }
 
         loader = GetComponentInChildren<SceneLoader>();
@@ -143,8 +155,18 @@ public class GameManager : Singleton<GameManager>
             SaveData = Instantiate(Resources.Load<GameObject>("Manager/SaveDataBase")).GetComponent<SaveDataBase>();
             SaveData.transform.SetParent(transform);
         }
+
+        audioManager = GetComponentInChildren<AudioManager>();
+        if (audioManager == null)
+        {
+            audioManager = Instantiate(Resources.Load<GameObject>("Manager/AudioManager")).GetComponent<AudioManager>();
+            audioManager.transform.SetParent(transform);
+        }
     }
-
-
+    public void OnApplicationQuit()
+    {
+        if(questManager != null)
+        questManager.TimeCheck();
+    }
 
 }

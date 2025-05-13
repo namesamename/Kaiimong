@@ -13,21 +13,12 @@ MonoBehaviour:
   m_Name: ActiveSkill_2
   m_EditorClassIdentifier: 
   ID: 2
-  Type: 0
-  Target: 0
-  TargetCount: 1
+  Name: sad
+  Description: sad
   Attack: 1
-  BuffID: 0
-  Name: 
-  Description: 
-  IconPath: 
   isSingleAttack: 0
-  attackCount: 0
-  damage: 
-  hitTiming: []
-  icon: {fileID: 0}
-  UltimateGauge: 0
-  IsMuti: 0
-  IsHeal: 0
+  UltimateGauge: 1
+  Type: 0
   IsBuff: 0
-  Id: 0
+  BuffID: 0
+  EffectType: 5

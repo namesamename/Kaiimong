@@ -12,15 +12,25 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TextMeshProUGUI countText;       //아이템 수량 텍스트
     [SerializeField] private Outline outlineEffect;           // 슬롯 외곽선 효과
 
+
+    Image[] images;
+
     private ItemData item;                    // 현재 슬롯에 들어있는 아이템
     private int itemCount;                    // 해당 아이템 수량
+
+    private void Awake()
+    {
+        images = GetComponentsInChildren<Image>();
+    }
     public void SetSlot(ItemData newItem, int amount = 1)     // 슬롯에 새 아이템 슬롯 설정
     {
+    
         item = newItem;
         itemCount = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, item.ID).Value;
 
         if (item != null)
         {
+            SetSlotColor(newItem);
             iconImage.sprite = Resources.Load<Sprite>(item.IconPath);
             iconImage.enabled = true;        // 아이콘  활성화
             if (itemCount > 1)
@@ -38,6 +48,30 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         {
             ClearSlot();                    // 아이템이 null이면 슬롯 비우기
         }
+    }
+
+
+    public void SetSlotColor(ItemData item)
+    {
+        switch (item.Grade)
+        {
+            case ERarity.S:
+                images[0].color = Color.yellow;
+                break;
+            case ERarity.A:
+                images[0].color = Color.magenta;
+                break;
+            case ERarity.B:
+                images[0].color = Color.blue;
+                break;
+            case ERarity.C:
+                images[0].color = Color.green;
+                break;
+            case ERarity.D:
+                images[0].color = Color.gray;
+                break;
+        }
+
     }
 
 
@@ -126,7 +160,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
         if (popupObj != null)
         {
-            popupObj.Show(item, itemCount);  // 아이템 데이터 전달
+            popupObj.ShowItem(item);  // 아이템 데이터 전달
         }
     }
 
