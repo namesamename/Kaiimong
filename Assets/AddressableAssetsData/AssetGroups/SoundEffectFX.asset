@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SoundEffectFX
+  m_EditorClassIdentifier: 
+  m_GroupName: SoundEffectFX
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1010be32aa31bd441abad80960eeae47
+  m_SerializeEntries:
+  - m_GUID: 6c7dc112447096f42813cf36bab570a0
+    m_Address: SoundEffectFx/1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5498c22adf40cea499feef2e033b12b6, type: 2}
+    - {fileID: 11400000, guid: 838f353c37f38cd44a4bd17165446beb, type: 2}
