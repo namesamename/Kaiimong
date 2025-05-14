@@ -131,6 +131,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - EnemyBattleSD
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bac5425cee820a04a807c91203b49c24
+    m_Address: Assets/Resources_moved/EnemySprite/Enemy_002.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
   m_SchemaSet:
