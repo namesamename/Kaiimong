@@ -35,7 +35,7 @@ public class GatchaResultUI : MonoBehaviour
         toLobbyButton.onClick.RemoveAllListeners();
         toLobbyButton.onClick.AddListener(OnGoToLobby);
         skipButton.onClick.AddListener(SkipShowResults);
-        revealSfx = await AddressableManager.Instance.LoadAsset<AudioClip>(AddreassablesType.SoundEffectFx, 1);
+        revealSfx = await AddressableManager.Instance.LoadAsset<AudioClip>(AddreassablesType.SoundEffectFx, 2);
 
         showResultRoutine = StartCoroutine(ShowResults());
     }
@@ -61,10 +61,12 @@ public class GatchaResultUI : MonoBehaviour
         }
 
         foreach (var character in GatchaResultHolder.results)
-        {
+        {   AudioManager.PlaySFX(revealSfx);
             var obj = Instantiate(prefab, resultGrid);
             var ui = obj.GetComponent<UICharacterResult>();
             ui.Setup(character);
+
+            
 
             if (isSkipping) continue;
             yield return new WaitForSeconds(0.3f);

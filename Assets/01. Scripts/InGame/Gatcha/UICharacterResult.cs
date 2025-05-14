@@ -22,6 +22,7 @@ public class UICharacterResult : MonoBehaviour  //뽑기 결과연출을 보여주는 스크�
         {
             case Grade.S:
                 background.color = Color.yellow;
+                AnimateSGradeS();
                 break;
             case Grade.A:
                 background.color = Color.cyan;
