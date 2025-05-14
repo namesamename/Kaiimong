@@ -106,6 +106,16 @@ public class BattleSystem : MonoBehaviour
 
     public void SetUI()
     {
+        // 기존 BattleUI 제거
+        BattleUI[] existingBattleUIs = FindObjectsOfType<BattleUI>();
+        foreach (BattleUI existingUI in existingBattleUIs)
+        {
+            if (existingUI != null && existingUI != BattleUI)
+            {
+                Destroy(existingUI.gameObject);
+            }
+        }
+
         GameObject canvas = GameObject.Find("Canvas");
         GameObject uiPrefab = Instantiate(Resources.Load("UI/Battle/BattleUI")) as GameObject;
         uiPrefab.transform.SetParent(canvas.transform, false);
@@ -261,11 +271,9 @@ public class BattleSystem : MonoBehaviour
     {
         if (PlayerTurn)
         {
-            Debug.Log("playerturn");
             if (!sortedOnce)
             {
                 sortedOnce = true;
-                Debug.Log("playerturn");
                 activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
                 StageManager.Instance.CurrentTurn++;
                 BattleUI.SetUI();
@@ -332,7 +340,7 @@ public class BattleSystem : MonoBehaviour
             {
                 if (i < playerCopy.Count)
                 {
-                    Character player = playerCopy[0];
+                    Character player = playerCopy[i];
                     //player.stat.agilityStat.Value = i + 1;
 
                     if (playerLocations[i].isOccupied) continue;
@@ -364,7 +372,7 @@ public class BattleSystem : MonoBehaviour
             {
                 if (i < enemiesCopy.Count)
                 {
-                    Enemy enemy = enemiesCopy[0];
+                    Enemy enemy = enemiesCopy[i];
                     //enemy.stat.agilityStat.Value = i + 1;
 
                     if (enemyLocations[i].isOccupied) continue;
