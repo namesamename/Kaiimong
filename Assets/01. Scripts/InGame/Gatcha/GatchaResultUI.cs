@@ -16,7 +16,9 @@ public class GatchaResultUI : MonoBehaviour
     private bool isSkipping = false;
     private Coroutine showResultRoutine;
 
-    private void Start()
+    private AudioClip revealSfx;
+
+    private async void Start()
     {
         retryButton.interactable = false;
         toLobbyButton.interactable = false;
@@ -26,6 +28,7 @@ public class GatchaResultUI : MonoBehaviour
         toLobbyButton.onClick.RemoveAllListeners();
         toLobbyButton.onClick.AddListener(OnGoToLobby);
         skipButton.onClick.AddListener(SkipShowResults);
+        revealSfx = await AddressableManager.Instance.LoadAsset<AudioClip>(AddreassablesType.SoundEffectFx, 1);
 
         showResultRoutine = StartCoroutine(ShowResults());
     }
