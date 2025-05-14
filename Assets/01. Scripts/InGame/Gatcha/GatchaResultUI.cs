@@ -18,6 +18,13 @@ public class GatchaResultUI : MonoBehaviour
 
     private AudioClip revealSfx;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            AudioManager.PlaySFX(revealSfx);
+        }
+    }
     private async void Start()
     {
         retryButton.interactable = false;
