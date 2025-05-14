@@ -26,7 +26,7 @@ public class QuestSlider : MonoBehaviour
             }
 
         }
-        slider.value = (float)(CompleteCount /quests.Count);
+        slider.value = ((float)CompleteCount / (float)quests.Count);
     }
 
 }

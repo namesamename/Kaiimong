@@ -42,19 +42,28 @@ public class CharacterSelectSlot : MonoBehaviour
 
         GlobalDataTable.Instance.DataCarrier.SetSave(characterSaveData);
         GlobalDataTable.Instance.DataCarrier.SetCharacter(character);
-        if(SceneLoader.Instance.GetPre()  == SceneState.ProfileScene)
+
+
+        switch (UIManager.Instance.characterIDType)
         {
 
-            SceneLoader.Instance.ChangeScene(SceneState.ProfileScene);
-   
-
+            case UICharacterIDType.Lobby:
+                UIManager.Instance.SetCharacterID(character.ID);
+                SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
+                break;
+            case UICharacterIDType.First:
+            case UICharacterIDType.Second:
+            case UICharacterIDType.Thrid:
+            case UICharacterIDType.Fourth:
+                UIManager.Instance.SetCharacterID(character.ID);
+                SceneLoader.Instance.ChangeScene(SceneState.ProfileScene);
+                break;
+            case UICharacterIDType.None:
+                SceneLoader.Instance.ChangeScene(SceneState.CharacterInfoScene);
+                break;
+            default:
+                break;
         }
-        else
-        {
-            SceneLoader.Instance.ChangeScene(SceneState.CharacterInfoScene);
-
-        }
-
     }
 
 

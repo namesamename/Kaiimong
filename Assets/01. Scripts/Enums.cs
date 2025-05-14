@@ -47,7 +47,9 @@ public enum SaveType
     Stage,
     Chapter,
     Item,
-    Quest
+    Quest,
+    Time,
+    UICharacterID
 
 }
 
@@ -76,6 +78,8 @@ public enum AddreassablesType
     POPUP,
     Passive,
     Quest,
+    ItemSlot,
+    SkillEffect,
 
 }
 public enum Grade
@@ -146,6 +150,7 @@ public enum SceneState
     MessageScene,
     QuestScene,
     ShopScene,
+    OptionScene,
 }
 public enum UpgradeType
 {
@@ -185,6 +190,27 @@ public enum TimeType
     Daily,
     Weekly,
     Monthly
+}
+
+public enum UICharacterIDType
+{
+    Lobby,
+    First,
+    Second,
+    Thrid,
+    Fourth,
+    None,
+
+}
+
+public enum SkillEffectType
+{
+    Self,
+    AllEnemy,
+    AllFriend,
+    SingleEnemy,
+    SingleFriend,
+    BattleField
 }
 
 

@@ -1,3 +1,5 @@
+using System;
+
 [System.Serializable]
 public class SaveInstance 
 {
@@ -28,6 +30,8 @@ public class CurrencySaveData : SaveInstance
     public int DIAValue;
     public int GachaValue;
     public int ActivityValue;
+    public DateTime date;
+
 }
 
 public class StageSaveData : SaveInstance
@@ -52,5 +56,23 @@ public class QuestSaveData : SaveInstance
     public bool IsComplete;
     public bool IsCan;
 }
+
+public class TimeSaveData : SaveInstance
+{
+    public DateTime lastDailyReset;
+    public DateTime lastWeeklyReset;
+}
+
+public class UICharacterIDSaveData : SaveInstance
+{
+    public int Lobby;
+    public int FirstProfile;
+    public int SecondProfile;
+    public int ThirdProfile;
+    public int FourthProfile;
+    public string IntroduceText;
+}
+
+
 
 

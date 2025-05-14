@@ -76,6 +76,10 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "Popups/";
             case AddreassablesType.Quest:
                 return "Quest/";
+            case AddreassablesType.ItemSlot:
+                return "ItemSlot/";
+            case AddreassablesType.SkillEffect:
+                return "SkillEffect/SkillEffect_";
             default:
                 return string.Empty;
 

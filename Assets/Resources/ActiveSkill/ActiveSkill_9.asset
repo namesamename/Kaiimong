@@ -13,21 +13,12 @@ MonoBehaviour:
   m_Name: ActiveSkill_9
   m_EditorClassIdentifier: 
   ID: 9
-  Type: 0
-  Target: 0
-  TargetCount: 4
+  Name: asdas
+  Description: sad
   Attack: 1
-  BuffID: 0
-  Name: 
-  Description: 
-  IconPath: 
   isSingleAttack: 0
-  attackCount: 0
-  damage: 
-  hitTiming: []
-  icon: {fileID: 0}
-  UltimateGauge: 0
-  IsMuti: 0
-  IsHeal: 0
+  UltimateGauge: 1
+  Type: 0
   IsBuff: 0
-  Id: 0
+  BuffID: 0
+  EffectType: 2

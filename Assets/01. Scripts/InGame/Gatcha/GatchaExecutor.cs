@@ -65,6 +65,8 @@ public class GatchaExecutor : MonoBehaviour
         curManager.SetCurrency(CurrencyType.Gacha, -useTicket);
         curManager.SetCurrency(CurrencyType.Dia, -needCrystal);
 
+        QuestManager.Instance.QuestTypeValueUP(count, QuestType.Gacha);
+
         Debug.Log($"[{mgr.currentGachaType}] Gatcha {count}雀 己傍!");
         Debug.Log($"家厚等 萍南: {useTicket}, 农府胶呕: {needCrystal}");
 

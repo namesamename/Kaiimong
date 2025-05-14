@@ -106,39 +106,10 @@ public class BattleSystem : MonoBehaviour
 
     public void SetUI()
     {
-        // 기존의 모든 BattleUI 찾아서 제거
-        BattleUI[] existingBattleUIs = FindObjectsOfType<BattleUI>();
-        foreach (BattleUI existingUI in existingBattleUIs)
-        {
-            if (existingUI != null && existingUI.gameObject != null)
-            {
-                Destroy(existingUI.gameObject);
-            }
-        }
-
-        // 새로운 BattleUI 생성
         GameObject canvas = GameObject.Find("Canvas");
-        if (canvas == null)
-        {
-            Debug.LogError("Canvas를 찾을 수 없습니다.");
-            return;
-        }
-
         GameObject uiPrefab = Instantiate(Resources.Load("UI/Battle/BattleUI")) as GameObject;
-        if (uiPrefab == null)
-        {
-            Debug.LogError("BattleUI 프리팹을 로드할 수 없습니다.");
-            return;
-        }
-
         uiPrefab.transform.SetParent(canvas.transform, false);
         BattleUI = uiPrefab.GetComponent<BattleUI>();
-        if (BattleUI == null)
-        {
-            Debug.LogError("BattleUI 컴포넌트를 찾을 수 없습니다.");
-            return;
-        }
-
         BattleUI.BattleSystem = this;
         BattleUI.CharacterUI.BattleSystem = this;
         StageManager.Instance.EndUISet();
@@ -255,6 +226,7 @@ public class BattleSystem : MonoBehaviour
             {
                 // 마지막 라운드인 경우 (승리)
                 StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
+                QuestManager.Instance.QuestTypeValueUP(1, QuestType.StageClear);
             }
             return;
         }
@@ -408,6 +380,7 @@ public class BattleSystem : MonoBehaviour
                     enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
                     enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
+                    enemyUnit.stat.OnDeath += () => QuestManager.Instance.QuestTypeValueUP(1, QuestType.KillMonster);
                     //enemyUnit.stat.OnDeath += CheckGameOver;
                     activeEnemies.Add(enemyUnit);
                     Enemies.RemoveAt(0);

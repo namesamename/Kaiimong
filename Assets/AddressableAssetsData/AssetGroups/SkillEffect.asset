@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SkillEffect
+  m_EditorClassIdentifier: 
+  m_GroupName: SkillEffect
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 0547a647b3d850c4c88dd4a859b1c22f
+  m_SerializeEntries:
+  - m_GUID: 0fc3aaac56c68ae438252fa72083a8a3
+    m_Address: SkillEffect/SkillEffect_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b9450e96519cc384c902feeaaceb85f5, type: 2}
+    - {fileID: 11400000, guid: 6813a9aa8df2a8d45a3e0132a32b75d3, type: 2}

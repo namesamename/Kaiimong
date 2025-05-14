@@ -111,7 +111,7 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
     }
     public void Excute()
     {
-        
+        QuestManager.Instance.QuestTypeValueUP(1, QuestType.LevelUp);
         LevelUpSystem.LevelUp(popUP.LevelInterval, popUP.UsingGlod, popUP.UsingAmulet, GlobalDataTable.Instance.DataCarrier.GetSave());
         SaveDataBase.Instance.SaveSingleData(GlobalDataTable.Instance.DataCarrier.GetSave());
         popUP.Initialize();
