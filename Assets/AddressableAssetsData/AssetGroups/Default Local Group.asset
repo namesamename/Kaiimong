@@ -103,7 +103,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b36612337bfa08a4f9fc3917b6c770c0
-    m_Address: Popups/UpdateNoticePopup
+    m_Address: Popups/UpdateNoticePopUp
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
