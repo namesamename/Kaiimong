@@ -62,7 +62,7 @@ public class CharacterUI : MonoBehaviour
         actionButton.onClick.RemoveAllListeners();
     }
 
-    void SkillButtonDisable()
+    public void SkillButtonDisable()
     {
         foreach (Button button in buttonList)
         {

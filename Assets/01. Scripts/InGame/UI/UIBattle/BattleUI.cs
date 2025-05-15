@@ -31,6 +31,20 @@ public class BattleUI : MonoBehaviour
         speedUpButton.onClick.AddListener(OnSpeedUpButton);
     }
 
+    private void DisableButtons()
+    {
+        pauseButton.enabled = false;
+        speedDownButton.enabled = false;
+        speedUpButton.enabled = false;
+    }
+
+    private void EnableButtons()
+    {
+        pauseButton.enabled = true;
+        speedDownButton.enabled = true;
+        speedUpButton.enabled = true;
+    }
+
     private async void OnPauseButtonAsync()
     {
         popupBattlePausePrefab = await UIManager.Instance.GetPOPUPPrefab("PopupBattlePause");
@@ -39,6 +53,9 @@ public class BattleUI : MonoBehaviour
 
         popupBattlePause.OnCancel -= OnCancelButton;
         popupBattlePause.OnConfirm -= StageManager.Instance.LoseStage;
+
+        DisableButtons();
+        characterUI.SkillButtonDisable();
 
         Time.timeScale = 0;
 
@@ -65,6 +82,8 @@ public class BattleUI : MonoBehaviour
     private void OnCancelButton()
     {
         Time.timeScale = currentSpeed;
+        EnableButtons();
+        characterUI.SkillButtonAble();
     }
 
     public void SetUI()
