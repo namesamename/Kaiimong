@@ -28,6 +28,7 @@ public class IntroducePopup : UIPOPUP
     {
 
         hUD = FindAnyObjectByType<CharacterProfileHUD>();
+        PlayShowAnimation();
         SetBtn();
     }
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,8 @@ public class CharacterInfoHUD : MonoBehaviour
                 Button Backbutton = GetComponentInChildren<Button>();
                 Backbutton.onClick.RemoveAllListeners();
                 Backbutton.onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
+
+                transform.DOLocalMoveY(400, 1);
           
                 break;
             case CharacterInfoType.Main:
@@ -36,9 +39,12 @@ public class CharacterInfoHUD : MonoBehaviour
 
                 SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, ()=>AddressableManager.Instance.UnloadType(AddreassablesType.Illustration)); 
                 button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
+
+                transform.DOLocalMoveY(400, 1);
                 break;
             case CharacterInfoType.Skin:
-                
+                transform.DOLocalMoveY(400, 1);
+
                 break;
             case CharacterInfoType.CharacterImage:
                 Image images = GetComponent<Image>();
@@ -51,6 +57,8 @@ public class CharacterInfoHUD : MonoBehaviour
                 textMeshPros[1].text = GlobalDataTable.Instance.character.GetCharToID(saveData.ID).Grade.ToString();
                 textMeshPros[2].text = saveData.Love.ToString("N1");
                 slider.value = saveData.Love / 100f;
+
+                transform.DOLocalMoveX(-650, 1);
                 break;
             case CharacterInfoType.Stat:
                 TextMeshProUGUI[] textMeshPross = GetComponentsInChildren<TextMeshProUGUI>();
@@ -63,6 +71,8 @@ public class CharacterInfoHUD : MonoBehaviour
                 textMeshPross[9].text = $"{Cir}%";
                 float CirAt = (float)(character.CriticalAttack + (saveData.Level * 0.01)) * 100;
                 textMeshPross[11].text = $"{CirAt}%";
+
+                transform.DOLocalMoveX(-650, 1);
 
                 break;
              case CharacterInfoType.Dolpa:
@@ -81,6 +91,8 @@ public class CharacterInfoHUD : MonoBehaviour
 
                 DolpaButton.onClick.RemoveAllListeners();
                 DolpaButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("breakthroughPopUP"));
+
+                transform.DOLocalMoveY(-275, 1);
                 break;
             case CharacterInfoType.Levelup:
                 TextMeshProUGUI Level = GetComponentInChildren<TextMeshProUGUI>();
@@ -88,6 +100,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 LevelUpButton.onClick.RemoveAllListeners();
                 Level.text = $"Level\n{saveData.Level}";
                 LevelUpButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("LevelupPopUp"));
+                transform.DOLocalMoveX(450, 1);
                 break;
             case CharacterInfoType.IngiUp:
                 TextMeshProUGUI Ingi = GetComponentInChildren<TextMeshProUGUI>();
@@ -95,6 +108,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 IngiUpButton.onClick.RemoveAllListeners();
                 Ingi.text = $"ÀÎÁö\n{saveData.Recognition}";
                 IngiUpButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("IngiPopUp"));
+                transform.DOLocalMoveX(750, 1);
                 break;
             case CharacterInfoType.ActiveSkill:
                 Button[] buttons = GetComponentsInChildren<Button>();
@@ -104,8 +118,10 @@ public class CharacterInfoHUD : MonoBehaviour
                     buttons[i].onClick.RemoveAllListeners();
                     buttons[i].onClick.AddListener(() => SetSkillPopup(index));
                 }
+                transform.DOLocalMoveX(600, 1);
                 break;
             case CharacterInfoType.PassiveSkill:
+                transform.DOLocalMoveX(600, 1);
                 break;
         }
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -59,6 +60,7 @@ public class QuestBlock : MonoBehaviour
 
     public void Setting()
     {
+        transform.DOLocalRotate(Vector3.zero, 1f);
         ButtonSet();
         TextSet();
     }

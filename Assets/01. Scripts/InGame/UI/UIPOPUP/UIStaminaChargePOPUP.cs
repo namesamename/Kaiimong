@@ -38,6 +38,7 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
             Buttons[i].onClick.RemoveAllListeners();
         }
 
+        PlayShowAnimation();
         BTNSet();
         TextSet();
         transform.GetChild(8).gameObject.SetActive(false);
