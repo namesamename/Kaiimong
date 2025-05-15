@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using System;
 
 public class AddressableManager : Singleton<AddressableManager>
 {
@@ -12,29 +13,92 @@ public class AddressableManager : Singleton<AddressableManager>
     List<AsyncOperationHandle> PrefabTracer=  new List<AsyncOperationHandle>();
     public async Task<T> LoadAsset<T>(AddreassablesType type, int id) where T : class
     {
-        var key = (type, id);
-        if (Tracer.ContainsKey(key))
+        try
         {
-            return Tracer[key].Result as T;
+            string address = TypeChanger(type) + id;
+            // 매번 새로운 로드를 시도
+            var handle = Addressables.LoadAssetAsync<T>(address);
+            
+            // 이전에 로드된 에셋이 있다면 해제
+            var key = (type, id);
+            if (Tracer.ContainsKey(key))
+            {
+                Addressables.Release(Tracer[key]);
+                Tracer.Remove(key);
+            }
+
+            await handle.Task;
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                var result = handle.Result;
+                if (result == null)
+                {
+                    return default;
+                }
+
+                // 스프라이트인 경우 추가 검증
+                if (typeof(T) == typeof(Sprite))
+                {
+                    var sprite = result as Sprite;
+                    if (sprite != null)
+                    {                        
+                        // 스프라이트가 실제로 다른지 확인
+                        if (Tracer.ContainsKey(key))
+                        {
+                            var prevSprite = Tracer[key].Result as Sprite;
+                            if (prevSprite != null)
+                            {
+                                if (sprite.GetInstanceID() == prevSprite.GetInstanceID())
+                                {
+                                    Debug.LogWarning($"Warning: Same sprite instance loaded for ID: {id}");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // 새로운 핸들을 트레이서에 저장
+                Tracer[key] = handle;
+                return result;
+            }
+            else
+            {
+                // 사용 가능한 주소 목록 출력
+                var locations = Addressables.ResourceLocators;
+                foreach (var locator in locations)
+                {
+                    foreach (var addressKey in locator.Keys)
+                    {
+                        if (addressKey.ToString().Contains(TypeChanger(type)))
+                        {
+                            Debug.Log($"Found address: {addressKey}");
+                        }
+                    }
+                }
+                return default;
+            }
         }
-
-        var handle = Addressables.LoadAssetAsync<T>(TypeChanger(type) + id);
-        Tracer[(type, id)] = handle;
-
-
-        await handle.Task;
-
-        if (handle.Status == AsyncOperationStatus.Succeeded)
-        {
-
-            return handle.Result;
-        }
-        else
+        catch (Exception e)
         {
             return default;
         }
     }
 
+    private string GetAlternativeAddress(AddreassablesType type, int id)
+    {
+        switch (type)
+        {
+            case AddreassablesType.CharacterIcon:
+                return $"Icon/Char_{id}";
+            case AddreassablesType.BattleSD:
+                return $"CharacterBattleSD/Char_{id}";
+            case AddreassablesType.RecognitionSD:
+                return $"RecognitionSD/Char_{id}";
+            default:
+                return string.Empty;
+        }
+    }
 
     public async Task<GameObject> LoadPrefabs(AddreassablesType type, string name)
     {
@@ -57,7 +121,6 @@ public class AddressableManager : Singleton<AddressableManager>
     {
         switch (type)
         {
-            
             case AddreassablesType.EnemyBattleSD:
                 return "EnemySprite/Enemy_";
             case AddreassablesType.BattleSD:
@@ -83,17 +146,19 @@ public class AddressableManager : Singleton<AddressableManager>
             case AddreassablesType.SoundEffectFx:
                 return "SoundEffectFx/";
             default:
+                Debug.LogError($"Unknown AddreassablesType: {type}");
                 return string.Empty;
-
         }
     }
 
     public void UnLoad(AddreassablesType type, int ID)
     {
-        if (Tracer.TryGetValue((type, ID), out var handle))
+        var key = (type, ID);
+        if (Tracer.TryGetValue(key, out var handle))
         {
             Addressables.Release(handle);
-            Tracer.Remove((type, ID));
+            Tracer.Remove(key);
+            Debug.Log($"Unloaded asset of type {type} with ID {ID}");
         }
     }
 
@@ -111,18 +176,19 @@ public class AddressableManager : Singleton<AddressableManager>
 
     public void UnloadType(AddreassablesType type)
     {
-        var Remove = new List<(AddreassablesType, int)>();
-
-        foreach (var TypeandID in Tracer)
+        var keysToRemove = new List<(AddreassablesType, int)>();
+        
+        foreach (var kvp in Tracer)
         {
-            if (TypeandID.Key.Item1 == type)
+            if (kvp.Key.Item1 == type)
             {
-                Addressables.Release(TypeandID.Value);
-                Remove.Add(TypeandID.Key);
+                Addressables.Release(kvp.Value);
+                keysToRemove.Add(kvp.Key);
+                Debug.Log($"Unloaded asset of type {type} with ID {kvp.Key.Item2}");
             }
         }
 
-        foreach (var key in Remove)
+        foreach (var key in keysToRemove)
         {
             Tracer.Remove(key);
         }

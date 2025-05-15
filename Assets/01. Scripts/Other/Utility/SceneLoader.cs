@@ -71,7 +71,7 @@ public class SceneLoader : Singleton<SceneLoader>
         {
             SetDic();
         }
-        if (sceneContainer.ContainsKey(state))
+        if (sceneContainer.ContainsKey(state) && !sceneContainer.ContainsValue(action))
         {
             sceneContainer[state] += action;
         }

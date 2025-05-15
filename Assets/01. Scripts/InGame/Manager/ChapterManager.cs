@@ -42,30 +42,30 @@ public class ChapterManager : Singleton<ChapterManager>
         ChapterSaveData = new ChapterSaveData();
         StageSaveData = new StageSaveData();
 
-        // ¸ðµç Ã©ÅÍ ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ Ã©ï¿½ï¿½ ï¿½Ê±ï¿½È­
         for (int i = 1; i < GlobalDataTable.Instance.Chapter.ChapterDic.Count + 1; i++)
         {
             int chapterId = GlobalDataTable.Instance.Chapter.ChapterDic[i].ID;
             ChapterSaveData newChapterData = new ChapterSaveData();
             newChapterData.ID = chapterId;
 
-            // ÀúÀåµÈ µ¥ÀÌÅÍ°¡ ÀÖ´ÂÁö È®ÀÎ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             var foundData = SaveDataBase.Instance.GetSaveInstanceList<ChapterSaveData>(SaveType.Chapter);
             if (foundData != null && foundData.Find(x => x.ID == chapterId) != null)
             {
-                // ÀúÀåµÈ µ¥ÀÌÅÍ ·Îµå
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
                 var savedData = foundData.Find(x => x.ID == chapterId);
                 newChapterData.ChapterOpen = savedData.ChapterOpen;
                 newChapterData.Savetype = SaveType.Chapter;
             }
             else
             {
-                // »õ µ¥ÀÌÅÍ »ý¼º
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 newChapterData.Savetype = SaveType.Chapter;
                 SaveDataBase.Instance.SaveSingleData(newChapterData);
             }
 
-            // »çÀü¿¡ ÀúÀå
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             ChaptersSaveList[chapterId] = newChapterData;
         }
 
@@ -73,18 +73,18 @@ public class ChapterManager : Singleton<ChapterManager>
         SaveDataBase.Instance.SaveSingleData(ChaptersSaveList[1]);
 
 
-        // ¸ðµç ½ºÅ×ÀÌÁö ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         for (int i = 1; i < GlobalDataTable.Instance.Stage.StageDic.Count + 1; i++)
         {
             int stageId = GlobalDataTable.Instance.Stage.StageDic[i].ID;
             StageSaveData newStageData = new StageSaveData();
             newStageData.ID = stageId;
 
-            // ÀúÀåµÈ µ¥ÀÌÅÍ°¡ ÀÖ´ÂÁö È®ÀÎ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             var foundData = SaveDataBase.Instance.GetSaveInstanceList<StageSaveData>(SaveType.Stage);
             if (foundData != null && foundData.Find(x => x.ID == stageId) != null)
             {
-                // ÀúÀåµÈ µ¥ÀÌÅÍ ·Îµå
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
                 var savedData = foundData.Find(x => x.ID == stageId);
                 newStageData.ClearedStage = savedData.ClearedStage;
                 newStageData.StageOpen = savedData.StageOpen;
@@ -92,12 +92,12 @@ public class ChapterManager : Singleton<ChapterManager>
             }
             else
             {
-                // »õ µ¥ÀÌÅÍ »ý¼º
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 newStageData.Savetype = SaveType.Stage;
                 SaveDataBase.Instance.SaveSingleData(newStageData);
             }
 
-            // »çÀü¿¡ ÀúÀå
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             StageSaveList[stageId] = newStageData;
         }
 

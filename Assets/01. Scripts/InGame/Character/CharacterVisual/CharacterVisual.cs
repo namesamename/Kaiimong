@@ -22,44 +22,135 @@ public class CharacterVisual : MonoBehaviour
     public Action action;
 
 
-    public async void Initialize(int ID , CharacterType character )
+    public async void Initialize(int ID, CharacterType character)
     {
-        animator = GetComponentInParent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        switch (character)
+
+        try
         {
-            case CharacterType.Friend:
-                BattleSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.BattleSD, ID);
-                Icon = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, ID);
-                RecoSD = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.RecognitionSD, ID);
-                // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
-                break;
-            case CharacterType.Enemy:
+            animator = GetComponentInParent<Animator>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
 
-                // animationClips = Resources.LoadAll<AnimationClip>(GlobalDatatable.instance.character.getid(ID).iconPath);
-                break;
+            switch (character)
+            {
+                case CharacterType.Friend:
+                    if (this == null || !gameObject.activeInHierarchy) return;
+                    
+                    // Ïä§ÌîÑÎùºÏù¥Ìä∏ Î°úÎìú ÏãúÎèÑ
+                    BattleSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.BattleSD, ID);
+                    
+                    if (this == null || !gameObject.activeInHierarchy) return;
+                    Icon = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, ID);
+                    
+                    if (this == null || !gameObject.activeInHierarchy) return;
+                    RecoSD = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.RecognitionSD, ID);
+
+                    // Í∏∞Î≥∏ Ïä§ÌîÑÎùºÏù¥Ìä∏ ÏÑ§Ï†ï
+                    if (this != null && gameObject.activeInHierarchy && spriteRenderer != null)
+                    {
+                        if (BattleSprite != null)
+                        {
+                            spriteRenderer.sprite = BattleSprite;
+                        }
+                        else if (Icon != null)
+                        {
+                            spriteRenderer.sprite = Icon;
+                        }
+                    }
+                    break;
+
+                case CharacterType.Enemy:
+                    if (this == null || !gameObject.activeInHierarchy) return;
+                    BattleSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.EnemyBattleSD, ID);
+                    if (this != null && gameObject.activeInHierarchy && spriteRenderer != null && BattleSprite != null)
+                    {
+                        spriteRenderer.sprite = BattleSprite;
+                    }
+                    break;
+            }
+
+            if (this == null || !gameObject.activeInHierarchy) return;
+
+            // Ïï†ÎãàÎ©îÏù¥ÏÖò ÏÑ§Ï†ï
+            if (animator != null)
+            {
+                RuntimeController = animator.runtimeAnimatorController;
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                AppearAnimationLength = stateInfo.length;
+                AnimationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
+                if (AnimationClips == null || AnimationClips.Length == 0)
+                {
+                    Debug.LogError($"Failed to load animation clips for Character/Silhum");
+                }
+                else
+                {
+                    Debug.Log($"Successfully loaded {AnimationClips.Length} animation clips");
+                    StartCoroutine(PlayAni());
+                }
+            }
+
+            action?.Invoke();
         }
-        // æ÷¥œ∏ﬁ¿Ãº« ±Ê¿Ã ∞ËªÍ
-        if (animator != null)
+        catch (Exception e)
         {
-            RuntimeController = animator.runtimeAnimatorController;
-            // µÓ¿Â æ÷¥œ∏ﬁ¿Ãº« ±Ê¿Ã ∞ËªÍ (Appear æ÷¥œ∏ﬁ¿Ãº« ªÁøÎ)
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            AppearAnimationLength = stateInfo.length;
-            //Debug.Log(AppearAnimationLength);
-            //ø©±‚µµ ºˆ¡§
-            AnimationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
-            StartCoroutine(PlayAni());
+            Debug.LogError($"Error in CharacterVisual.Initialize: {e.Message}\nStack Trace: {e.StackTrace}");
         }
-
-        action?.Invoke();
-
-
     }
 
     public void SetSprite(SpriteType sprite)
     {
-        action += () => SetSpritefun(sprite);
+        if (this == null || !gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("CharacterVisual is null or inactive. Cannot set sprite.");
+            return;
+        }
+
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null)
+            {
+                Debug.LogWarning("SpriteRenderer is null in SetSprite");
+                return;
+            }
+        }
+
+        try
+        {
+            // Ïä§ÌîÑÎùºÏù¥Ìä∏Í∞Ä Î°úÎìúÎêòÏóàÎäîÏßÄ ÌôïÏù∏
+            bool isSpriteLoaded = false;
+            switch (sprite)
+            {
+                case SpriteType.Icon:
+                    isSpriteLoaded = Icon != null;
+                    break;
+                case SpriteType.RecoSD:
+                    isSpriteLoaded = RecoSD != null;
+                    break;
+                case SpriteType.BattleSprite:
+                    isSpriteLoaded = BattleSprite != null;
+                    break;
+            }
+
+            if (isSpriteLoaded)
+            {
+                SetSpritefun(sprite);
+            }
+            else
+            {
+                // Ïä§ÌîÑÎùºÏù¥Ìä∏Í∞Ä ÏïÑÏßÅ Î°úÎìúÎêòÏßÄ ÏïäÏùÄ Í≤ΩÏö∞, Ï¥àÍ∏∞Ìôî ÏôÑÎ£å ÌõÑ ÏÑ§Ï†ïÌïòÎèÑÎ°ù actionÏóê Ï∂îÍ∞Ä
+                action += () => 
+                {
+                    if (this != null && gameObject.activeInHierarchy)
+                    {
+                        SetSpritefun(sprite);
+                    }
+                };
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error in CharacterVisual.SetSprite: {e.Message}");
+        }
     }
 
     
@@ -71,6 +162,18 @@ public class CharacterVisual : MonoBehaviour
 
     public void SetSpritefun(SpriteType sprite)
     {
+        if (this == null || !gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("CharacterVisual is null or inactive. Cannot set sprite.");
+            return;
+        }
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogWarning("SpriteRenderer is null in SetSpritefun");
+            return;
+        }
+
         switch (sprite)
         {
             case SpriteType.Icon:
@@ -83,7 +186,6 @@ public class CharacterVisual : MonoBehaviour
                 spriteRenderer.sprite = BattleSprite;
                 break;
         }
-
     }
     public Sprite Getincon()
     {
