@@ -99,12 +99,12 @@ public class CharacterStat : MonoBehaviour
         //}
 
 
-        attackStat.Value = Level;
-        defenseStat.Value = Level;
-        healthStat.Value = Level;
-        //agilityStat.Value = character.Speed + level;
-        criticalAttackStat.Value = (float)(Level * 0.01);
-        criticalPerStat.Value = (float)(Level * 0.01);
+        attackStat.Value = enemy.Att + Level;
+        defenseStat.Value = enemy.Def + Level;
+        healthStat.Value = enemy.HP + Level;
+        //agilityStat.Value = enemy.Speed + level;
+        criticalAttackStat.Value = enemy.Cri + (float)(Level * 0.01);
+        criticalPerStat.Value = enemy.Cri +(float)(Level * 0.01);
         healthStat.CurHealth = healthStat.Value;
 
 

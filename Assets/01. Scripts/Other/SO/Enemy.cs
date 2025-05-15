@@ -3,10 +3,10 @@ public class Enemy : SO
 {
     public string Name;
     public float HP;
-    public StatGrade Att;
-    public StatGrade Def;
-    public StatGrade Speed;
-    public StatGrade Cri;
+    public int Att;
+    public int Def;
+    public int Speed;
+    public float Cri;
     public int SkillID;
 
 

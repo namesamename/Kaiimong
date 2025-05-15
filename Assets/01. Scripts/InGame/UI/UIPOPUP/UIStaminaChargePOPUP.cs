@@ -132,7 +132,11 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
         TextSet();
         OnChargeStamina?.Invoke();
         PurchaseButtonReset();
-        topBarUI.UpdateResource();
+        if(SceneLoader.Instance.GetCur() == SceneState.LobbyScene)
+        {
+            topBarUI.UpdateResource();
+        }
+
     }
 
     public void BigStaminaUseSetting()
@@ -161,7 +165,10 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
         TextSet();
         OnChargeStamina?.Invoke();
         PurchaseButtonReset();
-        topBarUI.UpdateResource();
+        if (SceneLoader.Instance.GetCur() == SceneState.LobbyScene)
+        {
+            topBarUI.UpdateResource();
+        }
     }
 
     public void CrystalStaminaUseSetting()
@@ -198,7 +205,10 @@ public class UIStaminaChargePOPUP : UIBreakPOPUP
         OnChargeStamina?.Invoke();
         PurchaseButtonReset();
         transform.GetChild(8).gameObject.SetActive(false);
-        topBarUI.UpdateResource();
+        if (SceneLoader.Instance.GetCur() == SceneState.LobbyScene)
+        {
+            topBarUI.UpdateResource();
+        }
     }
 
     public void ClearAction()

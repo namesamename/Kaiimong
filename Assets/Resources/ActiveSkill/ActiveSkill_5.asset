@@ -16,9 +16,9 @@ MonoBehaviour:
   Name: asd
   Description: sad
   Attack: 1
-  isSingleAttack: 0
+  isSingleAttack: 1
   UltimateGauge: 1
-  Type: 0
-  IsBuff: 0
+  Type: 1
+  IsBuff: 1
   BuffID: 1
-  EffectType: 1
+  EffectType: 4
