@@ -1,33 +1,56 @@
 using DG.Tweening;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UICharacterResult : MonoBehaviour  //뽑기 결과연출을 보여주는 스크립트
 {
-    [SerializeField] private TMP_Text nameText;
-    [SerializeField] private TMP_Text gradeText;
-    [SerializeField] private Image background;
+[SerializeField] private Image background;
+    [SerializeField] private Image characterImage;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI gradeText;
 
-    public void Setup(Character character) //프리펩의 이름,등급 보여주는 부분
+
+    public async void Setup(Character character)
     {
         nameText.text = character.Name;
         gradeText.text = character.Grade.ToString();
 
+        // 배경 색상 (등급에 따라)
         switch (character.Grade)
         {
             case Grade.S:
-                background.color = new Color(1f, 0.8f, 0.2f); // 금색
-                AnimateSGradeS(); // 추가 애니메이션
+                background.color = Color.yellow;
+                AnimateSGradeS();
                 break;
-
             case Grade.A:
-                background.color = new Color(0.6f, 0.8f, 1f); // 파랑
+                background.color = Color.cyan;
                 break;
-
             case Grade.B:
-                background.color = new Color(0.85f, 0.85f, 0.85f); // 회색
+                background.color = Color.gray;
                 break;
+        }
+
+        // 스프라이트 로드: ID 1~4만 존재
+        if (character.ID >= 1 && character.ID <= 4)
+        {
+            Sprite loadedSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
+
+            if (loadedSprite != null)
+            {
+                characterImage.sprite = loadedSprite;
+                characterImage.color = Color.white;
+            }
+            else
+            {
+                characterImage.color = Color.clear;
+            }
+        }
+        else
+        {
+            // ID 범위 밖 → 이미지 비활성화 or 기본 이미지 처리
+            characterImage.color = Color.clear;
         }
     }
 

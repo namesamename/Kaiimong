@@ -80,6 +80,7 @@ public enum AddreassablesType
     Quest,
     ItemSlot,
     SkillEffect,
+    SoundEffectFx
 
 }
 public enum Grade
