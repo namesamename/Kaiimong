@@ -56,6 +56,7 @@ public class CommandController : MonoBehaviour
                 break;
             }
 
+            StageManager.Instance.BattleCamera.ShowTarget();
             yield return command.Execute();
             yield return new WaitForSeconds(1);
 
