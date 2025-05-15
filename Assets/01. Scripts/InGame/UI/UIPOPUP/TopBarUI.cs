@@ -21,7 +21,7 @@ public class TopBarUI : MonoBehaviour
 
         // 시작 시 한 번 갱신해서 보이게
 
-
+        
     }
 
     public void ButtonSet()

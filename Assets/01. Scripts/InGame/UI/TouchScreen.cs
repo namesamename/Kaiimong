@@ -68,7 +68,7 @@ public class TouchScreen : MonoBehaviour
                     break;
             }
         }
-#endif
+¤Ã¤² #endif
     }
 
 
