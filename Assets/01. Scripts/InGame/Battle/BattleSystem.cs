@@ -45,6 +45,8 @@ public class BattleSystem : MonoBehaviour
     private bool sortedOnce = false;
     private bool settingBattle = false;
 
+    public BattleCamera BattleCamera;
+
     public CommandController CommandController { get; private set; }
     public CharacterSelector CharacterSelector { get; private set; }
     public BattleUI BattleUI;
@@ -71,6 +73,7 @@ public class BattleSystem : MonoBehaviour
     {
         //StartBattle();
         CommandController.EndCheck += CheckGameOver;
+        BattleCamera = StageManager.Instance.BattleCamera;
     }
 
     void Update()
@@ -134,6 +137,7 @@ public class BattleSystem : MonoBehaviour
     {
         //CommandController.ExecuteCommnad();
         yield return StartCoroutine(CommandController.ExecuteCommandCoroutine());
+        BattleCamera.ShowMainView();
 
         if (PlayerTurn)
         {
@@ -252,7 +256,7 @@ public class BattleSystem : MonoBehaviour
 
     private void EnemyTurnPhase()
     {
-        if(StageManager.Instance.CurrentTurn == 20)
+        if (StageManager.Instance.CurrentTurn == 20)
         {
             StartCoroutine(ChangePhase(() => { isPhaseChanging = false; LosePhase(); }));
         }
@@ -280,6 +284,7 @@ public class BattleSystem : MonoBehaviour
                 //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
                 OnPlayerTurn?.Invoke();
                 CommandController.ClearList();
+                //BattleCamera.ShowCharacter(activePlayers[0].gameObject);
             }
             BattleUI.CharacterUI.SkillButtonAble();
         }
@@ -450,6 +455,7 @@ public class BattleSystem : MonoBehaviour
             sortedOnce = false;
             BattleUI.CharacterUI.PlayerTurnEnd();
         }
+        //BattleCamera.ShowCharacter(activePlayers[TurnIndex].gameObject);
         CanAttack = true;
     }
 

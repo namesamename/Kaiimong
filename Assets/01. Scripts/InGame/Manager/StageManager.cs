@@ -7,6 +7,7 @@ public class StageManager : Singleton<StageManager>
 {
     [Header("Stage Base")]
     [SerializeField] private BattleSystem battleSystem;
+    public BattleCamera BattleCamera;
 
     public BattleSystem BattleSystem { get { return battleSystem; } }
 

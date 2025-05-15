@@ -633,13 +633,16 @@ MonoBehaviour:
   TurnIndex: 0
   SelectedSkill: {fileID: 0}
   Targets: []
+  betweenPhaseTime: 0.5
   winFlag: 0
   loseFlag: 0
+  CurrentSet: 1
   CanSelectTarget: 0
   SelectedTarget: 0
   PlayerTurn: 0
   CanAttack: 0
   AttackEnded: 0
+  BattleCamera: {fileID: 0}
   BattleUI: {fileID: 0}
 --- !u!114 &7135094863711127828
 MonoBehaviour:
@@ -667,6 +670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Index: 0
+  IsExecutingCommands: 0
 --- !u!1 &5614296266163279154
 GameObject:
   m_ObjectHideFlags: 0
