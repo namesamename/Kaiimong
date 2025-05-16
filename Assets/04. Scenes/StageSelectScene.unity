@@ -753,6 +753,12 @@ MonoBehaviour:
   mainButton: {fileID: 754908352}
   addButton: {fileID: 1348403370}
   activityPointText: {fileID: 1014513924}
+  buttonsRect:
+  - {fileID: 1993581801}
+  - {fileID: 754908351}
+  - {fileID: 1984548941}
+  - {fileID: 1348403369}
+  buttonPosY: 466
 --- !u!1 &617170968
 GameObject:
   m_ObjectHideFlags: 3
@@ -966,7 +972,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -621, y: 466}
+  m_AnchoredPosition: {x: -621, y: 635}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &754908352
@@ -1733,7 +1739,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -235.8, y: 468.4}
+  m_AnchoredPosition: {x: -235.8, y: 635}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1348403370
@@ -2787,7 +2793,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -387, y: 467}
+  m_AnchoredPosition: {x: -387, y: 635}
   m_SizeDelta: {x: 241.09, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1984548942
@@ -2864,7 +2870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -828, y: 466}
+  m_AnchoredPosition: {x: -828, y: 635}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1993581802

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +10,24 @@ public class StageSelectSceneUI : MonoBehaviour
     [SerializeField] private Button addButton;
     [SerializeField] private TextMeshProUGUI activityPointText;
 
+    [SerializeField] private RectTransform[] buttonsRect;
+    [SerializeField] private float buttonPosY;
+
     void Start()
     {
+        MoveUI();
         backButton.onClick.AddListener(OnBackButton);
         mainButton.onClick.AddListener(OnMainButton);
         addButton.onClick.AddListener(OnAddButton);
         SetUI();
+    }
+
+    private void MoveUI()
+    {
+        for (int i = 0; i < buttonsRect.Length; i++)
+        {
+            buttonsRect[i].DOLocalMoveY(buttonPosY, 1f);
+        }
     }
 
     private async void OnAddButton()
