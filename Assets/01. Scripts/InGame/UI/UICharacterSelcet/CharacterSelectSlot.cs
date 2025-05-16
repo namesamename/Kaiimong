@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,9 +32,9 @@ public class CharacterSelectSlot : MonoBehaviour
        button.onClick.AddListener(ChangeScene);
 
 
+        transform.DOLocalRotate(Vector3.zero, 1f);
 
-
-        Debug.Log($"[SetSlot] ½½·Ô¿¡ Àû¿ë: {character.Name} (ID:{character.ID}) Lv.{saveData.Level} Grade:{character.Grade}");
+        //Debug.Log($"[SetSlot] ½½·Ô¿¡ Àû¿ë: {character.Name} (ID:{character.ID}) Lv.{saveData.Level} Grade:{character.Grade}");
 
        
     }

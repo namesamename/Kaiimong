@@ -42,33 +42,33 @@ public class TouchScreen : MonoBehaviour
         {
             isDragging = false;
         }
-#else
-        // 실제 터치 입력 (모바일용)
-        if (Input.touchCount == 1)
-        {
-            Touch touch = Input.GetTouch(0);
+//#else
+//        // 실제 터치 입력 (모바일용)
+//        if (Input.touchCount == 1)
+//        {
+//            Touch touch = Input.GetTouch(0);
 
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    touchStart = touch.position;
-                    break;
+//            switch (touch.phase)
+//            {
+//                case TouchPhase.Began:
+//                    touchStart = touch.position;
+//                    break;
 
-                case TouchPhase.Moved:
-                    Vector2 touchDelta = touch.position - touchStart;
-                    if (Mathf.Abs(touchDelta.y) > Mathf.Abs(touchDelta.x))
-                    {
+//                case TouchPhase.Moved:
+//                    Vector2 touchDelta = touch.position - touchStart;
+//                    if (Mathf.Abs(touchDelta.y) > Mathf.Abs(touchDelta.x))
+//                    {
 
-                        float sensitivity = 0.5f;
-                        float scrollAmount = touchDelta.y / Screen.height;
-                        scrollRect.verticalNormalizedPosition += scrollAmount * sensitivity;
-                        scroll.verticalNormalizedPosition = Mathf.Clamp01(scroll.verticalNormalizedPosition);
-                        touchStart = touch.position;
-                    }
-                    break;
-            }
-        }
-#endif
+//                        float sensitivity = 0.5f;
+//                        float scrollAmount = touchDelta.y / Screen.height;
+//                        scrollRect.verticalNormalizedPosition += scrollAmount * sensitivity;
+//                        scroll.verticalNormalizedPosition = Mathf.Clamp01(scroll.verticalNormalizedPosition);
+//                        touchStart = touch.position;
+//                    }
+//                    break;
+//            }
+//        }
+ #endif
     }
 
 

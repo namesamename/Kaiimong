@@ -16,9 +16,9 @@ MonoBehaviour:
   Name: dsa
   Description: asd
   Attack: 1
-  isSingleAttack: 0
+  isSingleAttack: 1
   UltimateGauge: 1
   Type: 0
-  IsBuff: 0
+  IsBuff: 1
   BuffID: 0
-  EffectType: 5
+  EffectType: 3

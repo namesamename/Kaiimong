@@ -132,7 +132,7 @@ MonoBehaviour:
     - EnemyBattleSD
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bac5425cee820a04a807c91203b49c24
-    m_Address: Assets/Resources_moved/EnemySprite/Enemy_002.png
+    m_Address: EnemySprite/Enemy_2
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

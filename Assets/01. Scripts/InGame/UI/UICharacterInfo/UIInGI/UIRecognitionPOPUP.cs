@@ -28,7 +28,7 @@ public class UIRecognitionPOPUP : UIPOPUP
     }
     public void Initialize()
     {
-
+        PlayShowAnimation();
         if (GlobalDataTable.Instance.DataCarrier.GetSave().Recognition <= 2)
         {
             for (int i = 0; i < setPOPUps.Length; i++)

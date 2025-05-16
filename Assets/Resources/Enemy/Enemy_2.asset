@@ -18,5 +18,5 @@ MonoBehaviour:
   Att: 23
   Def: 13
   Speed: 102
-  Cri: 3
+  Cri: 0.015
   SkillID: 2
