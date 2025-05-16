@@ -13,6 +13,8 @@ public abstract class CharacterCarrier : MonoBehaviour
     public GameObject SelectEffect;
 
 
+    private CharacterType type;
+
     private void Awake()
     {
 
@@ -25,6 +27,16 @@ public abstract class CharacterCarrier : MonoBehaviour
 
     public abstract void Initialize(int id, int level = -1);
 
+
+    public  CharacterType GetCharacterType()
+    {
+        return type;
+    }
+
+    public void SetType(CharacterType type)
+    {
+        this.type = type;
+    }
 
     public void SetID(int ID)
     {

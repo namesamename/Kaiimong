@@ -99,6 +99,11 @@ public class CharacterSkillBook : MonoBehaviour
    
     }
 
+    public int GetSkillGauge()
+    {
+        return SkillGauge;
+    }
+
 
     public bool IsFullCharage(ActiveSkillObject skill)
     {

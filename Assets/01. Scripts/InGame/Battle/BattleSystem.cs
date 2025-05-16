@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 
 public class BattleSystem : MonoBehaviour
@@ -51,9 +52,11 @@ public class BattleSystem : MonoBehaviour
     public CharacterSelector CharacterSelector { get; private set; }
     public BattleUI BattleUI;
 
+    List<UIBattleHealthBar> BattleHealthBars = new List<UIBattleHealthBar> { };
 
+    public Transform CanvasTrans;
 
-
+    public GameObject HealthPrefab;
     public Action OnPlayerTurn;
     public Action OnEnemyTurn;
     public Action SkillChanged;
@@ -65,6 +68,8 @@ public class BattleSystem : MonoBehaviour
         CommandController = GetComponent<CommandController>();
         CharacterSelector = GetComponent<CharacterSelector>();
         CharacterSelector.battleSystem = this;
+        HealthPrefab = Resources.Load<GameObject>("UI/Battle/HealthBar");
+        CanvasTrans = FindAnyObjectByType<Canvas>().transform;
         //StageManager.Instance.BringBattleSystem(this);
         SetUI();
     }
@@ -74,6 +79,7 @@ public class BattleSystem : MonoBehaviour
         //StartBattle();
         CommandController.EndCheck += CheckGameOver;
         BattleCamera = StageManager.Instance.BattleCamera;
+
     }
 
     void Update()
@@ -138,7 +144,7 @@ public class BattleSystem : MonoBehaviour
         //CommandController.ExecuteCommnad();
         yield return StartCoroutine(CommandController.ExecuteCommandCoroutine());
         BattleCamera.ShowMainView();
-
+        UpdateHealthUI();
         if (PlayerTurn)
         {
             CheckGameOver();
@@ -214,6 +220,7 @@ public class BattleSystem : MonoBehaviour
                 Debug.Log("모든 플레이어가 죽음: 현재 실행 중인 커맨드 중단");
                 CommandController.StopAllCommands();
             }
+            DestroyHealthBar();
             StartCoroutine(ChangePhase(() => { isPhaseChanging = false; LosePhase(); }));
             return;
         }
@@ -241,6 +248,9 @@ public class BattleSystem : MonoBehaviour
             {
                 // 마지막 라운드인 경우 (승리)
                 StartCoroutine(ChangePhase(() => { isPhaseChanging = false; WinPhase(); }));
+                DestroyHealthBar();
+
+
                 QuestManager.Instance.QuestTypeValueUP(1, QuestType.StageClear);
             }
             return;
@@ -354,12 +364,18 @@ public class BattleSystem : MonoBehaviour
                     GameObject playerObject = GlobalDataTable.Instance.character.CharacterInstanceSummon(player, Vector3.zero);
                     playerObject.transform.SetParent(playerLocations[i].transform, false);
                     CharacterCarrier playerUnit = playerObject.GetComponent<CharacterCarrier>();
+
+                    GameObject gameObject = Instantiate(HealthPrefab, CanvasTrans, false);
+                    gameObject.GetComponent<UIBattleHealthBar>().SetUI(playerUnit, CharacterType.Friend);
+                    BattleHealthBars.Add(gameObject.GetComponent<UIBattleHealthBar>());
+
                     playerUnit.visual.SetSprite(SpriteType.BattleSprite);
                     playerUnit.Initialize(GlobalDataTable.Instance.DataCarrier.GetCharacterIDToIndex(i));
                     playerLocations[i].isOccupied = true;
                     playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
                     playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
                     playerUnit.stat.OnDeath += () => CharacterDeath(playerUnit);
+                    playerUnit.stat.OnDeath += () => gameObject.GetComponent<UIBattleHealthBar>().DestroyThis();
                     //playerUnit.stat.OnDeath += CheckGameOver;
                     activePlayers.Add(playerUnit);
                     Players.RemoveAt(0);
@@ -389,11 +405,16 @@ public class BattleSystem : MonoBehaviour
                     GameObject enemyObject = GlobalDataTable.Instance.character.EnemyInstanceSummon(enemy, enemyLevel, Vector3.zero);
                     enemyObject.transform.SetParent(enemyLocations[i].transform, false);
                     CharacterCarrier enemyUnit = enemyObject.GetComponent<CharacterCarrier>();
+
+                    GameObject gameObject = Instantiate(HealthPrefab, CanvasTrans, false);
+                    gameObject.GetComponent<UIBattleHealthBar>().SetUI(enemyUnit, CharacterType.Enemy);
+                    BattleHealthBars.Add(gameObject.GetComponent<UIBattleHealthBar>());
                     enemyLocations[i].isOccupied = true;
                     enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
                     enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
                     enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
+                    enemyUnit.stat.OnDeath += () => gameObject.GetComponent<UIBattleHealthBar>().DestroyThis();
                     enemyUnit.stat.OnDeath += () => QuestManager.Instance.QuestTypeValueUP(1, QuestType.KillMonster);
                     //enemyUnit.stat.OnDeath += CheckGameOver;
                     activeEnemies.Add(enemyUnit);
@@ -554,7 +575,7 @@ public class BattleSystem : MonoBehaviour
             CommandController.AddCommand(new SkillCommand(activeEnemies[i], Targets, SelectedSkill));
             Targets.Clear();
         }
-
+        UpdateHealthUI();
         CanAttack = true;
     }
 
@@ -617,5 +638,21 @@ public class BattleSystem : MonoBehaviour
         }
 
         yield return new WaitForSeconds(maxWaitTime + 0.5f);
+    }
+
+    public void UpdateHealthUI()
+    {
+        foreach(UIBattleHealthBar character in BattleHealthBars) 
+        {
+            character.UpdataHealthBar();
+        }
+    }
+
+    public void DestroyHealthBar()
+    {
+        foreach (UIBattleHealthBar character in BattleHealthBars)
+        {
+            character.DestroyThis();
+        }
     }
 }
