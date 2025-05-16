@@ -23,8 +23,8 @@ public class GatchaExecutor : MonoBehaviour
         int useTicket = Mathf.Min(count, mgr.ticket);
         int needCrystal = (count - useTicket) * 180;
 
-        return $"{mgr.currentGachaType} Gatcha {count}time :\n" +
-               $"ticket {useTicket} + crystal {needCrystal} use \nDo it?";
+        return $"{mgr.currentGachaType} {count}회 뽑기:\n" +
+               $"금줄  {useTicket}개,  유리구슬  {needCrystal}개를 소모합니다 \n진행하겠습니까?";
     }
     private async void ShowConfirmPopupAsync<T>(string message, System.Action confirmAction) where T : PopupGatchaConfirm
     {
