@@ -56,7 +56,14 @@ public class CommandController : MonoBehaviour
                 break;
             }
 
-            StageManager.Instance.BattleCamera.ShowTarget();
+            if (StageManager.Instance.BattleSystem.GetActiveEnemies().Contains(command.targets[0]))
+            {
+                StageManager.Instance.BattleCamera.ShowEnemy();
+            }
+            else
+            {
+                StageManager.Instance.BattleCamera.ShowCharacter();
+            }
             yield return command.Execute();
             yield return new WaitForSeconds(1);
 

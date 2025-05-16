@@ -20,7 +20,9 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private Button targetConfirmButton;
     //[SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
+
     public Action OnConfirmButton;
+    public Action ResetIconY;
 
     private BattleSystem battleSystem;
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
@@ -95,10 +97,12 @@ public class CharacterUI : MonoBehaviour
 
     public void PlayerTurnEnd()
     {
+        Debug.Log("½ÇÇà");
         DisableActionButton();
         DIsableUI();
         battleSystem.TurnIndex = 0;
         PreviousCharacterIcon();
+        ResetIconY?.Invoke();
     }
 
     //void OnSkillCancelButton()
@@ -120,7 +124,9 @@ public class CharacterUI : MonoBehaviour
     void OnClickSkillButton(Button button)
     {
         int skillNum = buttonList.IndexOf(button);
+        Debug.Log(skillNum);
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
+        if (battleSystem.SelectedSkill == null) Debug.Log("null");
         battleSystem.SkillChanged?.Invoke();
         battleSystem.OnSkillSelected();
     }
@@ -179,7 +185,7 @@ public class CharacterUI : MonoBehaviour
             }
             if (i > battleSystem.TurnIndex)
             {
-                curIconRect.DOAnchorPos(iconPos[i - battleSystem.TurnIndex - 1], 1).SetEase(Ease.Linear);
+                curIconRect.DOAnchorPosX(iconPos[i - battleSystem.TurnIndex - 1].x, 1).SetEase(Ease.Linear);
                 curIconRect.DOScale(iconSize[i - battleSystem.TurnIndex - 1], 1).SetEase(Ease.Linear);
             }
         }
@@ -209,7 +215,9 @@ public class CharacterUI : MonoBehaviour
     void EnableUI()
     {
         skills.SetActive(true);
+        skills.GetComponent<CharacterUIEffect>().BounceEffect();
         icons.SetActive(true);
+        icons.GetComponent<CharacterUIEffect>().BounceEffect();
     }
 
     public void DIsableUI()

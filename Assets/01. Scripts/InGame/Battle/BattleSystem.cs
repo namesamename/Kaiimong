@@ -222,6 +222,7 @@ public class BattleSystem : MonoBehaviour
         {
             PlayerTurn = false;
             sortedOnce = false;
+            Debug.Log("wjrl");
             BattleUI.CharacterUI.PlayerTurnEnd();
             // 적이 모두 죽었을 때
             if (isExecutingCommands)
@@ -451,6 +452,7 @@ public class BattleSystem : MonoBehaviour
 
         if (TurnIndex == activePlayers.Count)
         {
+            Debug.Log("durl");
             PlayerTurn = false;
             sortedOnce = false;
             BattleUI.CharacterUI.PlayerTurnEnd();
