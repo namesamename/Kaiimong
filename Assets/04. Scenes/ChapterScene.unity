@@ -233,6 +233,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 899711336}
     m_Modifications:
+    - target: {fileID: 1263256784431532549, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+      propertyPath: buttonPosY
+      value: 485
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263256784431532549, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+      propertyPath: buttonsRect.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263256784431532549, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+      propertyPath: buttonsRect.Array.data[0]
+      value: 
+      objectReference: {fileID: 1024961134}
     - target: {fileID: 2630645690150420495, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -321,6 +333,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3869885488838146085, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 623
+      objectReference: {fileID: 0}
     - target: {fileID: 8027574849367977792, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
       propertyPath: m_Name
       value: ChapterSelectUI
@@ -333,6 +349,11 @@ PrefabInstance:
 --- !u!224 &1024961133 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2630645690150420495, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+  m_PrefabInstance: {fileID: 1024961132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1024961134 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3869885488838146085, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
   m_PrefabInstance: {fileID: 1024961132}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1453713914
