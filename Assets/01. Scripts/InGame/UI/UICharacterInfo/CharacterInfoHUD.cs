@@ -121,6 +121,18 @@ public class CharacterInfoHUD : MonoBehaviour
                 transform.DOLocalMoveX(600, 1);
                 break;
             case CharacterInfoType.PassiveSkill:
+                Image[] images1 = GetComponentsInChildren<Image>();
+                for(int i = 0; saveData.Recognition > i; i++)
+                {
+                    images1[i].color = Color.white;
+                }
+                button = GetComponentInChildren<Button>();
+
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("PassivePOPUP"));
+
+
+
                 transform.DOLocalMoveX(600, 1);
                 break;
         }

@@ -15,16 +15,16 @@ public class BattleCamera : MonoBehaviour
         StageManager.Instance.BattleCamera = this;        
     }
 
-    public void ShowCharacter(GameObject character)
+    public void ShowCharacter()
     {
-        Transform pos = CharacterCamera.transform;
-        CharacterCamera.transform.position = new Vector3(character.transform.position.x, pos.position.y, pos.position.z);
+        //Transform pos = CharacterCamera.transform;
+        //CharacterCamera.transform.position = new Vector3(character.transform.position.x, pos.position.y, pos.position.z);
         CharacterCamera.Priority = 20;
         TargetCamera.Priority = 0;
         MainViewCamera.Priority = 0;
     }
 
-    public void ShowTarget()
+    public void ShowEnemy()
     {
         //Transform pos = CharacterCamera.transform;
         //TargetCamera.transform.position = new Vector3(target.transform.position.x, pos.position.y, pos.position.z);

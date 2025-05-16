@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Threading.Tasks;
 using TMPro;
@@ -6,6 +7,9 @@ using UnityEngine.UI;
 
 public class BattleUI : MonoBehaviour
 {
+    [SerializeField] private RectTransform roundsRect;
+    [SerializeField] private RectTransform[] buttonsRect;
+
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button speedDownButton;
     [SerializeField] private Button speedUpButton;
@@ -25,10 +29,20 @@ public class BattleUI : MonoBehaviour
 
     private void Start()
     {
+        MoveUI();
         characterUI.BattleSystem = battleSystem;
         pauseButton.onClick.AddListener(OnPauseButtonAsync);
         speedDownButton.onClick.AddListener(OnSpeedDownButton);
         speedUpButton.onClick.AddListener(OnSpeedUpButton);
+    }
+
+    private void MoveUI()
+    {
+        roundsRect.DOLocalMoveX(-690, 1f);
+        for(int i = 0; i < buttonsRect.Length; i++)
+        {
+            buttonsRect[i].DOAnchorPosY(-40, 1f);
+        }
     }
 
     private void DisableButtons()

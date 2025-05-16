@@ -209,7 +209,8 @@ public class StageManager : Singleton<StageManager>
 
     private void StageWinExp()
     {
-        CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
+        LevelUpSystem.GainPlayerEXP(userExp);
+        //CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, userExp);
     }
 
     public void LoseStage()
