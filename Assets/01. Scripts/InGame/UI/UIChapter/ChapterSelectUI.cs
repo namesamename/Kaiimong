@@ -11,8 +11,12 @@ public class ChapterSelectUI : MonoBehaviour
 
     public List<ChapterSlotUI> slots = new List<ChapterSlotUI>();
 
+    [SerializeField] private RectTransform[] buttonsRect;
+    [SerializeField] private float buttonPosY;
+
     void Start()
     {
+        MoveUI();
         backButton.onClick.AddListener(OnBackButton);
         SetCategoryButtons();
         InitChapter();
@@ -64,5 +68,13 @@ public class ChapterSelectUI : MonoBehaviour
     private void OnBackButton()
     {
         SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
+    }
+
+    private void MoveUI()
+    {
+        for (int i = 0; i < buttonsRect.Length; i++)
+        {
+            buttonsRect[i].DOLocalMoveY(buttonPosY, 1f);
+        }
     }
 }
