@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PackageDataTable : MonoBehaviour
+public class PackageDataTable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Dictionary<int, List<Package>> PackageDic = new Dictionary<int, List<Package>>();
 
-    // Update is called once per frame
-    void Update()
+    public void Initialize()
     {
-        
+        List<Package> PackageSO = Resources.LoadAll<Package>("Package").ToList();
+        foreach(var data in PackageSO)
+        {
+            if (!PackageDic.ContainsKey(data.ShopID))
+                {
+                PackageDic[data.ShopID] = new List<Package>();
+            }
+            PackageDic[data.ShopID].Add(data);
+        }
     }
 }

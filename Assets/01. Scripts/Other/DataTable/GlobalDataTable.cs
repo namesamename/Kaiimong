@@ -14,6 +14,9 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public SpriteDataBase Sprite;
     public QuestDataTable Quest;
     public CharacterDialogueTable Dialogue;
+    public ShopDataTable Shop;
+    public PackageDataTable Package;
+
 
 
     public void Initialize()
@@ -31,6 +34,8 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         Sprite = new  SpriteDataBase();
         Quest = new QuestDataTable();
         Dialogue = new CharacterDialogueTable();
+        Shop = new ShopDataTable();
+        Package = new PackageDataTable();
 
         Quest.Initialize();
         Dialogue.Initialize();
@@ -44,6 +49,8 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         Item.Initialize();
         ChapterCategory.Initialize();
         EnemySpawn.Initialize();
+        Shop.Initialize();
+        Package.Initialize();
     }
 
 }

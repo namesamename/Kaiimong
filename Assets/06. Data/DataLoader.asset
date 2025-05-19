@@ -39,3 +39,7 @@ MonoBehaviour:
     sheetId: 480557962
   - className: CharacterDialogue
     sheetId: 1579207779
+  - className: Shop
+    sheetId: 1207905986
+  - className: Package
+    sheetId: 603536947

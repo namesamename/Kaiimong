@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopDataTable : MonoBehaviour
+public class ShopDataTable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Dictionary<int,Shop> ShopDic = new Dictionary<int, Shop>();
 
-    // Update is called once per frame
-    void Update()
+    public void Initialize()
     {
-        
+        Shop[]ShopSO = Resources.LoadAll<Shop>("Shop");
+        for(int i=0; i <ShopSO.Length;i++)
+        {
+            ShopDic[ShopSO[i].ID] = ShopSO[i];
+        }
     }
 }
