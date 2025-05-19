@@ -134,6 +134,30 @@ MonoBehaviour:
   - m_GUID: bac5425cee820a04a807c91203b49c24
     m_Address: EnemySprite/Enemy_2
     m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2b259fe1ce12b54c90e95a1054b94bf
+    m_Address: CharacterBattleSD/Char_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b29abf6b0703144d936ea23924b018a
+    m_Address: Icon/Char_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIcon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e130c0379ae6c53438a2b76d28cb776c
+    m_Address: CharacterSprite/Char_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 336510986f63a6342a73e590d9fa7b1c
+    m_Address: RecognitionSD/Char_5
+    m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0

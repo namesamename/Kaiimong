@@ -44,12 +44,13 @@ public class CharacterSelectHUD : MonoBehaviour
             buttons[i].onClick.RemoveAllListeners();
         }
 
-        if(SceneLoader.Instance.GetPre() == SceneState.InventoryScene)
+        if(SceneLoader.Instance.GetPre() == SceneState.CharacterInfoScene)
         {
             buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
         }
         else
         {
+
             buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
         }
        
