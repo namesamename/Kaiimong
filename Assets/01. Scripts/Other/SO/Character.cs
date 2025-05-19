@@ -12,9 +12,6 @@ public class Character : SO
     public float CriticalAttack;
     public CharacterAttackType CharacterType;
     public int CharacterItem;
-    public string SpritePath;
-    public string BattlePath;
-    public string RecognitionPath;
-    public string UpgradeBattlePath;
+
 
 }

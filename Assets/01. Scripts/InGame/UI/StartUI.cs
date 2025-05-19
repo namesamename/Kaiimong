@@ -9,6 +9,10 @@ public class StartUI : MonoBehaviour
 
     Transform StartButtoObject;
     Transform EndButtonObject;
+
+    float timer = 0f;
+
+    bool IsFade = false;
     private void Awake()
     {
         images = GetComponentsInChildren<Image>();
@@ -25,6 +29,14 @@ public class StartUI : MonoBehaviour
         EndButtonObject = transform.GetChild(4);
     }
 
+
+    private void Update()
+    {
+        if(IsFade)
+        {
+            ImageFade();
+        }
+    }
 
     public IEnumerator StartAni()
     {
@@ -57,8 +69,10 @@ public class StartUI : MonoBehaviour
         yield return new WaitForSeconds(0.03125f);
         setOff();
         yield return new WaitForSeconds(0.03125f);
-
+  
         setLight();
+        yield return new WaitForSeconds(0.5f);
+        IsFade = true;
         yield return new WaitForSeconds(1f);
         SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
 
@@ -74,6 +88,13 @@ public class StartUI : MonoBehaviour
     {
         images[0].enabled = true;
         images[1].enabled = false;
+    }
+
+    public void ImageFade()
+    {
+        timer += Time.deltaTime;
+        float progress = Mathf.Clamp01(timer / 1f); 
+        images[2].fillAmount = 1f - progress;
     }
 
     public void OnApplicationQuit()
