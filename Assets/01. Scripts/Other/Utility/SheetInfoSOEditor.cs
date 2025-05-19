@@ -150,7 +150,7 @@ public class SheetInfoSOEditor : Editor
             return "Shop_" + ID;
         }
 
-        else if (fileName == "Pacakge")
+        else if (fileName == "Package")
         {
             return "Package_" + ID;
         }

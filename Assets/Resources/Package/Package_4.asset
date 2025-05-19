@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b06665e48579774468b56223123549ea, type: 3}
-  m_Name: Package
+  m_Name: Package_4
   m_EditorClassIdentifier: 
-  ID: 8
-  ShopID: 2
+  ID: 4
+  ShopID: 1
   ItemCount: 1
-  ItemID: 5
+  ItemID: 10
   Gold: 0
   Dia: 0
