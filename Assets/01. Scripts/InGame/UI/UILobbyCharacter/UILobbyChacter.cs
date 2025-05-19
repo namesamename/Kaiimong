@@ -74,6 +74,7 @@ public class UILobbyChacter : MonoBehaviour
         if(Dialogue.Count > 0) 
         {
             textMeshProUGUI[0].text = Dialogue[UnityEngine.Random.Range(0, Dialogue.Count)];
+            QuestManager.Instance.QuestTypeValueUP(1,QuestType.CharacterInteraction);
         }
     }
 

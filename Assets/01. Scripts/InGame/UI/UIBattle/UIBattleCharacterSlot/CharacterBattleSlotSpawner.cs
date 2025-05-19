@@ -36,6 +36,7 @@ public class CharacterBattleSlotSpawner : MonoBehaviour
         {
             foreach (CharacterSaveData data in list)
             {
+                if(data.IsEquiped)
                 saveDatas.Add(data);
             }
             for (int i = 0; i < saveDatas.Count; i++)

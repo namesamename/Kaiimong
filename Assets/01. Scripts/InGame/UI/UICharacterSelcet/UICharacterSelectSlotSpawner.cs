@@ -130,6 +130,7 @@ public class UICharacterSelectSlotSpawner : MonoBehaviour
 
         foreach (var saveData in saveDataList)                                   // 저장된 캐릭터 데이터 각각 확인
         {
+            Debug.Log($"ID: {saveData.ID}");
             Character character = GlobalDataTable.Instance.character.GetCharToID(saveData.ID);  // 저장된 ID를 통해 SO 변환
 
             if (character == null)                                              // ID에 맞는 캐릭터가 없으면 스킵
