@@ -158,7 +158,32 @@ MonoBehaviour:
   - m_GUID: 336510986f63a6342a73e590d9fa7b1c
     m_Address: RecognitionSD/Char_5
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - FriendRecognitionSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8da3cd17e41faf741ac3db6288e774b5
+    m_Address: CharacterBattleSD/Char_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3fa3ebb42f38349479d36ad982c8bde1
+    m_Address: CharacterSprite/Char_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd21be51c29787647b6691814322c2c9
+    m_Address: Icon/Char_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIcon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0d0e7f8e5b0b1442b37b3c581273a69
+    m_Address: RecognitionSD/Char_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendRecognitionSD
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
