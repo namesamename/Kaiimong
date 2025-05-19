@@ -94,7 +94,7 @@ public class SceneLoader : Singleton<SceneLoader>
             return;
         }
 
-        preSceneState = sceneState;
+        //preSceneState = sceneState;
         // 씬 로드
         StartCoroutine(LoadSceneAsync(nextState));
     }
@@ -105,10 +105,10 @@ public class SceneLoader : Singleton<SceneLoader>
     IEnumerator LoadSceneAsync(SceneState nextState)
     {
         yield return new WaitForSeconds(0.02f);
-
-        // 현재 씬 업데이트 
+        preSceneState = sceneState;
+         // 현재 씬 업데이트 
         sceneState = nextState;
-
+     
         // 씬이름
         string sceneName = Enum.GetName(typeof(SceneState), sceneState);
 
