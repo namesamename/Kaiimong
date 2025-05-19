@@ -94,6 +94,7 @@ public class QuestManager : Singleton<QuestManager>
                 ResetQuest(TimeType.Daily);
                 timeSave.lastDailyReset = now;
                 SaveDataBase.Instance.SaveSingleData(timeSave);
+                CurrencyManager.Instance.ResetPurchase();
             }
         }
         else
