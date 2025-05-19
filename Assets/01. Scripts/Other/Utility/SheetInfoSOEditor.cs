@@ -144,6 +144,16 @@ public class SheetInfoSOEditor : Editor
         {
             return "EnemySpawn_" + ID;
         }
+
+        else if (fileName == "Shop")
+        {
+            return "Shop_" + ID;
+        }
+
+        else if (fileName == "Pacakge")
+        {
+            return "Package_" + ID;
+        }
         else
         {
             return fileName;
@@ -214,6 +224,16 @@ public class SheetInfoSOEditor : Editor
         {
             Directory = "QuestReward/";
         }
+        else if (SheetId == "Shop")
+        {
+            Directory = "Shop/";
+        }
+
+        else if (SheetId == "Package")
+        {
+             Directory = "Package/";
+        }
+
 
     }
 
