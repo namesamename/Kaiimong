@@ -223,4 +223,12 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         SaveDataBase.Instance.SaveSingleData(DicToSaveData());
     }
 
+    public void ResetPurchase()
+    {
+        DicSet();
+        CurrencySaveDic[CurrencyType.purchaseCount] = 0;
+        DicToSaveData();
+
+    }
+
 }

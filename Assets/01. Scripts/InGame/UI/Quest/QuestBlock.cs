@@ -170,6 +170,7 @@ public class QuestBlock : MonoBehaviour
         }
         else if(!QuestSave.IsCan && !QuestSave.IsComplete)
         {
+            Debug.Log(QuestSave.ID + questSO.QuestName);
             textMeshPros[0].text = "Find";
             button.interactable = true;
             button.onClick.AddListener(() => FindQuest());
@@ -185,23 +186,24 @@ public class QuestBlock : MonoBehaviour
             case QuestType.KillMonster:
             case QuestType.UseSkill:
             case QuestType.UseStamina:
-                button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ChapterScene));
+                SceneLoader.Instance.ChangeScene(SceneState.ChapterScene);
                 break;
             case QuestType.UesItem:
-                button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.InventoryScene));
+
+                SceneLoader.Instance.ChangeScene(SceneState.InventoryScene);
                 break;
             case QuestType.CharacterInteraction:
-                button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
+                SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
                 break;
             case QuestType.Gacha:
-                button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.PickupScene));
+                SceneLoader.Instance.ChangeScene(SceneState.PickupScene);
                 break;
             case QuestType.Recognition:
             case QuestType.LevelUp:
-                button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.CharacterSelectScene));
+                SceneLoader.Instance.ChangeScene(SceneState.CharacterSelectScene);
                 break;
             case QuestType.UseGold:
-                button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ShopScene));
+                SceneLoader.Instance.ChangeScene(SceneState.ShopScene);
                 break;
 
      
