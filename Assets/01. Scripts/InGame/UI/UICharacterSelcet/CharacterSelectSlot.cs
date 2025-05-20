@@ -48,10 +48,10 @@ public class CharacterSelectSlot : MonoBehaviour
         switch (UIManager.Instance.characterIDType)
         {
 
-            case UICharacterIDType.Lobby:
-                UIManager.Instance.SetCharacterID(character.ID);
-                SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
-                break;
+            //case UICharacterIDType.Lobby:
+            //    UIManager.Instance.SetCharacterID(character.ID);
+            //    SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
+            //    break;
             case UICharacterIDType.First:
             case UICharacterIDType.Second:
             case UICharacterIDType.Thrid:

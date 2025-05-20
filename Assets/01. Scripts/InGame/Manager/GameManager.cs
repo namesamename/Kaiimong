@@ -30,8 +30,7 @@ public class GameManager : Singleton<GameManager>
 
 
 
-    //�Ŵ����� ������ �ʱ�ȭ
-    //�� �Ŵ������� �ٸ� �Ŵ����� �����ؾ��� �� ��� ����
+
     private void Awake()
     {
         //�� �Ŵ����� �ʱ�ȭ
@@ -69,7 +68,7 @@ public class GameManager : Singleton<GameManager>
         chapterManager.Initailize();
 
 
-        
+        audioManager.Initialize();
         loader.Initialize();
         uiManager.Initialize();
     }

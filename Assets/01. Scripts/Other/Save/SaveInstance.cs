@@ -73,6 +73,14 @@ public class UICharacterIDSaveData : SaveInstance
     public string IntroduceText;
 }
 
+public class AudioSaveData : SaveInstance
+{
+    public float BGMVolume;
+    public float SFXVolume;
+    public bool IsMute;
+}
+
+
 
 
 

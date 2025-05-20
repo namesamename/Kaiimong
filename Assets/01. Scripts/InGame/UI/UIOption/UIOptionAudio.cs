@@ -7,11 +7,12 @@ public class UIOptionAudio : MonoBehaviour
 {
 
     Slider[] slider;
-
+    Toggle toggle;
 
     private void Awake()
     {
         slider = GetComponentsInChildren<Slider>();
+        toggle = GetComponentInChildren<Toggle>();
     }
 
 
@@ -27,8 +28,23 @@ public class UIOptionAudio : MonoBehaviour
         slider[0].onValueChanged.AddListener(BGM);
         slider[1].onValueChanged.AddListener(FX);
 
+
+        
+        
+        toggle.onValueChanged.RemoveAllListeners();
+        toggle.onValueChanged.AddListener(Mute);
+
     }
 
+
+    public void Mute(bool Ismute)
+    {
+        AudioManager.Instance.SetMute(Ismute);
+        toggle.isOn = AudioManager.Instance.GetMute();
+
+
+
+    }
 
     public void FX(float Volume)
     {

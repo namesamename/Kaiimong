@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
+
+    AudioSaveData saveData = new AudioSaveData();
+
     [Header("BGM Settings")]
     [SerializeField]
     private UnityEngine.AudioSource bgmSource; // 배경 음악용 오디오 소스
@@ -29,9 +32,62 @@ public class AudioManager : Singleton<AudioManager>
     protected void Start()
     {
         bgmSource = gameObject.GetOrAddComponent<UnityEngine.AudioSource>();
-
         ApplyVolumeSettings(); // 초기 볼륨 설정
     }
+
+
+    public void Initialize()
+    {
+        if(SaveDataBase.Instance.GetSaveDataToID<AudioSaveData>(SaveType.Audio, 0) != null)
+        {
+            var data = SaveDataBase.Instance.GetSaveDataToID<AudioSaveData>(SaveType.Audio, 0);
+            saveData.ID = data.ID;
+            saveData.Savetype = data.Savetype;
+            saveData.BGMVolume = data.BGMVolume;
+            saveData.SFXVolume = data.SFXVolume;
+            saveData.IsMute = data.IsMute;
+
+
+            SetMute(saveData.IsMute);
+
+            bgmVolume = saveData.BGMVolume;
+            sfxVolume = saveData.SFXVolume;
+
+            SetBGMVolume(bgmVolume);
+            SetSFXVolume(sfxVolume);
+
+            PlayBGM("Piano Instrumental 5");
+        }
+        else
+        {
+
+            AudioSaveData audio = new AudioSaveData()
+            { 
+                SFXVolume = 0.3f,
+                BGMVolume = 0.3f,
+                Savetype = SaveType.Audio,
+                IsMute = false,
+                ID = 0,
+            };
+
+            saveData.ID = audio.ID;
+            saveData.Savetype = audio.Savetype;
+            saveData.BGMVolume = audio.BGMVolume;
+            saveData.SFXVolume = audio.SFXVolume;
+            saveData.IsMute = audio.IsMute;
+
+            bgmVolume = saveData.BGMVolume;
+            sfxVolume = saveData.SFXVolume;
+
+            SetMute(false);
+            SetBGMVolume(bgmVolume);
+            SetSFXVolume(sfxVolume);
+
+            PlayBGM("Piano Instrumental 5");
+
+        }
+    }
+
 
     private void ApplyVolumeSettings()
     {
@@ -72,13 +128,17 @@ public class AudioManager : Singleton<AudioManager>
     public void SetMute(bool mute)
     {
         isMuted = mute;
+        saveData.IsMute = mute;
+        SaveDataBase.Instance.SaveSingleData(saveData);
         ApplyVolumeSettings();
     }
 
     public void SetBGMVolume(float volume)
     {
         bgmVolume = Mathf.Clamp(volume, 0f, 1f);
-        Debug.Log(bgmVolume);
+        saveData.BGMVolume = bgmVolume;
+        SaveDataBase.Instance.SaveSingleData(saveData);
+
         ApplyVolumeSettings();
     }
 
@@ -86,7 +146,9 @@ public class AudioManager : Singleton<AudioManager>
     {
 
         sfxVolume = Mathf.Clamp(volume, 0f, 1f);
-        Debug.Log(sfxVolume);
+        saveData.SFXVolume = sfxVolume;
+        SaveDataBase.Instance.SaveSingleData(saveData);
+
         ApplyVolumeSettings();
     }
 
@@ -183,5 +245,10 @@ public class AudioManager : Singleton<AudioManager>
             StopCoroutine(fadeCoroutine);
 
         fadeCoroutine = StartCoroutine(FadeInBGM(clipName, fadeDuration));
+    }
+
+    public bool GetMute()
+    {
+        return isMuted;
     }
 }

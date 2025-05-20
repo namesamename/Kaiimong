@@ -135,6 +135,12 @@ public class CharacterInfoHUD : MonoBehaviour
 
                 transform.DOLocalMoveX(600, 1);
                 break;
+            case CharacterInfoType.CEO:
+                Button CEO = GetComponentInChildren<Button>();
+                CEO.onClick.RemoveAllListeners();
+                CEO.onClick.AddListener(() => { UIManager.Instance.characterIDType = UICharacterIDType.Lobby; UIManager.Instance.SetCharacterID(character.ID); });
+                transform.DOLocalMoveY(400, 1);
+                break;
         }
 
 

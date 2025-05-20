@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UILobbyChacter : MonoBehaviour
 {
     Image characterImage;
-    Button[] buttons;
+    Button buttons;
     TextMeshProUGUI[] textMeshProUGUI;
     Action LoadOk;
 
@@ -16,7 +16,7 @@ public class UILobbyChacter : MonoBehaviour
     private void Awake()
     {
         characterImage = GetComponent<Image>();
-        buttons = GetComponentsInChildren<Button>();
+        buttons = GetComponentInChildren<Button>();
         textMeshProUGUI = GetComponentsInChildren<TextMeshProUGUI>();
 
         characterImage.enabled = false;
@@ -60,11 +60,9 @@ public class UILobbyChacter : MonoBehaviour
 
     public void SetButton()
     {
-        buttons[0].onClick.RemoveAllListeners();
-        buttons[1].onClick.RemoveAllListeners();
-
-        buttons[0].onClick.AddListener(ClickImage);
-        buttons[1].onClick.AddListener(CharacterSelect);
+        buttons.onClick.RemoveAllListeners();
+        buttons.onClick.AddListener(ClickImage);
+        //buttons[1].onClick.AddListener(CharacterSelect);
 
     }
 
@@ -79,12 +77,12 @@ public class UILobbyChacter : MonoBehaviour
     }
 
 
-    public void CharacterSelect()
-    {
-        UIManager.Instance.characterIDType = UICharacterIDType.Lobby;
-        SceneLoader.Instance.ChangeScene(SceneState.CharacterSelectScene);
+    //public void CharacterSelect()
+    //{
+    //    UIManager.Instance.characterIDType = UICharacterIDType.Lobby;
+    //    SceneLoader.Instance.ChangeScene(SceneState.CharacterSelectScene);
 
-    }
+    //}
 
 
 

@@ -11,6 +11,7 @@ public enum CharacterInfoType
     IngiUp,
     ActiveSkill,
     PassiveSkill,
+    CEO,
 
 }
 public enum SpriteType
@@ -49,7 +50,8 @@ public enum SaveType
     Item,
     Quest,
     Time,
-    UICharacterID
+    UICharacterID,
+    Audio
 
 }
 
