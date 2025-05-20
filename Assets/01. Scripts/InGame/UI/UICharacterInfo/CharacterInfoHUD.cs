@@ -48,7 +48,16 @@ public class CharacterInfoHUD : MonoBehaviour
                 break;
             case CharacterInfoType.CharacterImage:
                 Image images = GetComponent<Image>();
-                images.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
+
+                Sprite sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
+                if (sprite != null) 
+                {
+                    images.sprite = sprite;
+                }
+                else
+                {
+                    images.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, 1);
+                }
                 break;
             case CharacterInfoType.Name:
                 TextMeshProUGUI[] textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();

@@ -7,6 +7,7 @@ TagManager:
   - Reward
   - Stage
   - Background
+  - CharacterSlot
   layers:
   - Default
   - TransparentFX

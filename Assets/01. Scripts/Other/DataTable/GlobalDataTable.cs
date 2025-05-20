@@ -11,7 +11,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
     public UpGradeTable Upgrade;
     public EnemySpawnDataTable EnemySpawn;
     public ChapterCategoryDataTable ChapterCategory;
-    public SpriteDataBase Sprite;
+  
     public QuestDataTable Quest;
     public CharacterDialogueTable Dialogue;
     public ShopDataTable Shop;
@@ -31,7 +31,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
         ChapterCategory = new ChapterCategoryDataTable();
         Upgrade = new UpGradeTable();
         EnemySpawn = new EnemySpawnDataTable();
-        Sprite = new  SpriteDataBase();
+
         Quest = new QuestDataTable();
         Dialogue = new CharacterDialogueTable();
         Shop = new ShopDataTable();
@@ -39,7 +39,7 @@ public class GlobalDataTable : Singleton<GlobalDataTable>
 
         Quest.Initialize();
         Dialogue.Initialize();
-        Sprite.Initialize();
+
         Upgrade.Initialize();
         character.Initialize();
         skill.Initialize();

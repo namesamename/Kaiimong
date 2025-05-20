@@ -100,12 +100,17 @@ public class ChapterCameraTarget : MonoBehaviour
         Vector3 mouseWorld = GetMouseWorldPosition();
         RaycastHit2D hit = Physics2D.Raycast(mouseWorld, Vector2.zero);
 
+        if (hit.collider.CompareTag("Background")) return;
+
         if (hit.collider != null)
         {
             if (stageInfoUI.gameObject.activeSelf)
             {
-                Debug.Log(hit.collider);
-                stageInfoUI.DisableUI();
+                Debug.Log(hit.collider.gameObject);
+                if (!hit.collider.CompareTag("CharacterSlot"))
+                {
+                    stageInfoUI.DisableUI();
+                }
             }
             else
             {

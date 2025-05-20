@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CharacterSprite
+  m_EditorClassIdentifier: 
+  m_GroupName: CharacterSprite
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b6d11640275de9e49a954d0850972630
+  m_SerializeEntries:
+  - m_GUID: 9863f850d9c7a054a95e29833cabb393
+    m_Address: CharacterSprite/Char_12
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 638837c0f01d0fc4e84568cfeae635f7
+    m_Address: CharacterSprite/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47a0c9c3d98e67d46893fbe696048358
+    m_Address: CharacterSprite/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30ddb09ef0d1f534b81d8d2a0f7d9393
+    m_Address: CharacterSprite/Char_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8608c71610308e648af04adb1de207d4
+    m_Address: CharacterSprite/Char_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35477d2e703eee942a283c28baa171e5
+    m_Address: CharacterSprite/Char_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89c59587b348ff644ad93f34b18b1e7e
+    m_Address: CharacterSprite/Char_7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2aa17bdad3c4b3f4da342847224fe93f
+    m_Address: CharacterSprite/Char_8
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e11bc1a72d96bbb4699afcea4f23a873
+    m_Address: CharacterSprite/Char_9
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7315512c06d250148bb4761042262337
+    m_Address: CharacterSprite/Char_10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2972bfe730f820468b9256a5fc4098d
+    m_Address: CharacterSprite/Char_11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b5ef66ceee36a1a4e8afa545291e9dec, type: 2}
+    - {fileID: 11400000, guid: bd3623311c28f0744a0cf5e724bc762c, type: 2}

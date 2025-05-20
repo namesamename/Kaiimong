@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CharacterSD
+  m_EditorClassIdentifier: 
+  m_GroupName: CharacterSD
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 0061547efe5e86341b7a4e2066879f32
+  m_SerializeEntries:
+  - m_GUID: b033c069c3c61ff499a106a2095babf7
+    m_Address: CharacterBattleSD/Char_12
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8cd54489503a57b44bbd89085d3affa5
+    m_Address: CharacterBattleSD/Char_11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3309c5fdce998a340bb860ee5349040e
+    m_Address: CharacterBattleSD/Char_10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e7ed0d3bc4704d4a869fe8d89906da7
+    m_Address: CharacterBattleSD/Char_9
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 649060274fa454f40bb72f0991820860
+    m_Address: CharacterBattleSD/Char_8
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e1d338bb2acedd48bc9c2935462aca7
+    m_Address: CharacterBattleSD/Char_7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08799a5682271f646aec09c46ab327d7
+    m_Address: CharacterBattleSD/Char_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc2687962dbf6fe40ac0cb8b07cbb6a0
+    m_Address: CharacterBattleSD/Char_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d0693e673261a7429d154a2d6b5795f
+    m_Address: CharacterBattleSD/Char_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 504fc31096074ee458c5dafa2966071b
+    m_Address: CharacterBattleSD/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d5e7a03e87d99649b4705b29ac53b1f
+    m_Address: CharacterBattleSD/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 35d19557a2f25fa41ad1805c9cd37b5e, type: 2}
+    - {fileID: 11400000, guid: 42d200ece7e22b4419201c1f382d8c9b, type: 2}

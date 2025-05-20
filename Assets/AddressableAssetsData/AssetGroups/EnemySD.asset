@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: EnemySD
+  m_EditorClassIdentifier: 
+  m_GroupName: EnemySD
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ef1191765c4b39c4db4a5f67afa460a7
+  m_SerializeEntries:
+  - m_GUID: bac5425cee820a04a807c91203b49c24
+    m_Address: EnemySprite/Enemy_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1785ebb8e4cf694458dbf2667f53058f
+    m_Address: EnemySprite/Enemy_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2f675fe3a9a0c12488c9b71e148faf68, type: 2}
+    - {fileID: 11400000, guid: 4588863673d0bc64aa6d930a99cdb614, type: 2}

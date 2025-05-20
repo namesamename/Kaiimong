@@ -42,7 +42,7 @@ public class CharacterVisual : MonoBehaviour
                     Icon = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, ID);
                     
                     if (this == null || !gameObject.activeInHierarchy) return;
-                    RecoSD = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.RecognitionSD, ID);
+                    //RecoSD = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.RecognitionSD, ID);
 
                     // 기본 스프라이트 설정
                     if (this != null && gameObject.activeInHierarchy && spriteRenderer != null)

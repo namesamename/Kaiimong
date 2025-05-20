@@ -77,14 +77,12 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
     {
 
         Sprite sprite = null;
-        if(character.ID > 6) 
+
+        sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
+        if (sprite == null) 
         {
             sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, 1);
 
-        }
-        else
-        {
-            sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
         }
         images[1].sprite = sprite;
 
