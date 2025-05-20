@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 684628048}
   - component: {fileID: 684628050}
   - component: {fileID: 684628049}
-  - component: {fileID: 684628051}
+  - component: {fileID: 684628052}
   m_Layer: 5
   m_Name: Option
   m_TagString: Untagged
@@ -329,7 +329,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684628047}
   m_CullTransparentMesh: 1
---- !u!114 &684628051
+--- !u!114 &684628052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,11 +338,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 684628047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88739778a500c714c8c8516963d79990, type: 3}
+  m_Script: {fileID: 11500000, guid: cd509ec54faf5f04c8bffa2c123b2b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmSlider: {fileID: 1181661786}
-  sfxSlider: {fileID: 1887571131}
 --- !u!1 &805662265
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +930,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1023630942}
+  - component: {fileID: 1023630946}
   - component: {fileID: 1023630945}
   - component: {fileID: 1023630944}
   - component: {fileID: 1023630943}
@@ -1026,6 +1025,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1023630946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023630941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4318ea52c6e384db3bb492387fd674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1094540373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,7 +1196,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 20
+  m_Value: 43
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1906,7 +1917,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 20
+  m_Value: 51
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -78,12 +78,15 @@ public class AudioManager : Singleton<AudioManager>
     public void SetBGMVolume(float volume)
     {
         bgmVolume = Mathf.Clamp(volume, 0f, 1f);
+        Debug.Log(bgmVolume);
         ApplyVolumeSettings();
     }
 
     public void SetSFXVolume(float volume)
     {
+
         sfxVolume = Mathf.Clamp(volume, 0f, 1f);
+        Debug.Log(sfxVolume);
         ApplyVolumeSettings();
     }
 
