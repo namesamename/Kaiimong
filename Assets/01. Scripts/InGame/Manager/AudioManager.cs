@@ -121,10 +121,23 @@ public class AudioManager : Singleton<AudioManager>
         if (Instance.isMuted || !clip) return;
 
         AudioSource obj = Instantiate(Instance.audioSourcePrefab); // 새로운 사운드 소스 오브젝트 생성
+
+        DontDestroyOnLoad(obj);
+
         AudioSource soundSource = obj.GetComponent<AudioSource>(); // 사운드 소스 가져오기
         soundSource.Play(clip, Instance.sfxVolume, Instance.sfxPitchVariance); // 효과음 재생
+
+        Instance.StartCoroutine(SFXDown(obj, clip.length));
+        
     }
 
+
+
+    public static IEnumerator SFXDown(AudioSource au, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(au.gameObject);
+    }
     public void SetMute(bool mute)
     {
         isMuted = mute;

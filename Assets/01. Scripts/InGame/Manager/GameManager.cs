@@ -23,13 +23,10 @@ public class GameManager : Singleton<GameManager>
 
     AudioManager audioManager;
 
-
-
-
     GameObject[] ManagersPrefabs;
 
 
-
+    AudioClip audioClip;
 
     private void Awake()
     {
@@ -47,10 +44,25 @@ public class GameManager : Singleton<GameManager>
             }
         }
         ManagersPrefabs = Resources.LoadAll<GameObject>("Manager");
+        GetSFX();
         GetCompo();
         LevelUpSystem.Init();
-
         Initialize();
+    }
+
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            AudioManager.PlaySFX(audioClip);
+        }
+#else
+    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+    {
+           AudioManager.PlaySFX(audioClip);
+    }
+#endif
     }
 
 
@@ -166,6 +178,11 @@ public class GameManager : Singleton<GameManager>
     {
         if(questManager != null)
         questManager.TimeCheck();
+    }
+
+    public async void GetSFX()
+    {
+        audioClip = await AddressableManager.Instance.LoadAsset<AudioClip>(AddreassablesType.SoundEffectFx, 3);
     }
 
 }

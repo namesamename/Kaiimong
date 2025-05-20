@@ -9,11 +9,7 @@ public class QuestManager : Singleton<QuestManager>
     Dictionary<int, QuestSaveData> QuestData = new Dictionary<int, QuestSaveData>();
 
 
-    private void Start()
-    {
-        CheckDaily();
-        CheckWeekly();
-    }
+
 
     public void Initialize()
     {
@@ -46,6 +42,9 @@ public class QuestManager : Singleton<QuestManager>
 
          
             QuestData[QuestID] = newQuestData;
+
+            CheckDaily();
+            CheckWeekly();
         }
     }
 
@@ -55,13 +54,15 @@ public class QuestManager : Singleton<QuestManager>
 
         if (timeSave != null)
         {
-            DateTime now = DateTime.Now;
+            DateTime now = DateTime.UtcNow;
             DateTime thisTime = GetMonday() + resetTime;
             DateTime lastTime = thisTime.AddDays(-7);
             DateTime lastWeekly = timeSave.lastWeeklyReset;
-            if (now >= thisTime && lastWeekly < thisTime || (now < thisTime && lastWeekly < lastTime))
+            if ((now >= thisTime && lastWeekly < thisTime) || (now < thisTime && lastWeekly < lastTime))
             {
                 ResetQuest(TimeType.Weekly);
+                timeSave.lastWeeklyReset = now;
+                SaveDataBase.Instance.SaveSingleData(timeSave);
             }
         }
         else
@@ -70,10 +71,9 @@ public class QuestManager : Singleton<QuestManager>
             {
                 Savetype = SaveType.Time,
                 ID = 0,
-                lastDailyReset = DateTime.Now,
-                lastWeeklyReset = DateTime.Now,
+                lastDailyReset = DateTime.UtcNow,
+                lastWeeklyReset = DateTime.UtcNow,
             };
-
 
             SaveDataBase.Instance.SaveSingleData(newtimeSave);
         }
@@ -83,13 +83,13 @@ public class QuestManager : Singleton<QuestManager>
     {
         TimeSaveData timeSave = SaveDataBase.Instance.GetSaveDataToID<TimeSaveData>(SaveType.Time, 0);
 
-        if(timeSave != null)
+        if (timeSave != null)
         {
-            DateTime now = DateTime.Now;  
-            DateTime lastDaily = timeSave.lastDailyReset; 
-            DateTime todayResetTime = DateTime.Today + resetTime;  
+            DateTime now = DateTime.UtcNow;
+            DateTime lastDaily = timeSave.lastDailyReset;
+            DateTime todayResetTime = DateTime.UtcNow.Date + resetTime;
             DateTime yesterdayResetTime = todayResetTime.AddDays(-1);
-            if ((now >= todayResetTime && lastDaily < todayResetTime) ||(now < todayResetTime && lastDaily < yesterdayResetTime))
+            if ((now >= todayResetTime && lastDaily < todayResetTime) || (now < todayResetTime && lastDaily < yesterdayResetTime))
             {
                 ResetQuest(TimeType.Daily);
                 timeSave.lastDailyReset = now;
@@ -103,24 +103,19 @@ public class QuestManager : Singleton<QuestManager>
             {
                 Savetype = SaveType.Time,
                 ID = 0,
-                lastDailyReset = DateTime.Now,
-                lastWeeklyReset = DateTime.Now,
+                lastDailyReset = DateTime.UtcNow,
+                lastWeeklyReset = DateTime.UtcNow,
             };
             SaveDataBase.Instance.SaveSingleData(newtimeSave);
         }
-
-    
     }
 
     DateTime GetMonday()
     {
         DateTime today = DateTime.Today;
-        int WhenIsMonday = (int)DayOfWeek.Monday - (int)today.DayOfWeek;
-        if (WhenIsMonday == 0)
-            return today;
-        return today.AddDays(WhenIsMonday);
+        int diff = (7 + (int)today.DayOfWeek - (int)DayOfWeek.Monday) % 7;
+        return today.AddDays(-diff);
     }
-
 
 
     public void ResetQuest(TimeType timeType)
