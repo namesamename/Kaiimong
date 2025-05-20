@@ -20,6 +20,7 @@ public class ChapterCameraTarget : MonoBehaviour
     private void Start()
     {
         FindBackGround();
+        MoveCameraToLeftEdge();
     }
 
     void Update()
@@ -114,6 +115,14 @@ public class ChapterCameraTarget : MonoBehaviour
                     stageInfoUI.SetUI(clickedStage);
                 }
             }
+        }
+    }
+
+    void MoveCameraToLeftEdge()
+    {
+        if (backgroundFound)
+        {
+            transform.position = new Vector3(camMin, transform.position.y, transform.position.z);
         }
     }
 }
