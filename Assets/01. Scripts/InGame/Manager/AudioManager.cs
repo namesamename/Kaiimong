@@ -132,6 +132,19 @@ public class AudioManager : Singleton<AudioManager>
     }
 
 
+    public static void PlaySFXDestroySceneLoad(AudioClip clip)
+    {
+        if (Instance.isMuted || !clip) return;
+
+        AudioSource obj = Instantiate(Instance.audioSourcePrefab); // 새로운 사운드 소스 오브젝트 생성
+
+        AudioSource soundSource = obj.GetComponent<AudioSource>(); // 사운드 소스 가져오기
+        soundSource.Play(clip, Instance.sfxVolume, Instance.sfxPitchVariance); // 효과음 재생
+
+
+
+    }
+
 
     public static IEnumerator SFXDown(AudioSource au, float delay)
     {

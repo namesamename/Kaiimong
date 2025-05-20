@@ -11,11 +11,20 @@ public class UIUserInformation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Level;
     [SerializeField] private TextMeshProUGUI exp;
     [SerializeField] private Slider Slider;
-   
+
+    private Button button;
+
+    private void Awake()
+    {
+        button = GetComponentInChildren<Button>();
+    }
     //임시로 지정하는 데이터들 - 플레이어 데이터 
     private void Start()
     {
         ShowUserInfo();
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ProfileScene));
+
     }
     private void Update()
     {

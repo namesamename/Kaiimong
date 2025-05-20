@@ -185,6 +185,31 @@ MonoBehaviour:
     m_SerializedLabels:
     - FriendRecognitionSD
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89c59587b348ff644ad93f34b18b1e7e
+    m_Address: CharacterSprite/Char_7
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2aa17bdad3c4b3f4da342847224fe93f
+    m_Address: CharacterSprite/Char_8
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e11bc1a72d96bbb4699afcea4f23a873
+    m_Address: CharacterSprite/Char_9
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7315512c06d250148bb4761042262337
+    m_Address: CharacterSprite/Char_10
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2972bfe730f820468b9256a5fc4098d
+    m_Address: CharacterSprite/Char_11
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
   m_SchemaSet:

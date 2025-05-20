@@ -99,7 +99,7 @@ public class CharacterSelectSlot : MonoBehaviour
 
         Sprite sprite = null;
 
-        if (character.ID > 6)
+        if (character.ID > 11)
         {
             sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, 1);
         }else

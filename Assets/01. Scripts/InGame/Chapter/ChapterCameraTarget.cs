@@ -104,6 +104,7 @@ public class ChapterCameraTarget : MonoBehaviour
         {
             if (stageInfoUI.gameObject.activeSelf)
             {
+                Debug.Log(hit.collider);
                 stageInfoUI.DisableUI();
             }
             else

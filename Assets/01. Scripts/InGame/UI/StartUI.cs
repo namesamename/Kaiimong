@@ -10,11 +10,15 @@ public class StartUI : MonoBehaviour
     Transform StartButtoObject;
     Transform EndButtonObject;
 
+    AudioClip FlashClip;
+
     float timer = 0f;
 
     bool IsFade = false;
     private void Awake()
     {
+
+        GetFlash();
         images = GetComponentsInChildren<Image>();
         buttons = GetComponentsInChildren<Button>();
 
@@ -29,6 +33,11 @@ public class StartUI : MonoBehaviour
         EndButtonObject = transform.GetChild(4);
     }
 
+    public async void GetFlash()
+    {
+        FlashClip = await AddressableManager.Instance.LoadAsset<AudioClip>(AddreassablesType.SoundEffectFx, 4);
+
+    }
 
     private void Update()
     {
@@ -40,6 +49,8 @@ public class StartUI : MonoBehaviour
 
     public IEnumerator StartAni()
     {
+        AudioManager.PlaySFXDestroySceneLoad(FlashClip);
+
         StartButtoObject.gameObject.SetActive(false);
         EndButtonObject.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);

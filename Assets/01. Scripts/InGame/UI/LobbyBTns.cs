@@ -18,9 +18,9 @@ public class LobbyBTns : MonoBehaviour
         buttons[3].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.PickupScene));
         buttons[4].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ShopScene));
         buttons[5].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.QuestScene));
-        buttons[7].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ProfileScene));
+        
         buttons[6].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.MessageScene));
-        buttons[8].onClick.AddListener(async () => await UIManager.Instance.ShowPopup("StaminaChargePOPUP"));
+        buttons[7].onClick.AddListener(async () => await UIManager.Instance.ShowPopup("StaminaChargePOPUP"));
 
     }
     
