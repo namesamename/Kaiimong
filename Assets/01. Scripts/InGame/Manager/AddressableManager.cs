@@ -145,6 +145,9 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "SkillEffect/SkillEffect_";
             case AddreassablesType.SoundEffectFx:
                 return "SoundEffectFx/";
+
+            case AddreassablesType.CharacterSlotSprite:
+                return "CharacterSlotSprite/Char_";
             default:
                 Debug.LogError($"Unknown AddreassablesType: {type}");
                 return string.Empty;

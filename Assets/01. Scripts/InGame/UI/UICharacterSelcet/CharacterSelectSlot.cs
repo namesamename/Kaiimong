@@ -98,10 +98,10 @@ public class CharacterSelectSlot : MonoBehaviour
 
 
         Sprite sprite = null;
-        sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
+        sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterSlotSprite, character.ID);
         if (sprite == null)
         {
-            sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, 1);
+            sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterSlotSprite, 1);
         }
  
       

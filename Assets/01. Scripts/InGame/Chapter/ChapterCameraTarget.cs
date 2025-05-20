@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -97,32 +98,65 @@ public class ChapterCameraTarget : MonoBehaviour
 
     void TryClickObject()
     {
-        Vector3 mouseWorld = GetMouseWorldPosition();
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorld, Vector2.zero);
 
-        if (hit.collider.CompareTag("Background")) return;
-
-        if (hit.collider != null)
+        if (IsPointerOverUIElement())
         {
-            if (stageInfoUI.gameObject.activeSelf)
+            return; 
+        }
+
+        Vector3 mouseWorld = GetMouseWorldPosition();
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorld, Vector2.zero);
+
+        bool isCharacterClicked = false;
+        bool isStageClicked = false;
+        StageSlot clickedStage = null;
+
+   
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider == null) continue;
+
+            if (hit.collider.CompareTag("CharacterSlot"))
             {
-                Debug.Log(hit.collider.gameObject);
-                if (!hit.collider.CompareTag("CharacterSlot"))
-                {
-                    stageInfoUI.DisableUI();
-                }
+                isCharacterClicked = true;
+      
             }
-            else
+            else if (hit.collider.CompareTag("Stage"))
             {
-                if (hit.collider.CompareTag("Stage"))
-                {
-                    StageSlot clickedStage = hit.collider.GetComponent<StageSlot>();
-                    stageInfoUI.gameObject.SetActive(true);
-                    stageInfoUI.SetUI(clickedStage);
-                }
+                isStageClicked = true;
+                clickedStage = hit.collider.GetComponent<StageSlot>();
             }
         }
+
+        if (isStageClicked && clickedStage != null)
+        {
+            stageInfoUI.gameObject.SetActive(true);
+            stageInfoUI.SetUI(clickedStage);
+        }
+        else if (!isCharacterClicked)
+        {
+
+            stageInfoUI.DisableUI();
+        }
     }
+
+
+    private bool IsPointerOverUIElement()
+    {
+
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Input.mousePosition;
+
+
+        List<RaycastResult> results = new List<RaycastResult>();
+
+        EventSystem.current.RaycastAll(eventData, results);
+
+
+        return results.Count > 0;
+    }
+
+
 
     void MoveCameraToLeftEdge()
     {

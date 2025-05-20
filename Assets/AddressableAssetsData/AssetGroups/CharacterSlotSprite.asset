@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CharacterSlotSprite
+  m_EditorClassIdentifier: 
+  m_GroupName: CharacterSlotSprite
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ad1abc0e81581d744b96f250b5e1a5c9
+  m_SerializeEntries:
+  - m_GUID: 15be23c30fef84145a87ac9ea6e51d8a
+    m_Address: CharacterSlotSprite/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd5235285c2a630459832d1a37971806
+    m_Address: CharacterSlotSprite/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3419f5d3aa308714c8799cea210c158a
+    m_Address: CharacterSlotSprite/Char_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60bf18a430c6a294596c616c38bcfc49
+    m_Address: CharacterSlotSprite/Char_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4c217099f2054d41b2856a15d5e9051
+    m_Address: CharacterSlotSprite/Char_6
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7de8e190da1c414fa51b64dddd645ba
+    m_Address: CharacterSlotSprite/Char_7
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f23f8bf9e579de4c9b9f79fc3a1d93a
+    m_Address: CharacterSlotSprite/Char_8
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1dba790fcd393394cab172102163e826
+    m_Address: CharacterSlotSprite/Char_9
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e355467c67a3a574c862889b816ae008
+    m_Address: CharacterSlotSprite/Char_10
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c81b7a2d738eab478ed1f449969f72f
+    m_Address: CharacterSlotSprite/Char_11
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d72bc186ad794f24b87ebdc84d3f6303
+    m_Address: CharacterSlotSprite/Char_12
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 42726e0ba0c6ea34ebc18cb264437adf, type: 2}
+    - {fileID: 11400000, guid: 385edc2bc6338a348a408cb3cd27a054, type: 2}
