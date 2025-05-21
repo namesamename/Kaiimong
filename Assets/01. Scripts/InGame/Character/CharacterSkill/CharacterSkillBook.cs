@@ -83,19 +83,28 @@ public class CharacterSkillBook : MonoBehaviour
         //if(!IsFullCharage(skill)) 
         //    return;
 
-        SetSkillGauge(skill.SkillSO.UltimateGauge);
+        SetSkillGauge(skill);
         skill.UseSkill(characters);
     }
 
 
-    public void SetSkillGauge(int Gauge)
+    public void SetSkillGauge(ActiveSkillObject activeSkill)
     {
-        SkillGauge += Gauge;
-
-        if(SkillGauge > maxSkillGauge)
+        if(activeSkill.SkillSO.ID % 3 == 0)
         {
-            SkillGauge = maxSkillGauge;
+            SkillGauge = 0;
         }
+        else
+        {
+            SkillGauge += activeSkill.SkillSO.UltimateGauge;
+
+            if (SkillGauge > maxSkillGauge)
+            {
+                SkillGauge = maxSkillGauge;
+            }
+        }
+
+   
    
     }
 
