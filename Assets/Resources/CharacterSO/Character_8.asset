@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Character_8
   m_EditorClassIdentifier: 
   ID: 8
-  Name: "\uC544"
+  Name: "\uC6B0\uB9C8\uC655"
   Grade: 2
-  Health: 1200
-  Attack: 245
-  Defence: 114
-  Speed: 97
-  CriticalPer: 0.054
-  CriticalAttack: 1.48
+  Health: 1100
+  Attack: 230
+  Defence: 100
+  Speed: 104
+  CriticalPer: 0.052
+  CriticalAttack: 1.37
   CharacterType: 1
   CharacterItem: 1

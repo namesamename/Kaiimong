@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Character_6
   m_EditorClassIdentifier: 
   ID: 6
-  Name: "\uBC14"
+  Name: "\uC6A9\uB140"
   Grade: 0
-  Health: 1400
-  Attack: 225
-  Defence: 120
-  Speed: 99
-  CriticalPer: 0.058
-  CriticalAttack: 1.43
+  Health: 1600
+  Attack: 250
+  Defence: 130
+  Speed: 100
+  CriticalPer: 0.067
+  CriticalAttack: 1.46
   CharacterType: 0
   CharacterItem: 1

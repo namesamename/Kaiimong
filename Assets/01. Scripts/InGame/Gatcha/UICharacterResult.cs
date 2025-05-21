@@ -33,9 +33,9 @@ public class UICharacterResult : MonoBehaviour  //뽑기 결과연출을 보여주는 스크�
         }
 
         // 스프라이트 로드: ID 1~4만 존재
-        if (character.ID >= 1 && character.ID <= 4)
+        if (character.ID >= 1 && character.ID <= 12)
         {
-            Sprite loadedSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, character.ID);
+            Sprite loadedSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, character.ID);
 
             if (loadedSprite != null)
             {

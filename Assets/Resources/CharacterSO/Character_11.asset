@@ -13,17 +13,13 @@ MonoBehaviour:
   m_Name: Character_11
   m_EditorClassIdentifier: 
   ID: 11
-  Name: "\uCE74"
-  Grade: 2
-  Health: 1100
-  Attack: 230
-  Defence: 100
-  Speed: 104
-  CriticalPer: 0.052
-  CriticalAttack: 1.37
-  CharacterType: 1
+  Name: "\uC6D0\uC6B0\uD601"
+  Grade: 1
+  Health: 1200
+  Attack: 270
+  Defence: 118
+  Speed: 103
+  CriticalPer: 0.07
+  CriticalAttack: 1.5
+  CharacterType: 0
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1

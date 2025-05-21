@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Character_10
   m_EditorClassIdentifier: 
   ID: 10
-  Name: "\uCC28"
+  Name: "\uD0A4\uB9B0"
   Grade: 0
-  Health: 1200
-  Attack: 220
-  Defence: 110
-  Speed: 98
-  CriticalPer: 0.05
-  CriticalAttack: 1.38
-  CharacterType: 1
+  Health: 1300
+  Attack: 265
+  Defence: 121
+  Speed: 101
+  CriticalPer: 0.063
+  CriticalAttack: 1.47
+  CharacterType: 0
   CharacterItem: 1
