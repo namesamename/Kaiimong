@@ -13,17 +13,13 @@ MonoBehaviour:
   m_Name: Character_1
   m_EditorClassIdentifier: 
   ID: 1
-  Name: "\uAC00"
-  Grade: 0
-  Health: 1600
-  Attack: 250
-  Defence: 130
-  Speed: 100
-  CriticalPer: 0.067
-  CriticalAttack: 1.46
+  Name: "\uAC80\uC815\uCE58\uB9C8"
+  Grade: 1
+  Health: 1400
+  Attack: 225
+  Defence: 120
+  Speed: 99
+  CriticalPer: 0.058
+  CriticalAttack: 1.43
   CharacterType: 0
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1

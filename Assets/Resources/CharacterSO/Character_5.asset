@@ -13,17 +13,13 @@ MonoBehaviour:
   m_Name: Character_5
   m_EditorClassIdentifier: 
   ID: 5
-  Name: "\uB9C8"
-  Grade: 0
+  Name: "\uC9C4\uC870"
+  Grade: 2
   Health: 1200
-  Attack: 270
-  Defence: 118
-  Speed: 103
-  CriticalPer: 0.07
-  CriticalAttack: 1.5
-  CharacterType: 0
+  Attack: 220
+  Defence: 110
+  Speed: 98
+  CriticalPer: 0.05
+  CriticalAttack: 1.38
+  CharacterType: 1
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1

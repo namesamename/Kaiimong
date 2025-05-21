@@ -13,17 +13,13 @@ MonoBehaviour:
   m_Name: Character_4
   m_EditorClassIdentifier: 
   ID: 4
-  Name: "\uB77C"
-  Grade: 0
-  Health: 1300
-  Attack: 265
-  Defence: 121
-  Speed: 101
-  CriticalPer: 0.063
-  CriticalAttack: 1.47
-  CharacterType: 0
+  Name: "\uB9E4\uB4DC\uACFC\uD559\uC790"
+  Grade: 1
+  Health: 1200
+  Attack: 245
+  Defence: 114
+  Speed: 97
+  CriticalPer: 0.054
+  CriticalAttack: 1.48
+  CharacterType: 1
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1
