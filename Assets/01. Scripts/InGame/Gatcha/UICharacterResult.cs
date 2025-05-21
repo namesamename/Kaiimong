@@ -33,8 +33,7 @@ public class UICharacterResult : MonoBehaviour  //뽑기 결과연출을 보여주는 스크�
         }
 
         // 스프라이트 로드: ID 1~4만 존재
-        if (character.ID >= 1 && character.ID <= 12)
-        {
+
             Sprite loadedSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, character.ID);
 
             if (loadedSprite != null)
@@ -45,13 +44,7 @@ public class UICharacterResult : MonoBehaviour  //뽑기 결과연출을 보여주는 스크�
             else
             {
                 characterImage.color = Color.clear;
-            }
-        }
-        else
-        {
-            // ID 범위 밖 → 이미지 비활성화 or 기본 이미지 처리
-            characterImage.color = Color.clear;
-        }
+            }     
     }
 
     private void AnimateSGradeS() // S등급이 나왔을 때 동작하는 부분 
