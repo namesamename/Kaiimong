@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 6
   Name: "\uBC14"
-  Grade: 1
+  Grade: 0
   Health: 1400
   Attack: 225
   Defence: 120
@@ -23,7 +23,3 @@ MonoBehaviour:
   CriticalAttack: 1.43
   CharacterType: 0
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1

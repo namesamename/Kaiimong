@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 10
   Name: "\uCC28"
-  Grade: 2
+  Grade: 0
   Health: 1200
   Attack: 220
   Defence: 110
@@ -23,7 +23,3 @@ MonoBehaviour:
   CriticalAttack: 1.38
   CharacterType: 1
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1

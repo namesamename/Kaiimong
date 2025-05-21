@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1
   Name: "\uAC00"
-  Grade: 0
+  Grade: 1
   Health: 1600
   Attack: 250
   Defence: 130
@@ -23,7 +23,3 @@ MonoBehaviour:
   CriticalAttack: 1.46
   CharacterType: 0
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1

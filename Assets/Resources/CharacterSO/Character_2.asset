@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 2
   Name: "\uB098"
-  Grade: 0
+  Grade: 1
   Health: 1500
   Attack: 255
   Defence: 127
@@ -23,7 +23,3 @@ MonoBehaviour:
   CriticalAttack: 1.41
   CharacterType: 0
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1

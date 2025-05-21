@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 9
   Name: "\uC790"
-  Grade: 1
+  Grade: 0
   Health: 1100
   Attack: 255
   Defence: 111
@@ -23,7 +23,3 @@ MonoBehaviour:
   CriticalAttack: 1.44
   CharacterType: 1
   CharacterItem: 1
-  SpritePath: CharacterSprite/1
-  BattlePath: CharacterBattleSD/1
-  RecognitionPath: RecognitionSprite/1
-  UpgradeBattlePath: UpgradeBattleSD/1
