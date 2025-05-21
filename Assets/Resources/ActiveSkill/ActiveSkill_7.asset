@@ -16,9 +16,9 @@ MonoBehaviour:
   Name: as
   Description: sad
   Attack: 1
-  isSingleAttack: 1
+  isSingleAttack: 0
   UltimateGauge: 1
   Type: 0
-  IsBuff: 1
+  IsBuff: 0
   BuffID: 0
   EffectType: 0
