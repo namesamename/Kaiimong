@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterBattleSlotSpawner : MonoBehaviour
@@ -21,6 +22,9 @@ public class CharacterBattleSlotSpawner : MonoBehaviour
     public void CreatSlot()
     {
         List<CharacterSaveData> list = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
+        saveDatas.Clear();
+
+
         if (Slots.Count >= list.Count)
         {
             int index = 0;
@@ -38,15 +42,37 @@ public class CharacterBattleSlotSpawner : MonoBehaviour
             {
                 if(data.IsEquiped)
                 saveDatas.Add(data);
+
+
             }
+            SaveOrder(saveDatas);
             for (int i = 0; i < saveDatas.Count; i++)
             {
                 GameObject slot = Instantiate(Prefabs, transform);
                 Slots.Add(slot);
                 slot.GetComponent<CharacterBattleSlot>().SetComponent();
                 slot.GetComponent<CharacterBattleSlot>().SetSlot(saveDatas[i].ID);
+                Debug.Log(saveDatas[i].ID);
             }
         }
+    }
+
+    public List<CharacterSaveData> SaveOrder(List<CharacterSaveData> list)
+    {
+        List<Character> list2 = new List<Character>();
+        foreach (CharacterSaveData saveData in list)
+        {
+            list2.Add(GlobalDataTable.Instance.character.GetCharToID(saveData.ID));
+
+        }
+        list2 = list2.OrderBy(item => item.Grade).ToList();
+        list.Clear();
+        foreach (Character saveData in list2)
+        {
+            list.Add(SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, saveData.ID));
+        }
+
+        return list;
     }
 
     public void SelectSlot(CharacterBattleSlot slot)

@@ -32,14 +32,30 @@ public class UIPartyList : MonoBehaviour
     {
         Index = 0;
         partyDown();
-
         List<GameObject> slots = battleSlots.GetSlots();
-        
+
+
+        foreach (GameObject slot in slots)
+        {
+            slot.GetComponent<CharacterBattleSlot>().TurnDown();
+        }
+
+      
         foreach (int id in Party.GetCharacterIDList())
         {
             SlotList[Index].GetComponent<CharacterBattleSlot>().SetComponent();
             SlotList[Index].GetComponent<CharacterBattleSlot>().SetSlot(id);
-            slots[id - 1].GetComponent<CharacterBattleSlot>().Turnon(Index);
+
+            // ID로 직접 접근하지 말고, 해당 ID를 가진 슬롯을 찾아서 활성화
+            for (int i = 0; i < slots.Count; i++)
+            {
+                CharacterBattleSlot slotComponent = slots[i].GetComponent<CharacterBattleSlot>();
+                if (slotComponent.GetCharacterID() == id)
+                {
+                    slotComponent.Turnon(Index);
+                    break; 
+                }
+            }
             Index++;
         }
     }

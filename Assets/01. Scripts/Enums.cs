@@ -12,6 +12,7 @@ public enum CharacterInfoType
     ActiveSkill,
     PassiveSkill,
     CEO,
+    NoticePanel,
 
 }
 public enum SpriteType
@@ -214,7 +215,9 @@ public enum SkillEffectType
     AllFriend,
     SingleEnemy,
     SingleFriend,
-    BattleField
+    BattleField,
+    EnemyField,
+    FriendField
 }
 
 

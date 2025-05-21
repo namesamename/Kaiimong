@@ -36,6 +36,11 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
     }
 
 
+    public int GetCharacterID()
+    {
+        return characterID; 
+    }
+
     public void SetSlot(int ID)
     {
         characterID = ID;
