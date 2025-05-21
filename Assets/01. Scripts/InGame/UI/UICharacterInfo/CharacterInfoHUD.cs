@@ -1,6 +1,8 @@
 using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 
@@ -10,6 +12,7 @@ public class CharacterInfoHUD : MonoBehaviour
 {
     public CharacterInfoType CharacterInfoType;
 
+    public Transform Panel;
     public async void InitialIze(Character character , CharacterSaveData saveData)
     {
 
@@ -147,9 +150,16 @@ public class CharacterInfoHUD : MonoBehaviour
             case CharacterInfoType.CEO:
                 Button CEO = GetComponentInChildren<Button>();
                 CEO.onClick.RemoveAllListeners();
-                CEO.onClick.AddListener(() => { UIManager.Instance.characterIDType = UICharacterIDType.Lobby; UIManager.Instance.SetCharacterID(character.ID); });
+                CEO.onClick.AddListener(() => { UIManager.Instance.characterIDType = UICharacterIDType.Lobby;StartCoroutine(MovePannel(character)); UIManager.Instance.SetCharacterID(character.ID); });
+
+
                 transform.DOLocalMoveY(400, 1);
+                
                 break;
+
+       
+                
+
         }
 
 
@@ -162,5 +172,28 @@ public class CharacterInfoHUD : MonoBehaviour
         UIPOPUP game = await UIManager.Instance.ShowPopup("SkillInfoPopup");
         game.GetComponent<SkillInfoPoPUP>().SetPopup(GlobalDataTable.Instance.DataCarrier.GetCharacter(), index);
     }
+
+
+    public IEnumerator MovePannel(Character character)
+    {
+        if (Panel != null)
+        {
+            if (UIManager.Instance.GetCharacterID(UICharacterIDType.Lobby) == character.ID)
+            {
+                Panel.GetComponentInChildren<TextMeshProUGUI>().text = "이미 선택된 캐릭터입니다.";
+            }
+            else
+            {
+                Panel.GetComponentInChildren<TextMeshProUGUI>().text = "대표 캐릭터 설정 완료";
+            }
+            Panel.transform.DOLocalMoveX(810, 1.5f);
+            yield return new WaitForSeconds(2f);
+            Panel.transform.DOLocalMoveX(1200, 2f);
+
+        }
+    }
+
+
+
 
 }

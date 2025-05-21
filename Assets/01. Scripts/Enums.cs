@@ -12,6 +12,7 @@ public enum CharacterInfoType
     ActiveSkill,
     PassiveSkill,
     CEO,
+    NoticePanel,
 
 }
 public enum SpriteType

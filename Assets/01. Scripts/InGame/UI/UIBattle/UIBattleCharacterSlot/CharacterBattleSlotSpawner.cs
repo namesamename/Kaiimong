@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterBattleSlotSpawner : MonoBehaviour
@@ -21,6 +22,20 @@ public class CharacterBattleSlotSpawner : MonoBehaviour
     public void CreatSlot()
     {
         List<CharacterSaveData> list = SaveDataBase.Instance.GetSaveInstanceList<CharacterSaveData>(SaveType.Character);
+
+        List<Character> list2 = new List<Character>();
+        foreach(CharacterSaveData saveData in list) 
+        {
+            list2.Add(GlobalDataTable.Instance.character.GetCharToID(saveData.ID));
+            
+        }
+        list2 = list2.OrderBy(item => item.Grade).ToList();
+        list.Clear();
+        foreach (Character saveData in list2)
+        {
+            list.Add(SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character,saveData.ID));
+        }
+
         if (Slots.Count >= list.Count)
         {
             int index = 0;
