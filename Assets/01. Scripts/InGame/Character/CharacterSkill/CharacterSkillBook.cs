@@ -17,27 +17,28 @@ public class CharacterSkillBook : MonoBehaviour
 
     public void SkillSet(int ID, CharacterType type)
     {
-        maxSkillGauge = 7;
-        int Count = ID * 3;
-        for (int i = 2; i >= 0; i--) 
-        {
-            Debug.Log(Count - i);
-
-            if((Count - i) % 3 == 0)
-            {
-                ActiveSkillList[2].SetSkill(Count - i);
-            }
-            else if ((Count - i) % 3 == 1)
-            {
-                ActiveSkillList[0].SetSkill(Count - i);
-            }
-            else if ((Count - i) % 3 == 2)
-            {
-                ActiveSkillList[1].SetSkill(Count - i);
-            }
-        }
+   
         if(type == CharacterType.Friend)
         {
+            maxSkillGauge = 7;
+            int Count = ID * 3;
+            for (int i = 2; i >= 0; i--)
+            {
+                Debug.Log(Count - i);
+
+                if ((Count - i) % 3 == 0)
+                {
+                    ActiveSkillList[2].SetSkill(Count - i);
+                }
+                else if ((Count - i) % 3 == 1)
+                {
+                    ActiveSkillList[0].SetSkill(Count - i);
+                }
+                else if ((Count - i) % 3 == 2)
+                {
+                    ActiveSkillList[1].SetSkill(Count - i);
+                }
+            }
             CharacterSaveData saveData= SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, ID);
             for (int i = saveData.Recognition; i >= 0; i--)
             {
@@ -46,6 +47,10 @@ public class CharacterSkillBook : MonoBehaviour
         }
         else
         {
+
+            ActiveSkillList[0].SetSkill(GlobalDataTable.Instance.character.GetEnemyToID(ID).SkillID);
+            ActiveSkillList[1].SetSkill(GlobalDataTable.Instance.character.GetEnemyToID(ID).SecondSkillID);
+
 
         }
     }

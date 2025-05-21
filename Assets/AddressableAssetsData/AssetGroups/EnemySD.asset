@@ -29,6 +29,30 @@ MonoBehaviour:
     m_SerializedLabels:
     - EnemyBattleSD
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d6c2a9c0b776c447bca0ac62cae31ee
+    m_Address: EnemySprite/Enemy_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e6e6afda2b60e847af5a23f56ba9f98
+    m_Address: EnemySprite/Enemy_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a04349f4d30e9e24daff5f16b8162944
+    m_Address: EnemySprite/Enemy_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36aaf9999f876594ba12d04a9986b0e2
+    m_Address: EnemySprite/Enemy_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
   m_SchemaSet:
