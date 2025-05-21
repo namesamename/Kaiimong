@@ -18,6 +18,8 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private List<Vector3> iconSize = new List<Vector3>();
     [SerializeField] private List<Button> buttonList = new List<Button>();
     [SerializeField] private Button targetConfirmButton;
+    [SerializeField] private Image ultCover;
+    private Button ultButton;
     //[SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
 
@@ -29,10 +31,25 @@ public class CharacterUI : MonoBehaviour
 
     void Start()
     {
+        ultButton = buttonList[0];
         battleSystem.OnPlayerTurn += GetActivePlayerUnit;
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
         targetConfirmButton.enabled = false;
+    }
+
+    public void UltEnable()
+    {
+        if (curUnits[battleSystem.TurnIndex].skillBook.GetSkillGauge() == 7)
+        {
+            ultCover.gameObject.SetActive(false);
+            ultButton.enabled = true;
+        }
+        else
+        {
+            ultCover.gameObject.SetActive(true);
+            ultButton.enabled = false;
+        }
     }
 
     public void UnSubscribeCharacterUI()
@@ -161,7 +178,7 @@ public class CharacterUI : MonoBehaviour
             {
                 iconList[i].gameObject.SetActive(true);
             }
-            if( i >= curUnits.Count)
+            if (i >= curUnits.Count)
             {
                 iconList[i].gameObject.SetActive(false);
                 continue;
@@ -206,6 +223,8 @@ public class CharacterUI : MonoBehaviour
 
     void SetSkillButton()
     {
+        UltEnable();
+
         for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList.Length; i++)
         {
             //buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
@@ -230,7 +249,7 @@ public class CharacterUI : MonoBehaviour
     {
         targetConfirmButton.gameObject.SetActive(false);
         actionButton.gameObject.SetActive(true);
-        foreach(Button button in buttonList)
+        foreach (Button button in buttonList)
         {
             button.gameObject.SetActive(false);
         }
@@ -238,7 +257,7 @@ public class CharacterUI : MonoBehaviour
 
     public void DisableActionButton()
     {
-        foreach(Button button in buttonList)
+        foreach (Button button in buttonList)
         {
             button.gameObject.SetActive(true);
         }
