@@ -83,6 +83,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - FriendIllustration
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aec6adb5cacf1ae478caac78c056136b
+    m_Address: CharacterSprite/Char_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendIllustration
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
   m_SchemaSet:

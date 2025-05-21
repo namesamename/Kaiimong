@@ -130,8 +130,12 @@ public class ChapterCameraTarget : MonoBehaviour
 
         if (isStageClicked && clickedStage != null)
         {
-            stageInfoUI.gameObject.SetActive(true);
-            stageInfoUI.SetUI(clickedStage);
+            Debug.Log("Stage °»½Å");
+            if (!stageInfoUI.gameObject.activeSelf)
+            {
+                stageInfoUI.gameObject.SetActive(true);
+            }
+            stageInfoUI.SetUI(clickedStage); 
         }
         else if (!isCharacterClicked)
         {

@@ -58,28 +58,28 @@ public class CharacterProfileSlot : MonoBehaviour
         {
             if (UIManager.Instance.GetCharacterID(UICharacterIDType.First) != 0)
             {
-                image[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, UIManager.Instance.GetCharacterID(UICharacterIDType.First));
+                image[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterSlotSprite, UIManager.Instance.GetCharacterID(UICharacterIDType.First));
             }
         }
         else if (index == (int)UICharacterIDType.Second)
         {
             if (UIManager.Instance.GetCharacterID(UICharacterIDType.Second) != 0)
             {
-                image[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, UIManager.Instance.GetCharacterID(UICharacterIDType.Second));
+                image[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterSlotSprite, UIManager.Instance.GetCharacterID(UICharacterIDType.Second));
             }
         }
         else if (index == (int)UICharacterIDType.Thrid)
         {
             if (UIManager.Instance.GetCharacterID(UICharacterIDType.Thrid) != 0)
             {
-                image[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, UIManager.Instance.GetCharacterID(UICharacterIDType.Thrid));
+                image[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterSlotSprite, UIManager.Instance.GetCharacterID(UICharacterIDType.Thrid));
             }
         }
         else if (index == (int)UICharacterIDType.Fourth)
         {
             if (UIManager.Instance.GetCharacterID(UICharacterIDType.Fourth) != 0)
             {
-                image[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, UIManager.Instance.GetCharacterID(UICharacterIDType.Fourth));
+                image[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterSlotSprite, UIManager.Instance.GetCharacterID(UICharacterIDType.Fourth));
             }
         }
     }

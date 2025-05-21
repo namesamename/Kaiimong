@@ -83,6 +83,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b152020ce04c38f4da61bac42a402f66
+    m_Address: CharacterBattleSD/Char_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
   m_SchemaSet:
