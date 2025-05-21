@@ -215,7 +215,9 @@ public enum SkillEffectType
     AllFriend,
     SingleEnemy,
     SingleFriend,
-    BattleField
+    BattleField,
+    EnemyField,
+    FriendField
 }
 
 

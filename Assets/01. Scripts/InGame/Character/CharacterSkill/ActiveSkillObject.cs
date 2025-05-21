@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 
 
@@ -173,6 +174,14 @@ public class ActiveSkillObject : MonoBehaviour
                 GameObject FieldSkill = Instantiate(SkillEffectPrefab);
                 FieldSkill.transform.position = Vector3.zero;
                 FieldSkill.GetComponent<SkillEffect>().Play();
+                break;
+            case SkillEffectType.EnemyField:
+                GameObject Enemyskiils = Instantiate(SkillEffectPrefab, new Vector3(5,0,0), Quaternion.identity);
+                Enemyskiils.GetComponent<SkillEffect>().Play();
+                break;
+            case SkillEffectType.FriendField:
+                GameObject Friendskiils = Instantiate(SkillEffectPrefab, new Vector3(-5, 0, 0), Quaternion.identity);
+                Friendskiils.GetComponent<SkillEffect>().Play();
                 break;
 
         }
