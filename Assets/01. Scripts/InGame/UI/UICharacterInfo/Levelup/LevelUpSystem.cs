@@ -6,9 +6,9 @@ using UnityEngine.TextCore.Text;
 public static class LevelUpSystem
 {
     public static List<int> PlayerNeedExp = new List<int>();
-    public static List<float> needGold = new List<float>();
-    public static List<float> needamulet = new List<float>();
-    public static List<float> needLove = new List<float>();
+    public static List<int> needGold = new List<int>();
+    public static List<int> needamulet = new List<int>();
+    public static List<int> needLove = new List<int>();
     public static int[] MaxLevel = new int[4] { 20, 40, 60, 90 };
     public static void Init()
     {
@@ -50,18 +50,18 @@ public static class LevelUpSystem
             needGold.Add(
 
 
-               (float)( 0.6 * (i * i * i) + 2.5 * (i * i) + 25 * i) + 100
+               (int)( 0.6 * (i * i * i) + 2.5 * (i * i) + 25 * i) + 100
 
 
                 ) ;
             needamulet.Add(
                 
-                (float)(0.52*(i * i * i) + 6.1*(i * i) + 100 + 40 * i)
+                (int)(0.52*(i * i * i) + 6.1*(i * i) + 100 + 40 * i)
                 
                 
                 );
             needLove.Add(
-                (float)(0.075 * (i * i * i) + 3.75 * (i * i) + 6.75 * i)
+                (int)(0.075 * (i * i * i) + 3.75 * (i * i) + 6.75 * i)
                 ) ;
         }
     }

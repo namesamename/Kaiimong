@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemySpawn_5
   m_EditorClassIdentifier: 
   ID: 5
-  Stage: 2
-  Round: 2
+  Stage: 3
+  Round: 1
   Set: 2
-  EnemyID: 2
+  EnemyID: 3
   EnemyCount: 2
   Level: 2

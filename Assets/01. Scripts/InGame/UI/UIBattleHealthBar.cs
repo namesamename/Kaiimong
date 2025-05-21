@@ -44,7 +44,7 @@ public class UIBattleHealthBar : MonoBehaviour
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(character.transform.position + Vector3.up * 1f);
             rectTransform.position = screenPos;
-            Slider.value = character.stat.healthStat.CurHealth / 1f;
+            Slider.value = character.stat.healthStat.CurHealth / character.stat.healthStat.Value;
             for (int i = 0; i < 7; i++)
             {
                 UtiGauge[2 + i].enabled = false;
@@ -59,7 +59,7 @@ public class UIBattleHealthBar : MonoBehaviour
         {
             if (CharacterType.Friend == TargetTransform.GetComponent<CharacterCarrier>().GetCharacterType())
             {
-                Slider.value = TargetTransform.GetComponent<CharacterCarrier>().stat.healthStat.CurHealth / 1f;
+                Slider.value = TargetTransform.GetComponent<CharacterCarrier>().stat.healthStat.CurHealth / TargetTransform.GetComponent<CharacterCarrier>().stat.healthStat.Value;
                 for (int i = 0; i < TargetTransform.GetComponent<CharacterCarrier>().skillBook.GetSkillGauge(); i++)
                 {
                     UtiGauge[2 + i].color = Color.yellow;
@@ -67,7 +67,7 @@ public class UIBattleHealthBar : MonoBehaviour
             }
             else
             {
-                Slider.value = TargetTransform.GetComponent<CharacterCarrier>().stat.healthStat.CurHealth / 1f;
+                Slider.value = TargetTransform.GetComponent<CharacterCarrier>().stat.healthStat.CurHealth / TargetTransform.GetComponent<CharacterCarrier>().stat.healthStat.Value;
             }
         }
     }
@@ -75,7 +75,7 @@ public class UIBattleHealthBar : MonoBehaviour
 
     public void DestroyThis()
     {
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
 

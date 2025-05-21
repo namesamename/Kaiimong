@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Character_12
   m_EditorClassIdentifier: 
   ID: 12
-  Name: "\uD0C0"
+  Name: "\uC18C\uC18C"
   Grade: 1
   Health: 1000
   Attack: 240

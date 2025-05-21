@@ -116,14 +116,22 @@ public class CharacterStat : MonoBehaviour
     {
         animator.SetTrigger("Hit");
 
+        Debug.Log(Amount);
+        Debug.Log(defenseStat.GetStat());
 
-        if (defenseStat.GetStat() - Amount <=0)
+        Debug.Log(Amount - defenseStat.GetStat());
+
+        float Damage = Amount - defenseStat.GetStat();
+
+        if (Damage <= 0)
         {
+            Debug.Log("Damage");
             healthStat.CurHealth -= 1f;
         }
         else
         {
-            healthStat.CurHealth -= defenseStat.GetStat() - Amount;
+            Debug.Log(Damage);
+            healthStat.CurHealth -= Damage;
         }
         
         //if(healthStat.CurHealth<=0)
