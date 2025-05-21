@@ -18,6 +18,8 @@ public class StageManager : Singleton<StageManager>
     public int CurrentRound;
     public int CurrentTurn;
     public int CurrentSet;
+    public int RewardGold;
+    public int RewardDia;
 
     [Header("Reward and Returns")]
     public float returnActivityPoints;
@@ -59,13 +61,13 @@ public class StageManager : Singleton<StageManager>
         GameObject obj = Instantiate(Resources.Load("Battle/BattleSystem")) as GameObject;
         BattleSystem cursystem = obj.GetComponent<BattleSystem>();
         battleSystem = cursystem;
-        
+
         // 새로운 배틀시스템에 플레이어 데이터 설정
         if (Players != null && Players.Count > 0)
         {
             battleSystem.Players = new List<Character>(Players);
         }
-        
+
         finishedStage = false;
         SetStageInfo();
         StageStart();
@@ -95,13 +97,15 @@ public class StageManager : Singleton<StageManager>
         // 새로운 배경 생성
         GameObject background = Instantiate(Resources.Load("Battle/Background")) as GameObject;
         background.name = "Background";
-        
+
         CurrentRound = 1;
         CurrentTurn = 0;
         CurrentSet = 1;
         returnActivityPoints = CurrentStage.ActivityPoint * 1f;
         userExp = CurrentStage.ActivityPoint * 10;
         playerLove = CurrentStage.ActivityPoint;
+        RewardDia = CurrentStage.Dia;
+        RewardGold = CurrentStage.Gold;
     }
 
     private void CreateEnemy()
@@ -169,8 +173,16 @@ public class StageManager : Singleton<StageManager>
 
     private void OnStageWin()
     {
-        CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Gold);
-        CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, CurrentStage.Dia);
+        bool targetOne = false;
+        bool targetTwo = false;
+
+        CheckExtraTarget(targetOne, targetTwo);
+
+        RewardGold = targetOne ? RewardGold : RewardGold / 2;
+        RewardDia = targetTwo ? RewardDia : 0;
+
+        CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, RewardGold);
+        CurrencyManager.Instance.SetCurrency(CurrencyType.Dia, RewardDia);
         RewardListUp();
         //for(int i = 0; i < CurrentStage.ItemID.Length; i++)
         //{
@@ -205,6 +217,12 @@ public class StageManager : Singleton<StageManager>
                 ChapterManager.Instance.SaveChapterSingleData(CurrentStage.UnlockChapterID[i]);
             }
         }
+    }
+
+    public void CheckExtraTarget(bool targetOne, bool targetTwo)
+    {
+        targetOne = CurrentTurn <= 8 ? true : false;
+        targetTwo = battleSystem.GetActivePlayers().Count == 4 ? true : false;
     }
 
     private void StageWinExp()

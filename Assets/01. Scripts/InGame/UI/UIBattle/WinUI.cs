@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,6 +17,11 @@ public class WinUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerExpText;
     [SerializeField] private TextMeshProUGUI earnedExpText;
     [SerializeField] private GameObject itemRewardSlots;
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI diaText;
+
+    [SerializeField] private Image extraTargetOne;
+    [SerializeField] private Image extraTargetTwo;
 
     public bool CanClick = false;
     private bool setComplete = false;
@@ -58,6 +64,14 @@ public class WinUI : MonoBehaviour
 
             //characterImage.sprite = StageManager.Instance.Players[Random.Range(0,StageManager.Instance.Players.Count)].visual.SpriteRenderer.sprite;
             //characterImage.sprite = Resources.Load<Sprite>(StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].SpritePath);
+
+            bool targetOne = false;
+            bool targetTwo = false;
+
+            StageManager.Instance.CheckExtraTarget(targetOne, targetTwo);
+
+            ExtraTargetColor(targetOne, targetTwo);
+
             characterImage.sprite = sp;
             characterImage.SetNativeSize();
 
@@ -66,13 +80,37 @@ public class WinUI : MonoBehaviour
             playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
             earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
 
+            goldText.text = StageManager.Instance.RewardGold.ToString();
+            diaText.text = StageManager.Instance.RewardDia.ToString();
+
             StartCoroutine(DelaySetExpBar());
+        }
+    }
+
+    void ExtraTargetColor(bool targetOne, bool targetTwo)
+    {
+        if (targetOne)
+        {
+            extraTargetOne.DOColor(Color.magenta, 1f);
+        }
+        else
+        {
+            extraTargetOne.color = Color.white;
+        }
+
+        if (targetTwo)
+        {
+            extraTargetTwo.DOColor(Color.magenta, 1f);
+        }
+        else
+        {
+            extraTargetTwo.color = Color.white;
         }
     }
 
     private IEnumerator DelaySetExpBar()
     {
-        yield return null; // �� ������ ��� (UI �׷��� ������Ʈ ����)
+        yield return null;
 
         float userExp = CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP);
         float maxExp = GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
