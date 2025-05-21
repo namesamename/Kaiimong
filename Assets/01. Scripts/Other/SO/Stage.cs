@@ -10,4 +10,5 @@ public class Stage : SO
     public int Dia;
     public int[] UnlockStageID;
     public int[] UnlockChapterID;
+    public int Potion;
 }

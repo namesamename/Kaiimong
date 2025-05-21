@@ -105,9 +105,9 @@ public class StageManager : Singleton<StageManager>
         returnActivityPoints = CurrentStage.ActivityPoint * 1f;
         userExp = CurrentStage.ActivityPoint * 10;
         playerLove = CurrentStage.ActivityPoint;
-        RewardExpPotion = CurrentStage.Dia;
+        RewardExpPotion = CurrentStage.Potion;
         RewardGold = CurrentStage.Gold;
-        RewardDia = 0;
+        RewardDia = CurrentStage.Dia;
     }
 
     private void CreateEnemy()
@@ -180,8 +180,14 @@ public class StageManager : Singleton<StageManager>
 
         CheckExtraTarget(targetOne, targetTwo);
 
+        RewardDia = CurrentStage.Dia;
         RewardGold = targetOne ? RewardGold : RewardGold / 2;
         RewardExpPotion = targetTwo ? RewardExpPotion : 0;
+
+        if (RewardDia > 50)
+        {
+            CurrencyManager.Instance.SetCurrency(CurrencyType.Dia, RewardDia);
+        }
 
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, RewardGold);
         CurrencyManager.Instance.SetCurrency(CurrencyType.CharacterEXP, RewardExpPotion);
@@ -205,8 +211,10 @@ public class StageManager : Singleton<StageManager>
         }
         if (!ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage)
         {
-            RewardDia = 50;
-            CurrencyManager.Instance.SetCurrency(CurrencyType.Dia, RewardDia);
+            if (RewardDia == 50)
+            {
+                CurrencyManager.Instance.SetCurrency(CurrencyType.Dia, RewardDia);
+            }
             ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;
         }
         ChapterManager.Instance.SaveStageSingleData(CurrentStage.ID);
