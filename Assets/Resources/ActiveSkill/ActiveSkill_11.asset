@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: das
   Description: asd
   Attack: 1
-  isSingleAttack: 1
+  isSingleAttack: 0
   UltimateGauge: 1
   Type: 2
   IsBuff: 1

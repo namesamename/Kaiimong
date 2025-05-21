@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Character_11
   m_EditorClassIdentifier: 
   ID: 11
-  Name: "\uC6D0\uC6B0\uD601"
-  Grade: 1
+  Name: "\uC544\uC774\uB9B0"
+  Grade: 2
   Health: 1200
   Attack: 270
   Defence: 118
