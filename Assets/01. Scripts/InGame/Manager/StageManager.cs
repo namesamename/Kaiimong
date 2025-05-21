@@ -19,6 +19,7 @@ public class StageManager : Singleton<StageManager>
     public int CurrentTurn;
     public int CurrentSet;
     public int RewardGold;
+    public int RewardExpPotion;
     public int RewardDia;
 
     [Header("Reward and Returns")]
@@ -104,8 +105,9 @@ public class StageManager : Singleton<StageManager>
         returnActivityPoints = CurrentStage.ActivityPoint * 1f;
         userExp = CurrentStage.ActivityPoint * 10;
         playerLove = CurrentStage.ActivityPoint;
-        RewardDia = CurrentStage.Dia;
+        RewardExpPotion = CurrentStage.Dia;
         RewardGold = CurrentStage.Gold;
+        RewardDia = 0;
     }
 
     private void CreateEnemy()
@@ -179,10 +181,10 @@ public class StageManager : Singleton<StageManager>
         CheckExtraTarget(targetOne, targetTwo);
 
         RewardGold = targetOne ? RewardGold : RewardGold / 2;
-        RewardDia = targetTwo ? RewardDia : 0;
+        RewardExpPotion = targetTwo ? RewardExpPotion : 0;
 
         CurrencyManager.Instance.SetCurrency(CurrencyType.Gold, RewardGold);
-        CurrencyManager.Instance.SetCurrency(CurrencyType.Dia, RewardDia);
+        CurrencyManager.Instance.SetCurrency(CurrencyType.CharacterEXP, RewardExpPotion);
         RewardListUp();
         //for(int i = 0; i < CurrentStage.ItemID.Length; i++)
         //{
@@ -201,7 +203,12 @@ public class StageManager : Singleton<StageManager>
             //CharacterManager.Instance.SaveSingleData(player.ID);
             ////player.SaveData();
         }
-        ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;
+        if (!ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage)
+        {
+            RewardDia = 50;
+            CurrencyManager.Instance.SetCurrency(CurrencyType.Dia, RewardDia);
+            ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage = true;
+        }
         ChapterManager.Instance.SaveStageSingleData(CurrentStage.ID);
         for (int i = 0; i < CurrentStage.UnlockStageID.Length; i++)
         {

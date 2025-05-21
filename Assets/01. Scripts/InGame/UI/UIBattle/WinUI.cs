@@ -18,6 +18,7 @@ public class WinUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI earnedExpText;
     [SerializeField] private GameObject itemRewardSlots;
     [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI expPotionText;
     [SerializeField] private TextMeshProUGUI diaText;
 
     [SerializeField] private Image extraTargetOne;
@@ -81,6 +82,7 @@ public class WinUI : MonoBehaviour
             earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
 
             goldText.text = StageManager.Instance.RewardGold.ToString();
+            expPotionText.text = StageManager.Instance.RewardExpPotion.ToString();
             diaText.text = StageManager.Instance.RewardDia.ToString();
 
             StartCoroutine(DelaySetExpBar());
