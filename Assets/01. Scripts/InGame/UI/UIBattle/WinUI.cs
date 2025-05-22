@@ -140,7 +140,7 @@ public class WinUI : MonoBehaviour
             else
             {
                 currentExp += gainedExp;
-                CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, currentExp);
+                CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, gainedExp);
 
                 float t = (float)currentExp / requiredExp;
                 yield return DOTween.To(

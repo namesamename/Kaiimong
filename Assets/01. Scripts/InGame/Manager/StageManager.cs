@@ -235,6 +235,7 @@ public class StageManager : Singleton<StageManager>
         }
         if (!ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).ClearedStage)
         {
+            RewardDia = CurrentStage.Dia;
             if (RewardDia == 50)
             {
                 CurrencyManager.Instance.SetCurrency(CurrencyType.Dia, RewardDia);

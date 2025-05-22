@@ -20,6 +20,6 @@ MonoBehaviour:
   ItemID: 010000000200000003000000
   Gold: 200
   Dia: 50
-  UnlockStageID: 1b000000
+  UnlockStageID: 1b00000029000000
   UnlockChapterID: 05000000
   Potion: 500
