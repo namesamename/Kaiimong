@@ -316,6 +316,8 @@ public class CharacterUI : MonoBehaviour
     {
         icons.SetActive(false);
         stat.SetActive(true);
+        stat.GetComponent<UIBattleStatBoard>().IsOpen = true;
+        stat.GetComponent<UIBattleStatBoard>().SetEnalbe();
         skillInfo.SetActive(false);
     }
 

@@ -16,11 +16,20 @@ public class UIBattleSkill : MonoBehaviour
 
     private void Start()
     {
+        images[0].enabled = false;
         images[1].enabled = false;
 
         textMeshPros[0].text = string.Empty;
         textMeshPros[1].text = string.Empty;
 
+    }
+
+    public void  SetDown()
+    {
+        images[1].enabled = false;
+
+        textMeshPros[0].text = string.Empty;
+        textMeshPros[1].text = string.Empty;
     }
 
     public  void SetBattleSkillUI(ActiveSkill active)

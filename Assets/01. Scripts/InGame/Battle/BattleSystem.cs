@@ -134,8 +134,8 @@ public class BattleSystem : MonoBehaviour
         BattleUI = uiPrefab.GetComponent<BattleUI>();
         BattleUI.BattleSystem = this;
         BattleUI.CharacterUI.BattleSystem = this;
-        battleSkill = BattleUI.GetComponentInChildren<UIBattleSkill>();
-        battleStatBoard = BattleUI.GetComponentInChildren<UIBattleStatBoard>();
+        battleSkill = BattleUI.GetComponentInChildren<UIBattleSkill>(true);
+        battleStatBoard = BattleUI.GetComponentInChildren<UIBattleStatBoard>(true);
 
         StageManager.Instance.EndUISet();
     }

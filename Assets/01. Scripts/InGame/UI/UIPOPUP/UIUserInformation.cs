@@ -37,7 +37,7 @@ public class UIUserInformation : MonoBehaviour
         Level.text = "LV." + CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel);
         exp.text =$"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)}/{LevelUpSystem.PlayerNeedExp[CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)]}";
         float fillAmount = (float)CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP) / LevelUpSystem.PlayerNeedExp[CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)];
-        Slider.value = Mathf.Clamp01(fillAmount);
+        Slider.value = fillAmount;
     }
 
 

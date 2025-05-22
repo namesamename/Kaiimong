@@ -6,10 +6,10 @@ using UnityEngine;
 public class UIBattleStatBoard : MonoBehaviour
 {
     TextMeshProUGUI[] textMeshPros;
-
+    public bool IsOpen = false;
     private void Awake()
     {
-        textMeshPros = GetComponentsInChildren<TextMeshProUGUI>();
+        textMeshPros = GetComponentsInChildren<TextMeshProUGUI>(true);
     }
 
     private void Start()
@@ -23,6 +23,8 @@ public class UIBattleStatBoard : MonoBehaviour
 
     public void SetBattleStatUI(CharacterCarrier character)
     {
+     
+
         Character Chars = GlobalDataTable.Instance.character.GetCharToID(character.GetID());
         CharacterSaveData saveData = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, character.GetID());
 
@@ -32,7 +34,7 @@ public class UIBattleStatBoard : MonoBehaviour
 
         int Attack = Chars.Attack + saveData.Level;
 
-        textMeshPros[3].text = Attack == character.stat.attackStat.Value ? 
+        textMeshPros[3].text = Attack == character.stat.attackStat.Value ?
             $"공격력: {Attack}" : $"공격력: {Attack} +({character.stat.attackStat.Value - Attack})";
 
         int Defense = Chars.Defence + saveData.Level;
@@ -45,7 +47,7 @@ public class UIBattleStatBoard : MonoBehaviour
 
         //textMeshPros[5].text = Speed == character.stat.agilityStat.Value ?
         // $"속도: {Speed}" : $"속도: {Speed} +({character.stat.agilityStat.Value - Speed})";
-        textMeshPros[5].text = "속도: "+Speed.ToString();
+        textMeshPros[5].text = "속도: " + Speed.ToString();
 
         float Criper = Chars.CriticalPer + (float)0.01 * saveData.Level;
 
@@ -57,6 +59,29 @@ public class UIBattleStatBoard : MonoBehaviour
         textMeshPros[7].text = CriAttack == character.stat.criticalAttackStat.Value ?
             $"치명타 공격: {CriAttack}" : $"치명타 공격: {CriAttack} +({character.stat.criticalAttackStat.Value - CriAttack})";
 
+        if(!IsOpen)
+        {
+            for (int i = 0; i < textMeshPros.Length; i++)
+            {
+                textMeshPros[i].enabled = false;
+            }
+        }
 
+    }
+
+    public void SetEnalbe()
+    {
+        for (int i = 0; i < textMeshPros.Length; i++)
+        {
+            textMeshPros[i].enabled = true;
+        }
+    }
+
+    public void SetDown()
+    {
+        for (int i = 0; i < textMeshPros.Length; i++)
+        {
+            textMeshPros[i].text = string.Empty;
+        }
     }
 }
