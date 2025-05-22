@@ -178,11 +178,26 @@ public class StageManager : Singleton<StageManager>
         bool targetOne = false;
         bool targetTwo = false;
 
-        CheckExtraTarget(targetOne, targetTwo);
+        CheckExtraTarget(ref targetOne, ref targetTwo);
 
         RewardDia = CurrentStage.Dia;
-        RewardGold = targetOne ? RewardGold : RewardGold / 2;
-        RewardExpPotion = targetTwo ? RewardExpPotion : RewardExpPotion /2;
+
+        if (!ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).TargetOne)
+        {
+            RewardGold = targetOne ? RewardGold : RewardGold / 2;
+            if(targetOne)
+            {
+                ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).TargetOne = true;
+            }
+        }
+        if (!ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).TargetTwo)
+        {
+            RewardExpPotion = targetTwo ? RewardExpPotion : RewardExpPotion / 2;
+            if (targetTwo)
+            {
+                ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).TargetTwo = true;
+            }
+        }
 
         if (RewardDia > 50)
         {
@@ -234,10 +249,10 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
-    public void CheckExtraTarget(bool targetOne, bool targetTwo)
+    public void CheckExtraTarget(ref bool targetOne, ref bool targetTwo)
     {
-        targetOne = CurrentTurn <= 8 ? true : false;
-        targetTwo = battleSystem.GetActivePlayers().Count == 4 ? true : false;
+        targetOne = CurrentTurn <= 8;
+        targetTwo = battleSystem.GetActivePlayers().Count == Players.Count;
     }
 
     private void StageWinExp()

@@ -38,6 +38,8 @@ public class StageSaveData : SaveInstance
 {
     public bool ClearedStage;
     public bool StageOpen;
+    public bool TargetOne;
+    public bool TargetTwo;
 }
 public class ChapterSaveData : SaveInstance
 {

@@ -88,6 +88,8 @@ public class ChapterManager : Singleton<ChapterManager>
                 var savedData = foundData.Find(x => x.ID == stageId);
                 newStageData.ClearedStage = savedData.ClearedStage;
                 newStageData.StageOpen = savedData.StageOpen;
+                newStageData.TargetOne = savedData.TargetOne;
+                newStageData.TargetTwo = savedData.TargetTwo;
                 newStageData.Savetype = SaveType.Stage;
             }
             else
