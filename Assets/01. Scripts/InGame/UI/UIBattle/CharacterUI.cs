@@ -156,8 +156,8 @@ public class CharacterUI : MonoBehaviour
         int skillNum = buttonList.IndexOf(button);
         Debug.Log(skillNum);
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
-        if (battleSystem.SelectedSkill == null) Debug.Log("null");
         battleSystem.SkillChanged?.Invoke();
+        targetConfirmButton.enabled = false;
         uiSkill.SetBattleSkillUI(battleSystem.SelectedSkill.SkillSO);
         battleSystem.OnSkillSelected();
     }
