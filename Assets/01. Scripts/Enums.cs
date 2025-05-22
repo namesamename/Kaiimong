@@ -84,7 +84,8 @@ public enum AddreassablesType
     ItemSlot,
     SkillEffect,
     SoundEffectFx,
-    CharacterSlotSprite
+    CharacterSlotSprite,
+    ChapterBackground,
 
 }
 public enum Grade

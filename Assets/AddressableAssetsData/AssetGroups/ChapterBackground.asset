@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: ChapterBackground
+  m_EditorClassIdentifier: 
+  m_GroupName: ChapterBackground
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ecb274a1ac4e65348bd5247d698999e0
+  m_SerializeEntries:
+  - m_GUID: 0b94a8fd244f0524b89ad0f0f322d5cd
+    m_Address: Chapter/ChapterBackground/1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f7c49ee1f92eaa449adb5de6552697e
+    m_Address: Chapter/ChapterBackground/2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d88ef29435768e4dbf42258122e5df1
+    m_Address: Chapter/ChapterBackground/3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ba6844a72142354f8c8574fd5efdff0
+    m_Address: Chapter/ChapterBackground/4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6768282b76307684aa219dae615697ee
+    m_Address: Chapter/ChapterBackground/5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5d742515a638de941859c96f1dc89567, type: 2}
+    - {fileID: 11400000, guid: 9cb827ea3213f624c88eb9f35380e4a1, type: 2}
