@@ -284,6 +284,19 @@ public class BattleSystem : MonoBehaviour
             PlayerTurn = true;
             Debug.Log("enemyturn");
             activeEnemies = activeEnemies.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
+            if( activeEnemies.Count > 0 && activeEnemies.Count >0)
+            {
+                foreach (CharacterCarrier asd in activePlayers)
+                {
+                    asd.stat.SetBufftimeDown();
+                }
+                foreach (CharacterCarrier asd in activeEnemies)
+                {
+                    asd.stat.SetBufftimeDown();
+                }
+
+            }
+     
             //activeEnemies.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
             CommandController.ClearList();
             EnemyRandomCommand();
@@ -300,10 +313,21 @@ public class BattleSystem : MonoBehaviour
                 activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
                 StageManager.Instance.CurrentTurn++;
                 BattleUI.SetUI();
-                if (activePlayers.Count > 0)
+                if (activePlayers.Count > 0 && activeEnemies.Count > 0)
                 {
                     battleStatBoard.SetBattleStatUI(activePlayers[0]);
+                    foreach (CharacterCarrier asd in activePlayers)
+                    {
+                        asd.stat.SetBufftimeDown();
+                    }
+                    foreach (CharacterCarrier asd in activeEnemies)
+                    {
+                        asd.stat.SetBufftimeDown();
+                    }
                 }
+         
+
+
                 //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
                 OnPlayerTurn?.Invoke();
                 CommandController.ClearList();
