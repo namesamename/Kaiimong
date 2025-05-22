@@ -7,5 +7,6 @@ public class EnemyCarrier : CharacterCarrier
         visual.Initialize(id , CharacterType.Enemy);
         skillBook.SkillSet(GlobalDataTable.Instance.character.GetEnemyToID(id).SkillID, CharacterType.Enemy);
         stat.SetEnemy(GlobalDataTable.Instance.character.GetEnemyToID(id), level);
+        type = CharacterType.Enemy;
     }
 }

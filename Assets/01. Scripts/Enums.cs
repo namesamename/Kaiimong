@@ -221,4 +221,14 @@ public enum SkillEffectType
 }
 
 
+public enum DamageType
+{
+    CriAndWeek,
+    Cri,
+    Week,
+    Basic
+}
+
+
+
 

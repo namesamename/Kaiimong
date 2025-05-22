@@ -18,6 +18,7 @@ public class SkillCommand
     {
         Debug.Log("µü´ë");
         unit.skillBook.ActiveSkillUsing(skillData, targets);
+        unit.skillBook.SetSkillGauge(skillData, targets);
 
         float waitTime = 0f;
 
