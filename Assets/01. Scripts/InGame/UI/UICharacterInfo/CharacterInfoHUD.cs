@@ -186,9 +186,9 @@ public class CharacterInfoHUD : MonoBehaviour
             {
                 Panel.GetComponentInChildren<TextMeshProUGUI>().text = "대표 캐릭터 설정 완료";
             }
-            Panel.transform.DOLocalMoveX(810, 1.5f);
+            Panel.GetComponent<RectTransform>().DOAnchorPosX(0, 1.5f);
             yield return new WaitForSeconds(2f);
-            Panel.transform.DOLocalMoveX(1200, 2f);
+            Panel.GetComponent<RectTransform>().DOAnchorPosX(300, 2f);
 
         }
     }
