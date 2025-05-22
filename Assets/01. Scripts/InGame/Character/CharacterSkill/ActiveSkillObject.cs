@@ -82,7 +82,7 @@ public class ActiveSkillObject : MonoBehaviour
             foreach (CharacterCarrier c in targetcharacter)
             {
                 c.stat.healthStat.Heal(SkillSO.Attack * stat.attackStat.GetStat());
-                SkillDelay(GetAnimationLength(), SkillSO.Attack * stat.attackStat.GetStat(), c, false);
+                SkillDelay(GetAnimationLength(), SkillSO.Attack * stat.attackStat.GetStat(), c, DamageType.Cri);
                 EffectOn(SkillSO.EffectType, targetcharacter);
             }
         }

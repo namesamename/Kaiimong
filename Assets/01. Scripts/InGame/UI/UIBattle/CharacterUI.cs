@@ -34,6 +34,15 @@ public class CharacterUI : MonoBehaviour
     private BattleSystem battleSystem;
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
 
+    public UIBattleSkill uiSkill;
+    public UIBattleStatBoard uiboard;
+
+    private void Awake()
+    {
+        uiSkill =GetComponentInChildren<UIBattleSkill>();
+        uiboard = GetComponentInChildren<UIBattleStatBoard>();
+    }
+
     void Start()
     {
         battleSystem.OnPlayerTurn += GetActivePlayerUnit;
@@ -149,6 +158,7 @@ public class CharacterUI : MonoBehaviour
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
         if (battleSystem.SelectedSkill == null) Debug.Log("null");
         battleSystem.SkillChanged?.Invoke();
+        uiSkill.SetBattleSkillUI(battleSystem.SelectedSkill.SkillSO);
         battleSystem.OnSkillSelected();
     }
 
