@@ -26,7 +26,8 @@ MonoBehaviour:
   - m_GUID: 9102f86916bac864d950f06ab527fdc2
     m_Address: CharacterBattleSD/Char_9
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9e1d338bb2acedd48bc9c2935462aca7
     m_Address: CharacterBattleSD/Char_7
@@ -49,7 +50,8 @@ MonoBehaviour:
   - m_GUID: ff4b6f7638ef23b41a2b3f70896299c0
     m_Address: CharacterBattleSD/Char_3
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 504fc31096074ee458c5dafa2966071b
     m_Address: CharacterBattleSD/Char_2
@@ -60,7 +62,8 @@ MonoBehaviour:
   - m_GUID: dd4b5c0c8eeb9624780ec43c51ef0883
     m_Address: CharacterBattleSD/Char_12
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b152020ce04c38f4da61bac42a402f66
     m_Address: CharacterBattleSD/Char_4
@@ -71,17 +74,20 @@ MonoBehaviour:
   - m_GUID: 2ac23163a8e29c04bb10caf264ff12b3
     m_Address: CharacterBattleSD/Char_10
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78b02047a406fa5469cb395e55e6fee7
     m_Address: CharacterBattleSD/Char_1
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c7288fac74e866f4592c3827d29320b6
     m_Address: CharacterBattleSD/Char_8
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
