@@ -84,7 +84,8 @@ public enum AddreassablesType
     ItemSlot,
     SkillEffect,
     SoundEffectFx,
-    CharacterSlotSprite
+    CharacterSlotSprite,
+    BattleIcon
 
 }
 public enum Grade

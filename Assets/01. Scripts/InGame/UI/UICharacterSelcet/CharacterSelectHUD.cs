@@ -18,7 +18,7 @@ public class CharacterSelectHUD : MonoBehaviour
         slotSpawner = GetComponentInChildren<UICharacterSelectSlotSpawner>();
         buttons = GetComponentsInChildren<Button>(true);
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>(true);
-        prefab = transform.GetChild(2).transform.GetChild(2).transform.GetChild(2);
+        prefab = transform.GetChild(3).transform.GetChild(2).transform.GetChild(2);
     }
 
     private void Start()

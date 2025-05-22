@@ -5,11 +5,8 @@ using UnityEngine;
 
 public class QuestManager : Singleton<QuestManager>
 {
-    TimeSpan resetTime = new TimeSpan(5, 0, 0);
+    TimeSpan resetTime = new TimeSpan(5, 0, 0); // 오전 5시 초기화
     Dictionary<int, QuestSaveData> QuestData = new Dictionary<int, QuestSaveData>();
-
-
-
 
     public void Initialize()
     {
@@ -17,7 +14,7 @@ public class QuestManager : Singleton<QuestManager>
         {
             int QuestID = GlobalDataTable.Instance.Quest.QuestDic[i].ID;
             QuestSaveData newQuestData = new QuestSaveData();
-            newQuestData.ID = QuestID;    
+            newQuestData.ID = QuestID;
             var foundData = SaveDataBase.Instance.GetSaveInstanceList<QuestSaveData>(SaveType.Quest);
             if (foundData != null && foundData.Find(x => x.ID == QuestID) != null)
             {
@@ -29,7 +26,7 @@ public class QuestManager : Singleton<QuestManager>
                 newQuestData.IsCan = savedData.IsCan;
             }
             else
-            { 
+            {
                 newQuestData.CurValue = 0;
                 newQuestData.Savetype = SaveType.Quest;
                 newQuestData.QuestType = GlobalDataTable.Instance.Quest.GetQuestToID(QuestID).QuestType;
@@ -40,83 +37,85 @@ public class QuestManager : Singleton<QuestManager>
                 Debug.Log("Quest data NO");
             }
 
-         
             QuestData[QuestID] = newQuestData;
+        }
 
-            CheckDaily();
-            CheckWeekly();
+ 
+        CheckDaily();
+        CheckWeekly();
+    }
+
+    void CheckDaily()
+    {
+        TimeSaveData timeSave = GetOrCreateTimeSaveData();
+        DateTime now = DateTime.Now;
+        DateTime todayResetTime = DateTime.Today + resetTime;
+
+        if (now.TimeOfDay < resetTime)
+        {
+            todayResetTime = todayResetTime.AddDays(-1);
+        }
+
+   
+        if (timeSave.lastDailyReset < todayResetTime)
+        {
+            Debug.Log($"Daily Quest Reset: {now}");
+            ResetQuest(TimeType.Daily);
+            timeSave.lastDailyReset = now;
+            SaveDataBase.Instance.SaveSingleData(timeSave);
+            CurrencyManager.Instance.ResetPurchase();
         }
     }
 
     void CheckWeekly()
     {
-        TimeSaveData timeSave = SaveDataBase.Instance.GetSaveDataToID<TimeSaveData>(SaveType.Time, 0);
+        TimeSaveData timeSave = GetOrCreateTimeSaveData();
+        DateTime now = DateTime.Now; 
+        DateTime thisWeekReset = GetMondayOfThisWeek() + resetTime;
 
-        if (timeSave != null)
+
+        if (now < thisWeekReset)
         {
-            DateTime now = DateTime.UtcNow;
-            DateTime thisTime = GetMonday() + resetTime;
-            DateTime lastTime = thisTime.AddDays(-7);
-            DateTime lastWeekly = timeSave.lastWeeklyReset;
-            if ((now >= thisTime && lastWeekly < thisTime) || (now < thisTime && lastWeekly < lastTime))
-            {
-                ResetQuest(TimeType.Weekly);
-                timeSave.lastWeeklyReset = now;
-                SaveDataBase.Instance.SaveSingleData(timeSave);
-            }
+            thisWeekReset = thisWeekReset.AddDays(-7);
         }
-        else
-        {
-            TimeSaveData newtimeSave = new TimeSaveData()
-            {
-                Savetype = SaveType.Time,
-                ID = 0,
-                lastDailyReset = DateTime.UtcNow,
-                lastWeeklyReset = DateTime.UtcNow,
-            };
 
-            SaveDataBase.Instance.SaveSingleData(newtimeSave);
+
+        if (timeSave.lastWeeklyReset < thisWeekReset)
+        {
+            Debug.Log($"Weekly Quest Reset: {now}");
+            ResetQuest(TimeType.Weekly);
+            timeSave.lastWeeklyReset = now;
+            SaveDataBase.Instance.SaveSingleData(timeSave);
         }
     }
 
-    void CheckDaily()
+
+    TimeSaveData GetOrCreateTimeSaveData()
     {
         TimeSaveData timeSave = SaveDataBase.Instance.GetSaveDataToID<TimeSaveData>(SaveType.Time, 0);
 
-        if (timeSave != null)
+        if (timeSave == null)
         {
-            DateTime now = DateTime.UtcNow;
-            DateTime lastDaily = timeSave.lastDailyReset;
-            DateTime todayResetTime = DateTime.UtcNow.Date + resetTime;
-            DateTime yesterdayResetTime = todayResetTime.AddDays(-1);
-            if ((now >= todayResetTime && lastDaily < todayResetTime) || (now < todayResetTime && lastDaily < yesterdayResetTime))
-            {
-                ResetQuest(TimeType.Daily);
-                timeSave.lastDailyReset = now;
-                SaveDataBase.Instance.SaveSingleData(timeSave);
-                CurrencyManager.Instance.ResetPurchase();
-            }
-        }
-        else
-        {
-            TimeSaveData newtimeSave = new TimeSaveData()
+            timeSave = new TimeSaveData()
             {
                 Savetype = SaveType.Time,
                 ID = 0,
-                lastDailyReset = DateTime.UtcNow,
-                lastWeeklyReset = DateTime.UtcNow,
+                lastDailyReset = DateTime.MinValue, // 처음이므로 무조건 초기화되도록
+                lastWeeklyReset = DateTime.MinValue,
             };
-            SaveDataBase.Instance.SaveSingleData(newtimeSave);
+            SaveDataBase.Instance.SaveSingleData(timeSave);
         }
+
+        return timeSave;
     }
 
-    DateTime GetMonday()
+
+    DateTime GetMondayOfThisWeek()
     {
         DateTime today = DateTime.Today;
         int diff = (7 + (int)today.DayOfWeek - (int)DayOfWeek.Monday) % 7;
         return today.AddDays(-diff);
     }
-
 
     public void ResetQuest(TimeType timeType)
     {
@@ -124,62 +123,65 @@ public class QuestManager : Singleton<QuestManager>
         {
             foreach (Quest quest in GlobalDataTable.Instance.Quest.GetQuestList(TimeType.Daily))
             {
-                if (SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID) != null)
+                QuestSaveData questSave = SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID);
+                if (questSave != null)
                 {
-                    QuestSaveData questSave = SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID);
                     questSave.IsCan = false;
                     questSave.CurValue = 0;
                     questSave.IsComplete = false;
+                    SaveDataBase.Instance.SaveSingleData(questSave);
+
+                    if (QuestData.ContainsKey(quest.ID))
+                    {
+                        QuestData[quest.ID] = questSave;
+                    }
                 }
             }
         }
-        else
+        else if (timeType == TimeType.Weekly)
         {
             foreach (Quest quest in GlobalDataTable.Instance.Quest.GetQuestList(TimeType.Weekly))
             {
-                if (SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID) != null)
+                QuestSaveData questSave = SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID);
+                if (questSave != null)
                 {
-                    QuestSaveData questSave = SaveDataBase.Instance.GetSaveDataToID<QuestSaveData>(SaveType.Quest, quest.ID);
                     questSave.IsCan = false;
                     questSave.CurValue = 0;
                     questSave.IsComplete = false;
+                    SaveDataBase.Instance.SaveSingleData(questSave);
+                    if (QuestData.ContainsKey(quest.ID))
+                    {
+                        QuestData[quest.ID] = questSave;
+                    }
                 }
             }
         }
     }
-
-
-
     public void TimeCheck()
     {
-        TimeSaveData timeSave = SaveDataBase.Instance.GetSaveDataToID<TimeSaveData>(SaveType.Time, 0);
+        TimeSaveData timeSave = GetOrCreateTimeSaveData();
         timeSave.lastWeeklyReset = DateTime.Now;
         timeSave.lastDailyReset = DateTime.Now;
         SaveDataBase.Instance.SaveSingleData(timeSave);
     }
-
-
-
     public void QuestTypeValueUP(int value, QuestType quest)
     {
-        foreach(QuestSaveData item in QuestData.Values) 
+        foreach (QuestSaveData item in QuestData.Values)
         {
-            if(item.QuestType == quest)
+            if (item.QuestType == quest)
             {
                 item.CurValue += value;
                 SaveDataBase.Instance.SaveSingleData(item);
-               //
-            }
-            else
-            {
-                //Debug.Log("NoOk");
             }
         }
     }
 
     public void QuestValueUP(int id, int value)
     {
-        QuestData[id].CurValue += value;
+        if (QuestData.ContainsKey(id))
+        {
+            QuestData[id].CurValue += value;
+            SaveDataBase.Instance.SaveSingleData(QuestData[id]);
+        }
     }
-
 }

@@ -8,7 +8,6 @@ public class ItemBattleSlots : MonoBehaviour
     private Queue<GameObject> slotPool = new Queue<GameObject>();
     private List<GameObject> activeSlots = new List<GameObject>();
     public List<ItemBattleSlot> ItemSlotList = new List<ItemBattleSlot>();
-    private int index = 0;
 
     private void Awake()
     {
