@@ -70,7 +70,7 @@ public class WinUI : MonoBehaviour
             bool targetOne = false;
             bool targetTwo = false;
 
-            StageManager.Instance.CheckExtraTarget(targetOne, targetTwo);
+            StageManager.Instance.CheckExtraTarget(ref targetOne, ref targetTwo);
 
             ExtraTargetColor(targetOne, targetTwo);
 
@@ -166,19 +166,23 @@ public class WinUI : MonoBehaviour
     {
         if (targetOne)
         {
+            Debug.Log("1magenta");
             extraTargetOne.DOColor(Color.magenta, 1f);
         }
         else
         {
+            Debug.Log("1white");
             extraTargetOne.color = Color.white;
         }
 
         if (targetTwo)
         {
+            Debug.Log("2magenta");
             extraTargetTwo.DOColor(Color.magenta, 1f);
         }
         else
         {
+            Debug.Log("2white");
             extraTargetTwo.color = Color.white;
         }
     }
