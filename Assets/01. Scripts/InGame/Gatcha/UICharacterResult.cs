@@ -6,22 +6,24 @@ using UnityEngine.UI;
 
 public class UICharacterResult : MonoBehaviour  //뽑기 결과연출을 보여주는 스크립트
 {
-[SerializeField] private Image background;
+    [SerializeField] private Image background;
     [SerializeField] private Image characterImage;
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI gradeText;
+    [SerializeField] private GameObject Particle;
+
+
 
 
     public async void Setup(Character character)
     {
-        nameText.text = character.Name;
-        gradeText.text = character.Grade.ToString();
+        Particle.SetActive(false);
 
         // 배경 색상 (등급에 따라)
         switch (character.Grade)
         {
             case Grade.S:
                 background.color = Color.yellow;
+                Particle.SetActive(true);
+
                 AnimateSGradeS();
                 break;
             case Grade.A:
@@ -54,7 +56,5 @@ public class UICharacterResult : MonoBehaviour  //뽑기 결과연출을 보여주는 스크�
         transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
         // 배경 반짝이기
         background.DOFade(1f, 0.2f).From(0.3f).SetLoops(2, LoopType.Yoyo);
-        // 텍스트 흔들리기
-        gradeText.rectTransform.DOShakePosition(0.5f, 10f, 20, 90);
     }
 }

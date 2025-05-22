@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static GatchaManager;
 
 public class GatchaTypeChanger : MonoBehaviour
 {
@@ -11,8 +10,6 @@ public class GatchaTypeChanger : MonoBehaviour
 
     [SerializeField] private Image Banner;
     [SerializeField] private GameObject PickUps;
-    [SerializeField] private TextMeshProUGUI BannerName;
-    [SerializeField] private GameObject PickUpBannerImage;
 
     [SerializeField] private GameObject PickUpPointer;
     [SerializeField] private GameObject StandardPointer;
@@ -21,12 +18,12 @@ public class GatchaTypeChanger : MonoBehaviour
 
     private Dictionary<Transform, Vector3> originalPositions = new();
 
- 
-    private void Start()
+    private async void Start()
     {
         _gatchaManager = GatchaManager.Instance;
         SaveOriginalPositions();
         UpdateBannerImage(_gatchaManager.currentGachaType);
+
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
     }
@@ -46,26 +43,23 @@ public class GatchaTypeChanger : MonoBehaviour
         UpdateBannerImage(type);
     }
 
-    private void UpdateBannerImage(GatchaType type)
+    private async void UpdateBannerImage(GatchaType type)
     {
+        Sprite loadedSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.GatchaBanner, 1);
+
         switch (type)
         {
             case GatchaType.Pickup:
-                Banner.color = Color.gray;
-                BannerName.text = "픽업배너입니다";
-                Debug.Log("픽업 배너 이미지 입니다");
+                Banner.sprite = loadedSprite;
                 PickUps.SetActive(true);
-                PickUpBannerImage.SetActive(true);
                 PickUpPointer.SetActive(true);
                 StandardPointer.SetActive(false);
                 PlayPickUpAnimation();
+                UpdatePickUpImages();
                 break;
 
             case GatchaType.Standard:
-                Banner.color = Color.blue;
-                BannerName.text = "상시배너입니다";
-                Debug.Log("상시 배너 이미지 입니다");
-                PickUpBannerImage.SetActive(false);
+                Banner.color = Color.white;
                 PickUpPointer.SetActive(false);
                 StandardPointer.SetActive(true);
                 PickUps.SetActive(false);
@@ -84,13 +78,46 @@ public class GatchaTypeChanger : MonoBehaviour
         {
             if (originalPositions.ContainsKey(child))
             {
-                // 1. 원래 위치로 리셋
                 child.localPosition = originalPositions[child] + new Vector3(-100f, 0f, 0f);
-
-                // 2. 부드럽게 제자리로 이동
                 child.DOLocalMoveX(originalPositions[child].x, 0.5f)
                     .SetEase(Ease.OutBack)
                     .SetDelay(0.1f * child.GetSiblingIndex());
+            }
+        }
+    }
+
+    private async void UpdatePickUpImages()
+    {
+        Transform pickUpsTransform = PickUps.transform;
+
+        if (pickUpsTransform.childCount > 0)
+        {
+            Transform sPickUp = pickUpsTransform.GetChild(0);
+            Image sImage = sPickUp.GetComponent<Image>();
+
+            if (sImage != null)
+            {
+                int sID = GatchaManager.Instance.pickupSCharacterID;
+                Sprite sSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, sID);
+                if (sSprite != null) sImage.sprite = sSprite;
+                else Debug.LogWarning($"S 픽업(ID: {sID}) 이미지 로드 실패");
+            }
+        }
+
+        for (int i = 0; i < GatchaManager.Instance.pickupACharacterIDs.Count; i++)
+        {
+            int targetIndex = i + 1;
+            if (pickUpsTransform.childCount <= targetIndex) break;
+
+            Transform aPickUp = pickUpsTransform.GetChild(targetIndex);
+            Image aImage = aPickUp.GetComponent<Image>();
+
+            if (aImage != null)
+            {
+                int aID = GatchaManager.Instance.pickupACharacterIDs[i];
+                Sprite aSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, aID);
+                if (aSprite != null) aImage.sprite = aSprite;
+                else Debug.LogWarning($"A 픽업(ID: {aID}) 이미지 로드 실패");
             }
         }
     }
