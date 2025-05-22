@@ -88,12 +88,12 @@ public class CharacterSkillBook : MonoBehaviour
         //if(!IsFullCharage(skill)) 
         //    return;
 
-        SetSkillGauge(skill);
+
         skill.UseSkill(characters);
     }
 
 
-    public void SetSkillGauge(ActiveSkillObject activeSkill)
+    public void SetSkillGauge(ActiveSkillObject activeSkill , List<CharacterCarrier> characters)
     {
         if(activeSkill.SkillSO.ID % 3 == 0)
         {
@@ -101,7 +101,16 @@ public class CharacterSkillBook : MonoBehaviour
         }
         else
         {
-            SkillGauge += activeSkill.SkillSO.UltimateGauge;
+            if (characters.Count == 4)
+            {
+                SkillGauge += 2;
+            }
+            else
+            {
+                SkillGauge += 1;
+            }
+         
+
 
             if (SkillGauge > maxSkillGauge)
             {

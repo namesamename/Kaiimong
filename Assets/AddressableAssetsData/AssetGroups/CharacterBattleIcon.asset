@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CharacterBattleIcon
+  m_EditorClassIdentifier: 
+  m_GroupName: CharacterBattleIcon
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f26ddbe0eca9b8c4aa5273b3e5592192
+  m_SerializeEntries:
+  - m_GUID: 3de92b7e16d7bc04d8cf4c7a6ae466dd
+    m_Address: BattleIcon/Char_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c34bc5c4cb079134084e0f96727d83f2
+    m_Address: BattleIcon/Char_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0610014054a6dd549863b22da8a2d9a9
+    m_Address: BattleIcon/Char_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71cd99da8f40c9142b3997cd155acb78
+    m_Address: BattleIcon/Char_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95be97f409daa294b9000cabd3daaff2
+    m_Address: BattleIcon/Char_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d67870968f2cb1644ac9d25ffb3da7ba
+    m_Address: BattleIcon/Char_6
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9eda1dd14953f644981ad56e58de2139
+    m_Address: BattleIcon/Char_7
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75ce596cb9767074abb63f472f38b51a
+    m_Address: BattleIcon/Char_8
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20367c517ae08b54c87d8672929c9aaa
+    m_Address: BattleIcon/Char_9
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77caba76dc9b3514eae92edffa3a7cd8
+    m_Address: BattleIcon/Char_10
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76ff3dee66c31b041a8b048d6f6ceecd
+    m_Address: BattleIcon/Char_11
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf11a6a428992b64e8c843717b16476d
+    m_Address: BattleIcon/Char_12
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d8dbc6a369fb36d44912930689d4c5b5, type: 2}
+    - {fileID: 11400000, guid: b22997b9bf7f611429e05315bae8d725, type: 2}

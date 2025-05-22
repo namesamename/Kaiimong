@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ItemSaveData : SaveInstance
-{
-    public int ID;
-    public int Value;
-}
+
 public class UIItemSlotSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject slotPrefab;
@@ -26,7 +22,7 @@ public class UIItemSlotSpawner : MonoBehaviour
         ItemData[] allItems = Resources.LoadAll<ItemData>("Item");
 
         // 저장된 인벤토리 데이터 가져오기
-        List<ItemSaveData> ownedItems = SaveDataBase.Instance.GetSaveInstanceList<ItemSaveData>(SaveType.Item);
+        List<ItemSavaData> ownedItems = SaveDataBase.Instance.GetSaveInstanceList<ItemSavaData>(SaveType.Item);
 
         // (ItemData, ItemSaveData) 매칭하여 슬롯 생성
         ClearSlots();

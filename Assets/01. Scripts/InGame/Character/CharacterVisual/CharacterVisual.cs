@@ -39,7 +39,7 @@ public class CharacterVisual : MonoBehaviour
                     BattleSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.BattleSD, ID);
                     
                     if (this == null || !gameObject.activeInHierarchy) return;
-                    Icon = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, ID);
+                    Icon = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.BattleIcon, ID);
                     
                     if (this == null || !gameObject.activeInHierarchy) return;
                     //RecoSD = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.RecognitionSD, ID);

@@ -9,7 +9,7 @@ public class Enemy : SO
     public float Cri;
     public int SkillID;
     public int SecondSkillID;
-
+    public CharacterType CharacterType;
 
 
 

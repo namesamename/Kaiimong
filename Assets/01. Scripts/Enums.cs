@@ -84,7 +84,8 @@ public enum AddreassablesType
     ItemSlot,
     SkillEffect,
     SoundEffectFx,
-    CharacterSlotSprite
+    CharacterSlotSprite,
+    BattleIcon
 
 }
 public enum Grade
@@ -219,6 +220,16 @@ public enum SkillEffectType
     EnemyField,
     FriendField
 }
+
+
+public enum DamageType
+{
+    CriAndWeek,
+    Cri,
+    Week,
+    Basic
+}
+
 
 
 
