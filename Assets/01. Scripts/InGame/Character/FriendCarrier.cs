@@ -8,5 +8,6 @@ public class FriendCarrier : CharacterCarrier
         visual.Initialize(id, CharacterType.Friend);
         stat.SetCharacter(GlobalDataTable.Instance.character.GetCharToID(id), SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character,id).Level);
         skillBook.SkillSet(id, CharacterType.Friend);
+        type = CharacterType.Friend;
     }
 }

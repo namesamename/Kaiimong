@@ -13,7 +13,7 @@ public abstract class CharacterCarrier : MonoBehaviour
     public GameObject SelectEffect;
 
 
-    private CharacterType type;
+    protected CharacterType type;
 
     private void Awake()
     {

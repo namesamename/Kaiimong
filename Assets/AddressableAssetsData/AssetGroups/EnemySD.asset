@@ -17,14 +17,14 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: ef1191765c4b39c4db4a5f67afa460a7
   m_SerializeEntries:
-  - m_GUID: bac5425cee820a04a807c91203b49c24
-    m_Address: EnemySprite/Enemy_2
+  - m_GUID: 908b0b807d3736a40982e3521a05bc68
+    m_Address: EnemySprite/Enemy_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1785ebb8e4cf694458dbf2667f53058f
-    m_Address: EnemySprite/Enemy_1
+  - m_GUID: f03dd386fb2036540ab17206d0ede192
+    m_Address: EnemySprite/Enemy_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyBattleSD
@@ -49,6 +49,18 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb24e4cb102978c47a5b010af5936d36
     m_Address: EnemySprite/Enemy_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7c33bf8d2cff88418be86b2de8d81fd
+    m_Address: EnemySprite/Enemy_7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9ac0ae1eb28e414d9aa1d6cfac740a1
+    m_Address: EnemySprite/Enemy_8
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyBattleSD

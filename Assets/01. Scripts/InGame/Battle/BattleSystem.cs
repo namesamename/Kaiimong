@@ -61,6 +61,9 @@ public class BattleSystem : MonoBehaviour
     public Action OnEnemyTurn;
     public Action SkillChanged;
 
+    private UIBattleSkill battleSkill;
+    private UIBattleStatBoard battleStatBoard;
+
     private bool isPhaseChanging = false;
 
     private void Awake()
@@ -131,6 +134,9 @@ public class BattleSystem : MonoBehaviour
         BattleUI = uiPrefab.GetComponent<BattleUI>();
         BattleUI.BattleSystem = this;
         BattleUI.CharacterUI.BattleSystem = this;
+        battleSkill = BattleUI.GetComponentInChildren<UIBattleSkill>();
+        battleStatBoard = BattleUI.GetComponentInChildren<UIBattleStatBoard>();
+
         StageManager.Instance.EndUISet();
     }
 
@@ -294,6 +300,10 @@ public class BattleSystem : MonoBehaviour
                 activePlayers = activePlayers.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
                 StageManager.Instance.CurrentTurn++;
                 BattleUI.SetUI();
+                if (activePlayers.Count > 0)
+                {
+                    battleStatBoard.SetBattleStatUI(activePlayers[0]);
+                }
                 //activePlayers.Sort((a, b) => b.stat.agilityStat.Value.CompareTo(a.stat.agilityStat.Value));
                 OnPlayerTurn?.Invoke();
                 CommandController.ClearList();
@@ -471,6 +481,7 @@ public class BattleSystem : MonoBehaviour
             CommandController.AddCommand(new SkillCommand(activePlayers[TurnIndex], Targets, SelectedSkill));
             BattleUI.CharacterUI.NextCharacterIcon();
             TurnIndex++;
+            battleStatBoard.SetBattleStatUI(activePlayers[TurnIndex]);
             Targets.Clear();
             //BattleUI.CharacterUI.SetActionButton();
         }
@@ -545,6 +556,7 @@ public class BattleSystem : MonoBehaviour
         {
             int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillBook.ActiveSkillList.Length);
             SelectedSkill = activeEnemies[i].skillBook.ActiveSkillList[randomSkill];
+            battleSkill.SetBattleSkillUI(SelectedSkill.SkillSO);
             if (SelectedSkill.SkillSO.IsBuff)
             {
                 if (SelectedSkill.SkillSO.isSingleAttack)

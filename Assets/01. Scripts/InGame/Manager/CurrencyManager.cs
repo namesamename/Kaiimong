@@ -76,7 +76,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 Savetype = SaveType.Currency,
                 UserLevel = 1,
                 UserEXP = 0,
-                CurrentStaminaMax = 160,
+                CurrentStaminaMax = 180,
                 ActivityValue = 100,
                 GachaValue = 10000,
                 GoldValue = 1000,
