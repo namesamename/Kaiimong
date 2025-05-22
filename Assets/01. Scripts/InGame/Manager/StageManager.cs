@@ -168,7 +168,7 @@ public class StageManager : Singleton<StageManager>
             WinUI.gameObject.SetActive(true);
             OnStageWin();
             OnWin?.Invoke();
-            StageWinExp();
+            //StageWinExp();
             StartCoroutine(BeforeWinChangeDelay());
         }
     }
