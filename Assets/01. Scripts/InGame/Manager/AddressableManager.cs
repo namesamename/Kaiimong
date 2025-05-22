@@ -145,6 +145,9 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "SkillEffect/SkillEffect_";
             case AddreassablesType.SoundEffectFx:
                 return "SoundEffectFx/";
+            case AddreassablesType.GatchaBanner:
+                return "GatchaBanner/";
+
             case AddreassablesType.CharacterSlotSprite:
                 return "CharacterSlotSprite/Char_";
             case AddreassablesType.ChapterBackground:

@@ -85,8 +85,12 @@ public enum AddreassablesType
     SkillEffect,
     SoundEffectFx,
     CharacterSlotSprite,
+
+    GatchaBanner,
+
     ChapterBackground,
     BattleIcon,
+
 
 }
 public enum Grade
