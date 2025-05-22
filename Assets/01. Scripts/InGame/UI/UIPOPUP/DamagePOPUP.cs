@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 public class DamagePOPUP : UIPOPUP
 {
     TextMeshPro damageText;
@@ -13,10 +14,28 @@ public class DamagePOPUP : UIPOPUP
         //DamageRectTransform = GetComponent<RectTransform>();
     }
 
-    public void SetPOPUP(float Damage, bool IsCri, CharacterCarrier character)
+    public void SetPOPUP(float Damage, DamageType damage, CharacterCarrier character)
     {
         damageText.text = Damage.ToString();
-        damageText.color = IsCri ? Color.red : Color.black;
+
+        switch (damage)
+        {
+            case DamageType.CriAndWeek:
+                damageText.color = Color.red;
+                break;
+            case DamageType.Cri:
+                damageText.color = Color.yellow;
+                break;
+            case DamageType.Week:
+                damageText.color = Color.green;
+                break;
+            case DamageType.Basic:
+                damageText.color = Color.black;
+                break;
+        }
+
+
+
 
         float ran = Random.Range(-1f, 1f);
 

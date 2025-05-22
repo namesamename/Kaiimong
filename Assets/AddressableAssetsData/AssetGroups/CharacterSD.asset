@@ -17,32 +17,20 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 0061547efe5e86341b7a4e2066879f32
   m_SerializeEntries:
-  - m_GUID: b033c069c3c61ff499a106a2095babf7
-    m_Address: CharacterBattleSD/Char_12
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - FriendBattleSD
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8cd54489503a57b44bbd89085d3affa5
     m_Address: CharacterBattleSD/Char_11
     m_ReadOnly: 0
     m_SerializedLabels:
     - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3309c5fdce998a340bb860ee5349040e
+  - m_GUID: 7df302bc04d91b34989e9feea98cbf4b
     m_Address: CharacterBattleSD/Char_10
     m_ReadOnly: 0
     m_SerializedLabels:
     - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9e7ed0d3bc4704d4a869fe8d89906da7
+  - m_GUID: fe06985376486c34497c8c647d208e11
     m_Address: CharacterBattleSD/Char_9
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - FriendBattleSD
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 649060274fa454f40bb72f0991820860
-    m_Address: CharacterBattleSD/Char_8
     m_ReadOnly: 0
     m_SerializedLabels:
     - FriendBattleSD
@@ -65,8 +53,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1d0693e673261a7429d154a2d6b5795f
-    m_Address: CharacterBattleSD/Char_3
+  - m_GUID: a18b7572fe51ab74b921699b497c6154
+    m_Address: CharacterBattleSD/Char_8
     m_ReadOnly: 0
     m_SerializedLabels:
     - FriendBattleSD
@@ -77,14 +65,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3d5e7a03e87d99649b4705b29ac53b1f
-    m_Address: CharacterBattleSD/Char_1
+  - m_GUID: 4b5ac7c0a6745774b96ca093f20155e3
+    m_Address: CharacterBattleSD/Char_3
     m_ReadOnly: 0
     m_SerializedLabels:
     - FriendBattleSD
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b152020ce04c38f4da61bac42a402f66
     m_Address: CharacterBattleSD/Char_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FriendBattleSD
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8fc55ea3ee79ae479caeb973c7b5161
+    m_Address: CharacterBattleSD/Char_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - FriendBattleSD

@@ -1,10 +1,11 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class WinUI : MonoBehaviour
 {
@@ -76,17 +77,89 @@ public class WinUI : MonoBehaviour
             characterImage.sprite = sp;
             characterImage.SetNativeSize();
 
+            int gainedExp = StageManager.Instance.userExp;
+
             stageNameText.text = StageManager.Instance.CurrentStage.Name;
             playerLevelText.text = $"Lv {CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)}";
-            playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount}";
+            playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {LevelUpSystem.PlayerNeedExp[CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)]}";
             earnedExpText.text = $"Exp +{StageManager.Instance.userExp}";
 
             goldText.text = StageManager.Instance.RewardGold.ToString();
             expPotionText.text = StageManager.Instance.RewardExpPotion.ToString();
             diaText.text = StageManager.Instance.RewardDia.ToString();
 
-            StartCoroutine(DelaySetExpBar());
+            float currentExp = CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP);
+            int currentLevel = CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel);
+            float requiredExp = LevelUpSystem.PlayerNeedExp[currentLevel];
+            expBar.value = currentExp / requiredExp;
+
+            StartCoroutine(AnimateExpGain(gainedExp));
+            //StartCoroutine(DelaySetExpBar());
         }
+    }
+
+    private IEnumerator AnimateExpGain(int gainedExp)
+    {
+        CanClick = false;
+
+        int currentLevel = CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel);
+        int currentExp = CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP);
+        int requiredExp = LevelUpSystem.PlayerNeedExp[currentLevel];
+
+        while (gainedExp > 0)
+        {
+            int expToLevelUp = requiredExp - currentExp;
+
+            if (gainedExp >= expToLevelUp)
+            {
+                yield return DOTween.To(
+                    () => expBar.value,
+                    x => {
+                        expBar.value = x;
+                        playerExpText.text = $"{(int)(x * requiredExp)} / {requiredExp}";
+                    },
+                    1f, 1f
+                ).WaitForCompletion();
+
+                gainedExp -= expToLevelUp;
+
+                CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, -requiredExp);
+                CurrencyManager.Instance.SetCurrency(CurrencyType.UserLevel, 1);
+                CurrencyManager.Instance.UserLevelup();
+
+                currentLevel = CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel);
+                requiredExp = LevelUpSystem.PlayerNeedExp[currentLevel];
+                currentExp = 0;
+                expBar.value = 0;
+
+                playerLevelText.text = $"Lv {currentLevel}";
+                playerExpText.text = $"0 / {requiredExp}";
+
+                if (gainedExp == 0) break;
+            }
+            else
+            {
+                currentExp += gainedExp;
+                CurrencyManager.Instance.SetCurrency(CurrencyType.UserEXP, currentExp);
+
+                float t = (float)currentExp / requiredExp;
+                yield return DOTween.To(
+                    () => expBar.value,
+                    x => {
+                        expBar.value = x;
+                        playerExpText.text = $"{Mathf.RoundToInt(x * requiredExp)} / {requiredExp}";
+                    },
+                    t, 1f
+                ).WaitForCompletion();
+
+                gainedExp = 0;
+            }
+
+            Debug.Log(CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP));
+            //playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {LevelUpSystem.PlayerNeedExp[CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)]}";
+        }
+
+        CanClick = true;
     }
 
     void ExtraTargetColor(bool targetOne, bool targetTwo)
@@ -110,14 +183,14 @@ public class WinUI : MonoBehaviour
         }
     }
 
-    private IEnumerator DelaySetExpBar()
-    {
-        yield return null;
+    //private IEnumerator DelaySetExpBar()
+    //{
+    //    yield return null;
 
-        float userExp = CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP);
-        float maxExp = GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
-        expBar.value = userExp / maxExp;
-    }
+    //    float userExp = CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP);
+    //    float maxExp = GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.UserEXP].MaxCount;
+    //    expBar.value = userExp / maxExp;
+    //}
 
     public void UnSubscribeWinUI()
     {

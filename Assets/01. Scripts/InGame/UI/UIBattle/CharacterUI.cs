@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,10 @@ public class CharacterUI : MonoBehaviour
     [Header("Object for UIEnable")]
     [SerializeField] private GameObject skills;
     [SerializeField] private GameObject icons;
+    [SerializeField] private GameObject stat;
+    [SerializeField] private GameObject skillInfo;
+    [SerializeField] private GameObject CommandBtn;
+
 
     [Header("Icons & Buttons")]
     [SerializeField] private List<Image> iconList = new List<Image>();
@@ -19,7 +24,7 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private List<Button> buttonList = new List<Button>();
     [SerializeField] private Button targetConfirmButton;
     [SerializeField] private Image ultCover;
-    private Button ultButton;
+    [SerializeField] private Button ultButton;
     //[SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
 
@@ -29,9 +34,17 @@ public class CharacterUI : MonoBehaviour
     private BattleSystem battleSystem;
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
 
+    public UIBattleSkill uiSkill;
+    public UIBattleStatBoard uiboard;
+
+    private void Awake()
+    {
+        uiSkill =GetComponentInChildren<UIBattleSkill>();
+        uiboard = GetComponentInChildren<UIBattleStatBoard>();
+    }
+
     void Start()
     {
-        ultButton = buttonList[0];
         battleSystem.OnPlayerTurn += GetActivePlayerUnit;
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
@@ -43,12 +56,12 @@ public class CharacterUI : MonoBehaviour
         if (curUnits[battleSystem.TurnIndex].skillBook.GetSkillGauge() == 7)
         {
             ultCover.gameObject.SetActive(false);
-            ultButton.enabled = true;
+            ultButton.interactable = true;
         }
         else
         {
             ultCover.gameObject.SetActive(true);
-            ultButton.enabled = false;
+            ultButton.interactable = false;
         }
     }
 
@@ -145,6 +158,7 @@ public class CharacterUI : MonoBehaviour
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
         if (battleSystem.SelectedSkill == null) Debug.Log("null");
         battleSystem.SkillChanged?.Invoke();
+        uiSkill.SetBattleSkillUI(battleSystem.SelectedSkill.SkillSO);
         battleSystem.OnSkillSelected();
     }
 
@@ -237,6 +251,16 @@ public class CharacterUI : MonoBehaviour
         skills.GetComponent<CharacterUIEffect>().BounceEffect();
         icons.SetActive(true);
         icons.GetComponent<CharacterUIEffect>().BounceEffect();
+        stat.SetActive(true);
+        stat.GetComponent<CharacterUIEffect>().BounceEffect();
+        skillInfo.SetActive(true);
+        skillInfo.GetComponent <CharacterUIEffect>().BounceEffect();
+        CommandBtn.SetActive(true);
+        CommandBtn.GetComponent <CharacterUIEffect>().BounceEffect();
+
+        CommandBtnSet();
+
+
     }
 
     public void DIsableUI()
@@ -264,4 +288,43 @@ public class CharacterUI : MonoBehaviour
         targetConfirmButton.gameObject.SetActive(true);
         actionButton.gameObject.SetActive(false);
     }
+
+    public void CommandBtnSet()
+    {
+        Button[] buttons = CommandBtn.GetComponentsInChildren<Button>();
+
+        for (int i = 0; i < buttons.Length; i++) 
+        {
+            buttons[i].onClick.RemoveAllListeners();
+
+        }
+
+        buttons[0].onClick.AddListener(SpeedSet);
+        buttons[1].onClick.AddListener(StatSet);
+        buttons[2].onClick.AddListener(SkillSet);
+
+
+    }
+
+    public void SpeedSet()
+    {
+        icons.SetActive(true);
+        stat.SetActive(false);
+        skillInfo.SetActive(false);
+    }
+    public void StatSet()
+    {
+        icons.SetActive(false);
+        stat.SetActive(true);
+        skillInfo.SetActive(false);
+    }
+
+    public void SkillSet()
+    {
+        icons.SetActive(false);
+        stat.SetActive(false);
+        skillInfo.SetActive(true);
+    }
+
+
 }

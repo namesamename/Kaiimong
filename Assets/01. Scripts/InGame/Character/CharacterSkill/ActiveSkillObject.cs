@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 
 
@@ -81,7 +82,7 @@ public class ActiveSkillObject : MonoBehaviour
             foreach (CharacterCarrier c in targetcharacter)
             {
                 c.stat.healthStat.Heal(SkillSO.Attack * stat.attackStat.GetStat());
-                SkillDelay(GetAnimationLength(), SkillSO.Attack * stat.attackStat.GetStat(), c, false);
+                SkillDelay(GetAnimationLength(), SkillSO.Attack * stat.attackStat.GetStat(), c, DamageType.Cri);
                 EffectOn(SkillSO.EffectType, targetcharacter);
             }
         }
@@ -98,16 +99,36 @@ public class ActiveSkillObject : MonoBehaviour
                 {
                     AllDamage *= stat.criticalAttackStat.Value;
                     Debug.Log("Å©¸®Æ¼ÄÃ ¶ä¤§¤§");
-                    character.stat.TakeDamage(AllDamage);
-                    StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage, character, true));
-                    EffectOn(SkillSO.EffectType, targetcharacter);
+
+                    if(character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
+                    {
+                        character.stat.TakeDamage(AllDamage *(float)1.2);
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage* (float)1.2, character, DamageType.CriAndWeek));
+                        EffectOn(SkillSO.EffectType, targetcharacter);
+                    }
+                    else
+                    {
+                        character.stat.TakeDamage(AllDamage);
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage, character, DamageType.Cri));
+                        EffectOn(SkillSO.EffectType, targetcharacter);
+                    }
+
                 }
                 else
                 {
-                    character.stat.TakeDamage(AllDamage);
-                    StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage, character, false));
-                    EffectOn(SkillSO.EffectType, targetcharacter);
 
+                    if (character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
+                    {
+                        character.stat.TakeDamage(AllDamage * (float)1.2);
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage * (float)1.2, character, DamageType.Week));
+                        EffectOn(SkillSO.EffectType, targetcharacter);
+                    }
+                    else
+                    {
+                        character.stat.TakeDamage(AllDamage);
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage, character, DamageType.Basic));
+                        EffectOn(SkillSO.EffectType, targetcharacter);
+                    }
                 }
             }
 
@@ -123,17 +144,17 @@ public class ActiveSkillObject : MonoBehaviour
     }
 
 
-    public async void SetDamageAsync(CharacterCarrier character, float AllDamage, bool IsCri)
+    public async void SetDamageAsync(CharacterCarrier character, float AllDamage, DamageType damage)
     {
         GameObject DamagePOP = await UIManager.Instance.CreatTransformPOPUPAsync("DamagePOPUP", character.transform);
-        DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, IsCri, character);
+        DamagePOP.GetComponent<DamagePOPUP>().SetPOPUP(AllDamage, damage, character);
     }
 
-    public IEnumerator SkillDelay(float SkillAnimation, float AllDamage, CharacterCarrier character, bool IsCri)
+    public IEnumerator SkillDelay(float SkillAnimation, float AllDamage, CharacterCarrier character, DamageType damage)
     {
        
          yield return new WaitForSeconds(SkillAnimation);
-        SetDamageAsync(character, AllDamage, IsCri);
+        SetDamageAsync(character, AllDamage, damage);
     }
 
     public void CoolTimeDown()
@@ -173,6 +194,14 @@ public class ActiveSkillObject : MonoBehaviour
                 GameObject FieldSkill = Instantiate(SkillEffectPrefab);
                 FieldSkill.transform.position = Vector3.zero;
                 FieldSkill.GetComponent<SkillEffect>().Play();
+                break;
+            case SkillEffectType.EnemyField:
+                GameObject Enemyskiils = Instantiate(SkillEffectPrefab, new Vector3(5,0,0), Quaternion.identity);
+                Enemyskiils.GetComponent<SkillEffect>().Play();
+                break;
+            case SkillEffectType.FriendField:
+                GameObject Friendskiils = Instantiate(SkillEffectPrefab, new Vector3(-5, 0, 0), Quaternion.identity);
+                Friendskiils.GetComponent<SkillEffect>().Play();
                 break;
 
         }

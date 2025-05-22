@@ -12,6 +12,7 @@ public enum CharacterInfoType
     ActiveSkill,
     PassiveSkill,
     CEO,
+    NoticePanel,
 
 }
 public enum SpriteType
@@ -42,7 +43,7 @@ public enum CurrencyType
 public enum SaveType
 {
 
-    //ÀúÀå¸ñ·Ïµé
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½
     Character,
     Currency,
     Stage,
@@ -84,7 +85,12 @@ public enum AddreassablesType
     SkillEffect,
     SoundEffectFx,
     CharacterSlotSprite,
-    GatchaBanner
+
+    GatchaBanner,
+
+    ChapterBackground,
+    BattleIcon,
+
 
 }
 public enum Grade
@@ -113,33 +119,33 @@ public enum PassiveType
 
 public enum GatchaType
 {
-    Pickup, //ÇÈ¾÷»Ì±â¸¦ À§ÇÑ Å¸ÀÔ
-    Standard // »ó½Ã»Ì±â¸¦ À§ÇÑ Å¸ÀÔ
+    Pickup, //ï¿½È¾ï¿½ï¿½Ì±â¸¦ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+    Standard // ï¿½ï¿½Ã»Ì±â¸¦ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
 }
 
 public enum EItemType
 {
     None,
-    Item,            // ¾ÆÀÌÅÛ
-    Consume       // ¼Ò¸ðÇ°
+    Item,            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    Consume       // ï¿½Ò¸ï¿½Ç°
 }
 
-public enum EConsumableType //¼Ò¸ðÇ° Å¸ÀÔ
+public enum EConsumableType //ï¿½Ò¸ï¿½Ç° Å¸ï¿½ï¿½
 {
     None,
-    EnergyItem,     // È°µ¿·Â ÃæÀü ¾ÆÀÌÅÛ
-    Currency,       // ÇÈ¾÷ ÀçÈ­
-    Box            // ¾ÆÀÌÅÛ ¹Ú½º
+    EnergyItem,     // È°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    Currency,       // ï¿½È¾ï¿½ ï¿½ï¿½È­
+    Box            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½
 }
 public enum ERarity
 {
-    S,  // S±Þ
-    A,  // A±Þ
-    B,  // B±Þ
-    C,  // C±Þ
-    D   // D±Þ
+    S,  // Sï¿½ï¿½
+    A,  // Aï¿½ï¿½
+    B,  // Bï¿½ï¿½
+    C,  // Cï¿½ï¿½
+    D   // Dï¿½ï¿½
 }
-// ¾À ÀÌ¸§°ú °°¾Æ¾ßÇÔ
+// ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¾ï¿½ï¿½ï¿½
 public enum SceneState
 {
     StartScene,
@@ -215,8 +221,20 @@ public enum SkillEffectType
     AllFriend,
     SingleEnemy,
     SingleFriend,
-    BattleField
+    BattleField,
+    EnemyField,
+    FriendField
 }
+
+
+public enum DamageType
+{
+    CriAndWeek,
+    Cri,
+    Week,
+    Basic
+}
+
 
 
 

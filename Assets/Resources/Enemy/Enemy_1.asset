@@ -20,3 +20,4 @@ MonoBehaviour:
   Speed: 101
   Cri: 0.01
   SkillID: 1
+  SecondSkillID: 1

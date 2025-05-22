@@ -19,7 +19,7 @@ MonoBehaviour:
   ActivityPoint: 18
   ItemID: 00000000
   Gold: 0
-  Dia: 200
+  Dia: 50
   UnlockStageID: ffffffff
   UnlockChapterID: ffffffff
-  Potion: 500
+  Potion: 3500

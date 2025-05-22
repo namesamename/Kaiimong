@@ -18,8 +18,11 @@ public class ChapterCameraTarget : MonoBehaviour
     [SerializeField] private SpriteRenderer background;
     private bool backgroundFound = false;
 
+    [SerializeField] private SpriteRenderer chapterBackground;
+
     private void Start()
     {
+        SetBackground();
         FindBackGround();
         MoveCameraToLeftEdge();
     }
@@ -168,5 +171,10 @@ public class ChapterCameraTarget : MonoBehaviour
         {
             transform.position = new Vector3(camMin, transform.position.y, transform.position.z);
         }
+    }
+
+    public async void SetBackground()
+    {
+        chapterBackground.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.ChapterBackground, ChapterManager.Instance.CurChapter.ID);
     }
 }

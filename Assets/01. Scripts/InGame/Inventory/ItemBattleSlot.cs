@@ -7,7 +7,7 @@ public class ItemBattleSlot : MonoBehaviour
     [SerializeField] private Image Icon;
 
     private ItemData item;
-    private ItemSaveData Save;
+    private ItemSavaData Save;
 
     ItemBattleSlots battleSlots;
 
@@ -25,7 +25,7 @@ public class ItemBattleSlot : MonoBehaviour
         Icon.enabled = true;
         item = GlobalDataTable.Instance.Item.GetItemDataToID(ID);
         Icon.sprite = Resources.Load<Sprite>(item.IconPath);
-        Save = SaveDataBase.Instance.GetSaveDataToID<ItemSaveData>(SaveType.Item, ID);
+        Save = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, ID);
 
         SetSlotColor(item);
     }

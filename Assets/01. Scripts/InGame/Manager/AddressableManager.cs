@@ -150,6 +150,10 @@ public class AddressableManager : Singleton<AddressableManager>
 
             case AddreassablesType.CharacterSlotSprite:
                 return "CharacterSlotSprite/Char_";
+            case AddreassablesType.ChapterBackground:
+                return "Chapter/ChapterBackground/";
+            case AddreassablesType.BattleIcon:
+                return "BattleIcon/Char_";
             default:
                 Debug.LogError($"Unknown AddreassablesType: {type}");
                 return string.Empty;
