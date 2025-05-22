@@ -180,7 +180,7 @@ public class StageManager : Singleton<StageManager>
 
         CheckExtraTarget(ref targetOne, ref targetTwo);
 
-        RewardDia = CurrentStage.Dia;
+        RewardDia = 0;
 
         if (!ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).TargetOne)
         {
@@ -190,6 +190,11 @@ public class StageManager : Singleton<StageManager>
                 ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).TargetOne = true;
             }
         }
+        else
+        {
+            RewardGold = RewardGold / 2;
+        }
+
         if (!ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).TargetTwo)
         {
             RewardExpPotion = targetTwo ? RewardExpPotion : RewardExpPotion / 2;
@@ -197,6 +202,10 @@ public class StageManager : Singleton<StageManager>
             {
                 ChapterManager.Instance.GetStageSaveData(CurrentStage.ID).TargetTwo = true;
             }
+        }
+        else
+        {
+            RewardExpPotion /= 2;
         }
 
         if (RewardDia > 50)
