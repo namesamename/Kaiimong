@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chapter_5
   m_EditorClassIdentifier: 
   ID: 5
-  Name: "\uC720\uB9AC\uAD6C\uC2AC"
+  Name: "\uBD80\uC801"
   StagesID: 290000002a0000002b0000002c0000002d000000
   ContentPrefabPath: Chapter/Prefab/Chapter_5
   IconPath: Chapter/Icons/IconOne

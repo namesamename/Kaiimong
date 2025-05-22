@@ -22,4 +22,4 @@ MonoBehaviour:
   Dia: 50
   UnlockStageID: 25000000
   UnlockChapterID: ffffffff
-  Potion: 500
+  Potion: 0

@@ -182,7 +182,7 @@ public class StageManager : Singleton<StageManager>
 
         RewardDia = CurrentStage.Dia;
         RewardGold = targetOne ? RewardGold : RewardGold / 2;
-        RewardExpPotion = targetTwo ? RewardExpPotion : 0;
+        RewardExpPotion = targetTwo ? RewardExpPotion : RewardExpPotion /2;
 
         if (RewardDia > 50)
         {
