@@ -481,6 +481,7 @@ public class BattleSystem : MonoBehaviour
             CommandController.AddCommand(new SkillCommand(activePlayers[TurnIndex], Targets, SelectedSkill));
             BattleUI.CharacterUI.NextCharacterIcon();
             TurnIndex++;
+            if(TurnIndex < activePlayers.Count)
             battleStatBoard.SetBattleStatUI(activePlayers[TurnIndex]);
             Targets.Clear();
             //BattleUI.CharacterUI.SetActionButton();
