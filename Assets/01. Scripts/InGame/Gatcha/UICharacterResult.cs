@@ -21,16 +21,16 @@ public class UICharacterResult : MonoBehaviour  //뽑기 결과연출을 보여주는 스크�
         switch (character.Grade)
         {
             case Grade.S:
-                background.color = Color.yellow;
+                background.color = new Color32(0xFF, 0xE4, 0x00, 0xFF);
                 Particle.SetActive(true);
 
                 AnimateSGradeS();
                 break;
             case Grade.A:
-                background.color = Color.cyan;
+                background.color = new Color32(0x6C, 0x00, 0xFF, 0xFF);
                 break;
             case Grade.B:
-                background.color = Color.gray;
+                background.color = new Color32(0x00, 0x71, 0xC8, 0xFF);
                 break;
         }
 
