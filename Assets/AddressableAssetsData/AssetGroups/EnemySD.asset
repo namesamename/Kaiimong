@@ -29,25 +29,25 @@ MonoBehaviour:
     m_SerializedLabels:
     - EnemyBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4d6c2a9c0b776c447bca0ac62cae31ee
+  - m_GUID: 3cc21559d13c65f478469812f9a35334
     m_Address: EnemySprite/Enemy_3
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8e6e6afda2b60e847af5a23f56ba9f98
+  - m_GUID: 5e74fdd5b4b3959498d0add67224f966
     m_Address: EnemySprite/Enemy_4
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a04349f4d30e9e24daff5f16b8162944
+  - m_GUID: 698abfb999e51d545ae07c61bf85af0f
     m_Address: EnemySprite/Enemy_5
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyBattleSD
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 36aaf9999f876594ba12d04a9986b0e2
+  - m_GUID: fb24e4cb102978c47a5b010af5936d36
     m_Address: EnemySprite/Enemy_6
     m_ReadOnly: 0
     m_SerializedLabels:

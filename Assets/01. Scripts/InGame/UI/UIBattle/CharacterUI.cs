@@ -19,7 +19,7 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private List<Button> buttonList = new List<Button>();
     [SerializeField] private Button targetConfirmButton;
     [SerializeField] private Image ultCover;
-    private Button ultButton;
+    [SerializeField] private Button ultButton;
     //[SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
 
@@ -31,7 +31,6 @@ public class CharacterUI : MonoBehaviour
 
     void Start()
     {
-        ultButton = buttonList[0];
         battleSystem.OnPlayerTurn += GetActivePlayerUnit;
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
@@ -43,12 +42,12 @@ public class CharacterUI : MonoBehaviour
         if (curUnits[battleSystem.TurnIndex].skillBook.GetSkillGauge() == 7)
         {
             ultCover.gameObject.SetActive(false);
-            ultButton.enabled = true;
+            ultButton.interactable = true;
         }
         else
         {
             ultCover.gameObject.SetActive(true);
-            ultButton.enabled = false;
+            ultButton.interactable = false;
         }
     }
 

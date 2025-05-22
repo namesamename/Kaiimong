@@ -2413,6 +2413,7 @@ MonoBehaviour:
   - {fileID: 9061735938808594036}
   targetConfirmButton: {fileID: 4473708971227630173}
   ultCover: {fileID: 1822565249579494423}
+  ultButton: {fileID: 9061735938808594036}
   actionButton: {fileID: 8841756218176965592}
 --- !u!1 &4216020392772489615
 GameObject:
