@@ -14,7 +14,8 @@ public class GatchaTypeChanger : MonoBehaviour
     [SerializeField] private GameObject PickUpPointer;
     [SerializeField] private GameObject StandardPointer;
 
-    [SerializeField] private Button button;
+    [SerializeField] private Button Homebutton;
+    [SerializeField] private Button Backbutton;
 
     private Dictionary<Transform, Vector3> originalPositions = new();
 
@@ -24,8 +25,10 @@ public class GatchaTypeChanger : MonoBehaviour
         SaveOriginalPositions();
         UpdateBannerImage(_gatchaManager.currentGachaType);
 
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
+        Homebutton.onClick.RemoveAllListeners();
+        Homebutton.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
+        Backbutton.onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
+
     }
 
     private void SaveOriginalPositions()

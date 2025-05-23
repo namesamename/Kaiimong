@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class LobbyBTns : MonoBehaviour
 {
     Button[] buttons;
-    private void Awake()
+    private  void Awake()
     {
         buttons = GetComponentsInChildren<Button>();
 
@@ -16,10 +16,15 @@ public class LobbyBTns : MonoBehaviour
         buttons[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.InventoryScene));
         buttons[2].onClick.AddListener(() => { SceneLoader.Instance.ChangeScene(SceneState.CharacterSelectScene);  UIManager.Instance.characterIDType = UICharacterIDType.None; });
         buttons[3].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.PickupScene));
-        buttons[4].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ShopScene));
+
+        //buttons[4].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ShopScene));
+        buttons[4].onClick.AddListener(async () => await UIManager.Instance.ShowPopup("UpdateNoticePopUp"));
+
         buttons[5].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.QuestScene));
-        
-        buttons[6].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.MessageScene));
+
+        //buttons[6].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.MessageScene));
+        buttons[6].onClick.AddListener(async () => await UIManager.Instance.ShowPopup("UpdateNoticePopUp"));
+
         buttons[7].onClick.AddListener(async () => await UIManager.Instance.ShowPopup("StaminaChargePOPUP"));
 
     }
