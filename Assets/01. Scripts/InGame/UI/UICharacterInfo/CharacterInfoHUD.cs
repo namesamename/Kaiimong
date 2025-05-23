@@ -153,7 +153,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 CEO.onClick.AddListener(() => { UIManager.Instance.characterIDType = UICharacterIDType.Lobby;StartCoroutine(MovePannel(character)); UIManager.Instance.SetCharacterID(character.ID); });
 
 
-                transform.DOLocalMoveY(400, 1);
+          
                 
                 break;
 
