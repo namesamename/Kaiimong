@@ -288,11 +288,11 @@ public class BattleSystem : MonoBehaviour
             {
                 foreach (CharacterCarrier asd in activePlayers)
                 {
-                    asd.stat.SetBufftimeDown();
+                    asd.stat.OnTurnEnd();
                 }
                 foreach (CharacterCarrier asd in activeEnemies)
                 {
-                    asd.stat.SetBufftimeDown();
+                    asd.stat.OnTurnEnd();
                 }
 
             }
@@ -318,11 +318,11 @@ public class BattleSystem : MonoBehaviour
                     battleStatBoard.SetBattleStatUI(activePlayers[0]);
                     foreach (CharacterCarrier asd in activePlayers)
                     {
-                        asd.stat.SetBufftimeDown();
+                        asd.stat.OnTurnEnd();
                     }
                     foreach (CharacterCarrier asd in activeEnemies)
                     {
-                        asd.stat.SetBufftimeDown();
+                        asd.stat.OnTurnEnd();
                     }
                 }
          

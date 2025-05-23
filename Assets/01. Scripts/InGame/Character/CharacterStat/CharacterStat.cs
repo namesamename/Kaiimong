@@ -17,7 +17,15 @@ public enum StatType
     invincible,
 }
 
-
+public class BuffInstance
+{
+    public int buffID;
+    public BaseStat targetStat;
+    public float value;
+    public int remainingTurns;
+    public int originalTurns;
+    public SkillType skillType;
+}
 [System.Serializable]
 public class CharacterStat : MonoBehaviour
 {
@@ -35,6 +43,9 @@ public class CharacterStat : MonoBehaviour
 
     private int BuffTurn = 0;
     private Animator animator;
+
+
+    private Dictionary<int, BuffInstance> activeBuffs = new Dictionary<int, BuffInstance>();
 
     private void Awake()
     {
@@ -144,19 +155,13 @@ public class CharacterStat : MonoBehaviour
         animator.SetTrigger("Death");
         OnDeath?.Invoke();
     }
-    
 
-    public void SetBufftimeDown()
-    {
-        if(BuffTurn != 0)
-        {
-            BuffTurn--;
-        }
-    }
+
+
 
     public BaseStat EnumChanger(StatType statType)
     {
-        switch(statType) 
+        switch (statType)
         {
             case StatType.Agility:
                 return agilityStat;
@@ -175,41 +180,110 @@ public class CharacterStat : MonoBehaviour
         }
     }
 
-
-    public void Buff(ActiveSkill Skill)
+    public void Buff(ActiveSkill skill)
     {
-        float Attack;
-        if (Skill.Type == SkillType.buff && Skill.BuffID != 0)
-        {
-            BuffTurn = GlobalDataTable.Instance.skill.GetBuffToID(Skill.BuffID).Turn;
-            Attack = GlobalDataTable.Instance.skill.GetBuffToID(Skill.BuffID).Value;
-            BaseStat stat = EnumChanger(GlobalDataTable.Instance.skill.GetBuffToID(Skill.BuffID).Type);
-            buffStart(stat,Attack,BuffTurn,SkillType.buff);
-        }
-        else if(Skill.Type == SkillType.debuff && Skill.BuffID != 0)
-        {
-            BuffTurn = GlobalDataTable.Instance.skill.GetDebuffToID(Skill.BuffID).Turn;
-            Attack = GlobalDataTable.Instance.skill.GetDebuffToID(Skill.BuffID).Value;
-            BaseStat stat = EnumChanger(GlobalDataTable.Instance.skill.GetDebuffToID(Skill.BuffID).Type);
-            buffStart(stat, Attack, BuffTurn, SkillType.debuff);
-        }
-    
+        if (skill.BuffID == 0) return;
 
+        float value;
+        int turns;
+        StatType statType;
+
+
+        if (skill.Type == SkillType.buff)
+        {
+            var buffData = GlobalDataTable.Instance.skill.GetBuffToID(skill.BuffID);
+            value = buffData.Value;
+            turns = buffData.Turn;
+            statType = buffData.Type;
+        }
+        else if (skill.Type == SkillType.debuff)
+        {
+            var debuffData = GlobalDataTable.Instance.skill.GetDebuffToID(skill.BuffID);
+            value = -debuffData.Value; 
+            turns = debuffData.Turn;
+            statType = debuffData.Type;
+        }
+        else
+        {
+            return;
+        }
+
+        BaseStat targetStat = EnumChanger(statType);
+        if (targetStat == null) return;
+
+        ApplyBuff(skill.BuffID, targetStat, value, turns, skill.Type);
     }
-    public IEnumerator buffStart(BaseStat stat, float Attack, int duration, SkillType skill)
+
+    private void ApplyBuff(int buffID, BaseStat targetStat, float value, int turns, SkillType skillType)
     {
-        if(skill == SkillType.debuff)
+
+        if (activeBuffs.ContainsKey(buffID))
         {
-            Attack = -Attack;
+   
+            BuffInstance existingBuff = activeBuffs[buffID];
+            existingBuff.remainingTurns = turns;
+            existingBuff.originalTurns = turns;
         }
-        stat.AddMultiples(Attack);
-        yield return duration <= 0;
-        stat.AddMultiples(-Attack);
+        else
+        {
+
+            BuffInstance newBuff = new BuffInstance
+            {
+                buffID = buffID,
+                targetStat = targetStat,
+                value = value,
+                remainingTurns = turns,
+                originalTurns = turns,
+                skillType = skillType
+            };
+
+            // 스탯에 효과 적용
+            targetStat.AddMultiples(value);
+            activeBuffs[buffID] = newBuff;
+
+
+        }
     }
 
-   
 
-   
+    public void OnTurnEnd()
+    {
+        List<int> buffsToRemove = new List<int>();
+
+        foreach (var kvp in activeBuffs)
+        {
+            BuffInstance buff = kvp.Value;
+            buff.remainingTurns--;
+
+            Debug.Log($"버프 {buff.buffID}: {buff.remainingTurns}턴 남음");
+
+     
+            if (buff.remainingTurns <= 0)
+            {
+                buffsToRemove.Add(kvp.Key);
+            }
+        }
 
 
+        foreach (int buffID in buffsToRemove)
+        {
+            RemoveBuff(buffID);
+        }
+    }
+
+    private void RemoveBuff(int buffID)
+    {
+        if (activeBuffs.ContainsKey(buffID))
+        {
+            BuffInstance buff = activeBuffs[buffID];
+
+
+            buff.targetStat.AddMultiples(-buff.value);
+
+ 
+            activeBuffs.Remove(buffID);
+
+         
+        }
+    }
 }
