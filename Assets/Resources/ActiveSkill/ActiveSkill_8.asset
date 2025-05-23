@@ -21,4 +21,4 @@ MonoBehaviour:
   Type: 2
   IsBuff: 1
   BuffID: 1
-  EffectType: 1
+  EffectType: 2

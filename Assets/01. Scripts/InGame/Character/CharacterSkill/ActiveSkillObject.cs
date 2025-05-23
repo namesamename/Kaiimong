@@ -28,7 +28,7 @@ public class ActiveSkillObject : MonoBehaviour
     public async void SetSkill(int id)
     {
         SkillSO = GlobalDataTable.Instance.skill.GetActSkillSOToID(id);
-        SkillEffectPrefab = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.SkillEffect, "15");
+        SkillEffectPrefab = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.SkillEffect, $"{id}");
     }
 
 

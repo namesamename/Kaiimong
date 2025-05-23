@@ -38,10 +38,10 @@ public class BattleUI : MonoBehaviour
 
     private void MoveUI()
     {
-        roundsRect.DOLocalMoveX(-690, 1f);
+        roundsRect.DOLocalMoveX(-1000, 1f);
         for(int i = 0; i < buttonsRect.Length; i++)
         {
-            buttonsRect[i].DOAnchorPosY(-40, 1f);
+            buttonsRect[i].DOAnchorPosY(100, 1f);
         }
     }
 
