@@ -124,12 +124,16 @@ public class CharacterInfoHUD : MonoBehaviour
                 break;
             case CharacterInfoType.ActiveSkill:
                 Button[] buttons = GetComponentsInChildren<Button>();
+                Image[] images2 = GetComponentsInChildren<Image>();
                 for(int i = 0; i < buttons.Length; i++)
                 {
                     int index = i;
                     buttons[i].onClick.RemoveAllListeners();
                     buttons[i].onClick.AddListener(() => SetSkillPopup(index));
                 }
+                images2[3].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3);
+                images2[2].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3 -1);
+                images2[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3-2);
                 transform.DOLocalMoveX(600, 1);
                 break;
             case CharacterInfoType.PassiveSkill:

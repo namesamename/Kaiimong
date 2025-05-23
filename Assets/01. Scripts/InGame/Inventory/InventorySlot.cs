@@ -75,7 +75,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     }
 
 
-    public void SetSlotCurrency(CurrencyType currency, int Count)
+    public  void SetSlotCurrency(CurrencyType currency, int Count)
     {
 
 
@@ -92,6 +92,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         switch (currency) 
         {
             case CurrencyType.UserEXP:
+                
                 break;
             case CurrencyType.Gold:
                 break;

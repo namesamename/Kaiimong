@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillInfoPoPUP : UIPOPUP
@@ -17,14 +18,14 @@ public class SkillInfoPoPUP : UIPOPUP
         PlayShowAnimation();
     }
 
-    public void SetPopup(Character character, int index)
+    public async void SetPopup(Character character, int index)
     {
         int ID = character.ID;
         ActiveSkill ActSkill = GlobalDataTable.Instance.skill.GetActSkillSOToID(ID + index);
         SkillContext[0].text = ActSkill.Name;
         SkillContext[1].text = ActSkill.Description;
         BackGroundButton.onClick.AddListener(Destroy);
-        //images[2].sprite = Resources.Load<Sprite>(ActSkill.IconPath);
+        images[2].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, ActSkill.ID);
     }
 
 

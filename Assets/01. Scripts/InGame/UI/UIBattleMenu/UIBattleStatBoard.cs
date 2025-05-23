@@ -7,6 +7,7 @@ public class UIBattleStatBoard : MonoBehaviour
 {
     TextMeshProUGUI[] textMeshPros;
     public bool IsOpen = false;
+    public bool IsUpdate = false;
     private void Awake()
     {
         textMeshPros = GetComponentsInChildren<TextMeshProUGUI>(true);
@@ -20,6 +21,26 @@ public class UIBattleStatBoard : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(IsOpen)
+        {
+            if(IsUpdate)
+            {
+                for (int i = 0; i < textMeshPros.Length; i++)
+                {
+                    textMeshPros[i].enabled = true;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < textMeshPros.Length; i++)
+                {
+                    textMeshPros[i].text = string.Empty;
+                }
+            }
+        }
+    }
 
     public void SetBattleStatUI(CharacterCarrier character)
     {
@@ -69,19 +90,5 @@ public class UIBattleStatBoard : MonoBehaviour
 
     }
 
-    public void SetEnalbe()
-    {
-        for (int i = 0; i < textMeshPros.Length; i++)
-        {
-            textMeshPros[i].enabled = true;
-        }
-    }
-
-    public void SetDown()
-    {
-        for (int i = 0; i < textMeshPros.Length; i++)
-        {
-            textMeshPros[i].text = string.Empty;
-        }
-    }
+   
 }
