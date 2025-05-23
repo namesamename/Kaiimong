@@ -64,6 +64,10 @@ public class UIBattleHealthBar : MonoBehaviour
                 {
                     UtiGauge[2 + i].color = Color.yellow;
                 }
+                for (int i = TargetTransform.GetComponent<CharacterCarrier>().skillBook.GetSkillGauge(); i < UtiGauge.Length - 2; i++)
+                {
+                    UtiGauge[2 + i].color = Color.white;
+                }
             }
             else
             {

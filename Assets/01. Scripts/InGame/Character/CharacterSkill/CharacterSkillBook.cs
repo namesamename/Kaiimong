@@ -88,7 +88,7 @@ public class CharacterSkillBook : MonoBehaviour
         //if(!IsFullCharage(skill)) 
         //    return;
 
-
+        IsFullCharage(skill);
         skill.UseSkill(characters);
     }
 
@@ -128,24 +128,13 @@ public class CharacterSkillBook : MonoBehaviour
     }
 
 
-    public bool IsFullCharage(ActiveSkillObject skill)
+    public void IsFullCharage(ActiveSkillObject skill)
     {
         if(skill.SkillSO.ID % 3 == 0)
         {
-            if(SkillGauge == maxSkillGauge)
-            {
-                SkillGauge = 0;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            SkillGauge = 0;
         }
-        else
-        {
-            return true;
-        }
+ 
  
 
     }

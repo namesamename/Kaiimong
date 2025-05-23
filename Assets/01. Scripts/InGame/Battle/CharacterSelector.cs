@@ -43,6 +43,13 @@ public class CharacterSelector : MonoBehaviour
             }
             else
             {
+                Debug.Log("이거 힐인데");
+
+                foreach(CharacterCarrier character in battleSystem.GetActivePlayers())
+                {
+                    Debug.Log(character);
+                }
+
                 if (!battleSystem.SelectedSkill.SkillSO.isSingleAttack)
                 {
                     SelectAll(battleSystem.GetActivePlayers());
@@ -139,10 +146,21 @@ public class CharacterSelector : MonoBehaviour
         // 선택된 캐릭터를 Targets 리스트에 추가
         if (!battleSystem.SelectedSkill.SkillSO.isSingleAttack)
         {
-            foreach (CharacterCarrier units in battleSystem.GetActiveEnemies())
+            if (battleSystem.SelectedSkill.SkillSO.IsBuff)
             {
-                battleSystem.Targets.Add(units);
-                SelectedEffect(units, false);
+                foreach (CharacterCarrier units in battleSystem.GetActivePlayers())
+                {
+                    battleSystem.Targets.Add(units);
+                    SelectedEffect(units, false);
+                }
+            }
+            else
+            {
+                foreach (CharacterCarrier units in battleSystem.GetActiveEnemies())
+                {
+                    battleSystem.Targets.Add(units);
+                    SelectedEffect(units, false);
+                }
             }
         }
         if (battleSystem.SelectedSkill.SkillSO.isSingleAttack)

@@ -62,13 +62,14 @@ public class ActiveSkillObject : MonoBehaviour
             }
             else
             {
+
                 animator.SetTrigger("Thrid");
             }
         }
 
        
         CharacterStat stat = transform.parent.transform.parent.GetComponentInChildren<CharacterStat>();
-        //추후 추가
+
         if (SkillSO.Type == SkillType.debuff || SkillSO.Type == SkillType.buff)
         {
             Debug.Log("Use Buff");
@@ -103,13 +104,13 @@ public class ActiveSkillObject : MonoBehaviour
                     if(character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
                     {
                         character.stat.TakeDamage(AllDamage *(float)1.2);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage* (float)1.2, character, DamageType.CriAndWeek));
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage* (float)1.2 - character.stat.defenseStat.GetStat(), character, DamageType.CriAndWeek));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
                     else
                     {
                         character.stat.TakeDamage(AllDamage);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage, character, DamageType.Cri));
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage- character.stat.defenseStat.GetStat(), character, DamageType.Cri));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
 
@@ -120,13 +121,13 @@ public class ActiveSkillObject : MonoBehaviour
                     if (character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
                     {
                         character.stat.TakeDamage(AllDamage * (float)1.2);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage * (float)1.2, character, DamageType.Week));
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage * (float)1.2 - character.stat.defenseStat.GetStat(), character, DamageType.Week));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
                     else
                     {
                         character.stat.TakeDamage(AllDamage);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage, character, DamageType.Basic));
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage - character.stat.defenseStat.GetStat(), character, DamageType.Basic));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
                 }
@@ -175,10 +176,12 @@ public class ActiveSkillObject : MonoBehaviour
         {
             case SkillEffectType.transformToTarget:
                 GameObject Tagetskill = Instantiate(SkillEffectPrefab, transform.position, Quaternion.identity);
+                EffectDirection(Tagetskill);
                 Tagetskill.GetComponent<ISkillEffectable>().Play(characters);
                 break;
             case SkillEffectType.Self:
                 GameObject skill  = Instantiate(SkillEffectPrefab, transform.position, Quaternion.identity);
+                EffectDirection(skill);
                 skill.GetComponent<ISkillEffectable>().Play(characters);
                 break;
             case SkillEffectType.AllEnemy:
@@ -188,27 +191,52 @@ public class ActiveSkillObject : MonoBehaviour
                 foreach (CharacterCarrier character in characters)
                 {
                     GameObject skiils = Instantiate(SkillEffectPrefab, character.transform.position, Quaternion.identity);
+                    EffectDirection(skiils);
                     skiils.GetComponent<ISkillEffectable>().Play(characters);
                 }
                 break;
             case SkillEffectType.BattleField:
                 GameObject FieldSkill = Instantiate(SkillEffectPrefab);
+                EffectDirection(FieldSkill);
                 FieldSkill.transform.position = new Vector3(0f, -5f, 0f);
       
                 FieldSkill.GetComponent<ISkillEffectable>().Play(characters);
                 break;
             case SkillEffectType.EnemyField:
                 GameObject Enemyskiils = Instantiate(SkillEffectPrefab, new Vector3(5,-1,0), Quaternion.identity);
- 
+                EffectDirection(Enemyskiils);
                 Enemyskiils.GetComponent<ISkillEffectable>().Play(characters);
                 break;
             case SkillEffectType.FriendField:
                 GameObject Friendskiils = Instantiate(SkillEffectPrefab, new Vector3(-5, -1, 0), Quaternion.identity);
-            
+                EffectDirection(Friendskiils);
                 Friendskiils.GetComponent<ISkillEffectable>().Play(characters);
                 break;
 
+
         }
 
+    }
+
+
+    public void EffectDirection(GameObject Effect)
+    {
+        switch(SkillSO.EffectUpDownType) 
+        {
+            case SkillEffectUpDownType.Middle:
+                break;
+            case SkillEffectUpDownType.Right:
+                Effect.transform.position = new Vector3(Effect.transform.position.x + 1f, Effect.transform.position.y, Effect.transform.position.z);
+                break;
+            case SkillEffectUpDownType.Left:
+                Effect.transform.position = new Vector3(Effect.transform.position.x -1f, Effect.transform.position.y, Effect.transform.position.z);
+                break;
+            case SkillEffectUpDownType.Down:
+                Effect.transform.position = new Vector3(Effect.transform.position.x, Effect.transform.position.y -1f, Effect.transform.position.z);
+                break;
+            case SkillEffectUpDownType.Up:
+                Effect.transform.position = new Vector3(Effect.transform.position.x, Effect.transform.position.y +1f, Effect.transform.position.z);
+                break;
+        }
     }
 }

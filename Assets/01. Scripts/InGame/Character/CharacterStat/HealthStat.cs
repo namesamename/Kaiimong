@@ -12,7 +12,7 @@ public class HealthStat : BaseStat
 
     public void Heal(float Amount)
     {
-        CurHealth = Mathf.Max(CurHealth+Amount, Value);
+        CurHealth = Mathf.Min(CurHealth+Amount, Value);
     }
    
 }

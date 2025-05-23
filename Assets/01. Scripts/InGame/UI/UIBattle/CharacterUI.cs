@@ -235,14 +235,17 @@ public class CharacterUI : MonoBehaviour
         }
     }
 
-    void SetSkillButton()
+    private async void SetSkillButton()
     {
         UltEnable();
 
         for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList.Length; i++)
         {
-            //buttonList[i].image.sprite = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
+            int id = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].SkillSO.ID;
+            buttonList[i].image.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, id);
+            //curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
         }
+        ultCover.sprite = buttonList[2].image.sprite;
     }
 
     void EnableUI()

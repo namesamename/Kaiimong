@@ -49,7 +49,7 @@ MonoBehaviour:
   m_startDelay: 0
   m_makeCount: 10
   m_makeDelay: 0.25
-  m_randomPos: {x: 5, y: 0, z: 5}
+  m_randomPos: {x: 1, y: 0, z: -1}
   m_randomRot: {x: 0, y: 0, z: 0}
   m_randomScale: {x: 0, y: 0, z: 0}
   isObjectAttachToParent: 1
@@ -80,7 +80,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.25, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2549433306245947564}
@@ -129,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 3073212348884655730}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_startDelay: 0.5
   m_makeCount: 1
   m_makeDelay: 0
-  m_randomPos: {x: 0, y: 0, z: 0}
+  m_randomPos: {x: 1, y: 0, z: -1}
   m_randomRot: {x: 0, y: 0, z: 0}
   m_randomScale: {x: 0, y: 0, z: 0}
   isObjectAttachToParent: 1
@@ -182,7 +182,7 @@ Transform:
   m_GameObject: {fileID: 5161467369446299034}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_startDelay: 0.75
   m_makeCount: 1
   m_makeDelay: 0
-  m_randomPos: {x: 0, y: 0, z: 0}
+  m_randomPos: {x: 1, y: 0, z: -1}
   m_randomRot: {x: 0, y: 0, z: 0}
   m_randomScale: {x: 0, y: 0, z: 0}
   isObjectAttachToParent: 1
@@ -235,7 +235,7 @@ Transform:
   m_GameObject: {fileID: 5427083641216894359}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_startDelay: 0.25
   m_makeCount: 1
   m_makeDelay: 0
-  m_randomPos: {x: 0, y: 0, z: 0}
+  m_randomPos: {x: 1, y: 0, z: -1}
   m_randomRot: {x: 0, y: 0, z: 0}
   m_randomScale: {x: 0, y: 0, z: 0}
   isObjectAttachToParent: 1
@@ -288,7 +288,7 @@ Transform:
   m_GameObject: {fileID: 6237119822048160980}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_startDelay: 0
   m_makeCount: 1
   m_makeDelay: 0
-  m_randomPos: {x: 0, y: 0, z: 0}
+  m_randomPos: {x: 1, y: 0, z: -1}
   m_randomRot: {x: 0, y: 0, z: 0}
   m_randomScale: {x: 0, y: 0, z: 0}
   isObjectAttachToParent: 1
@@ -341,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 6448413915424380711}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_startDelay: 1
   m_makeCount: 1
   m_makeDelay: 0
-  m_randomPos: {x: 0, y: 0, z: 0}
+  m_randomPos: {x: 1, y: 0, z: -1}
   m_randomRot: {x: 0, y: 0, z: 0}
   m_randomScale: {x: 0, y: 0, z: 0}
   isObjectAttachToParent: 1
