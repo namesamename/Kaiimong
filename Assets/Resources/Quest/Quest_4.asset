@@ -17,6 +17,6 @@ MonoBehaviour:
   QuestDescription: "\uC778\uC9C0 \uC5C5"
   QuestType: 3
   RequiredCount: 1
-  RewardTableID: 7
-  SecondRewardTableID: 1
+  RewardTableID: 2
+  SecondRewardTableID: 7
   TimeType: 0

@@ -18,5 +18,5 @@ MonoBehaviour:
   QuestType: 8
   RequiredCount: 10000
   RewardTableID: 2
-  SecondRewardTableID: 3
-  TimeType: 2
+  SecondRewardTableID: 7
+  TimeType: 0

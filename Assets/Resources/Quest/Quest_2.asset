@@ -16,7 +16,7 @@ MonoBehaviour:
   QuestName: "\uB808\uBCA8\uC5C5"
   QuestDescription: "\uB808\uBCA8\uC5C5"
   QuestType: 1
-  RequiredCount: 11
-  RewardTableID: 3
-  SecondRewardTableID: 4
+  RequiredCount: 10
+  RewardTableID: 2
+  SecondRewardTableID: 7
   TimeType: 0

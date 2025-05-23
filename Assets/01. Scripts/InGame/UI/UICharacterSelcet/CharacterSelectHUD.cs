@@ -99,8 +99,8 @@ public class CharacterSelectHUD : MonoBehaviour
 
     public void Textset()
     {
-        textMeshPros[3].text = "Level";
-        textMeshPros[4].text = "Grade";
+        textMeshPros[1].text = "Level";
+        textMeshPros[2].text = "Grade";
     }
 
 
