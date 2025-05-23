@@ -147,7 +147,6 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "SoundEffectFx/";
             case AddreassablesType.GatchaBanner:
                 return "GatchaBanner/";
-
             case AddreassablesType.CharacterSlotSprite:
                 return "CharacterSlotSprite/Char_";
             case AddreassablesType.ChapterBackground:
@@ -156,6 +155,8 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "BattleIcon/Char_";
             case AddreassablesType.SkillIcon:
                 return "SkillIcon/SkillIcon_";
+            case AddreassablesType.CurrencyIcon:
+                return "CurrencyIcon/Currency_";
             default:
                 Debug.LogError($"Unknown AddreassablesType: {type}");
                 return string.Empty;

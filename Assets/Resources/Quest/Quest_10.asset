@@ -17,6 +17,6 @@ MonoBehaviour:
   QuestDescription: "\uC2A4\uD0DC\uBBF8\uB098 \uC0AC\uC6A9"
   QuestType: 9
   RequiredCount: 100
-  RewardTableID: 4
-  SecondRewardTableID: 5
-  TimeType: 2
+  RewardTableID: 2
+  SecondRewardTableID: 7
+  TimeType: 0

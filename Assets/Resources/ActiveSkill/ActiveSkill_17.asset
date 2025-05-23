@@ -18,7 +18,7 @@ MonoBehaviour:
   Attack: 1
   isSingleAttack: 1
   UltimateGauge: 1
-  Type: 0
+  Type: 2
   IsBuff: 1
   BuffID: 3
   EffectType: 4

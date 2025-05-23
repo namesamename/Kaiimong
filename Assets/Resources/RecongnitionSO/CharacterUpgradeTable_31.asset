@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e809435e8638d4eb066c8f0369b49f, type: 3}
+  m_Name: CharacterUpgradeTable_31
+  m_EditorClassIdentifier: 
+  ID: 31
+  CharacterID: 11
+  Name: "\uCD94\uD6C4 \uAC1C\uBC1C \uC608\uC815"
+  Des: "\uCD94\uD6C4 \uAC1C\uBC1C \uC608\uC815"
+  Recognition: 1
+  NeedGold: 1600
+  NeedLevel: 20
+  ItemCount: 3
+  FirstItemID: 1
+  FirstItemCount: 2
+  SecondItemID: 4
+  SecondItemCount: 3
+  ThridItemID: 0
+  ThridItemCount: 0
+  FourthItemID: 0
+  FourthItemCount: 0

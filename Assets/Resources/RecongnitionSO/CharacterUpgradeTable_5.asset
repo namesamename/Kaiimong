@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 5
   CharacterID: 2
-  Name: asd
-  Des: asd
+  Name: "\uCD94\uD6C4 \uAC1C\uBC1C \uC608\uC815"
+  Des: "\uCD94\uD6C4 \uAC1C\uBC1C \uC608\uC815"
   Recognition: 2
   NeedGold: 1200
   NeedLevel: 40

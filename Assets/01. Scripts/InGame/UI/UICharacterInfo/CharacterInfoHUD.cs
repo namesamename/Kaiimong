@@ -67,7 +67,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 Slider slider = GetComponentInChildren<Slider>();
                 textMeshPros[0].text = GlobalDataTable.Instance.character.GetCharToID(saveData.ID).Name;
                 textMeshPros[1].text = GlobalDataTable.Instance.character.GetCharToID(saveData.ID).Grade.ToString();
-                textMeshPros[2].text = saveData.Love.ToString("N1");
+                textMeshPros[3].text = saveData.Love.ToString("N1");
                 slider.value = saveData.Love / 100f;
 
                 transform.DOLocalMoveX(-650, 1);

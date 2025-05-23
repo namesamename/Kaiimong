@@ -22,4 +22,4 @@ MonoBehaviour:
   CriticalPer: 0.067
   CriticalAttack: 1.46
   CharacterType: 0
-  CharacterItem: 1
+  CharacterItem: 20

@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 public class CharacterProfileStatusMessage : MonoBehaviour
 {
-    TextMeshProUGUI[] text;
+    TextMeshProUGUI text;
     Button button;
 
     private void Awake()
     {
-        text = GetComponentsInChildren<TextMeshProUGUI>();
+        text = GetComponentInChildren<TextMeshProUGUI>();
         button = GetComponentInChildren<Button>();
         button.onClick.RemoveAllListeners();
     }
@@ -31,13 +31,13 @@ public class CharacterProfileStatusMessage : MonoBehaviour
     {
         if(UIManager.Instance.GetText() !=  string.Empty) 
         {
-            text[0].text = UIManager.Instance.GetText();
+            text.text = UIManager.Instance.GetText();
         }
         else
         {
-            text[0].text = "Hellow";
+            text.text = "Hellow";
         }
-        text[1].text = "Write";
+
 
     }
 

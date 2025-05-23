@@ -16,7 +16,7 @@ MonoBehaviour:
   QuestName: "\uBF51\uAE30"
   QuestDescription: "\uBF51\uAE30"
   QuestType: 5
-  RequiredCount: 1
-  RewardTableID: 3
-  SecondRewardTableID: 4
+  RequiredCount: 10
+  RewardTableID: 2
+  SecondRewardTableID: 7
   TimeType: 1

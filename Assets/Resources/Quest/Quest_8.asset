@@ -16,7 +16,7 @@ MonoBehaviour:
   QuestName: "\uC544\uC774\uD15C \uC0AC\uC6A9"
   QuestDescription: "\uC544\uC774\uD15C \uC0AC\uC6A9"
   QuestType: 7
-  RequiredCount: 1
-  RewardTableID: 7
-  SecondRewardTableID: 1
-  TimeType: 2
+  RequiredCount: 10
+  RewardTableID: 2
+  SecondRewardTableID: 7
+  TimeType: 1
