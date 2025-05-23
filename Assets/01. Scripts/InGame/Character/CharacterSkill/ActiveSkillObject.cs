@@ -28,7 +28,7 @@ public class ActiveSkillObject : MonoBehaviour
     public async void SetSkill(int id)
     {
         SkillSO = GlobalDataTable.Instance.skill.GetActSkillSOToID(id);
-        SkillEffectPrefab = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.SkillEffect, "1");
+        SkillEffectPrefab = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.SkillEffect, $"{id}");
     }
 
 
@@ -171,14 +171,15 @@ public class ActiveSkillObject : MonoBehaviour
 
     public void EffectOn(SkillEffectType skillEffect, List<CharacterCarrier> characters)
     {
-        
-
         switch (skillEffect)
         {
+            case SkillEffectType.transformToTarget:
+                GameObject Tagetskill = Instantiate(SkillEffectPrefab, transform.position, Quaternion.identity);
+                Tagetskill.GetComponent<ISkillEffectable>().Play(characters);
+                break;
             case SkillEffectType.Self:
-                Debug.Log("왜 안나오냐");
                 GameObject skill  = Instantiate(SkillEffectPrefab, transform.position, Quaternion.identity);
-                skill.GetComponent<SkillEffect>().Play();
+                skill.GetComponent<ISkillEffectable>().Play(characters);
                 break;
             case SkillEffectType.AllEnemy:
             case SkillEffectType.AllFriend:
@@ -187,21 +188,24 @@ public class ActiveSkillObject : MonoBehaviour
                 foreach (CharacterCarrier character in characters)
                 {
                     GameObject skiils = Instantiate(SkillEffectPrefab, character.transform.position, Quaternion.identity);
-                    skiils.GetComponent<SkillEffect>().Play();
+                    skiils.GetComponent<ISkillEffectable>().Play(characters);
                 }
                 break;
             case SkillEffectType.BattleField:
                 GameObject FieldSkill = Instantiate(SkillEffectPrefab);
-                FieldSkill.transform.position = Vector3.zero;
-                FieldSkill.GetComponent<SkillEffect>().Play();
+                FieldSkill.transform.position = new Vector3(0f, -5f, 0f);
+      
+                FieldSkill.GetComponent<ISkillEffectable>().Play(characters);
                 break;
             case SkillEffectType.EnemyField:
-                GameObject Enemyskiils = Instantiate(SkillEffectPrefab, new Vector3(5,0,0), Quaternion.identity);
-                Enemyskiils.GetComponent<SkillEffect>().Play();
+                GameObject Enemyskiils = Instantiate(SkillEffectPrefab, new Vector3(5,-1,0), Quaternion.identity);
+ 
+                Enemyskiils.GetComponent<ISkillEffectable>().Play(characters);
                 break;
             case SkillEffectType.FriendField:
-                GameObject Friendskiils = Instantiate(SkillEffectPrefab, new Vector3(-5, 0, 0), Quaternion.identity);
-                Friendskiils.GetComponent<SkillEffect>().Play();
+                GameObject Friendskiils = Instantiate(SkillEffectPrefab, new Vector3(-5, -1, 0), Quaternion.identity);
+            
+                Friendskiils.GetComponent<ISkillEffectable>().Play(characters);
                 break;
 
         }
