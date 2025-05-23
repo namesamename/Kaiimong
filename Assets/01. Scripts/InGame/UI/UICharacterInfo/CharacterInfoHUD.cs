@@ -33,7 +33,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 Backbutton.onClick.RemoveAllListeners();
                 Backbutton.onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
 
-                transform.DOLocalMoveY(400, 1);
+                //transform.DOLocalMoveY(400, 1);
           
                 break;
             case CharacterInfoType.Main:
@@ -43,10 +43,10 @@ public class CharacterInfoHUD : MonoBehaviour
                 SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, ()=>AddressableManager.Instance.UnloadType(AddreassablesType.Illustration)); 
                 button.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
 
-                transform.DOLocalMoveY(400, 1);
+                //transform.DOLocalMoveY(400, 1);
                 break;
             case CharacterInfoType.Skin:
-                transform.DOLocalMoveY(400, 1);
+                //transform.DOLocalMoveY(400, 1);
 
                 break;
             case CharacterInfoType.CharacterImage:

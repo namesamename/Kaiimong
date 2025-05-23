@@ -8,7 +8,7 @@ public class UILobbyRight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.DOLocalMoveX(0, 1f);
+        transform.DOLocalMoveX(50, 1f);
     }
 
 
