@@ -15,7 +15,7 @@ public class StageSelectSceneUI : MonoBehaviour
 
     void Start()
     {
-        MoveUI();
+       /// MoveUI();
         backButton.onClick.AddListener(OnBackButton);
         mainButton.onClick.AddListener(OnMainButton);
         addButton.onClick.AddListener(OnAddButton);
