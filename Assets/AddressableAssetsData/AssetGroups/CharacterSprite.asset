@@ -41,7 +41,7 @@ MonoBehaviour:
     m_SerializedLabels:
     - FriendIllustration
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8608c71610308e648af04adb1de207d4
+  - m_GUID: 54473f950fb85784bbf3944065601e5f
     m_Address: CharacterSprite/Char_6
     m_ReadOnly: 0
     m_SerializedLabels:
