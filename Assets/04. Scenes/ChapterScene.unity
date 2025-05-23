@@ -349,6 +349,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3285745170831047061, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285745170831047061, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 539a4c67d1d328e4ab6c8f533d26a90b, type: 3}
+    - target: {fileID: 3869885488838146085, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869885488838146085, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3869885488838146085, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 450
@@ -358,7 +374,8 @@ PrefabInstance:
       value: ChapterSelectUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8571745307796742635, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 959bebe62f7d3bd46be6dfd7d975b250, type: 3}
