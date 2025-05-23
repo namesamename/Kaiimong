@@ -8,6 +8,7 @@ public class UIBattleSkill : MonoBehaviour
 {
     Image[] images;
     TextMeshProUGUI[] textMeshPros;
+    public bool IsOpen = false;
     private void Awake()
     {
         images = GetComponentsInChildren<Image>();
@@ -32,12 +33,30 @@ public class UIBattleSkill : MonoBehaviour
         textMeshPros[1].text = string.Empty;
     }
 
-    public  void SetBattleSkillUI(ActiveSkill active)
+    public  async void SetBattleSkillUI(ActiveSkill active)
     {
         //
-
+        images[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, active.ID);
         textMeshPros[0].text = active.Name;
         textMeshPros[1].text = active.Description;
+
+        if (!IsOpen)
+        {
+            images[1].enabled = false;
+            for (int i = 0; i < textMeshPros.Length; i++)
+            {
+                textMeshPros[i].enabled = false;
+            }
+        }
+    }
+
+    public void SetEnalbe()
+    {
+        for (int i = 0; i < textMeshPros.Length; i++)
+        {
+            textMeshPros[i].enabled = true;
+        }
+        images[1].enabled = true;
     }
 
 }

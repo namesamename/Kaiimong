@@ -335,6 +335,8 @@ public class CharacterUI : MonoBehaviour
     {
         icons.SetActive(false);
         stat.SetActive(false);
+        skillInfo.GetComponent<UIBattleSkill>().IsOpen = true;
+        skillInfo.GetComponent<UIBattleSkill>().SetEnalbe();
         skillInfo.SetActive(true);
     }
 

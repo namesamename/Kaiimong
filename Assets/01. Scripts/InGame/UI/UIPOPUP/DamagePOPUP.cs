@@ -29,12 +29,16 @@ public class DamagePOPUP : UIPOPUP
         switch (damage)
         {
             case DamageType.CriAndWeek:
+                damageText.text = Damage.ToString() + "!";
+                damageText.fontStyle = FontStyles.Bold;
                 damageText.color = Color.red;
                 break;
             case DamageType.Cri:
+                damageText.text = Damage.ToString() + "!";
                 damageText.color = Color.yellow;
                 break;
             case DamageType.Week:
+                damageText.fontStyle = FontStyles.Bold;
                 damageText.color = Color.green;
                 break;
             case DamageType.Basic:

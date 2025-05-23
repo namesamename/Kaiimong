@@ -47,6 +47,7 @@ public class StageInfoUI : MonoBehaviour
         stageName.text = stage.Name;
         stageActivityPointText.text = $"-{stage.ActivityPoint}";
         ItemBattleSlots.SetItemList(stage.ID);
+        enterButton.onClick.RemoveAllListeners();
         enterButton.onClick.AddListener(OnEnterButton);
     }
 
