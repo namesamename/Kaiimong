@@ -25,6 +25,7 @@ public class ChapterContent : MonoBehaviour
             {
                 slots[i].gameObject.SetActive(true);
                 slots[i].Stage = GlobalDataTable.Instance.Stage.StageDic[Chapter.StagesID[i]];
+                slots[i].StageName.text = GlobalDataTable.Instance.Stage.StageDic[Chapter.StagesID[i]].Name;
             }
             else { slots[i].gameObject.SetActive(false); }
         }
