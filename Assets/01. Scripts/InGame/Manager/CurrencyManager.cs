@@ -136,6 +136,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
             CurrencySaveDic[CurrencyType.Activity] += amount;
         }
+        DicToSaveData();
     }
     public void SetCurrency(CurrencyType currency, int amount)
     {
