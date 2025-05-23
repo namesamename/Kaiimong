@@ -116,10 +116,7 @@ public class CharacterStat : MonoBehaviour
     {
         animator.SetTrigger("Hit");
 
-        Debug.Log(Amount);
-        Debug.Log(defenseStat.GetStat());
 
-        Debug.Log(Amount - defenseStat.GetStat());
 
         float Damage = Amount - defenseStat.GetStat();
 

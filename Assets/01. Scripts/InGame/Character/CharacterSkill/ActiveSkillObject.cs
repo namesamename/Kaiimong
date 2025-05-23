@@ -62,6 +62,7 @@ public class ActiveSkillObject : MonoBehaviour
             }
             else
             {
+
                 animator.SetTrigger("Thrid");
             }
         }
@@ -103,13 +104,13 @@ public class ActiveSkillObject : MonoBehaviour
                     if(character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
                     {
                         character.stat.TakeDamage(AllDamage *(float)1.2);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage* (float)1.2, character, DamageType.CriAndWeek));
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage* (float)1.2 - character.stat.defenseStat.GetStat(), character, DamageType.CriAndWeek));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
                     else
                     {
                         character.stat.TakeDamage(AllDamage);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage, character, DamageType.Cri));
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage- character.stat.defenseStat.GetStat(), character, DamageType.Cri));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
 
@@ -120,13 +121,13 @@ public class ActiveSkillObject : MonoBehaviour
                     if (character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
                     {
                         character.stat.TakeDamage(AllDamage * (float)1.2);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage * (float)1.2, character, DamageType.Week));
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage * (float)1.2 - character.stat.defenseStat.GetStat(), character, DamageType.Week));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
                     else
                     {
                         character.stat.TakeDamage(AllDamage);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage, character, DamageType.Basic));
+                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage - character.stat.defenseStat.GetStat(), character, DamageType.Basic));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
                 }

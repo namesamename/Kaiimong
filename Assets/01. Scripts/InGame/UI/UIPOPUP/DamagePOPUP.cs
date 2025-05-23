@@ -16,7 +16,15 @@ public class DamagePOPUP : UIPOPUP
 
     public void SetPOPUP(float Damage, DamageType damage, CharacterCarrier character)
     {
-        damageText.text = Damage.ToString();
+        if(Damage < 0f)
+        {
+            damageText.text = 1f.ToString();
+        }else
+        {
+            damageText.text = Damage.ToString();
+        }
+
+        
 
         switch (damage)
         {
