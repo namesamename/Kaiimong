@@ -223,7 +223,8 @@ public enum SkillEffectType
     SingleFriend,
     BattleField,
     EnemyField,
-    FriendField
+    FriendField,
+    transformToTarget,
 }
 
 

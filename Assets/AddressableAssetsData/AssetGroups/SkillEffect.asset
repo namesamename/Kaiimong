@@ -17,8 +17,103 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 0547a647b3d850c4c88dd4a859b1c22f
   m_SerializeEntries:
-  - m_GUID: 0fc3aaac56c68ae438252fa72083a8a3
+  - m_GUID: 8670ad0ee6f67a640bcb9d2fccaee041
     m_Address: SkillEffect/SkillEffect_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 877b04db6f9e2c84a9931432441be253
+    m_Address: SkillEffect/SkillEffect_28
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4278bcbbfaf5c324e9ca87946fd26dcd
+    m_Address: SkillEffect/SkillEffect_29
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b388495e265d6714d8a0daf89f584294
+    m_Address: SkillEffect/SkillEffect_30
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6817d0b01d9b77c44a06e867aedc4536
+    m_Address: SkillEffect/SkillEffect_13
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a8cc1914fe15704880e119190137589
+    m_Address: SkillEffect/SkillEffect_14
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30be5dfa5e4a7e84e9063f7b9f8295db
+    m_Address: SkillEffect/SkillEffect_15
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab903868cd24d3e4eb811f0481016d31
+    m_Address: SkillEffect/SkillEffect_19
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 811ede6754553ba4f826c7aecc629089
+    m_Address: SkillEffect/SkillEffect_20
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99466c0a62f107e4e925b076fb02608d
+    m_Address: SkillEffect/SkillEffect_21
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf84dcb1aaa4f8243be87da6107f94d4
+    m_Address: SkillEffect/SkillEffect_22
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2877ad921c8503439051020d175b2ec
+    m_Address: SkillEffect/SkillEffect_24
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94e1e7a4b6ff973449707c92157f2f26
+    m_Address: SkillEffect/SkillEffect_23
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5601212418e7520409139229f4bef2f4
+    m_Address: SkillEffect/SkillEffect_25
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 460961703359e6a459987ed96a4400ab
+    m_Address: SkillEffect/SkillEffect_35
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ede9b2d8a6c73b41a10c18c7b0e7df0
+    m_Address: SkillEffect/SkillEffect_27
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b9f37c4ef176d5498413aacde017ccf
+    m_Address: SkillEffect/SkillEffect_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 133a958171e62e9458bff26bc580e840
+    m_Address: SkillEffect/SkillEffect_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5d965fe64a316441bcaa1f9523d7f3e
+    m_Address: SkillEffect/SkillEffect_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7307db7f7fdfdb9489784fc2346d3ec1
+    m_Address: SkillEffect/SkillEffect_5
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

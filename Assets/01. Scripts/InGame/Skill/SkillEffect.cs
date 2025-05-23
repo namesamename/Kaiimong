@@ -1,39 +1,38 @@
 
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillEffect : MonoBehaviour
+public  class SkillEffect : MonoBehaviour, ISkillEffectable
 {
 
-    ParticleSystem Particle;
-
-    private void Awake()
-    {
-        Particle = GetComponent<ParticleSystem>();
-    }
 
     private void Start()
     {
-        Particle.Stop();
+        StartCoroutine(StartEffect());
     }
-
-
-    public void Play()
+    public void Destroy()
     {
-        StartCoroutine(StartAndDestroy());
+        Destroy(gameObject);
     }
 
-    public IEnumerator StartAndDestroy()
+    public void Play(List<CharacterCarrier> list)
     {
-        yield return null;
-        Particle.Play();
-        Debug.Log($"파티클 타임: {Particle.main.duration + Particle.main.startLifetime.constantMax}");
-        yield return new WaitForSeconds(Particle.main.duration+ Particle.main.startLifetime.constantMax);
-        Destroy(Particle.gameObject);
+        StartCoroutine(StartEffect());
+        
     }
 
-    public void Pause()
+
+    public IEnumerator StartEffect()
     {
-        Particle.Stop();
+        yield return new WaitForSeconds(3f);
+        Destroy();
     }
+
+
+
+    
+   
+
+    
 }

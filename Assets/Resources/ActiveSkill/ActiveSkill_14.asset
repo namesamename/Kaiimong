@@ -16,9 +16,9 @@ MonoBehaviour:
   Name: d
   Description: as
   Attack: 1
-  isSingleAttack: 1
+  isSingleAttack: 0
   UltimateGauge: 1
   Type: 3
-  IsBuff: 0
+  IsBuff: 1
   BuffID: 0
   EffectType: 1

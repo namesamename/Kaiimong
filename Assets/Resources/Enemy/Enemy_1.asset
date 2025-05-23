@@ -21,3 +21,4 @@ MonoBehaviour:
   Cri: 0.01
   SkillID: 1
   SecondSkillID: 1
+  CharacterType: 0
