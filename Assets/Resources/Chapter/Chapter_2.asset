@@ -16,4 +16,4 @@ MonoBehaviour:
   Name: Chpater2
   StagesID: 10000000110000001200000013000000140000001500000016000000170000001800000019000000
   ContentPrefabPath: Chapter/Prefab/Chapter_2
-  IconPath: Chapter/Icons/IconTwo
+  IconPath: Chapter/Icons/2
