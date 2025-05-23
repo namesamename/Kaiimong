@@ -23,8 +23,8 @@ public class GatchaCurrenyText : MonoBehaviour
         ticket = CurrencyManager.Instance.GetCurrency(CurrencyType.Gacha);
         crystal = CurrencyManager.Instance.GetCurrency(CurrencyType.Dia);
 
-        tickettxt.text = "금줄 : " + ticket.ToString();
-        crystaltxt.text ="유리구슬 : " + crystal.ToString();
+        tickettxt.text = ticket.ToString();
+        crystaltxt.text =crystal.ToString();
         GatchaCount.text = GatchaManager.Instance.gatchaDrawCount.ToString() + " / 70번째 획득에 S등급 확정!";
     }
 
