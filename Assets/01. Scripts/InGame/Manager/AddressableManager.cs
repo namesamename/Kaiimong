@@ -154,6 +154,8 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "Chapter/ChapterBackground/";
             case AddreassablesType.BattleIcon:
                 return "BattleIcon/Char_";
+            case AddreassablesType.SkillIcon:
+                return "SkillIcon/SkillIcon_";
             default:
                 Debug.LogError($"Unknown AddreassablesType: {type}");
                 return string.Empty;

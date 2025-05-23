@@ -45,12 +45,13 @@ public class GatchaTypeChanger : MonoBehaviour
 
     private async void UpdateBannerImage(GatchaType type)
     {
-        Sprite loadedSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.GatchaBanner, 1);
+        Sprite PickUpSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.GatchaBanner, 1);
+        Sprite StandardSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.GatchaBanner, 2);
 
         switch (type)
         {
             case GatchaType.Pickup:
-                Banner.sprite = loadedSprite;
+                Banner.sprite = PickUpSprite;
                 PickUps.SetActive(true);
                 PickUpPointer.SetActive(true);
                 StandardPointer.SetActive(false);
@@ -59,7 +60,7 @@ public class GatchaTypeChanger : MonoBehaviour
                 break;
 
             case GatchaType.Standard:
-                Banner.color = Color.white;
+                Banner.sprite = StandardSprite;
                 PickUpPointer.SetActive(false);
                 StandardPointer.SetActive(true);
                 PickUps.SetActive(false);

@@ -90,6 +90,7 @@ public enum AddreassablesType
 
     ChapterBackground,
     BattleIcon,
+    SkillIcon,
 
 
 }
