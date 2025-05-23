@@ -4,25 +4,25 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 
-//½½·Ô ÇÏ³ª ´ã´çÇÏ´Â ½ºÅ©¸³Æ®
+//ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®
 
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private Image iconImage;                 // ½½·Ô ¾ÈÀÇ ¾ÆÀÌÄÜ ÀÌ¹ÌÁö
-    [SerializeField] private TextMeshProUGUI countText;       //¾ÆÀÌÅÛ ¼ö·® ÅØ½ºÆ®
-    [SerializeField] private Outline outlineEffect;           // ½½·Ô ¿Ü°û¼± È¿°ú
+    [SerializeField] private Image iconImage;                 // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+    [SerializeField] private TextMeshProUGUI countText;       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ®
+    [SerializeField] private Outline outlineEffect;           // ï¿½ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½ï¿½ï¿½ È¿ï¿½ï¿½
 
 
     Image[] images;
 
-    private ItemData item;                    // ÇöÀç ½½·Ô¿¡ µé¾îÀÖ´Â ¾ÆÀÌÅÛ
-    private int itemCount;                    // ÇØ´ç ¾ÆÀÌÅÛ ¼ö·®
+    private ItemData item;                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private int itemCount;                    // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Awake()
     {
         images = GetComponentsInChildren<Image>();
     }
-    public void SetSlot(ItemData newItem, int amount = 1)     // ½½·Ô¿¡ »õ ¾ÆÀÌÅÛ ½½·Ô ¼³Á¤
+    public void SetSlot(ItemData newItem, int amount = 1)     // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
     
         item = newItem;
@@ -32,7 +32,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         {
             SetSlotColor(newItem);
             iconImage.sprite = Resources.Load<Sprite>(item.IconPath);
-            iconImage.enabled = true;        // ¾ÆÀÌÄÜ  È°¼ºÈ­
+            iconImage.enabled = true;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  È°ï¿½ï¿½È­
             if (itemCount > 1)
             {
                 countText.text = itemCount.ToString();
@@ -42,11 +42,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                 countText.text = string.Empty;
             }
 
-            outlineEffect.enabled = false;   // ½½·Ô »ý¼º ½Ã ¿Ü°û¼± ºñÈ°¼ºÈ­
+            outlineEffect.enabled = false;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ü°ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         }
         else
         {
-            ClearSlot();                    // ¾ÆÀÌÅÛÀÌ nullÀÌ¸é ½½·Ô ºñ¿ì±â
+            ClearSlot();                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ nullï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
@@ -79,7 +79,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
 
 
-        iconImage.enabled = true;        // ¾ÆÀÌÄÜ  È°¼ºÈ­
+        iconImage.enabled = true;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  È°ï¿½ï¿½È­
         if (Count > 1)
         {
             countText.text = Count.ToString();
@@ -92,6 +92,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         switch (currency) 
         {
             case CurrencyType.UserEXP:
+                
                 break;
             case CurrencyType.Gold:
                 iconImage.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
@@ -110,43 +111,43 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void ClearSlot()                 // ½½·Ô ºñ¿ì±â
+    public void ClearSlot()                 // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        item = null;                        // ¾ÆÀÌÅÛ Á¦°Å
-        itemCount = 0;                      // ¼ö·® ÃÊ±âÈ­
+        item = null;                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        itemCount = 0;                      // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
-        iconImage.sprite = null;            // ÀÌ¹ÌÁö Á¦°Å
-        iconImage.enabled = false;          // ÀÌ¹ÌÁö ¼û±è
+        iconImage.sprite = null;            // ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        iconImage.enabled = false;          // ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     }
 
-    public bool TryConsume(int amount)                // ¾ÆÀÌÅÛ ÁöÁ¤ÇÑ ¼ö·®¸¸Å­ ¼Òºñ
+    public bool TryConsume(int amount)                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ ï¿½Òºï¿½
     {
-        if (item.ItemType != EItemType.Consume)         // ¾ÆÀÓÅÛ Å¸ÀÔÀÌ ¼Ò¸ðÇ°ÀÌ ¾Æ´Ï¸é
-            return false;                             // ¼Òºñ ½ÇÆÐ (¼Ò¸ðÇ°¸¸ »ç¿ë °¡´É)
+        if (item.ItemType != EItemType.Consume)         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½
+            return false;                             // ï¿½Òºï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
-        if (itemCount >= amount)                       // ÇöÀç ¼ö·®ÀÌ ¼ÒºñÇÏ·Á´Â ¾ç ÀÌ»óÀÌ¸é
+        if (itemCount >= amount)                       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Òºï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ì¸ï¿½
         {
-            itemCount -= amount;                      // ¼ö·® Â÷°¨
-            countText.text = itemCount > 0 ? itemCount.ToString() : "";  // ¼ö·® Ç¥½Ã, 0ÀÌ¸é Ç¥½Ã Á¦°Å
+            itemCount -= amount;                      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            countText.text = itemCount > 0 ? itemCount.ToString() : "";  // ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½, 0ï¿½Ì¸ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             if (itemCount == 0)
-                ClearSlot();                              // ¼ö·® 0ÀÌ¸é ½½·Ô ºñ¿ì±â
+                ClearSlot();                              // ï¿½ï¿½ï¿½ï¿½ 0ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            return true;                              // ¼Òºñ ¼º°ø
+            return true;                              // ï¿½Òºï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
-            Debug.Log("Àç·á ¼ö·®ÀÌ ºÎÁ·");
-            return false;                             // ¼Òºñ ½ÇÆÐ
+            Debug.Log("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+            return false;                             // ï¿½Òºï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
-    public ItemData GetItem()                         // ÇöÀç ¾ÆÀÌÅÛ Á¤º¸ ¹ÝÈ¯
+    public ItemData GetItem()                         // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
     {
         return item;
     }
 
-    public int GetCount()                             // ÇöÀç ¾ÆÀÌÅÛ ¼ö·® ¹ÝÈ¯
+    public int GetCount()                             // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
     {
         return itemCount;
     }
@@ -154,23 +155,23 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
 
 
-    public  async void OnPointerClick(PointerEventData eventData)    // ½½·Ô Å¬¸¯ ½Ã ÆË¾÷ È£Ãâ
+    public  async void OnPointerClick(PointerEventData eventData)    // ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½Ë¾ï¿½ È£ï¿½ï¿½
     {
-        if (item == null) return;                             // ¾ÆÀÌÅÛÀÌ ºñ¾îÀÖÀ¸¸é ¹«½Ã
+        if (item == null) return;                             // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        var popupObj = await UIManager.Instance.ShowPopup<ItemInfoPopup>();    // UIManagerÀÇ ShowPopup ÇÔ¼ö È£Ãâ
+        var popupObj = await UIManager.Instance.ShowPopup<ItemInfoPopup>();    // UIManagerï¿½ï¿½ ShowPopup ï¿½Ô¼ï¿½ È£ï¿½ï¿½
 
         if (popupObj != null)
         {
-            popupObj.ShowItem(item);  // ¾ÆÀÌÅÛ µ¥ÀÌÅÍ Àü´Þ
+            popupObj.ShowItem(item);  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
-    /* public void OnPointerClick(PointerEventData eventData)      // ½½·Ô Å¬¸¯ ½Ã ÆË¾÷ È£Ãâ
+    /* public void OnPointerClick(PointerEventData eventData)      // ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½Ë¾ï¿½ È£ï¿½ï¿½
      {
-         if (item == null) return;                                 // ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ¾øÀ¸¸é µ¹¾Æ°¡±â
+         if (item == null) return;                                 // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½
 
-         ItemInfoPopup popup = FindObjectOfType<ItemInfoPopup>();  // ¾À¿¡¼­ ItemInfoPopup ¿ÀºêÁ§Æ®
+         ItemInfoPopup popup = FindObjectOfType<ItemInfoPopup>();  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ItemInfoPopup ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
          if (popup != null)
              popup.Show(item, itemCount);
      }*/
