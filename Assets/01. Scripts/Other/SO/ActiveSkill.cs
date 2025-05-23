@@ -12,8 +12,8 @@ public class ActiveSkill : SO
     public SkillType Type;
     public bool IsBuff;
     public int BuffID;
-
     public SkillEffectType EffectType;
+    public SkillEffectUpDownType EffectUpDownType;
 
 
   

@@ -587,7 +587,7 @@ public class BattleSystem : MonoBehaviour
                 if (SelectedSkill.SkillSO.isSingleAttack)
                 {
                     int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
-                    Targets.Add(activeEnemies[i]);
+                    Targets.Add(activeEnemies[randomTarget]);
                 }
                 else
                 {

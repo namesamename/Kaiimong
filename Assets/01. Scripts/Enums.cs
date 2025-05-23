@@ -227,6 +227,16 @@ public enum SkillEffectType
     transformToTarget,
 }
 
+public enum SkillEffectUpDownType
+{
+    Middle,
+    Down,
+    Up,
+    Left,
+    Right,
+}
+
+
 
 public enum DamageType
 {
