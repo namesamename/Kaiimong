@@ -80,7 +80,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
 
         iconImage.enabled = true;        // 아이콘  활성화
-        if (itemCount > 1)
+        if (Count > 1)
         {
             countText.text = Count.ToString();
         }
@@ -92,7 +92,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         switch (currency) 
         {
             case CurrencyType.UserEXP:
-                iconImage.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 2);
                 break;
             case CurrencyType.Gold:
                 iconImage.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
@@ -104,6 +103,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             case CurrencyType.Dia:
                 break;
             case CurrencyType.CharacterEXP:
+                iconImage.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 2);
                 break;
 
 
