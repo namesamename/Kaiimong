@@ -37,7 +37,7 @@ public class CharacterProfileStatusMessage : MonoBehaviour
         {
             text[0].text = "Hellow";
         }
-        text[1].text = "Write";
+        //text[1].text = "Write";
 
     }
 
