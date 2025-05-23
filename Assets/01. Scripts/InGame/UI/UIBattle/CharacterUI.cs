@@ -319,7 +319,9 @@ public class CharacterUI : MonoBehaviour
     public void SpeedSet()
     {
         icons.SetActive(true);
+        stat.GetComponent<UIBattleStatBoard>().IsUpdate = false;
         stat.SetActive(false);
+        skillInfo.GetComponent<UIBattleSkill>().IsUpdate = false;
         skillInfo.SetActive(false);
     }
     public void StatSet()
@@ -327,7 +329,7 @@ public class CharacterUI : MonoBehaviour
         icons.SetActive(false);
         stat.SetActive(true);
         stat.GetComponent<UIBattleStatBoard>().IsOpen = true;
-        stat.GetComponent<UIBattleStatBoard>().SetEnalbe();
+        stat.GetComponent<UIBattleStatBoard>().IsUpdate = true;
         skillInfo.SetActive(false);
     }
 
@@ -336,7 +338,7 @@ public class CharacterUI : MonoBehaviour
         icons.SetActive(false);
         stat.SetActive(false);
         skillInfo.GetComponent<UIBattleSkill>().IsOpen = true;
-        skillInfo.GetComponent<UIBattleSkill>().SetEnalbe();
+        skillInfo.GetComponent<UIBattleSkill>().IsUpdate = true;
         skillInfo.SetActive(true);
     }
 
