@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CurrencyIcon
+  m_EditorClassIdentifier: 
+  m_GroupName: CurrencyIcon
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 9d8c7468b8f6d7543a184d72b6ceb0de
+  m_SerializeEntries:
+  - m_GUID: 66ec579ec8833f94dbc202f56c3dbf4b
+    m_Address: CurrencyIcon/Currency_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9964915a6b84c34eb19b0f24f196ae3
+    m_Address: CurrencyIcon/Currency_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e263958dffc1ad34a9553145ffbf4432, type: 2}
+    - {fileID: 11400000, guid: 2006a10291de27741bd55a25c524184c, type: 2}

@@ -59,11 +59,11 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
     }
 
 
-    public void SetLevel(int NeedCount)
+    public  void SetLevel(int NeedCount)
     {
         itemCount = GlobalDataTable.Instance.DataCarrier.GetSave().Level;
         iconImage[0].color = Color.yellow;
-        //iconImage[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
+       
         countText.text = $"{itemCount}/{NeedCount}";
         if (itemCount < NeedCount)
         {
@@ -75,11 +75,11 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void SetGold(int NeedCount)
+    public async void SetGold(int NeedCount)
     {
         itemCount = CurrencyManager.Instance.GetCurrency(CurrencyType.Gold);
         iconImage[0].color = Color.yellow;
-        //iconImage[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<GoldCurrencySO>(CurrencyType.Gold).IconPath);
+        iconImage[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
         countText.text = $"{itemCount.ToKNumber()}/{NeedCount.ToKNumber()}";
         if (itemCount < NeedCount)
         {

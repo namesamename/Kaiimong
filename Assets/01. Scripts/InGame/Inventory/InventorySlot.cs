@@ -75,7 +75,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     }
 
 
-    public  void SetSlotCurrency(CurrencyType currency, int Count)
+    public  async void SetSlotCurrency(CurrencyType currency, int Count)
     {
 
 
@@ -92,9 +92,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         switch (currency) 
         {
             case CurrencyType.UserEXP:
-                
+                iconImage.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 2);
                 break;
             case CurrencyType.Gold:
+                iconImage.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
                 break;
             case CurrencyType.Gacha:
                 break;
