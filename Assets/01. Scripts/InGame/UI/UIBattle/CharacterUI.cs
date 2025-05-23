@@ -105,6 +105,7 @@ public class CharacterUI : MonoBehaviour
 
     public void SkillButtonAble()
     {
+        SetSkillButton();
         foreach (Button button in buttonList)
         {
             button.enabled = true;
@@ -238,12 +239,18 @@ public class CharacterUI : MonoBehaviour
     private async void SetSkillButton()
     {
         UltEnable();
+        Sprite[] sprites = new Sprite[3];
 
         for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList.Length; i++)
         {
             int id = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].SkillSO.ID;
-            buttonList[i].image.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, id);
+            sprites[i] = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, id);
             //curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
+        }
+
+        for(int i = 0; i < sprites.Length; i++)
+        {
+            buttonList[i].image.sprite = sprites[i];
         }
         ultCover.sprite = buttonList[2].image.sprite;
     }
