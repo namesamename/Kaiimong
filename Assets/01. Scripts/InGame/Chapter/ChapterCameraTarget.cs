@@ -17,6 +17,7 @@ public class ChapterCameraTarget : MonoBehaviour
     [SerializeField] private StageInfoUI stageInfoUI;
     [SerializeField] private SpriteRenderer background;
     private bool backgroundFound = false;
+    private bool smallBackground = false;
 
     [SerializeField] private SpriteRenderer chapterBackground;
 
@@ -57,7 +58,7 @@ public class ChapterCameraTarget : MonoBehaviour
                     isStillClick = false;
                 }
 
-                if (isDragging)
+                if (isDragging && !smallBackground)
                 {
                     transform.position += delta;
                     float clamp = Mathf.Clamp(transform.position.x, camMin, camMax);
@@ -88,6 +89,8 @@ public class ChapterCameraTarget : MonoBehaviour
             camMax = backgroundBound.max.x - cameraWidth;
             camMin = backgroundBound.min.x + cameraWidth;
 
+            if (backgroundBound.size.x <= cameraWidth * 2) smallBackground = true;
+
             backgroundFound = true;
         }
     }
@@ -104,7 +107,7 @@ public class ChapterCameraTarget : MonoBehaviour
 
         if (IsPointerOverUIElement())
         {
-            return; 
+            return;
         }
 
         Vector3 mouseWorld = GetMouseWorldPosition();
@@ -114,7 +117,7 @@ public class ChapterCameraTarget : MonoBehaviour
         bool isStageClicked = false;
         StageSlot clickedStage = null;
 
-   
+
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider == null) continue;
@@ -122,7 +125,7 @@ public class ChapterCameraTarget : MonoBehaviour
             if (hit.collider.CompareTag("CharacterSlot"))
             {
                 isCharacterClicked = true;
-      
+
             }
             else if (hit.collider.CompareTag("Stage"))
             {
@@ -138,7 +141,7 @@ public class ChapterCameraTarget : MonoBehaviour
             {
                 stageInfoUI.gameObject.SetActive(true);
             }
-            stageInfoUI.SetUI(clickedStage); 
+            stageInfoUI.SetUI(clickedStage);
         }
         else if (!isCharacterClicked)
         {
