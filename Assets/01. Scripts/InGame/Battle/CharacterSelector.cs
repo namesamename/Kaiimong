@@ -102,6 +102,7 @@ public class CharacterSelector : MonoBehaviour
             CharacterCarrier character = units[0];
             selectedCharacter = character;
             SelectedEffect(character, true);
+            battleSystem.BattleUI.CharacterUI.ActionButtonAble();
         }
 
         if (Input.GetMouseButtonDown(0))
