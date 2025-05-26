@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 7
   QuestName: "\uC2A4\uD0AC \uC0AC\uC6A9"
-  QuestDescription: "\uC2A4\uD0AC \uC0AC\uC6A9"
+  QuestDescription: "\uC784\uC758 \uC2A4\uD0AC\uC744 50\uD68C \uC0AC\uC6A9\uD558\uAE30"
   QuestType: 6
   RequiredCount: 50
   RewardTableID: 2
