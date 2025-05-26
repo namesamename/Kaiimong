@@ -22,10 +22,12 @@ public class UIBreakImage : MonoBehaviour, ISetPOPUp
         if(itemSava == null)
         {
             textMesh.text = $"0/1";
+            textMesh.color = Color.red;
         }
         else
         {
             textMesh.text = $"{itemSava.Value}/1";
+            textMesh.color = Color.green;
         }
     }
 
