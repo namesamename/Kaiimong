@@ -14,7 +14,7 @@ public class UIBreakImage : MonoBehaviour, ISetPOPUp
     }
     public async void Initialize()
     {
-        //Images[0].sprite = Resources.Load<Sprite>(ImsiGameManager.Instance.GetCharacter().chracterpath);
+        images[0].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.BattleIcon, GlobalDataTable.Instance.DataCarrier.GetCharacter().ID);
         images[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, GlobalDataTable.Instance.DataCarrier.GetCharacter().ID);
 
         ItemSavaData itemSava = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, GlobalDataTable.Instance.DataCarrier.GetCharacter().CharacterItem);

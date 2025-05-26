@@ -72,22 +72,24 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         {
             data = new CurrencySaveData()
             {
-                UserName = "JIHwan",
+                UserName = "Tester",
                 Savetype = SaveType.Currency,
                 UserLevel = 1,
                 UserEXP = 0,
                 CurrentStaminaMax = 180,
-                ActivityValue = 100,
-                GachaValue = 10000,
-                GoldValue = 1000,
-                DIAValue = 99999,
-                CharacterEXP = 1000,
+                ActivityValue = 180,
+                GachaValue = 20,
+                GoldValue =  0,
+                DIAValue = 1800,
+                CharacterEXP = 0,
                 purchaseCount = 0,
                 ID = 0,
                 date = DateTime.UtcNow,
                 
 
             };
+
+            SaveDataBase.Instance.SaveSingleData(data);
         }
         DicSet();
     }
