@@ -157,6 +157,8 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "SkillIcon/SkillIcon_";
             case AddreassablesType.CurrencyIcon:
                 return "CurrencyIcon/Currency_";
+            case AddreassablesType.Tutorial:
+                return "TutorialPrefab/Tutorial";
             default:
                 Debug.LogError($"Unknown AddreassablesType: {type}");
                 return string.Empty;

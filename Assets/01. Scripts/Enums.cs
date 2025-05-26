@@ -92,6 +92,7 @@ public enum AddreassablesType
     BattleIcon,
     SkillIcon,
     CurrencyIcon,
+    Tutorial,
 
 
 }

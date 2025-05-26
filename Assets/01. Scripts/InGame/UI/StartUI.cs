@@ -50,6 +50,11 @@ public class StartUI : MonoBehaviour
 
     public IEnumerator StartAni()
     {
+        if (!CurrencyManager.Instance.GetIsTutorial())
+        {
+            SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, () => TutorialManager.Instance.NextTutorial());
+            SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, () => SceneLoader.Instance.DisRegistarerAction(SceneState.LobbyScene, () => TutorialManager.Instance.NextTutorial()));
+        }
         AudioManager.PlaySFXDestroySceneLoad(FlashClip);
 
         StartButtoObject.gameObject.SetActive(false);
@@ -87,6 +92,7 @@ public class StartUI : MonoBehaviour
         IsFade = true;
         yield return new WaitForSeconds(1f);
         SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
+   
 
     }
 

@@ -28,5 +28,11 @@ public class LobbyBTns : MonoBehaviour
         buttons[7].onClick.AddListener(async () => await UIManager.Instance.ShowPopup("StaminaChargePOPUP"));
 
     }
+
+
+    public void TutorialChanger()
+    {
+
+    }
     
 }

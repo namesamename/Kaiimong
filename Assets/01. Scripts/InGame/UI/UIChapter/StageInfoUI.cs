@@ -23,7 +23,7 @@ public class StageInfoUI : MonoBehaviour
 
     private void OnEnable()
     {
-        rect.DOAnchorPos(new Vector3(-960, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
+        rect.DOAnchorPos(new Vector3(0, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
     }
 
     public void DisableUI()
