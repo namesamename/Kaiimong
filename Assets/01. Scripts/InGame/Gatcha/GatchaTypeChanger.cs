@@ -27,8 +27,7 @@ public class GatchaTypeChanger : MonoBehaviour
 
         Homebutton.onClick.RemoveAllListeners();
         Homebutton.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
-        Backbutton.onClick.AddListener(() => SceneLoader.Instance.ChanagePreScene());
-
+        Backbutton.onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.LobbyScene));
     }
 
     private void SaveOriginalPositions()
