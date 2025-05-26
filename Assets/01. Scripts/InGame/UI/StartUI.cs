@@ -52,8 +52,10 @@ public class StartUI : MonoBehaviour
     {
         if (!CurrencyManager.Instance.GetIsTutorial())
         {
-            SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, () => TutorialManager.Instance.NextTutorial());
-            SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, () => SceneLoader.Instance.DisRegistarerAction(SceneState.LobbyScene, () => TutorialManager.Instance.NextTutorial()));
+            TutorialManager.Instance.TutorialAction +=() => TutorialManager.Instance.NextTutorial();
+
+            SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, TutorialManager.Instance.TutorialAction);
+            SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, () => SceneLoader.Instance.DisRegistarerAction(SceneState.LobbyScene, TutorialManager.Instance.TutorialAction));
         }
         AudioManager.PlaySFXDestroySceneLoad(FlashClip);
 

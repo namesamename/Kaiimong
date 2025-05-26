@@ -76,6 +76,13 @@ public class StageInfoUI : MonoBehaviour
                     StageManager.Instance.Players.Add(newCharacter);
                 }
                 RemoveListner();
+                if(!CurrencyManager.Instance.GetIsTutorial())
+                {
+                    TutorialManager.Instance.CurPreDelete();
+                    SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, TutorialManager.Instance.TutorialAction);
+                    SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, () => SceneLoader.Instance.DisRegistarerAction(SceneState.BattleScene, TutorialManager.Instance.TutorialAction));
+                }
+
                 SceneLoader.Instance.ChangeScene(SceneState.BattleScene);
             }
         }
@@ -85,5 +92,7 @@ public class StageInfoUI : MonoBehaviour
     {
         enterButton.onClick.RemoveListener(OnEnterButton);
     }
+
+ 
 
 }
