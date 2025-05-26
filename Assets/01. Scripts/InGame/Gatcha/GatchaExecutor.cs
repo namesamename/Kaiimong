@@ -42,11 +42,11 @@ public class GatchaExecutor : MonoBehaviour
 
     private List<Character> results = new();
 
-    private async void Draw(int count)  //뽑기 창에서 뽑기를 실행하는 메서드 , 중요
+    private async void Draw(int count)
     {
-        var mgr = GatchaManager.Instance;  //가챠 매니저 가져오기
-        var curManager = CurrencyManager.Instance; //재화 매니져 가져오기
-        results.Clear(); // 결과 리스트 초기화
+        var mgr = GatchaManager.Instance;
+        var curManager = CurrencyManager.Instance;
+        results.Clear();
 
         int useTicket = Mathf.Min(count, mgr.ticket);
         int needCrystal = (count - useTicket) * 180;
@@ -58,7 +58,6 @@ public class GatchaExecutor : MonoBehaviour
             return;
         }
 
-        // 재화 차감
         mgr.ticket -= useTicket;
         mgr.crystal -= needCrystal;
 
@@ -74,57 +73,64 @@ public class GatchaExecutor : MonoBehaviour
         {
             Grade grade;
 
-            // 마지막 10번째 보정 처리
             if (count == 10 && i == count - 1)
             {
                 grade = GetGuaranteedAorSGrade(mgr.gatchaDrawCount);
             }
             else
             {
-                grade = GetRandomGrade(mgr.currentGachaType, mgr.gatchaDrawCount); //등급 추출
+                grade = GetRandomGrade(mgr.currentGachaType, mgr.gatchaDrawCount);
             }
 
-            var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade); //해당 등급 풀 가져오기
+            var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade);
             if (pool.Count == 0)
             {
                 Debug.LogWarning($"등급 {grade} 캐릭터 풀이 비어 있음");
                 continue;
             }
 
-            Character selected = null; // 최종 선택 캐릭터
+            Character selected = null;
 
-            // 픽업 처리 (S or A, 50% 확률)
             if (mgr.currentGachaType == GatchaType.Pickup)
             {
-                if (grade == Grade.S && Random.value < 0.5f) // 50퍼센트로  S일시 지정된 픽업캐릭터 획득하기
+                if (grade == Grade.S)
                 {
-                    selected = pool.Find(c => c.ID == mgr.pickupSCharacterID);  //픽업 S
+                    if (mgr.LatestSID != 0 && mgr.LatestSID != mgr.pickupSCharacterID)
+                    {
+                        selected = pool.Find(c => c.ID == mgr.pickupSCharacterID);
+                        Debug.Log($"보정 작동! 이전 S(ID:{mgr.LatestSID}) ≠ 픽업 S(ID:{mgr.pickupSCharacterID}), 픽업 S 강제 지급");
+                    }
+                    else if (Random.value < 0.5f)
+                    {
+                        selected = pool.Find(c => c.ID == mgr.pickupSCharacterID);
+                        Debug.Log($"50% 확률로 픽업 S 지급 시도 → {(selected != null ? "성공" : "실패")}");
+                    }
                 }
 
-                if (grade == Grade.A && selected == null && Random.value < 0.5f) //A 픽업 되는 부분
+                if (grade == Grade.A && selected == null && Random.value < 0.5f)
                 {
-                    var candidates = pool.FindAll(c => mgr.pickupACharacterIDs.Contains(c.ID));  // candidates A픽업 리스트 풀을 가짐
+                    var candidates = pool.FindAll(c => mgr.pickupACharacterIDs.Contains(c.ID));
                     if (candidates.Count > 0)
                     {
-                        selected = candidates[Random.Range(0, candidates.Count)]; //풀 중 하나 선택
+                        selected = candidates[Random.Range(0, candidates.Count)];
                     }
                 }
             }
 
-            // 일반 캐릭터 처리
             if (selected == null)
             {
-                selected = pool[Random.Range(0, pool.Count)];  // 일반 S/A/B 캐릭터 선택
+                selected = pool[Random.Range(0, pool.Count)];
             }
 
             results.Add(selected);
             GatchaHistoryManager.Instance.AddEntry(new GatchaHistoryEntry(
-selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+                selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
             Debug.Log($"획득: [{grade}] {selected.Name} (ID:{selected.ID})");
 
-            // S등급이면 무조건 카운트 초기화, 아니면 증가
             if (grade == Grade.S)
             {
+                mgr.LatestSID = selected.ID;
+                mgr.SaveLatestSID(selected.ID);
                 mgr.gatchaDrawCount = 0;
             }
             else
@@ -135,15 +141,13 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
             CharacterDuplicateCheck(selected.ID);
         }
 
-        // 재화 및 가챠 횟수 저장
         curManager.Save();
         PlayerPrefs.SetInt("GatchaDrawCount", mgr.gatchaDrawCount);
         PlayerPrefs.Save();
 
-        // 결과 전달 및 씬 이동
-        GatchaResultHolder.results = results;  //홀더의 결과에 담아두기
+        GatchaResultHolder.results = results;
 
-        GatchaResultHolder.session = new GatchaSessionData //최근 뽑기 형식 기억
+        GatchaResultHolder.session = new GatchaSessionData
         {
             gatchaType = mgr.currentGachaType,
             drawCount = count,
@@ -153,6 +157,7 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("GatchaResultScene");
     }
+
     private Grade GetGuaranteedAorSGrade(int drawCount)
     {
         float sRate = 3f;
@@ -179,7 +184,7 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
         if (mgr.crystal < needCrystal)
         {
             Debug.LogWarning("크리스탈이 부족합니다!");
-           await   UIManager.Instance.ShowPopup<PopupCurrencyLack>();
+            await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
             return results;
         }
 
@@ -188,11 +193,12 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
         mgr.crystal -= needCrystal;
         curManager.SetCurrency(CurrencyType.Gacha, -useTicket);
         curManager.SetCurrency(CurrencyType.Dia, -needCrystal);
+
         for (int i = 0; i < session.drawCount; i++)
         {
             Grade grade;
 
-            // 마지막 10번째 보정 처리
+            // 10번째 보정 처리
             if (session.drawCount == 10 && i == session.drawCount - 1)
             {
                 grade = GetGuaranteedAorSGrade(mgr.gatchaDrawCount);
@@ -212,14 +218,15 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
             Character selected = SelectCharacterByPickup(grade, pool, session);
             results.Add(selected);
 
-          
             GatchaHistoryManager.Instance.AddEntry(new GatchaHistoryEntry(
-    selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+                selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
             Debug.Log($"[DrawMore] 획득: [{grade}] {selected.Name} (ID:{selected.ID})");
 
-            // S등급이면 무조건 카운트 초기화, 아니면 증가
+            // S등급이면 LatestSID 기록 + 카운트 초기화
             if (grade == Grade.S)
             {
+                mgr.LatestSID = selected.ID;
+                mgr.SaveLatestSID(selected.ID);
                 mgr.gatchaDrawCount = 0;
             }
             else
@@ -233,6 +240,7 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
         curManager.Save();
         PlayerPrefs.SetInt("GatchaDrawCount", mgr.gatchaDrawCount);
         PlayerPrefs.Save();
+
         var currencyText = FindObjectOfType<GatchaCurrenyText>();
         if (currencyText != null)
         {
@@ -242,14 +250,25 @@ selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-M
         return results;
     }
 
+
     private Character SelectCharacterByPickup(Grade grade, List<Character> pool, GatchaSessionData session)
     {
+        var mgr = GatchaManager.Instance;
+
         if (session.gatchaType == GatchaType.Pickup)
         {
-            if (grade == Grade.S && Random.value < 0.5f)//일단 결과창에서 뽑기를 할때 픽업이면 무조건 S 픽업 지정 캐릭터 나오게
+            if (grade == Grade.S)
             {
-                var pickupS = pool.Find(c => c.ID == session.pickupSId);
-                if (pickupS != null) return pickupS;
+                if (mgr.LatestSID != 0 && mgr.LatestSID != session.pickupSId)
+                {
+                    var forcedPickupS = pool.Find(c => c.ID == session.pickupSId);
+                    if (forcedPickupS != null) return forcedPickupS;
+                }
+                else if (Random.value < 0.5f)
+                {
+                    var pickupS = pool.Find(c => c.ID == session.pickupSId);
+                    if (pickupS != null) return pickupS;
+                }
             }
 
             if (grade == Grade.A && Random.value < 0.5f)
