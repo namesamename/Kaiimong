@@ -26,16 +26,17 @@ public class UILevelUPEffect : BaseLevelupInfo, ISetPOPUp
         textMeshPros[5].text = CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP).ToKNumber();
     }
 
-    public void SetImages()
+    public async void SetImages()
     {
-        Images[1].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.Gold).IconPath);
-        Images[3].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.Gold).IconPath);
+        Images[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
+        Images[3].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
 
-        Images[2].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.CharacterEXP).IconPath);
-        Images[4].sprite = Resources.Load<Sprite>(GlobalDataTable.Instance.currency.GetCurrencySOToEnum<CurrencySO>(CurrencyType.CharacterEXP).IconPath);
+        Images[2].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 2);
+        Images[4].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 2); 
+
     }
 
-    private int GetTotalCurrency(int fromLevel, int toLevel, bool isGold)
+        private int GetTotalCurrency(int fromLevel, int toLevel, bool isGold)
     {
         int total = 0;
         for (int i = fromLevel + 1; i <= toLevel; i++)

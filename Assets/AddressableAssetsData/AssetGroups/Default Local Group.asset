@@ -117,6 +117,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca60e80279919664f94326999d57c53d
+    m_Address: Icon/_Heathen Engineering/Samples/UX Examples/Flat Icons Free/Simple
+      Slide Toggle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 2f1e48fd46ac5b84095caffd61371511, type: 2}
   m_SchemaSet:

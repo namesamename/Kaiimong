@@ -116,6 +116,9 @@ public class CharacterManager : Singleton<CharacterManager>
       
             }
 
+            var BasicCharacter = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, 1);
+            BasicCharacter.IsEquiped = true;
+            SaveDataBase.Instance.SaveSingleData(BasicCharacter);
             // 사전에 저장
             CharacterSaveDic[CharacterID] = newCharacterID;
         }

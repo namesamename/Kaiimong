@@ -80,7 +80,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 ActivityValue = 180,
                 GachaValue = 20,
                 GoldValue = 0,
-                DIAValue = 5400,
+                DIAValue = 1800,
                 CharacterEXP = 0,
                 purchaseCount = 0,
                 ID = 0,
@@ -88,6 +88,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 
 
             };
+
+            SaveDataBase.Instance.SaveSingleData(data);
         }
         DicSet();
     }

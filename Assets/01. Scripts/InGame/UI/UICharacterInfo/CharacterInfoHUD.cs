@@ -131,9 +131,11 @@ public class CharacterInfoHUD : MonoBehaviour
                     buttons[i].onClick.RemoveAllListeners();
                     buttons[i].onClick.AddListener(() => SetSkillPopup(index));
                 }
-                images2[3].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3);
-                images2[2].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3 -1);
-                images2[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3-2);
+                int baseIndex = (character.ID - 1) * 3;
+                for (int i = 0; i < 3; i++)
+                {
+                    images2[i + 1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, baseIndex + i);
+                }
                 transform.DOLocalMoveX(600, 1);
                 break;
             case CharacterInfoType.PassiveSkill:
