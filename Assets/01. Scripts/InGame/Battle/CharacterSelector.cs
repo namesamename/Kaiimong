@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class CharacterSelector : MonoBehaviour
 {
@@ -7,9 +8,12 @@ public class CharacterSelector : MonoBehaviour
     public BattleSystem battleSystem;
     private Camera _camera;
 
+    public bool initialTarget = false;
+
     private void Awake()
     {
         _camera = Camera.main;
+        initialTarget = false;
     }
 
     private void Start()
@@ -30,7 +34,7 @@ public class CharacterSelector : MonoBehaviour
     {
         if (battleSystem.CanSelectTarget)
         {
-            if(!battleSystem.SelectedSkill.SkillSO.IsBuff)
+            if (!battleSystem.SelectedSkill.SkillSO.IsBuff)
             {
                 if (!battleSystem.SelectedSkill.SkillSO.isSingleAttack)
                 {
@@ -45,7 +49,7 @@ public class CharacterSelector : MonoBehaviour
             {
                 Debug.Log("이거 힐인데");
 
-                foreach(CharacterCarrier character in battleSystem.GetActivePlayers())
+                foreach (CharacterCarrier character in battleSystem.GetActivePlayers())
                 {
                     Debug.Log(character);
                 }
@@ -92,6 +96,14 @@ public class CharacterSelector : MonoBehaviour
 
     private void MouseClick(List<CharacterCarrier> units)
     {
+        if (!initialTarget)
+        {
+            initialTarget = true;
+            CharacterCarrier character = units[1];
+            selectedCharacter = character;
+            SelectedEffect(character, true);
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
@@ -169,6 +181,7 @@ public class CharacterSelector : MonoBehaviour
             SelectedEffect(selectedCharacter, false);
         }
         selectedCharacter = null;
+        initialTarget = false;
         battleSystem.SetTarget();
     }
 
