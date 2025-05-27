@@ -18,6 +18,7 @@ public class ChapterCameraTarget : MonoBehaviour
     [SerializeField] private SpriteRenderer background;
     private bool backgroundFound = false;
     private bool smallBackground = false;
+    private float cameraXPosition;
 
     [SerializeField] private SpriteRenderer chapterBackground;
 
@@ -25,7 +26,7 @@ public class ChapterCameraTarget : MonoBehaviour
     {
         SetBackground();
         FindBackGround();
-        MoveCameraToLeftEdge();
+        SetCameraPosition();
     }
 
     void Update()
@@ -63,6 +64,8 @@ public class ChapterCameraTarget : MonoBehaviour
                     transform.position += delta;
                     float clamp = Mathf.Clamp(transform.position.x, camMin, camMax);
                     transform.position = new Vector3(clamp, transform.position.y, transform.position.z);
+                    cameraXPosition = transform.position.x;
+                    PlayerPrefs.SetFloat(ChapterManager.Instance.CurChapter.ToString(), cameraXPosition);
                     dragStart = current;
                 }
             }
@@ -168,11 +171,19 @@ public class ChapterCameraTarget : MonoBehaviour
 
 
 
-    void MoveCameraToLeftEdge()
+    void SetCameraPosition()
     {
         if (backgroundFound)
         {
-            transform.position = new Vector3(camMin, transform.position.y, transform.position.z);
+            if (PlayerPrefs.HasKey(ChapterManager.Instance.CurChapter.ToString()))
+            {
+                float x = PlayerPrefs.GetFloat(ChapterManager.Instance.CurChapter.ToString());
+                transform.position = new Vector3(x, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                transform.position = new Vector3(camMin, transform.position.y, transform.position.z);
+            }
         }
     }
 
