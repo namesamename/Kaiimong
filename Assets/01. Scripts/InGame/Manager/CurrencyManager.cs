@@ -18,6 +18,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     string LastTimeExitKey = "Timekey";
 
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
+    private Dictionary<string  ,object> OtherSaveDic = new Dictionary<string, object>();
 
     public Sprite goldSprite;
     public Sprite diaSprite;
@@ -186,7 +187,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public void ClearTutorial()
     {
         data.IsTutorial = true;
-        SaveDataBase.Instance.SaveSingleData(data);
+        DicSet();
+        Save();
     }
     public int GetCurrency(CurrencyType currency)
     {
@@ -209,6 +211,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         CurrencySaveDic[CurrencyType.CharacterEXP] = data.CharacterEXP;
         CurrencySaveDic[CurrencyType.CurMaxStamina] = data.CurrentStaminaMax;
         CurrencySaveDic[CurrencyType.purchaseCount] = data.purchaseCount;
+        OtherSaveDic["IsTutorial"] = data.IsTutorial;
+        OtherSaveDic["User"] = data.UserName;
+
     }
 
     public CurrencySaveData DicToSaveData()
@@ -224,6 +229,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             CharacterEXP = CurrencySaveDic[CurrencyType.CharacterEXP],
             CurrentStaminaMax = CurrencySaveDic[CurrencyType.CurMaxStamina],
             purchaseCount = CurrencySaveDic[CurrencyType.purchaseCount],
+            UserName = (string)OtherSaveDic["User"],
+            IsTutorial =(bool)OtherSaveDic["IsTutorial"],
             Savetype = SaveType.Currency,
             ID = 0
         };
@@ -237,9 +244,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void ResetPurchase()
     {
-        DicSet();
+        
         CurrencySaveDic[CurrencyType.purchaseCount] = 0;
-        DicToSaveData();
+        Save();
 
     }
     private async void SetCurrencySprite()

@@ -31,8 +31,8 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         battleSlots = GetComponentInParent<CharacterBattleSlotSpawner>();
         images = GetComponentsInChildren<Image>();
         LV = GetComponentInChildren<TextMeshProUGUI>();
-        INGI = new Image[3] { images[2], images[3], images[4] };
-        BreakThrought = new Image[5] { images[5], images[6], images[7], images[8], images[9] };
+        INGI = new Image[3] { images[3], images[4], images[5] };
+        BreakThrought = new Image[5] { images[6], images[7], images[8], images[9], images[10] };
     }
 
 
@@ -53,6 +53,8 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         {
             images[i].enabled = true;
         }
+
+        images[2].enabled = false;
         character = GlobalDataTable.Instance.character.GetCharToID(ID);
         Save = SaveDataBase.Instance.GetSaveDataToID<CharacterSaveData>(SaveType.Character, ID);
 
@@ -76,6 +78,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         {
             images[i].enabled = false;
         }
+        images[2].enabled = true ;
     }
 
     public async void SetSlotColorAndCharacterImage(Character character)
