@@ -105,10 +105,7 @@ public class StartUI : MonoBehaviour
     }
 
 
-    public void SetTuto()
-    {
-        CurrencyManager.Instance.ClearTutorial();
-    }
+
    
 
     public void setLight()

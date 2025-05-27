@@ -17,11 +17,18 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public float TimeWhenNextCharge;
     string LastTimeExitKey = "Timekey";
 
-    private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
+
 
     public Sprite goldSprite;
     public Sprite diaSprite;
     public Sprite potionSprite;
+
+
+
+    private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
+    private Dictionary<string, object> OtherDataDic = new Dictionary<string, object>();
+
+
 
 
     private void Update()
@@ -186,7 +193,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public void ClearTutorial()
     {
         data.IsTutorial = true;
-        SaveDataBase.Instance.SaveSingleData(data);
+        DicSet();
+        Save();
     }
     public int GetCurrency(CurrencyType currency)
     {
@@ -209,7 +217,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         CurrencySaveDic[CurrencyType.CharacterEXP] = data.CharacterEXP;
         CurrencySaveDic[CurrencyType.CurMaxStamina] = data.CurrentStaminaMax;
         CurrencySaveDic[CurrencyType.purchaseCount] = data.purchaseCount;
-    }
+        OtherDataDic["UserName"] = data.UserName;
+        OtherDataDic["Tutorial"] = data.IsTutorial;
+}
 
     public CurrencySaveData DicToSaveData()
     {
@@ -225,6 +235,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             CurrentStaminaMax = CurrencySaveDic[CurrencyType.CurMaxStamina],
             purchaseCount = CurrencySaveDic[CurrencyType.purchaseCount],
             Savetype = SaveType.Currency,
+            IsTutorial = (bool)OtherDataDic["Tutorial"],
+            UserName = (string)OtherDataDic["UserName"],
+
             ID = 0
         };
         return data;
@@ -237,9 +250,15 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     public void ResetPurchase()
     {
-        DicSet();
         CurrencySaveDic[CurrencyType.purchaseCount] = 0;
-        DicToSaveData();
+
+       
+        Save();
+
+   
+        data = DicToSaveData();
+        data.UserName = GetUserName(); 
+        SaveDataBase.Instance.SaveSingleData(data);
 
     }
     private async void SetCurrencySprite()
