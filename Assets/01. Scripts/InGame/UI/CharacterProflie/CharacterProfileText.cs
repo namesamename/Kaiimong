@@ -26,7 +26,17 @@ public class CharacterProfileText : MonoBehaviour
 
     public void TextSet()
     {
-        textMeshPros[0].text = $"{SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0).UserName}/{SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0).UserLevel}";
+        if(SaveDataBase.Instance ==  null)
+        {
+            Debug.Log("sadasd");
+        }
+
+        if(SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0) == null)
+        {
+            Debug.Log("SaveData null");
+        }
+        textMeshPros[0].text = $"{SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0).UserName}/" +
+            $"{SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0).UserLevel}";
         textMeshPros[1].text = $"{SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0).date}";
 
         List<StageSaveData> stageSaveDatas = SaveDataBase.Instance.GetSaveInstanceList<StageSaveData>(SaveType.Stage);

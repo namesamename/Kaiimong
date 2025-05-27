@@ -23,7 +23,7 @@ public class StageInfoUI : MonoBehaviour
 
     private void OnEnable()
     {
-        rect.DOAnchorPos(new Vector3(-960, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
+        rect.DOAnchorPos(new Vector3(0, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
     }
 
     public void DisableUI()
@@ -31,7 +31,7 @@ public class StageInfoUI : MonoBehaviour
         ItemBattleSlots.ClearSlots();
         RemoveListner();
         stage = null;
-        rect.DOAnchorPos(new Vector3(0, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
+        rect.DOAnchorPos(new Vector3(960, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
         StartCoroutine(DisableDelay());
     }
 
@@ -53,6 +53,9 @@ public class StageInfoUI : MonoBehaviour
 
     private async void OnEnterButton()
     {
+       
+
+
         int curActPoint = CurrencyManager.Instance.GetCurrency(CurrencyType.Activity);
 
         if (GlobalDataTable.Instance.DataCarrier.GetCharacterIDList().Count > 0)
@@ -76,6 +79,13 @@ public class StageInfoUI : MonoBehaviour
                     StageManager.Instance.Players.Add(newCharacter);
                 }
                 RemoveListner();
+                if(!CurrencyManager.Instance.GetIsTutorial())
+                {
+                    TutorialManager.Instance.CurPreDelete();
+                    SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, TutorialManager.Instance.TutorialAction);
+                    SceneLoader.Instance.RegisterSceneAction(SceneState.BattleScene, () => SceneLoader.Instance.DisRegistarerAction(SceneState.BattleScene, TutorialManager.Instance.TutorialAction));
+                }
+
                 SceneLoader.Instance.ChangeScene(SceneState.BattleScene);
             }
         }
@@ -85,5 +95,7 @@ public class StageInfoUI : MonoBehaviour
     {
         enterButton.onClick.RemoveListener(OnEnterButton);
     }
+
+ 
 
 }

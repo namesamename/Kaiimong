@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private List<Vector3> iconPos = new List<Vector3>();
     [SerializeField] private List<Vector3> iconSize = new List<Vector3>();
     [SerializeField] private List<Button> buttonList = new List<Button>();
+    [SerializeField] private List<TextMeshProUGUI> skillTypeList = new List<TextMeshProUGUI>();
     [SerializeField] private Button targetConfirmButton;
     [SerializeField] private Image ultCover;
     [SerializeField] private Button ultButton;
@@ -155,9 +157,16 @@ public class CharacterUI : MonoBehaviour
     void OnClickSkillButton(Button button)
     {
         int skillNum = buttonList.IndexOf(button);
+        if(!CurrencyManager.Instance.GetIsTutorial())
+        {
+            TutorialManager.Instance.CurPreDelete();
+            TutorialManager.Instance.TutorialAction();
+        }
+
         Debug.Log(skillNum);
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
         battleSystem.SkillChanged?.Invoke();
+        battleSystem.CharacterSelector.initialTarget = false;
         targetConfirmButton.enabled = false;
         uiSkill.SetBattleSkillUI(battleSystem.SelectedSkill.SkillSO);
         battleSystem.OnSkillSelected();
@@ -245,6 +254,7 @@ public class CharacterUI : MonoBehaviour
         {
             int id = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].SkillSO.ID;
             sprites[i] = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, id);
+            skillTypeList[i].text = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].SkillSO.Type.ToString().ToUpper();
             //curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
         }
 

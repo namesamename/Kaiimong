@@ -15,6 +15,9 @@ public class StartUI : MonoBehaviour
     float timer = 0f;
 
     bool IsFade = false;
+
+
+   
     private void Awake()
     {
 
@@ -25,13 +28,16 @@ public class StartUI : MonoBehaviour
         buttons[0].onClick.RemoveAllListeners();
         buttons[1].onClick.RemoveAllListeners();
 
+
         buttons[0].onClick.AddListener(() => StartCoroutine(StartAni()));
         buttons[0].onClick.AddListener(() => Debug.Log("Å¬¸¯"));
-      buttons[1].onClick.AddListener(OnApplicationQuit);
+         buttons[1].onClick.AddListener(OnApplicationQuit);
 
 
         StartButtoObject = transform.GetChild(3);
         EndButtonObject = transform.GetChild(4);
+
+
     }
 
     public async void GetFlash()
@@ -50,6 +56,13 @@ public class StartUI : MonoBehaviour
 
     public IEnumerator StartAni()
     {
+        if (!CurrencyManager.Instance.GetIsTutorial())
+        {
+            TutorialManager.Instance.TutorialAction +=() => TutorialManager.Instance.NextTutorial();
+
+            SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, TutorialManager.Instance.TutorialAction);
+            SceneLoader.Instance.RegisterSceneAction(SceneState.LobbyScene, () => SceneLoader.Instance.DisRegistarerAction(SceneState.LobbyScene, TutorialManager.Instance.TutorialAction));
+        }
         AudioManager.PlaySFXDestroySceneLoad(FlashClip);
 
         StartButtoObject.gameObject.SetActive(false);
@@ -87,8 +100,16 @@ public class StartUI : MonoBehaviour
         IsFade = true;
         yield return new WaitForSeconds(1f);
         SceneLoader.Instance.ChangeScene(SceneState.LobbyScene);
+   
 
     }
+
+
+    public void SetTuto()
+    {
+        CurrencyManager.Instance.ClearTutorial();
+    }
+   
 
     public void setLight()
     {

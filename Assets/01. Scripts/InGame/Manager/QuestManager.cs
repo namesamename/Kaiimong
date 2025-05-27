@@ -56,12 +56,11 @@ public class QuestManager : Singleton<QuestManager>
             todayResetTime = todayResetTime.AddDays(-1);
         }
 
-   
         if (timeSave.lastDailyReset < todayResetTime)
         {
             Debug.Log($"Daily Quest Reset: {now}");
             ResetQuest(TimeType.Daily);
-            timeSave.lastDailyReset = now;
+            timeSave.lastDailyReset = todayResetTime; // now 대신 todayResetTime 저장
             SaveDataBase.Instance.SaveSingleData(timeSave);
             CurrencyManager.Instance.ResetPurchase();
         }
