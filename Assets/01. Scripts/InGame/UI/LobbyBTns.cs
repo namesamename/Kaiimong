@@ -12,7 +12,7 @@ public class LobbyBTns : MonoBehaviour
         {
             buttons[i].onClick.RemoveAllListeners();
         }
-        buttons[0].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.ChapterScene));
+        buttons[0].onClick.AddListener(() => TutorialChanger());
         buttons[1].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.InventoryScene));
         buttons[2].onClick.AddListener(() => { SceneLoader.Instance.ChangeScene(SceneState.CharacterSelectScene);  UIManager.Instance.characterIDType = UICharacterIDType.None; });
         buttons[3].onClick.AddListener(() => SceneLoader.Instance.ChangeScene(SceneState.PickupScene));
@@ -26,6 +26,22 @@ public class LobbyBTns : MonoBehaviour
         buttons[6].onClick.AddListener(async () => await UIManager.Instance.ShowPopup("UpdateNoticePopUp"));
 
         buttons[7].onClick.AddListener(async () => await UIManager.Instance.ShowPopup("StaminaChargePOPUP"));
+
+    }
+
+
+    public void TutorialChanger()
+    {
+        if(!CurrencyManager.Instance.GetIsTutorial())
+        {
+            TutorialManager.Instance.CurPreDelete();
+  
+
+            SceneLoader.Instance.RegisterSceneAction(SceneState.ChapterScene, TutorialManager.Instance.TutorialAction);
+            SceneLoader.Instance.RegisterSceneAction(SceneState.ChapterScene, () => SceneLoader.Instance.DisRegistarerAction(SceneState.ChapterScene, TutorialManager.Instance.TutorialAction));
+            
+        }
+        SceneLoader.Instance.ChangeScene(SceneState.ChapterScene);
 
     }
     

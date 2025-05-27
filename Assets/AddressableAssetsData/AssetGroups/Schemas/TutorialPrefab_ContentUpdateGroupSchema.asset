@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb0fc5d495191340863de6ecdc09599, type: 3}
-  m_Name: EnemySpawn_1
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: TutorialPrefab_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  ID: 1
-  Stage: 1
-  Round: 1
-  Set: 1
-  EnemyID: 1
-  EnemyCount: 2
-  Level: 1
+  m_Group: {fileID: 11400000, guid: 28b33ecd12327f84ab014e8056df2751, type: 2}
+  m_StaticContent: 0

@@ -92,7 +92,12 @@ public enum AddreassablesType
     BattleIcon,
     SkillIcon,
     CurrencyIcon,
+
     ItemIcon,
+
+    Tutorial,
+
+
 
 }
 public enum Grade
