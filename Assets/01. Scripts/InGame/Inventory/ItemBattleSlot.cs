@@ -1,3 +1,4 @@
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,14 @@ public class ItemBattleSlot : MonoBehaviour
         Save = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, ID);
 
         SetSlotColor(item);
+    }
+
+    public void SetCurrencySlot(Sprite sprite)
+    {
+        gradeColor.enabled = true;
+        Icon.enabled = true;
+        gradeColor.color = Color.black;
+        Icon.sprite = sprite;
     }
 
     public void SlotClear()

@@ -19,9 +19,11 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
 
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
 
+    public Sprite goldSprite;
+    public Sprite diaSprite;
+    public Sprite potionSprite;
 
 
-  
     private void Update()
     {
         if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
@@ -43,7 +45,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         HaveData();
         StartCoroutine(StartStamina());
- 
+        SetCurrencySprite();
     }
 
 
@@ -240,5 +242,10 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         DicToSaveData();
 
     }
-
+    private async void SetCurrencySprite()
+    {
+        goldSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
+        diaSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 3);
+        potionSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 2);
+    }
 }
