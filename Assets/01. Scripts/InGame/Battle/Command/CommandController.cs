@@ -27,6 +27,12 @@ public class CommandController : MonoBehaviour
         IsExecutingCommands = true;
         commandsStopped = false;
 
+
+        if (!CurrencyManager.Instance.GetIsTutorial()) 
+        {
+            TutorialManager.Instance.CurPreDelete();
+        }
+
         // 실행 전 다시 한번 상태 체크
         if (StageManager.Instance.BattleSystem.GetActivePlayers().Count == 0 ||
             StageManager.Instance.BattleSystem.GetActiveEnemies().Count == 0)

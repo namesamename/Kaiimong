@@ -34,6 +34,15 @@ public class BattleUI : MonoBehaviour
         pauseButton.onClick.AddListener(OnPauseButtonAsync);
         speedDownButton.onClick.AddListener(OnSpeedDownButton);
         speedUpButton.onClick.AddListener(OnSpeedUpButton);
+
+
+        if(!CurrencyManager.Instance.GetIsTutorial())
+        {
+            pauseButton.gameObject.SetActive(false);
+            speedDownButton.gameObject.SetActive(false);
+            speedUpButton.gameObject.SetActive(false);
+        }
+
     }
 
     private void MoveUI()
@@ -61,6 +70,8 @@ public class BattleUI : MonoBehaviour
 
     private async void OnPauseButtonAsync()
     {
+ 
+
         popupBattlePausePrefab = await UIManager.Instance.GetPOPUPPrefab("PopupBattlePause");
         GameObject instance = Instantiate(popupBattlePausePrefab, this.transform);
         popupBattlePause = instance.GetComponent<PopupBattlePause>();

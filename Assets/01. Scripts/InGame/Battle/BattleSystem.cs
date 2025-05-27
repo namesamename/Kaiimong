@@ -151,6 +151,7 @@ public class BattleSystem : MonoBehaviour
         //CommandController.ExecuteCommnad();
         yield return StartCoroutine(CommandController.ExecuteCommandCoroutine());
         UpdateHealthUI();
+
         BattleCamera.ShowMainView();
 
         if (PlayerTurn)
@@ -159,6 +160,14 @@ public class BattleSystem : MonoBehaviour
             if (!isPhaseChanging)
             {
                 StartCoroutine(ChangePhase(PlayerTurnPhase));
+                if (!CurrencyManager.Instance.GetIsTutorial())
+                {
+                    if(TutorialManager.Instance.GetIndex() != 11)
+                    {
+                        TutorialManager.Instance.NextTutorial();
+                    }
+                  
+                }
             }
         }
         else

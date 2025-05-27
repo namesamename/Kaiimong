@@ -142,6 +142,11 @@ public class ChapterCameraTarget : MonoBehaviour
                 stageInfoUI.gameObject.SetActive(true);
             }
             stageInfoUI.SetUI(clickedStage);
+            if(!CurrencyManager.Instance.GetIsTutorial())
+            {
+                TutorialManager.Instance.CurPreDelete();
+                TutorialManager.Instance.TutorialAction();
+            }
         }
         else if (!isCharacterClicked)
         {
