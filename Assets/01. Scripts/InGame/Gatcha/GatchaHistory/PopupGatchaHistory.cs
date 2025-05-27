@@ -9,6 +9,7 @@ public class PopupGatchaHistory : UIPOPUP
 
     [SerializeField] GameObject NoticePanel;
     [SerializeField] GameObject HistoryPanel;
+    [SerializeField] GameObject EntryPanel;
 
     private void Start()
     {
@@ -43,10 +44,21 @@ public class PopupGatchaHistory : UIPOPUP
     {
         NoticePanel.SetActive(true);
         HistoryPanel.SetActive(false);
+        EntryPanel.SetActive(false);
+
     }
     public void PanelSettingHistory()
     {
         NoticePanel.SetActive(false);
         HistoryPanel.SetActive(true);
+        EntryPanel.SetActive(false);
     }
+
+    public void PanelSettingEntry()
+    {
+        NoticePanel.SetActive(false);
+        HistoryPanel.SetActive(false);
+        EntryPanel.SetActive(true);
+    }
+
 }
