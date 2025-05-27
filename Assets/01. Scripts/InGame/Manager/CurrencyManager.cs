@@ -181,7 +181,11 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         Save();
     }
 
-
+    public void ClearTutorial()
+    {
+        data.IsTutorial = !data.IsTutorial;
+        SaveDataBase.Instance.SaveSingleData(data);
+    }
     public int GetCurrency(CurrencyType currency)
     {
         return CurrencySaveDic[currency];

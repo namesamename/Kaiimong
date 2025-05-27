@@ -157,7 +157,7 @@ public class CharacterUI : MonoBehaviour
     void OnClickSkillButton(Button button)
     {
         int skillNum = buttonList.IndexOf(button);
-        if(skillNum == 0 && !CurrencyManager.Instance.GetIsTutorial())
+        if(!CurrencyManager.Instance.GetIsTutorial())
         {
             TutorialManager.Instance.CurPreDelete();
             TutorialManager.Instance.TutorialAction();

@@ -24,10 +24,20 @@ public class TutorialManager : Singleton<TutorialManager>
             canvas = FindAnyObjectByType<Canvas>();
              tutorialPrefab = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.Tutorial, Index.ToString());
             CurPre = Instantiate(tutorialPrefab, canvas.transform);
+
+            if (Index == 4)
+            {
+                CurPre.transform.SetSiblingIndex(1);
+            }
             Index++;
         }
     }
     
+
+    public int GetIndex()
+    {
+        return Index;
+    }
 
     public void CurPreDelete()
     {
