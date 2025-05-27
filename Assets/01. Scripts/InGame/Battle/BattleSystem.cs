@@ -163,7 +163,10 @@ public class BattleSystem : MonoBehaviour
                 if (!CurrencyManager.Instance.GetIsTutorial())
                 {
                     if(TutorialManager.Instance.GetIndex() != 11)
-                    TutorialManager.Instance.NextTutorial();
+                    {
+                        TutorialManager.Instance.NextTutorial();
+                    }
+                  
                 }
             }
         }

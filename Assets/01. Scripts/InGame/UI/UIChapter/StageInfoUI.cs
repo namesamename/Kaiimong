@@ -53,6 +53,9 @@ public class StageInfoUI : MonoBehaviour
 
     private async void OnEnterButton()
     {
+       
+
+
         int curActPoint = CurrencyManager.Instance.GetCurrency(CurrencyType.Activity);
 
         if (GlobalDataTable.Instance.DataCarrier.GetCharacterIDList().Count > 0)
