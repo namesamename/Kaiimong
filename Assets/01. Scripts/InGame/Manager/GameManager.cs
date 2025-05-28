@@ -193,7 +193,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Tutorial()
     {
-        if(!currencyManager.GetIsTutorial())
+        if(!currencyManager.GetIsTutorial() || !currencyManager.GetIsChartutorial())
         {
             TutorialManager = Instantiate(Resources.Load<GameObject>("Manager/TutorialManager"));
             TutorialManager.transform.SetParent(transform);

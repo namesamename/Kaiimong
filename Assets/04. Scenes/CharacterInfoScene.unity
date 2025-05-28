@@ -968,7 +968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0021d0de970d06641950a2d84114a3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterInfoType: 0
+  CharacterInfoType: 7
   Panel: {fileID: 0}
 --- !u!1 &316662367
 GameObject:
@@ -1070,7 +1070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0021d0de970d06641950a2d84114a3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterInfoType: 0
+  CharacterInfoType: 5
   Panel: {fileID: 0}
 --- !u!1 &322373669
 GameObject:
@@ -2338,7 +2338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0021d0de970d06641950a2d84114a3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterInfoType: 0
+  CharacterInfoType: 8
   Panel: {fileID: 0}
 --- !u!1 &757689902
 GameObject:
@@ -3897,7 +3897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0021d0de970d06641950a2d84114a3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterInfoType: 0
+  CharacterInfoType: 11
   Panel: {fileID: 1348429117}
 --- !u!114 &1258201090
 MonoBehaviour:
@@ -4074,7 +4074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0021d0de970d06641950a2d84114a3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterInfoType: 0
+  CharacterInfoType: 4
   Panel: {fileID: 0}
 --- !u!1 &1322560488
 GameObject:
@@ -5188,7 +5188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0021d0de970d06641950a2d84114a3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterInfoType: 0
+  CharacterInfoType: 1
   Panel: {fileID: 0}
 --- !u!1 &1675887197
 GameObject:

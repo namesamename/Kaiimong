@@ -38,7 +38,7 @@ public class TutorialManager : Singleton<TutorialManager>
 
     public async void NextCharTutorialAsync()
     {
-        if (!CurrencyManager.Instance.GetIsTutorial())
+        if (!CurrencyManager.Instance.GetIsChartutorial())
         {
             if (CurPre != null)
             {
@@ -53,7 +53,7 @@ public class TutorialManager : Singleton<TutorialManager>
                 return;
             }
             canvas = FindAnyObjectByType<Canvas>();
-            tutorialPrefab = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.CharTutorial, Index.ToString());
+            tutorialPrefab = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.CharTutorial, CharIndex.ToString());
             CurPre = Instantiate(tutorialPrefab, canvas.transform);
 
 

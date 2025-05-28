@@ -27,7 +27,7 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
     {
         if(!CurrencyManager.Instance.GetIsChartutorial())
         {
-            for (int i = 0; i < buttons.Length; i++)
+            for (int i = 0; i < 4; i++)
             {
                 buttons[i].enabled = false;
             }
