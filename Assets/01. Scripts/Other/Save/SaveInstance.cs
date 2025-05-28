@@ -31,6 +31,8 @@ public class CurrencySaveData : SaveInstance
     public int GachaValue;
     public int ActivityValue;
     public DateTime date;
+    public bool IsTutorial;
+    public bool IsCharTutorial;
 
 }
 

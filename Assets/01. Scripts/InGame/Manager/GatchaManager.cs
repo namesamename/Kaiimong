@@ -1,41 +1,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GatchaManager :Singleton<GatchaManager> //화면에서 가챠 타입 구분, 뽑기 횟수 저장 매니저 
+public class GatchaManager : Singleton<GatchaManager>
 {
-    public int crystal;
-    public int ticket;
-    public int gatchaDrawCount = 0;
+    private const string LatestSIDKey = "GatchaLatestSID"; // PlayerPrefs 저장 키
+
+    public int crystal;                     // 크리스탈 보유량
+    public int ticket;                      // 티켓 보유량
+    public int gatchaDrawCount = 0;         // 가챠 누적 횟수 (보정용)
     public static GatchaManager Instance;
-    public GatchaType currentGachaType;  //가장 최근의 가챠 타입을 가져오기
-    public int pickupSCharacterID =1;         // S 픽업 대상
-    public List<int> pickupACharacterIDs = new() {6,7};
+
+    public int LatestSID;                   // 가장 최근에 뽑힌 S등급 캐릭터 ID
+    public GatchaType currentGachaType;     // 현재 뽑기 종류 (Pickup, Standard 등)
+    public int pickupSCharacterID = 1;      // 픽업 S등급 캐릭터 ID
+    public List<int> pickupACharacterIDs = new() { 6, 7 }; // 픽업 A등급 캐릭터 ID 리스트
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject); // 필요 시 주석 해제
         }
         else if (Instance != this)
         {
-            Destroy(gameObject); // 중복 생성된 GatchaManager 제거
+            Destroy(gameObject);
             return;
         }
+
+        // 저장된 정보 불러오기
         gatchaDrawCount = PlayerPrefs.GetInt("GatchaDrawCount", 0);
+        LatestSID = PlayerPrefs.GetInt(LatestSIDKey, 0); // S등급 ID 불러오기 (없으면 0)
     }
+
     private void Start()
     {
-        SetGachaType(GatchaType.Pickup);
-        Setting();
+        SetGachaType(GatchaType.Pickup); // 기본 가챠 타입은 픽업
+        Setting();                       // 티켓 및 크리스탈 정보 불러오기
     }
-    public void SetGachaType(GatchaType type) //기본 타입을 픽업으로 설정
+
+    public void SaveLatestSID(int id)
+    {
+        LatestSID = id;
+        PlayerPrefs.SetInt(LatestSIDKey, id);
+        PlayerPrefs.Save();
+    }
+
+    public void SetGachaType(GatchaType type)
     {
         currentGachaType = type;
         Debug.Log($"GachaType 변경됨: {type}");
     }
-    public void Setting()//티켓,보석 재화를 
+
+    public void Setting()
     {
         ticket = CurrencyManager.Instance.GetCurrency(CurrencyType.Gacha);
         crystal = CurrencyManager.Instance.GetCurrency(CurrencyType.Dia);

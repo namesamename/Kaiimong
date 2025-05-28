@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ActiveSkill_10
   m_EditorClassIdentifier: 
   ID: 10
-  Name: das
-  Description: asd
+  Name: "\uC77C\uBC18 \uACF5\uACA9"
+  Description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825 \uB9CC\uD07C \uB2E8\uC77C
+    \uACF5\uACA9"
   Attack: 1
   isSingleAttack: 1
   UltimateGauge: 1
@@ -22,4 +23,4 @@ MonoBehaviour:
   IsBuff: 0
   BuffID: 0
   EffectType: 3
-  EffectUpDownType: 1
+  EffectUpDownType: 0

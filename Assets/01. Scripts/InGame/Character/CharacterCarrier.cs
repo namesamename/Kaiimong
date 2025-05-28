@@ -1,8 +1,12 @@
 using UnityEngine;
 public abstract class CharacterCarrier : MonoBehaviour 
 {
-
-
+    public float longPressThreshold = 1.0f;
+    private float touchStartTime;
+    private bool longPressTriggered = false;
+    private bool popupShown = false;
+    private bool isTouchingThis = false;
+    public GameObject StatPOPUP;
     int ID = 0;
     [HideInInspector]
     public CharacterSkillBook skillBook;
@@ -22,6 +26,52 @@ public abstract class CharacterCarrier : MonoBehaviour
         stat = GetComponentInChildren<CharacterStat>();
         visual = GetComponentInChildren<CharacterVisual>();
 
+    }
+
+    private  void Update()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                touchStartTime = Time.time;
+                longPressTriggered = false;
+
+         
+                if (IsTouchedMe(touch))
+                {
+                    isTouchingThis = true;
+                }
+                else
+                {
+                    isTouchingThis = false;
+                }
+            }
+            else if ((touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved) && !longPressTriggered && isTouchingThis)
+            {
+                if (Time.time - touchStartTime >= longPressThreshold)
+                {
+             
+                    longPressTriggered = true;
+
+                    if(SceneLoader.Instance.GetCur() == SceneState.BattleScene && !popupShown)
+                    {
+                        popupShown  = true;
+
+                        GameObject game = Instantiate(StatPOPUP, FindAnyObjectByType<Canvas>().transform);
+                        game.GetComponent<UIBattleStatPOPUP>().Initialize(this);
+                    }
+                
+                }
+            }
+            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            {
+                touchStartTime = 0f;
+                longPressTriggered = false;
+            }
+        }
     }
 
 
@@ -45,6 +95,18 @@ public abstract class CharacterCarrier : MonoBehaviour
     public int GetID()
     {
         return ID;
+    }
+
+    public void SetPopupShonwFalse()
+    {
+        popupShown = false;
+    }
+
+    private bool IsTouchedMe(Touch touch)
+    {
+        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
+        Collider2D col = Physics2D.OverlapPoint(worldPoint);
+        return col != null && col.gameObject == this.gameObject;
     }
 
     //    private void Start()

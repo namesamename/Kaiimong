@@ -17,7 +17,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
         iconImage = GetComponentsInChildren<Image>();
         countText = GetComponentInChildren<TextMeshProUGUI>();
     }
-    public void SetSlot(ItemData newItem, int NeedCount)     // 슬롯에 새 아이템 슬롯 설정
+    public async void SetSlot(ItemData newItem, int NeedCount)     // 슬롯에 새 아이템 슬롯 설정
     {
         item = newItem;
 
@@ -25,7 +25,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
         SetColor(newItem);
         if (item != null)
         {
-            iconImage[1].sprite = Resources.Load<Sprite>(item.IconPath);
+            iconImage[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.ItemIcon, item.ID);
             iconImage[1].enabled = true;        // 아이콘  활성화
 
             if (itemSava != null)
@@ -38,7 +38,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
                 }
                 else
                 {
-                    countText.color = Color.green;
+                    countText.color = Color.black;
                 }
             }
             else
@@ -71,7 +71,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            countText.color = Color.green;
+            countText.color = Color.black;
         }
     }
 
@@ -87,7 +87,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            countText.color = Color.green;
+            countText.color = Color.black;
         }
     }
 

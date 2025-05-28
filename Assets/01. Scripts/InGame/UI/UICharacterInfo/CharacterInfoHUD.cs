@@ -102,7 +102,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 }
 
                 DolpaButton.onClick.RemoveAllListeners();
-                DolpaButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("breakthroughPopUP"));
+                DolpaButton.onClick.AddListener(BreakPOPUP);
 
                 transform.DOLocalMoveY(-275, 1);
                 break;
@@ -111,7 +111,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 Button LevelUpButton = GetComponentInChildren<Button>();
                 LevelUpButton.onClick.RemoveAllListeners();
                 Level.text = $"Level\n{saveData.Level}";
-                LevelUpButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("LevelupPopUp"));
+                LevelUpButton.onClick.AddListener(LevelupPOPUP);
                 transform.DOLocalMoveX(450, 1);
                 break;
             case CharacterInfoType.IngiUp:
@@ -119,7 +119,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 Button IngiUpButton = GetComponentInChildren<Button>();
                 IngiUpButton.onClick.RemoveAllListeners();
                 Ingi.text = $"ÀÎÁö\n{saveData.Recognition}";
-                IngiUpButton.onClick.AddListener(async () => await UIManager.Instance.ShowPopup("IngiPopUp"));
+                IngiUpButton.onClick.AddListener(IngiPOPUP);
                 transform.DOLocalMoveX(750, 1);
                 break;
             case CharacterInfoType.ActiveSkill:
@@ -131,9 +131,26 @@ public class CharacterInfoHUD : MonoBehaviour
                     buttons[i].onClick.RemoveAllListeners();
                     buttons[i].onClick.AddListener(() => SetSkillPopup(index));
                 }
-                images2[3].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3);
-                images2[2].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3 -1);
-                images2[1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, character.ID * 3-2);
+                int baseIndex = (character.ID - 1) * 3;
+                for (int i = 0; i < 3; i++)
+                {
+                    images2[i + 1].sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, baseIndex + i + 1);
+                }
+                if(!CurrencyManager.Instance.GetIsChartutorial())
+                {
+                    for(int i = 0;i < buttons.Length; i++)
+                    {
+                        buttons[i].enabled = false;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < buttons.Length; i++)
+                    {
+                        buttons[i].enabled = true;
+                    }
+                }
+
                 transform.DOLocalMoveX(600, 1);
                 break;
             case CharacterInfoType.PassiveSkill:
@@ -170,6 +187,38 @@ public class CharacterInfoHUD : MonoBehaviour
 
     }
 
+
+    public async void IngiPOPUP()
+    {
+        await UIManager.Instance.ShowPopup("IngiPopUp");
+
+        if (!CurrencyManager.Instance.GetIsChartutorial())
+        {
+            TutorialManager.Instance.NextCharTutorialAsync();
+        }
+    }
+
+    public async void BreakPOPUP()
+    {
+        await UIManager.Instance.ShowPopup("breakthroughPopUP");
+
+        if (!CurrencyManager.Instance.GetIsChartutorial())
+        {
+            TutorialManager.Instance.NextCharTutorialAsync();
+        }
+    }
+
+
+    public async void LevelupPOPUP()
+    {
+
+        await UIManager.Instance.ShowPopup("LevelupPopUp");
+
+        if(!CurrencyManager.Instance.GetIsChartutorial())
+        {
+             TutorialManager.Instance.NextCharTutorialAsync();
+        }
+    }
     
     public async void SetSkillPopup(int index)
     {

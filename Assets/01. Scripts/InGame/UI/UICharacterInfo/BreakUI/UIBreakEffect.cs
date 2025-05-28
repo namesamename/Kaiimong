@@ -21,9 +21,9 @@ public class UIBreakEffect : MonoBehaviour, ISetPOPUp
         {
             //Images[i].sprite = 에셋생기면 추가;
         }
-        for(int i = 0; i < texts.Length; ++i) 
+        for(int i = 0 ; i < texts.Length; ++i) 
         {
-            texts[i].text = i.ToString();
+            texts[i].text = (i+1).ToString();
             texts[i].color = Color.black;
         }
         for (int i = texts.Length-1; i >= GlobalDataTable.Instance.DataCarrier.GetSave().Necessity; i--) 

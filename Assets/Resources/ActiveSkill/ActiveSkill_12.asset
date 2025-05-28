@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: ActiveSkill_12
   m_EditorClassIdentifier: 
   ID: 12
-  Name: dsa
-  Description: asd
+  Name: "\uAD81\uADF9\uAE30"
+  Description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825 \uB9CC\uD07C \uBAA8\uB4E0
+    \uC801 \uB300\uC0C1 \uACF5\uACA9"
   Attack: 1
-  isSingleAttack: 1
+  isSingleAttack: 0
   UltimateGauge: 1
-  Type: 3
+  Type: 0
   IsBuff: 0
   BuffID: 0
-  EffectType: 4
+  EffectType: 1
   EffectUpDownType: 0

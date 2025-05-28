@@ -15,8 +15,8 @@ MonoBehaviour:
   ID: 3
   Name: "\uBAAC3"
   HP: 600
-  Att: 26
-  Def: 10
+  Att: 182
+  Def: 70
   Speed: 100
   Cri: 0.02
   SkillID: 3

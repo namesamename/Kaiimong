@@ -103,7 +103,7 @@ public class AddressableManager : Singleton<AddressableManager>
     public async Task<GameObject> LoadPrefabs(AddreassablesType type, string name)
     {
         var handle = Addressables.LoadAssetAsync<GameObject>(TypeChanger(type)+name);
-
+        Debug.Log("프리펩 보냄");
         await handle.Task;
         if(handle.Status == AsyncOperationStatus.Succeeded) 
         {
@@ -157,6 +157,15 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "SkillIcon/SkillIcon_";
             case AddreassablesType.CurrencyIcon:
                 return "CurrencyIcon/Currency_";
+
+            case AddreassablesType.ItemIcon:
+                return "ItemIcon/Item_";
+
+            case AddreassablesType.Tutorial:
+                return "TutorialPrefab/Tutorial";
+            case AddreassablesType.CharTutorial:
+                return "CharTutorial/ChrTutorial";
+
             default:
                 Debug.LogError($"Unknown AddreassablesType: {type}");
                 return string.Empty;

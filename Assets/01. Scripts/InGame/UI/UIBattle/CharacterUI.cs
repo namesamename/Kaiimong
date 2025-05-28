@@ -1,7 +1,9 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,11 +24,13 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private List<Vector3> iconPos = new List<Vector3>();
     [SerializeField] private List<Vector3> iconSize = new List<Vector3>();
     [SerializeField] private List<Button> buttonList = new List<Button>();
+    [SerializeField] private List<TextMeshProUGUI> skillTypeList = new List<TextMeshProUGUI>();
     [SerializeField] private Button targetConfirmButton;
     [SerializeField] private Image ultCover;
     [SerializeField] private Button ultButton;
     //[SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
+    private List<Image> buttonIcon = new List<Image>();
 
     public Action OnConfirmButton;
     public Action ResetIconY;
@@ -34,21 +38,22 @@ public class CharacterUI : MonoBehaviour
     private BattleSystem battleSystem;
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
 
-    public UIBattleSkill uiSkill;
-    public UIBattleStatBoard uiboard;
 
-    private void Awake()
-    {
-        uiSkill =GetComponentInChildren<UIBattleSkill>();
-        uiboard = GetComponentInChildren<UIBattleStatBoard>();
-    }
+
 
     void Start()
     {
+
         battleSystem.OnPlayerTurn += GetActivePlayerUnit;
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
         targetConfirmButton.enabled = false;
+        foreach (Button button in buttonList)
+        {
+            Image image = button.GetComponent<Image>();
+            image.material = new Material(image.material);
+            buttonIcon.Add(image);
+        }
     }
 
     public void UltEnable()
@@ -76,7 +81,9 @@ public class CharacterUI : MonoBehaviour
     {
         foreach (Button button in buttonList)
         {
-            button.onClick.AddListener(() => OnClickSkillButton(button));
+            Button btn = button;
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => OnClickSkillButton(btn));
         }
         targetConfirmButton.onClick.AddListener(OnClickTargetConfirmButton);
         //cancelButton.onClick.AddListener(OnSkillCancelButton);
@@ -154,14 +161,58 @@ public class CharacterUI : MonoBehaviour
 
     void OnClickSkillButton(Button button)
     {
+
+
+
         int skillNum = buttonList.IndexOf(button);
-        Debug.Log(skillNum);
+        if (!CurrencyManager.Instance.GetIsTutorial())
+        {
+            TutorialManager.Instance.CurPreDelete();
+            TutorialManager.Instance.TutorialAction();
+        }
+
+
+
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
+        SkillSelectEffect(skillNum);
         battleSystem.SkillChanged?.Invoke();
         battleSystem.CharacterSelector.initialTarget = false;
         targetConfirmButton.enabled = false;
-        uiSkill.SetBattleSkillUI(battleSystem.SelectedSkill.SkillSO);
+
         battleSystem.OnSkillSelected();
+        button.GetComponent<UILongPressButton>().SetBattleSystem(curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum]);
+
+
+
+
+    }
+
+    public void SkillSelectEffect(int skillNum)
+    {
+        foreach (Image icon in buttonIcon)
+        {
+            Material mat = icon.material;
+
+            mat.SetFloat("_OutlineEnabled", 0);
+        }
+
+        if (skillNum < buttonIcon.Count)
+        {
+            Image _image = buttonIcon[skillNum];
+            Material _material = _image.material;
+
+            _material.SetFloat("_OutlineEnabled", 1);
+        }
+
+        if (skillNum == 100)
+        {
+            foreach (Image icon in buttonIcon)
+            {
+                Material mat = icon.material;
+
+                mat.SetFloat("_OutlineEnabled", 0);
+            }
+        }
     }
 
     void OnClickTargetConfirmButton()
@@ -246,14 +297,17 @@ public class CharacterUI : MonoBehaviour
         {
             int id = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].SkillSO.ID;
             sprites[i] = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, id);
+            skillTypeList[i].text = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].SkillSO.Type.ToString().ToUpper();
             //curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
         }
 
-        for(int i = 0; i < sprites.Length; i++)
+        for (int i = 0; i < sprites.Length; i++)
         {
             buttonList[i].image.sprite = sprites[i];
         }
         ultCover.sprite = buttonList[2].image.sprite;
+
+        SkillSelectEffect(100);
     }
 
     void EnableUI()
@@ -262,15 +316,6 @@ public class CharacterUI : MonoBehaviour
         skills.GetComponent<CharacterUIEffect>().BounceEffect();
         icons.SetActive(true);
         icons.GetComponent<CharacterUIEffect>().BounceEffect();
-        stat.SetActive(true);
-        stat.GetComponent<CharacterUIEffect>().BounceEffect();
-        skillInfo.SetActive(true);
-        skillInfo.GetComponent <CharacterUIEffect>().BounceEffect();
-        CommandBtn.SetActive(true);
-        CommandBtn.GetComponent <CharacterUIEffect>().BounceEffect();
-
-        CommandBtnSet();
-
 
     }
 
@@ -300,48 +345,9 @@ public class CharacterUI : MonoBehaviour
         actionButton.gameObject.SetActive(false);
     }
 
-    public void CommandBtnSet()
-    {
-        Button[] buttons = CommandBtn.GetComponentsInChildren<Button>();
-
-        for (int i = 0; i < buttons.Length; i++) 
-        {
-            buttons[i].onClick.RemoveAllListeners();
-
-        }
-
-        buttons[0].onClick.AddListener(SpeedSet);
-        buttons[1].onClick.AddListener(StatSet);
-        buttons[2].onClick.AddListener(SkillSet);
 
 
-    }
 
-    public void SpeedSet()
-    {
-        icons.SetActive(true);
-        stat.GetComponent<UIBattleStatBoard>().IsUpdate = false;
-        stat.SetActive(false);
-        skillInfo.GetComponent<UIBattleSkill>().IsUpdate = false;
-        skillInfo.SetActive(false);
-    }
-    public void StatSet()
-    {
-        icons.SetActive(false);
-        stat.SetActive(true);
-        stat.GetComponent<UIBattleStatBoard>().IsOpen = true;
-        stat.GetComponent<UIBattleStatBoard>().IsUpdate = true;
-        skillInfo.SetActive(false);
-    }
-
-    public void SkillSet()
-    {
-        icons.SetActive(false);
-        stat.SetActive(false);
-        skillInfo.GetComponent<UIBattleSkill>().IsOpen = true;
-        skillInfo.GetComponent<UIBattleSkill>().IsUpdate = true;
-        skillInfo.SetActive(true);
-    }
 
 
 }

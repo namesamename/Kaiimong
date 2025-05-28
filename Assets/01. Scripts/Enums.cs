@@ -39,6 +39,8 @@ public enum CurrencyType
     CharacterEXP,
     CurMaxStamina,
     purchaseCount,
+    UserName,
+    Tutorial
 }
 public enum SaveType
 {
@@ -92,6 +94,12 @@ public enum AddreassablesType
     BattleIcon,
     SkillIcon,
     CurrencyIcon,
+
+    ItemIcon,
+
+    Tutorial,
+    CharTutorial,
+
 
 
 }

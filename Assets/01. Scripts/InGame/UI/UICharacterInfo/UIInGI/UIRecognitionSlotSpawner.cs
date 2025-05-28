@@ -31,23 +31,33 @@ public class UIRecognitionSlotSpawner : MonoBehaviour, ISetPOPUp
     public void SetItemslot(CharacterUpgradeTable table )
     {
   
-        if (table.ItemCount >= 3)
+        if (table.ItemCount >= 2)
         {
             NeedTable[-1] = table.NeedLevel;
             SlotInstantiate(0, UpgradeType.Level);
             NeedTable[0] = table.NeedGold;
             SlotInstantiate(0, UpgradeType.Gold);
+
+        }
+        if(table.ItemCount >= 3) 
+        {
             NeedTable[table.FirstItemID] = table.FirstItemCount;
             SlotInstantiate(table.FirstItemID);
-            NeedTable[table.SecondItemID] = table.SecondItemCount;
-            SlotInstantiate(table.SecondItemID);
+
         }
         if (table.ItemCount >= 4)
         {
-            NeedTable[table.ThridItemID] = table.ThridItemCount;
-            SlotInstantiate(table.ThridItemID);
+            NeedTable[table.SecondItemID] = table.SecondItemCount;
+            SlotInstantiate(table.SecondItemID);
+      
         }
         if (table.ItemCount >= 5)
+        {
+            NeedTable[table.ThridItemID] = table.ThridItemCount;
+            SlotInstantiate(table.ThridItemID);
+  
+        }
+        if( table.ItemCount >= 6)
         {
             NeedTable[table.FourthItemID] = table.FourthItemCount;
             SlotInstantiate(table.FourthItemID);

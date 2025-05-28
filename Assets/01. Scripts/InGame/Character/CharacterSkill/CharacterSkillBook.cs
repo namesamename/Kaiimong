@@ -95,6 +95,21 @@ public class CharacterSkillBook : MonoBehaviour
 
     public void SetSkillGauge(ActiveSkillObject activeSkill , List<CharacterCarrier> characters)
     {
+        if(!CurrencyManager.Instance.GetIsTutorial())
+        {
+            if (activeSkill.SkillSO.ID == 1)
+            {
+                SkillGauge += 1;
+            }
+
+            if (activeSkill.SkillSO.ID ==2)
+            {
+                SkillGauge += 6;
+            }
+            return;
+        }
+
+
         if(activeSkill.SkillSO.ID % 3 == 0)
         {
             SkillGauge = 0;

@@ -18,10 +18,13 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     string LastTimeExitKey = "Timekey";
 
     private Dictionary<CurrencyType, int> CurrencySaveDic = new Dictionary<CurrencyType, int>();
+    private Dictionary<string  ,object> OtherSaveDic = new Dictionary<string, object>();
+
+    public Sprite goldSprite;
+    public Sprite diaSprite;
+    public Sprite potionSprite;
 
 
-
-  
     private void Update()
     {
         if (CurrencySaveDic.ContainsKey(CurrencyType.Activity))
@@ -43,7 +46,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     {
         HaveData();
         StartCoroutine(StartStamina());
- 
+        SetCurrencySprite();
     }
 
 
@@ -79,15 +82,18 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 CurrentStaminaMax = 180,
                 ActivityValue = 180,
                 GachaValue = 20,
-                GoldValue = 0,
-                DIAValue = 5400,
+                GoldValue =  0,
+                DIAValue = 1800,
                 CharacterEXP = 0,
                 purchaseCount = 0,
                 ID = 0,
                 date = DateTime.UtcNow,
+                IsTutorial = false,
+                IsCharTutorial = false,
                 
 
             };
+            SaveDataBase.Instance.SaveSingleData(data);
         }
         DicSet();
     }
@@ -124,6 +130,14 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         return DicToSaveData();
     }
 
+    public bool GetIsTutorial()
+    {
+        return data.IsTutorial;
+    }
+    public bool GetIsChartutorial()
+    {
+        return data.IsCharTutorial;
+    }
     public void HealStamina(int amount)
     {
         if (CurrencySaveDic[CurrencyType.Activity] + amount > GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount)
@@ -176,7 +190,20 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         Save();
     }
 
+    public void ClearTutorial()
+    {
+        data.IsTutorial = true;
+        DicSet();
+        Save();
+    }
 
+
+    public void ClearCharTutorial()
+    {
+        data.IsCharTutorial = true;
+        DicSet();
+        Save();
+    }
     public int GetCurrency(CurrencyType currency)
     {
         return CurrencySaveDic[currency];
@@ -198,7 +225,11 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         CurrencySaveDic[CurrencyType.CharacterEXP] = data.CharacterEXP;
         CurrencySaveDic[CurrencyType.CurMaxStamina] = data.CurrentStaminaMax;
         CurrencySaveDic[CurrencyType.purchaseCount] = data.purchaseCount;
+        OtherSaveDic["IsTutorial"] = data.IsTutorial;
+        OtherSaveDic["User"] = data.UserName;
+        OtherSaveDic["IsChartutorial"] = data.IsCharTutorial;
     }
+
 
     public CurrencySaveData DicToSaveData()
     {
@@ -213,7 +244,11 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             CharacterEXP = CurrencySaveDic[CurrencyType.CharacterEXP],
             CurrentStaminaMax = CurrencySaveDic[CurrencyType.CurMaxStamina],
             purchaseCount = CurrencySaveDic[CurrencyType.purchaseCount],
+            UserName = (string)OtherSaveDic["User"],
+            IsTutorial = (bool)OtherSaveDic["IsTutorial"],
+            IsCharTutorial = (bool)OtherSaveDic["IsChartutorial"],
             Savetype = SaveType.Currency,
+
             ID = 0
         };
         return data;
@@ -225,11 +260,19 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
 
     public void ResetPurchase()
-    {
-        DicSet();
+    {      
         CurrencySaveDic[CurrencyType.purchaseCount] = 0;
-        DicToSaveData();
-
+        Save();
+   
+        data = DicToSaveData();
+        data.UserName = GetUserName(); 
+        SaveDataBase.Instance.SaveSingleData(data);
     }
 
+    private async void SetCurrencySprite()
+    {
+        goldSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
+        diaSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 3);
+        potionSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 2);
+    }
 }

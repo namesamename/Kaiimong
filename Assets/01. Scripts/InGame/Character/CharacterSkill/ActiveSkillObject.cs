@@ -49,7 +49,22 @@ public class ActiveSkillObject : MonoBehaviour
     }
     public void UseSkill(List<CharacterCarrier> targetcharacter)
     {
-        QuestManager.Instance.QuestTypeValueUP(1, QuestType.UseSkill);
+        if (SkillSO.IsBuff == false)
+        {
+            if (targetcharacter[0].GetCharacterType() == CharacterType.Enemy)
+            {
+                QuestManager.Instance.QuestTypeValueUP(1, QuestType.UseSkill);
+            }
+        }
+        else
+        {
+            if (targetcharacter[0].GetCharacterType()  == CharacterType.Friend)
+            {
+                QuestManager.Instance.QuestTypeValueUP(1, QuestType.UseSkill);
+            }
+           
+        }
+        
         if (animator != null)
         {
             if (SkillSO.ID % 3 == 1)
@@ -93,48 +108,72 @@ public class ActiveSkillObject : MonoBehaviour
 
             foreach (CharacterCarrier character in targetcharacter.ToList())
             {
-
-                float AllDamage = SkillSO.Attack * stat.attackStat.GetStat();
-
-                if (stat.criticalPerStat.Value > Random.Range(0.000f, 1f))
+                
+                if (!CurrencyManager.Instance.GetIsTutorial())
                 {
-                    AllDamage *= stat.criticalAttackStat.Value;
-                    Debug.Log("农府萍拿 朵ぇぇ");
-
-                    if(character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
+                    
+                    if(SkillSO.ID != 3)
                     {
-                        character.stat.TakeDamage(AllDamage *(float)1.2);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage* (float)1.2 - character.stat.defenseStat.GetStat(), character, DamageType.CriAndWeek));
+                        character.stat.TakeDamage(1f);
+                        StartCoroutine(SkillDelay(GetAnimationLength(),  1f, character, DamageType.Week));
                         EffectOn(SkillSO.EffectType, targetcharacter);
                     }
                     else
                     {
-                        character.stat.TakeDamage(AllDamage);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage- character.stat.defenseStat.GetStat(), character, DamageType.Cri));
+                        character.stat.TakeDamage(999f);
+                        StartCoroutine(SkillDelay(GetAnimationLength(), 999f, character, DamageType.Week));
                         EffectOn(SkillSO.EffectType, targetcharacter);
+        
                     }
-
+             
                 }
                 else
                 {
+                    float AllDamage = SkillSO.Attack * stat.attackStat.GetStat();
 
-                    if (character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
+                    if (stat.criticalPerStat.Value > Random.Range(0.000f, 1f))
                     {
-                        character.stat.TakeDamage(AllDamage * (float)1.2);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage * (float)1.2 - character.stat.defenseStat.GetStat(), character, DamageType.Week));
-                        EffectOn(SkillSO.EffectType, targetcharacter);
+                        AllDamage *= stat.criticalAttackStat.Value;
+                        Debug.Log("农府萍拿 朵ぇぇ");
+
+                        if (character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
+                        {
+                            character.stat.TakeDamage(AllDamage * (float)1.2);
+                            StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage * (float)1.2 - character.stat.defenseStat.GetStat(), character, DamageType.CriAndWeek));
+                            EffectOn(SkillSO.EffectType, targetcharacter);
+                        }
+                        else
+                        {
+                            character.stat.TakeDamage(AllDamage);
+                            StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage - character.stat.defenseStat.GetStat(), character, DamageType.Cri));
+                            EffectOn(SkillSO.EffectType, targetcharacter);
+                        }
+
                     }
                     else
                     {
-                        character.stat.TakeDamage(AllDamage);
-                        StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage - character.stat.defenseStat.GetStat(), character, DamageType.Basic));
-                        EffectOn(SkillSO.EffectType, targetcharacter);
+
+                        if (character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
+                        {
+                            character.stat.TakeDamage(AllDamage * (float)1.2);
+                            StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage * (float)1.2 - character.stat.defenseStat.GetStat(), character, DamageType.Week));
+                            EffectOn(SkillSO.EffectType, targetcharacter);
+                        }
+                        else
+                        {
+                            character.stat.TakeDamage(AllDamage);
+                            StartCoroutine(SkillDelay(GetAnimationLength(), AllDamage - character.stat.defenseStat.GetStat(), character, DamageType.Basic));
+                            EffectOn(SkillSO.EffectType, targetcharacter);
+                        }
                     }
                 }
             }
 
+            if (!CurrencyManager.Instance.GetIsTutorial() && SkillSO.ID == 3)
+            {
+                CurrencyManager.Instance.ClearTutorial();
+            }
 
-         
 
         }
 

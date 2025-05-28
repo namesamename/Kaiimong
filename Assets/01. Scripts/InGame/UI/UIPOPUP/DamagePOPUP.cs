@@ -35,11 +35,11 @@ public class DamagePOPUP : UIPOPUP
                 break;
             case DamageType.Cri:
                 damageText.text = Damage.ToString() + "!";
-                damageText.color = Color.yellow;
+                damageText.color = Color.red;
                 break;
             case DamageType.Week:
                 damageText.fontStyle = FontStyles.Bold;
-                damageText.color = Color.green;
+                damageText.color = Color.yellow;
                 break;
             case DamageType.Basic:
                 damageText.color = Color.black;

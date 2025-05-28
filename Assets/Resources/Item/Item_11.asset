@@ -13,15 +13,19 @@ MonoBehaviour:
   m_Name: Item_11
   m_EditorClassIdentifier: 
   ID: 11
-  Name: "\uD2B9\uC218 \uC7AC\uB8CC3"
-  Grade: 1
+  Name: "\uC801\uC608\uB9B0 \uD30C\uD3B8"
+  Grade: 0
   ItemType: 2
   ConsumeID: 0
   IconPath: ItemIcon/IconOne
   MaxStackCount: 999
-  Description: "\u3141\u3134\u3147"
-  ObtainLocationCount: 1
+  Description: "\uCE90\uB9AD\uD130\uC758 \uB3CC\uD30C(\uD544\uC5F0) \uC7AC\uB8CC"
+  ObtainLocationCount: 0
   FirstLocation: 1-1
   SecondLocation: 
-  ThridLocation: 
+  ThirdLocation: 
+  FourthLocation: 
+  FifthLocation: 
+  SixthLocation: 
+  SeventhLocation: 
   Probability: 20

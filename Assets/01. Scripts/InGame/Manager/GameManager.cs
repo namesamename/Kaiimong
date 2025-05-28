@@ -28,6 +28,9 @@ public class GameManager : Singleton<GameManager>
 
     AudioClip audioClip;
 
+
+    GameObject TutorialManager;
+
     private void Awake()
     {
         //�� �Ŵ����� �ʱ�ȭ
@@ -48,6 +51,16 @@ public class GameManager : Singleton<GameManager>
         GetCompo();
         LevelUpSystem.Init();
         Initialize();
+
+        Tutorial();
+    }
+    void Start()
+    {
+#if UNITY_STANDALONE || UNITY_WEBGL
+    Application.runInBackground = true;
+#else
+        Application.runInBackground = false;
+#endif
     }
 
     private void Update()
@@ -172,6 +185,18 @@ public class GameManager : Singleton<GameManager>
         {
             audioManager = Instantiate(Resources.Load<GameObject>("Manager/AudioManager")).GetComponent<AudioManager>();
             audioManager.transform.SetParent(transform);
+        }
+
+        
+        
+    }
+
+    public void Tutorial()
+    {
+        if(!currencyManager.GetIsTutorial() || !currencyManager.GetIsChartutorial())
+        {
+            TutorialManager = Instantiate(Resources.Load<GameObject>("Manager/TutorialManager"));
+            TutorialManager.transform.SetParent(transform);
         }
     }
     public void OnApplicationQuit()

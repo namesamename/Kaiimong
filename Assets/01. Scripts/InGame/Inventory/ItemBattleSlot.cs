@@ -1,3 +1,4 @@
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,16 +19,24 @@ public class ItemBattleSlot : MonoBehaviour
         battleSlots = GetComponentInParent<ItemBattleSlots>();
     }
 
-    public void SetSlot(int ID)
+    public async void SetSlot(int ID)
     {
         ItemID = ID;
         gradeColor.enabled = true;
         Icon.enabled = true;
         item = GlobalDataTable.Instance.Item.GetItemDataToID(ID);
-        Icon.sprite = Resources.Load<Sprite>(item.IconPath);
+        Icon.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.ItemIcon, ID);
         Save = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, ID);
 
         SetSlotColor(item);
+    }
+
+    public void SetCurrencySlot(Sprite sprite)
+    {
+        gradeColor.enabled = true;
+        Icon.enabled = true;
+        gradeColor.color = Color.black;
+        Icon.sprite = sprite;
     }
 
     public void SlotClear()

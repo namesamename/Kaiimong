@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ItemBattleSlots : MonoBehaviour
 {
@@ -41,12 +42,36 @@ public class ItemBattleSlots : MonoBehaviour
             {
                 curStageItemList.Add(item);
             }
-            CreateSlot();
+            CreateSlot(stageID);
         }
     }
 
-    public void CreateSlot()
+    public void CreateSlot(int stageID)
     {
+        if (GlobalDataTable.Instance.Stage.StageDic[stageID].Gold > 0)
+        {
+            GameObject slot = SlotDequeue();
+            slot.GetComponent<ItemBattleSlot>().SetComponent();
+            slot.GetComponent<ItemBattleSlot>().SetCurrencySlot(CurrencyManager.Instance.goldSprite);
+            activeSlots.Add(slot);
+        }
+
+        if (GlobalDataTable.Instance.Stage.StageDic[stageID].Potion > 0)
+        {
+            GameObject slot = SlotDequeue();
+            slot.GetComponent<ItemBattleSlot>().SetComponent();
+            slot.GetComponent<ItemBattleSlot>().SetCurrencySlot(CurrencyManager.Instance.potionSprite);
+            activeSlots.Add(slot);
+        }
+
+        if (!ChapterManager.Instance.GetStageSaveData(stageID).ClearedStage && GlobalDataTable.Instance.Stage.StageDic[stageID].Dia > 0)
+        {
+            GameObject slot = SlotDequeue();
+            slot.GetComponent<ItemBattleSlot>().SetComponent();
+            slot.GetComponent<ItemBattleSlot>().SetCurrencySlot(CurrencyManager.Instance.diaSprite);
+            activeSlots.Add(slot);
+        }
+
         foreach (ItemData item in curStageItemList)
         {
             GameObject slot;
@@ -66,6 +91,21 @@ public class ItemBattleSlots : MonoBehaviour
         }
     }
 
+    GameObject SlotDequeue()
+    {
+        GameObject slot;
+        if (slotPool.Count > 0)
+        {
+            slot = slotPool.Dequeue();
+            slot.SetActive(true);
+        }
+        else
+        {
+            slot = Instantiate(Prefabs, transform);
+        }
+
+        return slot;
+    }
     public void ClearSlots()
     {
         foreach (GameObject slot in activeSlots)

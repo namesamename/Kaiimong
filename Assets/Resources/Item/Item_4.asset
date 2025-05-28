@@ -19,9 +19,13 @@ MonoBehaviour:
   ConsumeID: 0
   IconPath: ItemIcon/IconOne
   MaxStackCount: 999
-  Description: "\u3134\u3141\u3147"
-  ObtainLocationCount: 1
-  FirstLocation: 1-1
-  SecondLocation: 
-  ThridLocation: 
+  Description: "\uC601\uD63C \uD0C0\uC785 \uAC15\uD654 \uC7AC\uB8CC(B)"
+  ObtainLocationCount: 6
+  FirstLocation: 1-4
+  SecondLocation: 1-12
+  ThirdLocation: 1-15
+  FourthLocation: 2-5
+  FifthLocation: 3-3
+  SixthLocation: 3-9
+  SeventhLocation: 
   Probability: 20

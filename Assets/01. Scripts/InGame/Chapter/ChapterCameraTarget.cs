@@ -17,6 +17,8 @@ public class ChapterCameraTarget : MonoBehaviour
     [SerializeField] private StageInfoUI stageInfoUI;
     [SerializeField] private SpriteRenderer background;
     private bool backgroundFound = false;
+    private bool smallBackground = false;
+    private float cameraXPosition;
 
     [SerializeField] private SpriteRenderer chapterBackground;
 
@@ -24,7 +26,7 @@ public class ChapterCameraTarget : MonoBehaviour
     {
         SetBackground();
         FindBackGround();
-        MoveCameraToLeftEdge();
+        SetCameraPosition();
     }
 
     void Update()
@@ -57,11 +59,13 @@ public class ChapterCameraTarget : MonoBehaviour
                     isStillClick = false;
                 }
 
-                if (isDragging)
+                if (isDragging && !smallBackground)
                 {
                     transform.position += delta;
                     float clamp = Mathf.Clamp(transform.position.x, camMin, camMax);
                     transform.position = new Vector3(clamp, transform.position.y, transform.position.z);
+                    cameraXPosition = transform.position.x;
+                    PlayerPrefs.SetFloat(ChapterManager.Instance.CurChapter.ToString(), cameraXPosition);
                     dragStart = current;
                 }
             }
@@ -88,6 +92,8 @@ public class ChapterCameraTarget : MonoBehaviour
             camMax = backgroundBound.max.x - cameraWidth;
             camMin = backgroundBound.min.x + cameraWidth;
 
+            if (backgroundBound.size.x <= cameraWidth * 2) smallBackground = true;
+
             backgroundFound = true;
         }
     }
@@ -104,7 +110,7 @@ public class ChapterCameraTarget : MonoBehaviour
 
         if (IsPointerOverUIElement())
         {
-            return; 
+            return;
         }
 
         Vector3 mouseWorld = GetMouseWorldPosition();
@@ -114,7 +120,7 @@ public class ChapterCameraTarget : MonoBehaviour
         bool isStageClicked = false;
         StageSlot clickedStage = null;
 
-   
+
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider == null) continue;
@@ -122,7 +128,7 @@ public class ChapterCameraTarget : MonoBehaviour
             if (hit.collider.CompareTag("CharacterSlot"))
             {
                 isCharacterClicked = true;
-      
+
             }
             else if (hit.collider.CompareTag("Stage"))
             {
@@ -138,7 +144,12 @@ public class ChapterCameraTarget : MonoBehaviour
             {
                 stageInfoUI.gameObject.SetActive(true);
             }
-            stageInfoUI.SetUI(clickedStage); 
+            stageInfoUI.SetUI(clickedStage);
+            if(!CurrencyManager.Instance.GetIsTutorial())
+            {
+                TutorialManager.Instance.CurPreDelete();
+                TutorialManager.Instance.TutorialAction();
+            }
         }
         else if (!isCharacterClicked)
         {
@@ -165,11 +176,19 @@ public class ChapterCameraTarget : MonoBehaviour
 
 
 
-    void MoveCameraToLeftEdge()
+    void SetCameraPosition()
     {
         if (backgroundFound)
         {
-            transform.position = new Vector3(camMin, transform.position.y, transform.position.z);
+            if (PlayerPrefs.HasKey(ChapterManager.Instance.CurChapter.ToString()))
+            {
+                float x = PlayerPrefs.GetFloat(ChapterManager.Instance.CurChapter.ToString());
+                transform.position = new Vector3(x, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                transform.position = new Vector3(camMin, transform.position.y, transform.position.z);
+            }
         }
     }
 

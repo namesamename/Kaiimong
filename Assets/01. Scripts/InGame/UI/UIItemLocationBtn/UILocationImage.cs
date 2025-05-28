@@ -14,8 +14,8 @@ public class UILocationImage : MonoBehaviour
     }
 
 
-    public void ImageSetting(int ID)
+    public async void ImageSetting(int ID)
     {
-        //Images.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.ItemSlot, ID);
+        Images.sprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.ItemIcon, ID);
     }
 }

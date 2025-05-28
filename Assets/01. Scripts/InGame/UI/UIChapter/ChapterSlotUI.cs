@@ -57,7 +57,18 @@ public class ChapterSlotUI : MonoBehaviour
         if (chapterData != null && chapterData.ChapterOpen)
         {
             ChapterManager.Instance.RegisterChapter(Chapter);
-            SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+            if (!CurrencyManager.Instance.GetIsTutorial())
+            {   
+                TutorialManager.Instance.CurPreDelete();
+                SceneLoader.Instance.RegisterSceneAction(SceneState.StageSelectScene, TutorialManager.Instance.TutorialAction);
+                SceneLoader.Instance.RegisterSceneAction(SceneState.StageSelectScene, () => SceneLoader.Instance.DisRegistarerAction(SceneState.StageSelectScene, TutorialManager.Instance.TutorialAction));
+                SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+            }
+            else
+            {
+                SceneLoader.Instance.ChangeScene(SceneState.StageSelectScene);
+            }
+
         }
         else
         {
