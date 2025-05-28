@@ -21,6 +21,20 @@ public class StageInfoUI : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
+    private void Update()
+    {
+        if(GlobalDataTable.Instance.DataCarrier.GetCharacterIDList().Count > 0)
+        {
+            enterButton.enabled = true;
+            enterButton.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            enterButton.enabled = false;
+            enterButton.GetComponent<Image>().color = Color.black;
+        }
+    }
+
     private void OnEnable()
     {
         rect.DOAnchorPos(new Vector3(0, rect.anchoredPosition.y), 1f).SetEase(Ease.Linear);
