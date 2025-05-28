@@ -505,6 +505,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef61bb1a49c0af1449324452d090deeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  longPressThreshold: 1
+  StatPOPUP: {fileID: 1211721743444973699, guid: ad287a0f31d38954384f9e3120db20b2, type: 3}
   skillBook: {fileID: 0}
   stat: {fileID: 0}
   visual: {fileID: 0}

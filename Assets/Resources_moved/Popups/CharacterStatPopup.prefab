@@ -260,9 +260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac6d575f5b7b3a44b1ba3f0a4bf9e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterImage: {fileID: 0}
-  CharacterName: {fileID: 0}
-  CharacterStat: {fileID: 0}
+  CharacterImage: {fileID: 1604650367693611192}
+  CharacterName: {fileID: 6600952984560574796}
+  CharacterStat: {fileID: 4949346627806403533}
 --- !u!1 &1604650367693611192
 GameObject:
   m_ObjectHideFlags: 0

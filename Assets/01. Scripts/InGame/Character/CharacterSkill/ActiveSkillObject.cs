@@ -49,7 +49,22 @@ public class ActiveSkillObject : MonoBehaviour
     }
     public void UseSkill(List<CharacterCarrier> targetcharacter)
     {
-        QuestManager.Instance.QuestTypeValueUP(1, QuestType.UseSkill);
+        if (SkillSO.IsBuff == false)
+        {
+            if (targetcharacter[0].GetCharacterType() == CharacterType.Enemy)
+            {
+                QuestManager.Instance.QuestTypeValueUP(1, QuestType.UseSkill);
+            }
+        }
+        else
+        {
+            if (targetcharacter[0].GetCharacterType()  == CharacterType.Friend)
+            {
+                QuestManager.Instance.QuestTypeValueUP(1, QuestType.UseSkill);
+            }
+           
+        }
+        
         if (animator != null)
         {
             if (SkillSO.ID % 3 == 1)

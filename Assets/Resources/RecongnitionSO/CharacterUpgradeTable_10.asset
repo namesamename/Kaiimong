@@ -20,8 +20,8 @@ MonoBehaviour:
   NeedGold: 1200
   NeedLevel: 20
   ItemCount: 3
-  FirstItemID: 1
-  FirstItemCount: 2
+  FirstItemID: 7
+  FirstItemCount: 1
   SecondItemID: 4
   SecondItemCount: 3
   ThridItemID: 12

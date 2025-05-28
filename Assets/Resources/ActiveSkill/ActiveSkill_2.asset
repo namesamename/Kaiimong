@@ -16,10 +16,10 @@ MonoBehaviour:
   Name: sad
   Description: sad
   Attack: 1
-  isSingleAttack: 1
+  isSingleAttack: 0
   UltimateGauge: 1
   Type: 0
   IsBuff: 0
   BuffID: 0
-  EffectType: 3
-  EffectUpDownType: 1
+  EffectType: 1
+  EffectUpDownType: 0

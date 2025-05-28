@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Item_22
   m_EditorClassIdentifier: 
   ID: 22
-  Name: "\uC7C8\uD06C\uB77C \uD30C\uD3B8"
+  Name: "\uC18C\uC18C \uD30C\uD3B8"
   Grade: 0
-  ItemType: 1
+  ItemType: 2
   ConsumeID: 0
   IconPath: ItemIcon/IconOne
   MaxStackCount: 999

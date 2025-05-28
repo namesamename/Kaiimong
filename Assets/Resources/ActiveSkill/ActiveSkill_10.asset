@@ -22,4 +22,4 @@ MonoBehaviour:
   IsBuff: 0
   BuffID: 0
   EffectType: 3
-  EffectUpDownType: 4
+  EffectUpDownType: 0

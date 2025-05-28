@@ -19,10 +19,10 @@ MonoBehaviour:
   Recognition: 2
   NeedGold: 1200
   NeedLevel: 40
-  ItemCount: 3
-  FirstItemID: 1
-  FirstItemCount: 2
-  SecondItemID: 4
+  ItemCount: 4
+  FirstItemID: 7
+  FirstItemCount: 3
+  SecondItemID: 5
   SecondItemCount: 3
   ThridItemID: 12
   ThridItemCount: 213

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Item_13
   m_EditorClassIdentifier: 
   ID: 13
-  Name: "\uD2B9\uC218 \uC7AC\uB8CC5"
-  Grade: 2
+  Name: "\uBCA0\uD154 \uD30C\uD3B8"
+  Grade: 0
   ItemType: 2
   ConsumeID: 0
   IconPath: ItemIcon/IconOne
   MaxStackCount: 999
-  Description: "\u3141\u3134\u3147"
-  ObtainLocationCount: 1
+  Description: "\uCE90\uB9AD\uD130\uC758 \uB3CC\uD30C \uC7AC\uB8CC"
+  ObtainLocationCount: 0
   FirstLocation: 1-1
   SecondLocation: 
   ThridLocation: 

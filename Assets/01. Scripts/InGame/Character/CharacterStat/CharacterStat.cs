@@ -125,10 +125,11 @@ public class CharacterStat : MonoBehaviour
 
     public void TakeDamage(float Amount)
     {
+        if(healthStat.CurHealth <= 0)
+        {
+            return;
+        }
         animator.SetTrigger("Hit");
-
-
-
         float Damage = Amount - defenseStat.GetStat();
 
         if (Damage <= 0)

@@ -76,6 +76,8 @@ public class BattleSystem : MonoBehaviour
         SetUI();
     }
 
+    
+
     void Start()
     {
         //StartBattle();
@@ -86,6 +88,16 @@ public class BattleSystem : MonoBehaviour
 
     void Update()
     {
+        if(SelectedSkill  != null)
+        {
+            Debug.Log(SelectedSkill);
+            if(SelectedSkill.SkillSO != null)
+            {
+                Debug.Log(SelectedSkill.SkillSO);
+            }
+        }
+    
+
         if (appearAnimComplete)
         {
             Debug.Log("finish");
@@ -620,7 +632,7 @@ public class BattleSystem : MonoBehaviour
                 }
             }
 
-            CommandController.AddCommand(new SkillCommand(activeEnemies[i], Targets, SelectedSkill));
+            CommandController.AddCommand(new SkillCommand( activeEnemies[i], new List<CharacterCarrier>(Targets), SelectedSkill));
             Targets.Clear();
         }
         UpdateHealthUI();

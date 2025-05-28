@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,6 +43,7 @@ public class CharacterUI : MonoBehaviour
 
     void Start()
     {
+
         battleSystem.OnPlayerTurn += GetActivePlayerUnit;
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
@@ -79,7 +81,9 @@ public class CharacterUI : MonoBehaviour
     {
         foreach (Button button in buttonList)
         {
-            button.onClick.AddListener(() => OnClickSkillButton(button));
+            Button btn = button;
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => OnClickSkillButton(btn));
         }
         targetConfirmButton.onClick.AddListener(OnClickTargetConfirmButton);
         //cancelButton.onClick.AddListener(OnSkillCancelButton);
@@ -157,6 +161,9 @@ public class CharacterUI : MonoBehaviour
 
     void OnClickSkillButton(Button button)
     {
+     
+
+ 
         int skillNum = buttonList.IndexOf(button);
         if(!CurrencyManager.Instance.GetIsTutorial())
         {
@@ -164,7 +171,8 @@ public class CharacterUI : MonoBehaviour
             TutorialManager.Instance.TutorialAction();
         }
 
-        Debug.Log(skillNum);
+        
+
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
         SkillSelectEffect(skillNum);
         battleSystem.SkillChanged?.Invoke();
@@ -172,11 +180,21 @@ public class CharacterUI : MonoBehaviour
         targetConfirmButton.enabled = false;
      
         battleSystem.OnSkillSelected();
+        button.GetComponent<UILongPressButton>().SetBattleSystem(curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum]);
+
+
+    
+        
     }
 
     public void SkillSelectEffect(int skillNum)
     {
-        foreach(Image icon in buttonIcon)
+        if (skillNum < 0 || skillNum >= buttonIcon.Count)
+        {
+           
+            return;
+        }
+        foreach (Image icon in buttonIcon)
         {
             Material mat = icon.material;
 

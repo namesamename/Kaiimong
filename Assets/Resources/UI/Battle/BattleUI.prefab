@@ -1584,6 +1584,7 @@ GameObject:
   - component: {fileID: 3932102055074864229}
   - component: {fileID: 1993243609064406715}
   - component: {fileID: 5673462019449725731}
+  - component: {fileID: 3303431320577152806}
   - component: {fileID: 7738615381726839361}
   m_Layer: 5
   m_Name: SecondSkillButton
@@ -1650,6 +1651,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3303431320577152806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4379831685209278209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e47cdd4fb42a74d91f211d874d3614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  longPressThreshold: 1
+  POPUP: {fileID: 6887138757571361722, guid: 04dac215fead7e94bb4caab0a9b23867, type: 3}
+  BattleSystem: {fileID: 0}
 --- !u!114 &7738615381726839361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2810,6 +2826,7 @@ GameObject:
   - component: {fileID: 3481236306490758513}
   - component: {fileID: 3079586065976680116}
   - component: {fileID: 2550936150247542633}
+  - component: {fileID: 1189521733275466399}
   - component: {fileID: 386737897787571184}
   m_Layer: 5
   m_Name: FirstSkillButton
@@ -2876,6 +2893,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1189521733275466399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7135775663313511389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e47cdd4fb42a74d91f211d874d3614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  longPressThreshold: 1
+  POPUP: {fileID: 6887138757571361722, guid: 04dac215fead7e94bb4caab0a9b23867, type: 3}
+  BattleSystem: {fileID: 0}
 --- !u!114 &386737897787571184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2995,6 +3027,7 @@ GameObject:
   - component: {fileID: 4884442604720612697}
   - component: {fileID: 1881089839199588112}
   - component: {fileID: 279554025481768175}
+  - component: {fileID: 2475162832825578733}
   - component: {fileID: 9061735938808594036}
   m_Layer: 5
   m_Name: UltSkillButton
@@ -3062,6 +3095,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2475162832825578733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105450263044574102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e47cdd4fb42a74d91f211d874d3614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  longPressThreshold: 1
+  POPUP: {fileID: 6887138757571361722, guid: 04dac215fead7e94bb4caab0a9b23867, type: 3}
+  BattleSystem: {fileID: 0}
 --- !u!114 &9061735938808594036
 MonoBehaviour:
   m_ObjectHideFlags: 0

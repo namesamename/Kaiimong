@@ -19,11 +19,11 @@ MonoBehaviour:
   Recognition: 3
   NeedGold: 1400
   NeedLevel: 60
-  ItemCount: 3
-  FirstItemID: 1
-  FirstItemCount: 2
-  SecondItemID: 4
-  SecondItemCount: 3
+  ItemCount: 4
+  FirstItemID: 7
+  FirstItemCount: 5
+  SecondItemID: 5
+  SecondItemCount: 5
   ThridItemID: 12
   ThridItemCount: 213
   FourthItemID: 123
