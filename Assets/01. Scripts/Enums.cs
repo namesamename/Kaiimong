@@ -39,6 +39,8 @@ public enum CurrencyType
     CharacterEXP,
     CurMaxStamina,
     purchaseCount,
+    UserName,
+    Tutorial
 }
 public enum SaveType
 {

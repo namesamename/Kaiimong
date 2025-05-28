@@ -14,6 +14,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
     Character character;
     CharacterSaveData Save;
 
+    public Sprite PlusImage;
     public bool IsSeted = false;
     public bool IsSelected = false;
 
@@ -70,6 +71,10 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         Button[] buttons = GetComponentsInChildren<Button>();
         images[0].color = Color.white;
 
+ 
+        images[1].sprite = PlusImage;
+  
+
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].enabled = false;
@@ -78,6 +83,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
         {
             images[i].enabled = false;
         }
+
         images[2].enabled = true ;
     }
 
@@ -161,6 +167,7 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
                 if (eventData.button == PointerEventData.InputButton.Left)
                 {
                     GlobalDataTable.Instance.DataCarrier.RemoveIndex(index);
+  
                     battleSlots.SelectSlot(this);
                     battleSlots.SlotIdexSet();
                     partyList.Partyset();
@@ -171,6 +178,8 @@ public class CharacterBattleSlot : MonoBehaviour, IPointerClickHandler
                 if (eventData.button == PointerEventData.InputButton.Left)
                 {
                     //Turnon(partyList.Index);
+               
+               
                     GlobalDataTable.Instance.DataCarrier.AddCharacterID(Save.ID);
 
                     battleSlots.SelectSlot(this);

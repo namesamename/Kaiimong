@@ -213,8 +213,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         CurrencySaveDic[CurrencyType.purchaseCount] = data.purchaseCount;
         OtherSaveDic["IsTutorial"] = data.IsTutorial;
         OtherSaveDic["User"] = data.UserName;
-
     }
+
 
     public CurrencySaveData DicToSaveData()
     {
@@ -232,6 +232,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             UserName = (string)OtherSaveDic["User"],
             IsTutorial =(bool)OtherSaveDic["IsTutorial"],
             Savetype = SaveType.Currency,
+
             ID = 0
         };
         return data;
@@ -243,12 +244,15 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     }
 
     public void ResetPurchase()
-    {
-        
+    {      
         CurrencySaveDic[CurrencyType.purchaseCount] = 0;
         Save();
-
+   
+        data = DicToSaveData();
+        data.UserName = GetUserName(); 
+        SaveDataBase.Instance.SaveSingleData(data);
     }
+
     private async void SetCurrencySprite()
     {
         goldSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
