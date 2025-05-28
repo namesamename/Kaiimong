@@ -132,7 +132,6 @@ public class ActiveSkillObject : MonoBehaviour
                     if (stat.criticalPerStat.Value > Random.Range(0.000f, 1f))
                     {
                         AllDamage *= stat.criticalAttackStat.Value;
-                        Debug.Log("Å©¸®Æ¼ÄÃ ¶ä¤§¤§");
 
                         if (character.GetCharacterType() != transform.GetComponentInParent<CharacterCarrier>().GetCharacterType())
                         {
