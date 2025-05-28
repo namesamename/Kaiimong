@@ -39,8 +39,70 @@ public class PackageGroupItemUI : MonoBehaviour
         priceText.text = shop.Price.ToString();
         priceIcon.sprite = (shop.MoneyID == 1 ? goldIcon : crystalIcon);
 
-        // 구매 버튼은 눌러도 아무 동작 안함
+        // 구매 버튼 설정
         buyButton.onClick.RemoveAllListeners();
-        buyButton.interactable = false; // 또는 비활성화하지 않고 그냥 비워두기
+        buyButton.interactable = true;
+        buyButton.onClick.AddListener(() => OnClickBuy(group, shop));
+    }
+
+    private async void OnClickBuy(PackageGroup group, Shop shop)
+    {
+        var popup = await UIManager.Instance.ShowPopup("ShopBuyPopUp") as ShopBuyPopUp;
+
+        if (popup != null)
+        {
+            popup.Setup(() =>
+            {
+                TryBuy(group, shop);
+            });
+        }
+    }
+
+    private async void TryBuy(PackageGroup group, Shop shop)
+    {
+        var curManager = CurrencyManager.Instance;
+        int current = 0;
+        CurrencyType currencyType = CurrencyType.Gold;
+
+        // 구매 재화 타입 결정
+        if (shop.MoneyID == 1)
+        {
+            current = curManager.GetCurrency(CurrencyType.Gold);
+            currencyType = CurrencyType.Gold;
+        }
+        else if (shop.MoneyID == 3)
+        {
+            current = curManager.GetCurrency(CurrencyType.Dia);
+            currencyType = CurrencyType.Dia;
+        }
+
+        // 재화 부족 시
+        if (current < shop.Price)
+        {
+            await UIManager.Instance.ShowPopup("ShopCurrencyLackPopup");
+            return;
+        }
+
+        // 재화 차감 (음수 값으로 처리)
+        curManager.SetCurrency(currencyType, -shop.Price);
+        Debug.Log($"패키지 {group.ShopID} 구매 완료 - {shop.Price} {currencyType}");
+
+        // 아이템 지급
+        foreach (var package in group.Packages)
+        {
+            if (package.ItemID == 0)
+            {
+                curManager.SetCurrency(CurrencyType.Gold, package.Gold);
+                Debug.Log($"골드 지급: +{package.Gold}");
+            }
+            else
+            {
+                ItemManager.Instance.SetitemCount(package.ItemID, package.ItemCount);
+                Debug.Log($"아이템 지급: ID={package.ItemID}, 수량={package.ItemCount}");
+            }
+        }
+        ShopUIManager.Instance.SettingCurrency();
+
+        // TODO: UI 갱신, 이펙트, 사운드 등 추가 가능
     }
 }
