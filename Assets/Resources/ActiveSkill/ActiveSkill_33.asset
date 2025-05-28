@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: ActiveSkill_33
   m_EditorClassIdentifier: 
   ID: 33
-  Name: sad
-  Description: das
+  Name: "\uAD81\uADF9\uAE30"
+  Description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825 \uB9CC\uD07C \uBAA8\uB4E0
+    \uC801 \uB300\uC0C1 \uACF5\uACA9"
   Attack: 1
   isSingleAttack: 0
   UltimateGauge: 1
-  Type: 1
+  Type: 0
   IsBuff: 0
   BuffID: 3
-  EffectType: 6
+  EffectType: 1
   EffectUpDownType: 0
