@@ -22,7 +22,9 @@ public class SkillInfoPoPUP : UIPOPUP
     public async void SetPopup(Character character, int index)
     {
         int ID = character.ID;
-        ActiveSkill ActSkill = GlobalDataTable.Instance.skill.GetActSkillSOToID(ID + index);
+        int skillID = (ID - 1) * 3 + (index + 1);
+
+        ActiveSkill ActSkill = GlobalDataTable.Instance.skill.GetActSkillSOToID(skillID);
         SkillContext[0].text = ActSkill.Name;
         SkillContext[1].text = ActSkill.Description;
         BackGroundButton.onClick.AddListener(Destroy);
