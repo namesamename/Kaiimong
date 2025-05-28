@@ -127,7 +127,6 @@ public class UIManager : Singleton<UIManager>
         //var obj = Resources.Load($"Popups/{popupName}", typeof(GameObject)) as GameObject;
         if (obj == null)
         {
-            Debug.LogWarning($"Failed to ShowPopup({popupName})");
             return null;
         }
         return ShowPopupWithPrefab(obj);

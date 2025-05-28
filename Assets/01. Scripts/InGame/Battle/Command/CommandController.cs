@@ -19,7 +19,6 @@ public class CommandController : MonoBehaviour
     public void AddCommand(SkillCommand command)
     {
         skillCommands.Add(command);
-        Debug.Log($"Command added: {command}, Total commands: {skillCommands.Count}");
     }
 
     public IEnumerator ExecuteCommandCoroutine()

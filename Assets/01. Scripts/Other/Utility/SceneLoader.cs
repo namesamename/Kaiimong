@@ -51,7 +51,6 @@ public class SceneLoader : Singleton<SceneLoader>
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("씬이 로드될 때 호출되는 함수 현재 씬 이름 :" + scene.name + "\n / 현재 씬 state" + sceneState);
         if(sceneContainer == null)
         {
             SetDic();
@@ -90,7 +89,6 @@ public class SceneLoader : Singleton<SceneLoader>
     {
         if (!sceneContainer.ContainsKey(nextState))
         {
-            Debug.LogError($"씬 상태 {nextState}에 대한 동작이 딕셔너리에 없습니다.");
             return;
         }
 

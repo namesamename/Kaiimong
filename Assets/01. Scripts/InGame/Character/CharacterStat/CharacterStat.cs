@@ -132,12 +132,10 @@ public class CharacterStat : MonoBehaviour
 
         if (Damage <= 0)
         {
-            Debug.Log("Damage");
             healthStat.CurHealth -= 1f;
         }
         else
         {
-            Debug.Log(Damage);
             healthStat.CurHealth -= Damage;
         }
         
@@ -257,8 +255,6 @@ public class CharacterStat : MonoBehaviour
         {
             BuffInstance buff = kvp.Value;
             buff.remainingTurns--;
-
-            Debug.Log($"버프 {buff.buffID}: {buff.remainingTurns}턴 남음");
 
      
             if (buff.remainingTurns <= 0)

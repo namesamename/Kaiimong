@@ -26,8 +26,6 @@ public class OptionManager : MonoBehaviour
         float savedSFX = PlayerPrefs.GetFloat(SFX, 50f);
 
 
-        Debug.Log("저장된 BGM: " + savedBGM);
-        Debug.Log("저장된 SFX: " + savedSFX);
 
         // 슬라이더에 저장된 값을 반영
 
@@ -65,6 +63,5 @@ public class OptionManager : MonoBehaviour
         PlayerPrefs.SetFloat(BGM, bgmSlider.value);
         PlayerPrefs.SetFloat(SFX, sfxSlider.value);
         PlayerPrefs.Save();                                  // 저장 강제 반영
-        Debug.Log("슬라이더 값 저장 완료 (OnDisable)");
     }
 }

@@ -15,7 +15,6 @@ public class ItemSlotUI : MonoBehaviour
         if (package.ItemID == 0)
         {
             loadedSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CurrencyIcon, 1);
-            Debug.Log($"재화 아이콘 로드: ID {package.ItemID}");
             iconImage.sprite = loadedSprite;
             iconImage.color = Color.white;
             countText.text = $"x{package.Gold}";
@@ -24,7 +23,6 @@ public class ItemSlotUI : MonoBehaviour
         {
             string key = $"ItemIcon_{package.ItemID}";
             loadedSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.ItemIcon, package.ItemID);
-            Debug.Log($" 아이템 아이콘 로드: {key}");
             iconImage.sprite = loadedSprite;
             iconImage.color = Color.white;
             countText.text = $"x{package.ItemCount}";
@@ -32,7 +30,6 @@ public class ItemSlotUI : MonoBehaviour
 
         if (loadedSprite == null)
         {
-            Debug.LogWarning($"아이콘 로드 실패 - ItemID: {package.ItemID}");
             iconImage.color = Color.red;
             return;
         }

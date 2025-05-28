@@ -35,7 +35,6 @@ public class CharacterBookUI : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"[도감] ID {id}번 캐릭터를 찾을 수 없습니다.");
             }
         }
 

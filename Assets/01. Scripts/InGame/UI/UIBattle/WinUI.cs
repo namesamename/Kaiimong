@@ -155,7 +155,6 @@ public class WinUI : MonoBehaviour
                 gainedExp = 0;
             }
 
-            Debug.Log(CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP));
             //playerExpText.text = $"{CurrencyManager.Instance.GetCurrency(CurrencyType.UserEXP)} / {LevelUpSystem.PlayerNeedExp[CurrencyManager.Instance.GetCurrency(CurrencyType.UserLevel)]}";
         }
 
@@ -166,23 +165,19 @@ public class WinUI : MonoBehaviour
     {
         if (targetOne)
         {
-            Debug.Log("1magenta");
             extraTargetOne.DOColor(Color.magenta, 1f);
         }
         else
         {
-            Debug.Log("1white");
             extraTargetOne.color = Color.white;
         }
 
         if (targetTwo)
         {
-            Debug.Log("2magenta");
             extraTargetTwo.DOColor(Color.magenta, 1f);
         }
         else
         {
-            Debug.Log("2white");
             extraTargetTwo.color = Color.white;
         }
     }

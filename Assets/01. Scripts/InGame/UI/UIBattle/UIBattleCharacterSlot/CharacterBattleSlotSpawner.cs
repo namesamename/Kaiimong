@@ -52,7 +52,6 @@ public class CharacterBattleSlotSpawner : MonoBehaviour
                 Slots.Add(slot);
                 slot.GetComponent<CharacterBattleSlot>().SetComponent();
                 slot.GetComponent<CharacterBattleSlot>().SetSlot(saveDatas[i].ID);
-                Debug.Log(saveDatas[i].ID);
             }
         }
     }

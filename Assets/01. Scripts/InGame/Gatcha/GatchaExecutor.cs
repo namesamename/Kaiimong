@@ -53,7 +53,6 @@ public class GatchaExecutor : MonoBehaviour
 
         if (mgr.crystal < needCrystal)
         {
-            Debug.LogWarning("크리스탈이 부족합니다!");
             await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
             return;
         }
@@ -66,8 +65,6 @@ public class GatchaExecutor : MonoBehaviour
 
         QuestManager.Instance.QuestTypeValueUP(count, QuestType.Gacha);
 
-        Debug.Log($"[{mgr.currentGachaType}] Gatcha {count}회 성공!");
-        Debug.Log($"소비된 티켓: {useTicket}, 크리스탈: {needCrystal}");
 
         for (int i = 0; i < count; i++)
         {
@@ -85,7 +82,6 @@ public class GatchaExecutor : MonoBehaviour
             var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade);
             if (pool.Count == 0)
             {
-                Debug.LogWarning($"등급 {grade} 캐릭터 풀이 비어 있음");
                 continue;
             }
 
@@ -98,12 +94,10 @@ public class GatchaExecutor : MonoBehaviour
                     if (mgr.LatestSID != 0 && mgr.LatestSID != mgr.pickupSCharacterID)
                     {
                         selected = pool.Find(c => c.ID == mgr.pickupSCharacterID);
-                        Debug.Log($"보정 작동! 이전 S(ID:{mgr.LatestSID}) ≠ 픽업 S(ID:{mgr.pickupSCharacterID}), 픽업 S 강제 지급");
                     }
                     else if (Random.value < 0.5f)
                     {
                         selected = pool.Find(c => c.ID == mgr.pickupSCharacterID);
-                        Debug.Log($"50% 확률로 픽업 S 지급 시도 → {(selected != null ? "성공" : "실패")}");
                     }
                 }
 
@@ -125,7 +119,6 @@ public class GatchaExecutor : MonoBehaviour
             results.Add(selected);
             GatchaHistoryManager.Instance.AddEntry(new GatchaHistoryEntry(
                 selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-            Debug.Log($"획득: [{grade}] {selected.Name} (ID:{selected.ID})");
 
             if (grade == Grade.S)
             {
@@ -183,7 +176,6 @@ public class GatchaExecutor : MonoBehaviour
 
         if (mgr.crystal < needCrystal)
         {
-            Debug.LogWarning("크리스탈이 부족합니다!");
             await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
             return results;
         }
@@ -211,7 +203,6 @@ public class GatchaExecutor : MonoBehaviour
             var pool = GatchaCharacterPool.Instance.GetCharactersByGrade(grade);
             if (pool.Count == 0)
             {
-                Debug.LogWarning($"등급 {grade} 캐릭터 풀이 비어 있음");
                 continue;
             }
 
@@ -220,7 +211,6 @@ public class GatchaExecutor : MonoBehaviour
 
             GatchaHistoryManager.Instance.AddEntry(new GatchaHistoryEntry(
                 selected.Name, grade, mgr.currentGachaType, System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-            Debug.Log($"[DrawMore] 획득: [{grade}] {selected.Name} (ID:{selected.ID})");
 
             // S등급이면 LatestSID 기록 + 카운트 초기화
             if (grade == Grade.S)
@@ -322,7 +312,6 @@ public class GatchaExecutor : MonoBehaviour
         // 하드 천장: 70회차는 무조건 S
         if (drawCount > 0 && drawCount % 69 == 0)  //69번이 뽑힌 상태  - 그 이후 70번 천장으로 S 확정 
         {
-            Debug.Log("70회차 보정 발동! 무조건 S등급");
             GatchaManager.Instance.gatchaDrawCount = 0;
             return Grade.S;
         }

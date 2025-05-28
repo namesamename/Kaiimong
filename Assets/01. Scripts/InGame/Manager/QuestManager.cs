@@ -34,7 +34,6 @@ public class QuestManager : Singleton<QuestManager>
                 newQuestData.IsComplete = false;
 
                 SaveDataBase.Instance.SaveSingleData(newQuestData);
-                Debug.Log("Quest data NO");
             }
 
             QuestData[QuestID] = newQuestData;
@@ -58,7 +57,6 @@ public class QuestManager : Singleton<QuestManager>
 
         if (timeSave.lastDailyReset < todayResetTime)
         {
-            Debug.Log($"Daily Quest Reset: {now}");
             ResetQuest(TimeType.Daily);
             timeSave.lastDailyReset = todayResetTime;
             SaveDataBase.Instance.SaveSingleData(timeSave);
@@ -81,7 +79,6 @@ public class QuestManager : Singleton<QuestManager>
 
         if (timeSave.lastWeeklyReset < thisWeekReset)
         {
-            Debug.Log($"Weekly Quest Reset: {now}");
             ResetQuest(TimeType.Weekly);
             timeSave.lastWeeklyReset = now;
             SaveDataBase.Instance.SaveSingleData(timeSave);

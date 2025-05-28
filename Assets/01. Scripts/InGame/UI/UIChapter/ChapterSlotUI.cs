@@ -72,7 +72,6 @@ public class ChapterSlotUI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Null");
         }
     }
 

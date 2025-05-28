@@ -41,7 +41,6 @@ public class SkillDataTable
         }
         else
         {
-            Debug.Log("This ID is incorrect");
             return null;
         }
     }
@@ -54,7 +53,6 @@ public class SkillDataTable
         }
         else
         {
-            Debug.Log("This ID is incorrect");
             return null;
         }
     }
@@ -66,7 +64,6 @@ public class SkillDataTable
         }
         else
         {
-            Debug.Log("That Id Dont Have Character");
             return null;
         }
     }
@@ -78,7 +75,6 @@ public class SkillDataTable
         }
         else
         {
-            Debug.Log("That Id Dont Have Character");
             return null;
         }
     }

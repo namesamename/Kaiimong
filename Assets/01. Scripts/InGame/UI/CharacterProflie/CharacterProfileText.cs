@@ -28,12 +28,10 @@ public class CharacterProfileText : MonoBehaviour
     {
         if(SaveDataBase.Instance ==  null)
         {
-            Debug.Log("sadasd");
         }
 
         if(SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0) == null)
         {
-            Debug.Log("SaveData null");
         }
         textMeshPros[0].text = $"{SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0).UserName}/" +
             $"{SaveDataBase.Instance.GetSaveDataToID<CurrencySaveData>(SaveType.Currency, 0).UserLevel}";

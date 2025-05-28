@@ -88,19 +88,9 @@ public class BattleSystem : MonoBehaviour
 
     void Update()
     {
-        if(SelectedSkill  != null)
-        {
-            Debug.Log(SelectedSkill);
-            if(SelectedSkill.SkillSO != null)
-            {
-                Debug.Log(SelectedSkill.SkillSO);
-            }
-        }
-    
 
         if (appearAnimComplete)
         {
-            Debug.Log("finish");
             appearAnimComplete = false;
             PlayerTurn = true;
             StartCoroutine(ChangePhase(PlayerTurnPhase));
@@ -182,7 +172,6 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            Debug.Log("들어감");
             if (settingBattle)
             {
                 SetBattle();
@@ -236,7 +225,6 @@ public class BattleSystem : MonoBehaviour
         if (isPhaseChanging) return;
 
         isPhaseChanging = true;
-        Debug.Log(isPhaseChanging);
         bool isExecutingCommands = CommandController.IsExecutingCommands;
 
         if (Players.Count == 0 && activePlayers.Count == 0)
@@ -244,7 +232,6 @@ public class BattleSystem : MonoBehaviour
             // 플레이어가 모두 죽었을 때 (패배)
             if (isExecutingCommands)
             {
-                Debug.Log("모든 플레이어가 죽음: 현재 실행 중인 커맨드 중단");
                 CommandController.StopAllCommands();
             }
             DestroyHealthBar();
@@ -256,12 +243,10 @@ public class BattleSystem : MonoBehaviour
         {
             PlayerTurn = false;
             sortedOnce = false;
-            Debug.Log("wjrl");
             BattleUI.CharacterUI.PlayerTurnEnd();
             // 적이 모두 죽었을 때
             if (isExecutingCommands)
             {
-                Debug.Log("모든 적이 죽음: 현재 실행 중인 커맨드 중단");
                 CommandController.StopAllCommands();
             }
 
@@ -301,7 +286,6 @@ public class BattleSystem : MonoBehaviour
         if (!PlayerTurn)
         {
             PlayerTurn = true;
-            Debug.Log("enemyturn");
             activeEnemies = activeEnemies.OrderByDescending(x => x.stat.agilityStat.Value).ThenBy(x => x.stat.attackStat.Value).ToList();
             if( activeEnemies.Count > 0 && activeEnemies.Count >0)
             {
@@ -532,7 +516,6 @@ public class BattleSystem : MonoBehaviour
 
         if (TurnIndex == activePlayers.Count)
         {
-            Debug.Log("durl");
             PlayerTurn = false;
             sortedOnce = false;
             BattleUI.CharacterUI.PlayerTurnEnd();
@@ -672,7 +655,6 @@ public class BattleSystem : MonoBehaviour
 
         if (activeEnemies.Count == 0 && Enemies.Count == 0)
         {
-            Debug.Log("All enemies defeated, checking game state");
             CheckGameOver();
         }
     }

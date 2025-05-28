@@ -16,7 +16,6 @@ public class SkillCommand
     }
     public IEnumerator Execute()
     {
-        Debug.Log("µü´ë");
         unit.skillBook.ActiveSkillUsing(skillData, targets);
         unit.skillBook.SetSkillGauge(skillData, targets);
 

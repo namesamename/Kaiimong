@@ -87,7 +87,6 @@ public class ActiveSkillObject : MonoBehaviour
 
         if (SkillSO.Type == SkillType.debuff || SkillSO.Type == SkillType.buff)
         {
-            Debug.Log("Use Buff");
             foreach (CharacterCarrier c in targetcharacter)
             { c.stat.Buff(SkillSO);
                 EffectOn(SkillSO.EffectType, targetcharacter);
@@ -104,7 +103,6 @@ public class ActiveSkillObject : MonoBehaviour
         }
         else
         {
-            Debug.Log("TakeDamage");
 
             foreach (CharacterCarrier character in targetcharacter.ToList())
             {

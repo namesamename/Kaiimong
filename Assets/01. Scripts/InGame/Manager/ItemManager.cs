@@ -106,7 +106,6 @@ public class ItemManager : Singleton<ItemManager>
                 newItemData.Value = 0;
                 newItemData.Savetype = SaveType.Item;
                 SaveDataBase.Instance.SaveSingleData(newItemData);
-                Debug.Log("item data NO");
             }
 
             // 사전에 저장

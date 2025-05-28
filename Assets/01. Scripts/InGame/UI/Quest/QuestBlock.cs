@@ -170,7 +170,6 @@ public class QuestBlock : MonoBehaviour
         }
         else if(!QuestSave.IsCan && !QuestSave.IsComplete)
         {
-            Debug.Log(QuestSave.ID + questSO.QuestName);
             textMeshPros[0].text = "Find";
             button.interactable = true;
             button.onClick.AddListener(() => FindQuest());

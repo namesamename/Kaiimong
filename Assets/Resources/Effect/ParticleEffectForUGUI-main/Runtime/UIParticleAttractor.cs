@@ -181,7 +181,6 @@ namespace Coffee.UIExtensions
                             }
                             catch (Exception e)
                             {
-                                Debug.LogException(e);
                             }
                         }
 
@@ -326,7 +325,6 @@ namespace Coffee.UIExtensions
                 }
 
                 m_ParticleSystem = null;
-                Debug.Log($"Upgraded!");
             }
         }
     }

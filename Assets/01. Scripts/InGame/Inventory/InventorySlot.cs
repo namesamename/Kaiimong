@@ -138,7 +138,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            Debug.Log("재료 수량이 부족");
             return false;                             // 소비 실패
         }
     }

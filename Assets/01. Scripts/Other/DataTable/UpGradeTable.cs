@@ -23,7 +23,6 @@ public class UpGradeTable
         }
         else
         {
-            Debug.Log("This ID is incorrect");
             return null;
         }
     }

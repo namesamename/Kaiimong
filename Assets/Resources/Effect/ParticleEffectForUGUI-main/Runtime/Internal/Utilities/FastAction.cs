@@ -60,7 +60,6 @@ namespace Coffee.UIParticleInternal
                 }
                 catch (Exception e)
                 {
-                    Debug.LogException(e);
                 }
 
                 node = node.Next;

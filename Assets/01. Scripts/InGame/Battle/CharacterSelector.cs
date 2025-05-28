@@ -47,7 +47,6 @@ public class CharacterSelector : MonoBehaviour
             }
             else
             {
-                Debug.Log("이거 힐인데");
 
                 foreach (CharacterCarrier character in battleSystem.GetActivePlayers())
                 {

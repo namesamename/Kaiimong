@@ -51,7 +51,6 @@ public class AddressableManager : Singleton<AddressableManager>
                             {
                                 if (sprite.GetInstanceID() == prevSprite.GetInstanceID())
                                 {
-                                    Debug.LogWarning($"Warning: Same sprite instance loaded for ID: {id}");
                                 }
                             }
                         }
@@ -72,7 +71,6 @@ public class AddressableManager : Singleton<AddressableManager>
                     {
                         if (addressKey.ToString().Contains(TypeChanger(type)))
                         {
-                            Debug.Log($"Found address: {addressKey}");
                         }
                     }
                 }
@@ -103,7 +101,6 @@ public class AddressableManager : Singleton<AddressableManager>
     public async Task<GameObject> LoadPrefabs(AddreassablesType type, string name)
     {
         var handle = Addressables.LoadAssetAsync<GameObject>(TypeChanger(type)+name);
-        Debug.Log("프리펩 보냄");
         await handle.Task;
         if(handle.Status == AsyncOperationStatus.Succeeded) 
         {
@@ -167,7 +164,6 @@ public class AddressableManager : Singleton<AddressableManager>
                 return "CharTutorial/ChrTutorial";
 
             default:
-                Debug.LogError($"Unknown AddreassablesType: {type}");
                 return string.Empty;
         }
     }
@@ -179,7 +175,6 @@ public class AddressableManager : Singleton<AddressableManager>
         {
             Addressables.Release(handle);
             Tracer.Remove(key);
-            Debug.Log($"Unloaded asset of type {type} with ID {ID}");
         }
     }
 
@@ -205,7 +200,6 @@ public class AddressableManager : Singleton<AddressableManager>
             {
                 Addressables.Release(kvp.Value);
                 keysToRemove.Add(kvp.Key);
-                Debug.Log($"Unloaded asset of type {type} with ID {kvp.Key.Item2}");
             }
         }
 

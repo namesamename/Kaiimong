@@ -43,8 +43,6 @@ public class TutorialBoxthrid : MonoBehaviour
         float bottom = bl.y;
 
         // 디버그 출력
-        Debug.Log($"Target UI 좌표 - left:{left}, right:{right}, top:{top}, bottom:{bottom}");
-        Debug.Log($"Canvas 크기: {canvas.GetComponent<RectTransform>().rect.width} x {canvas.GetComponent<RectTransform>().rect.height}");
 
         // Top 마스크 (타겟 UI 위쪽 전체)
         topMask.anchorMin = new Vector2(0, 0);

@@ -20,7 +20,6 @@ public class CharacterDataTable
         }
         else
         {
-            Debug.Log("적 프리펩 로드 실패");
         }
 
         var handles = Addressables.LoadAssetAsync<GameObject>("Character/FriendPrefabs");
@@ -32,7 +31,6 @@ public class CharacterDataTable
         }
         else
         {
-            Debug.Log("아군 프리펩 로드 실패");
         }
 
 
@@ -58,7 +56,6 @@ public class CharacterDataTable
         }
         else
         {
-            Debug.Log("This ID is incorrect");
             return null;
         }
     }
@@ -72,7 +69,6 @@ public class CharacterDataTable
         }
         else
         {
-            Debug.Log("This ID is incorrect");
             return null;
         }
     }

@@ -85,7 +85,6 @@ public class PackageGroupItemUI : MonoBehaviour
 
         // 재화 차감 (음수 값으로 처리)
         curManager.SetCurrency(currencyType, -shop.Price);
-        Debug.Log($"패키지 {group.ShopID} 구매 완료 - {shop.Price} {currencyType}");
 
         // 아이템 지급
         foreach (var package in group.Packages)
@@ -93,12 +92,10 @@ public class PackageGroupItemUI : MonoBehaviour
             if (package.ItemID == 0)
             {
                 curManager.SetCurrency(CurrencyType.Gold, package.Gold);
-                Debug.Log($"골드 지급: +{package.Gold}");
             }
             else
             {
                 ItemManager.Instance.SetitemCount(package.ItemID, package.ItemCount);
-                Debug.Log($"아이템 지급: ID={package.ItemID}, 수량={package.ItemCount}");
             }
         }
         ShopUIManager.Instance.SettingCurrency();

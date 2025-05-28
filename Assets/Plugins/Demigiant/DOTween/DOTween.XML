@@ -39,7 +39,11 @@
             Used in place of <c>System.Action</c>.
             </summary>
         </member>
-        <member name="T:DG.Tweening.Core.Debugger">
+        <member name="T:DG.Tweening.Core.
+				
+				
+				
+				ger">
             <summary>
             Public so it can be used by lose scripts related to DOTween (like DOTweenAnimation)
             </summary>

@@ -79,11 +79,9 @@ public class CharacterVisual : MonoBehaviour
                 AnimationClips = Resources.LoadAll<AnimationClip>($"Character/Silhum");
                 if (AnimationClips == null || AnimationClips.Length == 0)
                 {
-                    Debug.LogError($"Failed to load animation clips for Character/Silhum");
                 }
                 else
                 {
-                    Debug.Log($"Successfully loaded {AnimationClips.Length} animation clips");
                     StartCoroutine(PlayAni());
                 }
             }
@@ -92,7 +90,6 @@ public class CharacterVisual : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"Error in CharacterVisual.Initialize: {e.Message}\nStack Trace: {e.StackTrace}");
         }
     }
 
@@ -100,7 +97,6 @@ public class CharacterVisual : MonoBehaviour
     {
         if (this == null || !gameObject.activeInHierarchy)
         {
-            Debug.LogWarning("CharacterVisual is null or inactive. Cannot set sprite.");
             return;
         }
 
@@ -109,7 +105,6 @@ public class CharacterVisual : MonoBehaviour
             spriteRenderer = GetComponent<SpriteRenderer>();
             if (spriteRenderer == null)
             {
-                Debug.LogWarning("SpriteRenderer is null in SetSprite");
                 return;
             }
         }
@@ -149,14 +144,12 @@ public class CharacterVisual : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"Error in CharacterVisual.SetSprite: {e.Message}");
         }
     }
 
     
     public float GetAnimationLength(int index)
     {
-        Debug.Log(AnimationClips[index].length);
         return AnimationClips[index].length;
     }
 
@@ -164,13 +157,11 @@ public class CharacterVisual : MonoBehaviour
     {
         if (this == null || !gameObject.activeInHierarchy)
         {
-            Debug.LogWarning("CharacterVisual is null or inactive. Cannot set sprite.");
             return;
         }
 
         if (spriteRenderer == null)
         {
-            Debug.LogWarning("SpriteRenderer is null in SetSpritefun");
             return;
         }
 

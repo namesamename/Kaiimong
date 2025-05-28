@@ -49,7 +49,6 @@ public class GatchaManager : Singleton<GatchaManager>
     public void SetGachaType(GatchaType type)
     {
         currentGachaType = type;
-        Debug.Log($"GachaType º¯°æµÊ: {type}");
     }
 
     public void Setting()

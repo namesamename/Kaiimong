@@ -45,7 +45,6 @@ public class GatchaHistoryManager : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "gatcha_history.json");
 
         File.WriteAllText(path, json);
-        Debug.Log($"[SAVE] Gatcha history saved to: {path}");
     }
 
     // JSON 불러오기
@@ -60,17 +59,14 @@ public class GatchaHistoryManager : MonoBehaviour
             if (wrapper != null && wrapper.entries != null)
             {
                 historyList = wrapper.entries;
-                Debug.Log($"[LOAD] Gatcha history loaded from: {path}");
             }
             else
             {
-                Debug.LogWarning("[LOAD] JSON 데이터 파싱 실패!");
                 historyList = new();
             }
         }
         else
         {
-            Debug.LogWarning($"[LOAD] No history file found at: {path}");
             historyList = new();
         }
     }

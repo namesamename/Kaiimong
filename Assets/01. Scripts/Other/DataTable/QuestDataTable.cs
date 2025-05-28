@@ -61,7 +61,6 @@ public class QuestDataTable
         }
         else
         {
-            Debug.Log("This ID is incorrect");
             return null;
         }
     }
@@ -74,7 +73,6 @@ public class QuestDataTable
         }
         else
         {
-            Debug.Log("This ID is incorrect");
             return null;
         }
     }

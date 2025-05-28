@@ -56,7 +56,6 @@ public class GatchaResultUI : MonoBehaviour
         GameObject prefab = Resources.Load<GameObject>("GatchaPrefab/CharacterResult");
         if (prefab == null)
         {
-            Debug.LogError("CharacterResult 프리팹 로드 실패!");
             yield break;
         }
 
@@ -124,7 +123,6 @@ public class GatchaResultUI : MonoBehaviour
 
             if (results == null || results.Result.Count == 0)
             {
-                Debug.LogWarning("재화 부족 또는 뽑기 실패!");
                 await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
                 return;
             }

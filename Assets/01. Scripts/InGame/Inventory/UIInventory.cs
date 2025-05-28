@@ -274,7 +274,6 @@ public class UIInventory : MonoBehaviour
         {
             Destroy(obj);                                               // 슬롯 오브젝트 제거
         }
-        Debug.Log($"[슬롯 초기화] 이전 슬롯 {spawnedSlots.Count}개 제거");
         spawnedSlots.Clear();
 
     }

@@ -46,7 +46,6 @@ public class StageManager : Singleton<StageManager>
         // CurrentStage가 null이면 리턴
         if (CurrentStage == null)
         {
-            Debug.LogWarning("CurrentStage is null. Cannot set battle scene.");
             return;
         }
 
@@ -84,7 +83,6 @@ public class StageManager : Singleton<StageManager>
         // CurrentStage가 null이면 리턴
         if (CurrentStage == null)
         {
-            Debug.LogWarning("CurrentStage is null. Cannot set stage info.");
             return;
         }
 
@@ -121,7 +119,6 @@ public class StageManager : Singleton<StageManager>
                 {
                     Enemy newEnemy = GlobalDataTable.Instance.character.GetEnemyToID(curEnemyList[i].EnemyID);
                     Enemies.Add(newEnemy);
-                    Debug.Log(Enemies.Count);
                 }
                 CurrentSet++;
             }

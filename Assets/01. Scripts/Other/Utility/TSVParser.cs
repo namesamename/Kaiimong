@@ -105,7 +105,6 @@ public class TSVParser
             }
             catch (Exception ex)
             {
-                Debug.Log("Convert Failed");
             }
         }
         return dt;

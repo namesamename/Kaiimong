@@ -81,9 +81,6 @@ public class ObjectMoveDestroy : MonoBehaviour , ISkillEffectable
         Vector2 end = Target.position;
         float time = 0;
 
-        Debug.Log(time);
-        Debug.Log(ObjectDestroyTime);
-
         while (time < ObjectDestroyTime)
         {
  

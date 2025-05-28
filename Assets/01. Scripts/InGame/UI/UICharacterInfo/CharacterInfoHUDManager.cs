@@ -8,7 +8,6 @@ public class CharacterInfoHUDManager : Singleton<CharacterInfoHUDManager>
     {
         if(!CurrencyManager.Instance.GetIsChartutorial())
         {
-            Debug.Log("왜 안뜨는거냐");
             TutorialManager.Instance.NextCharTutorialAsync();
         }
         Initialize();

@@ -38,7 +38,6 @@ public class ShopUIManager : Singleton<ShopUIManager>
 
             if (shop == null)
             {
-                Debug.LogWarning($"Shop 데이터 없음: ShopID {group.ShopID}");
                 continue;
             }
 

@@ -103,7 +103,6 @@ public class GatchaTypeChanger : MonoBehaviour
                 int sID = GatchaManager.Instance.pickupSCharacterID;
                 Sprite sSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, sID);
                 if (sSprite != null) sImage.sprite = sSprite;
-                else Debug.LogWarning($"S 픽업(ID: {sID}) 이미지 로드 실패");
             }
         }
 
@@ -120,7 +119,6 @@ public class GatchaTypeChanger : MonoBehaviour
                 int aID = GatchaManager.Instance.pickupACharacterIDs[i];
                 Sprite aSprite = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.CharacterIcon, aID);
                 if (aSprite != null) aImage.sprite = aSprite;
-                else Debug.LogWarning($"A 픽업(ID: {aID}) 이미지 로드 실패");
             }
         }
     }

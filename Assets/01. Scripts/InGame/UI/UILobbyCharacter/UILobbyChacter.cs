@@ -54,7 +54,6 @@ public class UILobbyChacter : MonoBehaviour
         }
         else
         {
-            Debug.LogError("캐릭터가 대화텍스트가 존재하지 않음");
         }
     }
 

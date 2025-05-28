@@ -17,7 +17,6 @@ public class UItutorialPOPUP : MonoBehaviour
         {
             buttons[i].onClick.RemoveAllListeners();
             buttons[i].onClick.AddListener( () =>   TutorialManager.Instance.NextCharTutorialAsync());
-            Debug.Log("µé¾î°¨");
         }
     }
 

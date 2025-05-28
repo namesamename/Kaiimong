@@ -19,7 +19,6 @@ public static class GameSaveSystem
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
-                Debug.Log($"폴더 생성됨: {directory}");
             }
             //저장
             string json = JsonConvert.SerializeObject(new SaveDataWrapper { Saves = saves }, Formatting.Indented
@@ -29,7 +28,6 @@ public static class GameSaveSystem
         }
         catch (Exception exception)
         {
-            Debug.LogException(exception);
         }
         
     }
@@ -73,12 +71,10 @@ public static class GameSaveSystem
             }
             else
             {
-                Debug.Log($"삭제할 파일이 존재하지 않습니다: {path}");
             }
         }
         catch (Exception exception)
         {
-            Debug.LogException(exception);
         }
     }
 

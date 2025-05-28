@@ -37,7 +37,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                     TimeWhenNextCharge = actSO.AutoRecoveryPerMinute - interval;
                     interval -= actSO.AutoRecoveryPerMinute;
                     SetCurrency(CurrencyType.Activity, 1);
-                    //Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
                 }
             }
         }
@@ -56,7 +55,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         yield return new WaitUntil(() => actSO != null);
         if (PlayerPrefs.HasKey(LastTimeExitKey))
         {
-            Debug.Log(PlayerPrefs.GetString(LastTimeExitKey));
             DateTime last = DateTime.Parse(PlayerPrefs.GetString(LastTimeExitKey));
             DateTime Utc = last.ToUniversalTime();
             TimeSpan span = DateTime.UtcNow - Utc;
@@ -110,7 +108,6 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         if (SaveDataBase.Instance.SaveDic.ContainsKey(SaveType.Currency))
         {
             PlayerPrefs.SetString(LastTimeExitKey, DateTime.UtcNow.ToString("o"));
-            Debug.Log(DateTime.UtcNow.ToString("o"));
             PlayerPrefs.Save();
         }
 
@@ -143,11 +140,9 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         if (CurrencySaveDic[CurrencyType.Activity] + amount > GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount)
         {
             CurrencySaveDic[CurrencyType.Activity] = GlobalDataTable.Instance.currency.CurrencyDic[CurrencyType.Activity].MaxCount;
-            Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
         }
         else
         {
-            Debug.Log(CurrencySaveDic[CurrencyType.Activity]);
             CurrencySaveDic[CurrencyType.Activity] += amount;
         }
         DicToSaveData();
