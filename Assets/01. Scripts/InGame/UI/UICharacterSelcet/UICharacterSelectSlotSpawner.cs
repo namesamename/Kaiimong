@@ -130,16 +130,16 @@ public class UICharacterSelectSlotSpawner : MonoBehaviour
 
         foreach (var saveData in saveDataList)                                   // 저장된 캐릭터 데이터 각각 확인
         {
-            Debug.Log($"ID: {saveData.ID}");
+    
             Character character = GlobalDataTable.Instance.character.GetCharToID(saveData.ID);  // 저장된 ID를 통해 SO 변환
 
             if (character == null)                                              // ID에 맞는 캐릭터가 없으면 스킵
             {
-                Debug.Log($"[SlotSpawner] ID {saveData.ID}에 해당하는 캐릭터를 찾을 수 없음");
+
                 continue;
             }
 
-            Debug.Log($"[슬롯 생성] {character.Grade} 등급의 프리팹으로 슬롯 생성 중...");
+    
 
           
             GameObject slotObj = Instantiate(SlotPrefabs, transform);       // 슬롯 생성 및 배치

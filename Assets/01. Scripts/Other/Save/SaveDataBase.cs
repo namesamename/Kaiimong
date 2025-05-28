@@ -51,7 +51,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
         }
 
         sw.Stop();
-        UnityEngine.Debug.Log($"SaveDic 정리에 걸린 시간: {sw.ElapsedMilliseconds}ms");
+
     }
 
 
@@ -164,7 +164,7 @@ public class SaveDataBase : Singleton<SaveDataBase>
             {
                 SaveDic[instance.Savetype].Add(instance);
             }
-            UnityEngine.Debug.Log(instance.Savetype);
+       
             GameSaveSystem.Save(instance.Savetype, SaveDic[instance.Savetype]);
         }
         else

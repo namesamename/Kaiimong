@@ -51,7 +51,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("씬이 로드될 때 호출되는 함수 현재 씬 이름 :" + scene.name + "\n / 현재 씬 state" + sceneState);
+
         if(sceneContainer == null)
         {
             SetDic();

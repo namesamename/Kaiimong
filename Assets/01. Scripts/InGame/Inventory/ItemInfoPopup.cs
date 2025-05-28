@@ -16,6 +16,7 @@ public class ItemInfoPopup : UIPOPUP
         locationImage = GetComponentInChildren<UILocationImage>();
         locationItemValue = GetComponentInChildren<UILocationItemValue>();
         button = GetComponentInChildren<Button>();
+
     }
 
 

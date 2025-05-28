@@ -74,7 +74,7 @@ public class CharacterInfoHUD : MonoBehaviour
                 break;
             case CharacterInfoType.Stat:
                 TextMeshProUGUI[] textMeshPross = GetComponentsInChildren<TextMeshProUGUI>();
-                Debug.Log("TextMeshProUGUI Count: " + textMeshPross.Length);
+      
                 textMeshPross[1].text = (character.Health + saveData.Level).ToString();
                 textMeshPross[3].text = (character.Attack + saveData.Level).ToString();
                 textMeshPross[5].text = (character.Defence + saveData.Level).ToString();

@@ -24,7 +24,7 @@ public class CharacterSkillBook : MonoBehaviour
             int Count = ID * 3;
             for (int i = 2; i >= 0; i--)
             {
-                Debug.Log(Count - i);
+            
 
                 if ((Count - i) % 3 == 0)
                 {
