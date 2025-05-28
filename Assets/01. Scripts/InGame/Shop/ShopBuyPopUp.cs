@@ -9,21 +9,22 @@ public class ShopBuyPopUp : UIPOPUP
 
     private Action onConfirm;
 
-    public void Setup(Action confirmCallback)
+    public async void Setup(Action confirmCallback)
     {
         onConfirm = confirmCallback;
 
         confirmButton.onClick.RemoveAllListeners();
-        confirmButton.onClick.AddListener(() =>
+        confirmButton.onClick.AddListener(async () =>
         {
             onConfirm?.Invoke();
-            Destroy(); // 혹은 Destroy(gameObject);
+            Destroy();
+            var popup = await UIManager.Instance.ShowPopup("CompletedPurchasePopup") as CompletedPurchasePopup;
         });
 
         cancelButton.onClick.RemoveAllListeners();
         cancelButton.onClick.AddListener(() =>
         {
-            Destroy(); // 혹은 Destroy(gameObject);
+            Destroy();
         });
     }
 }
