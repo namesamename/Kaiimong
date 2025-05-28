@@ -123,11 +123,11 @@ public class CharacterStat : MonoBehaviour
 
     public void TakeDamage(float Amount)
     {
-        if(healthStat.CurHealth <= 0)
+        if (animator != null)
         {
-            return;
+            animator.SetTrigger("Hit");
         }
-        animator.SetTrigger("Hit");
+      
         float Damage = Amount - defenseStat.GetStat();
 
         if (Damage <= 0)
@@ -151,7 +151,11 @@ public class CharacterStat : MonoBehaviour
 
     public void OnDie()
     {
-        animator.SetTrigger("Death");
+        if (animator != null)
+        {
+            animator.SetTrigger("Death");
+        }
+
         OnDeath?.Invoke();
     }
 

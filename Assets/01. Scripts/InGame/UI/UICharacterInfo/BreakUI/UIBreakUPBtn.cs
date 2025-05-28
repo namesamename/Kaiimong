@@ -32,7 +32,7 @@ public class UIBreakUPBtn : MonoBehaviour, ISetPOPUp
             buttons[0].interactable = false;
         }
 
-        buttons[1].onClick.AddListener(breakPOPUP.Destroy);
+        buttons[1].onClick.AddListener(TutorialDestroy);
     }
 
 
@@ -45,6 +45,16 @@ public class UIBreakUPBtn : MonoBehaviour, ISetPOPUp
         SaveDataBase.Instance.SaveSingleData(saveData);
         breakPOPUP.Initialize();
         CharacterInfoHUDManager.Instance.Initialize();
+    }
+
+    public void TutorialDestroy()
+    {
+        if(!CurrencyManager.Instance.GetIsChartutorial()) 
+        {
+            TutorialManager.Instance.NextCharTutorialAsync();
+        }
+        breakPOPUP.Destroy();
+
     }
 
 }

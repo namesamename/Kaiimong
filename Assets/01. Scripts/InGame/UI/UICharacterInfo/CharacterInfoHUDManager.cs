@@ -1,8 +1,16 @@
 
+
+using UnityEngine;
+
 public class CharacterInfoHUDManager : Singleton<CharacterInfoHUDManager>
 {
     private void Start()
     {
+        if(!CurrencyManager.Instance.GetIsChartutorial())
+        {
+            Debug.Log("왜 안뜨는거냐");
+            TutorialManager.Instance.NextCharTutorialAsync();
+        }
         Initialize();
     }
     public void Initialize()

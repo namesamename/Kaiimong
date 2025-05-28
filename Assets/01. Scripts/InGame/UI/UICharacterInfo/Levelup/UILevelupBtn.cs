@@ -23,6 +23,24 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
         buttons[4].onClick.AddListener(OnDown);
 
     }
+    private void Update()
+    {
+        if(!CurrencyManager.Instance.GetIsChartutorial())
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                buttons[i].enabled = false;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].enabled = true;
+            }
+        }
+
+    }
     public void OnMax()
     {
         int MaxEXP = popUP.Effect.CalculateMaxCurrency(CurrencyManager.Instance.GetCurrency(CurrencyType.CharacterEXP), false);
@@ -107,7 +125,13 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
     public void OnDown()
     {
         popUP.UISet();
+        if (!CurrencyManager.Instance.GetIsChartutorial())
+        {
+            TutorialManager.Instance.NextCharTutorialAsync();
+        }
         popUP.Destroy();
+  
+
     }
     public void Excute()
     {

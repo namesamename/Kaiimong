@@ -54,6 +54,14 @@ public class GameManager : Singleton<GameManager>
 
         Tutorial();
     }
+    void Start()
+    {
+#if UNITY_STANDALONE || UNITY_WEBGL
+    Application.runInBackground = true;
+#else
+        Application.runInBackground = false;
+#endif
+    }
 
     private void Update()
     {
@@ -185,7 +193,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Tutorial()
     {
-        if(!currencyManager.GetIsTutorial())
+        if(!currencyManager.GetIsTutorial() || !currencyManager.GetIsChartutorial())
         {
             TutorialManager = Instantiate(Resources.Load<GameObject>("Manager/TutorialManager"));
             TutorialManager.transform.SetParent(transform);
