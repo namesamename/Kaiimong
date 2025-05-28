@@ -40,8 +40,6 @@ public class CharacterStat : MonoBehaviour
     
 
     public Action OnDeath;
-
-    private int BuffTurn = 0;
     private Animator animator;
 
 
@@ -113,7 +111,7 @@ public class CharacterStat : MonoBehaviour
         attackStat.Value = enemy.Att + Level;
         defenseStat.Value = enemy.Def + Level;
         healthStat.Value = enemy.HP + Level;
-        //agilityStat.Value = enemy.Speed + level;
+        agilityStat.Value = enemy.Speed + Level;
         criticalAttackStat.Value = enemy.Cri + (float)(Level * 0.01);
         criticalPerStat.Value = enemy.Cri +(float)(Level * 0.01);
         healthStat.CurHealth = healthStat.Value;
