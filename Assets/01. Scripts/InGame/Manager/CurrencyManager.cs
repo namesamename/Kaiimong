@@ -89,6 +89,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
                 ID = 0,
                 date = DateTime.UtcNow,
                 IsTutorial = false,
+                IsCharTutorial = false,
                 
 
             };
@@ -132,6 +133,10 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public bool GetIsTutorial()
     {
         return data.IsTutorial;
+    }
+    public bool GetIsChartutorial()
+    {
+        return data.IsCharTutorial;
     }
     public void HealStamina(int amount)
     {
@@ -190,6 +195,14 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         DicSet();
         Save();
     }
+
+
+    public void ClearCharTutorial()
+    {
+        data.IsCharTutorial = true;
+        DicSet();
+        Save();
+    }
     public int GetCurrency(CurrencyType currency)
     {
         return CurrencySaveDic[currency];
@@ -213,6 +226,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
         CurrencySaveDic[CurrencyType.purchaseCount] = data.purchaseCount;
         OtherSaveDic["IsTutorial"] = data.IsTutorial;
         OtherSaveDic["User"] = data.UserName;
+        OtherSaveDic["IsChartutorial"] = data.IsCharTutorial;
     }
 
 
@@ -230,7 +244,8 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
             CurrentStaminaMax = CurrencySaveDic[CurrencyType.CurMaxStamina],
             purchaseCount = CurrencySaveDic[CurrencyType.purchaseCount],
             UserName = (string)OtherSaveDic["User"],
-            IsTutorial =(bool)OtherSaveDic["IsTutorial"],
+            IsTutorial = (bool)OtherSaveDic["IsTutorial"],
+            IsCharTutorial = (bool)OtherSaveDic["IsChartutorial"],
             Savetype = SaveType.Currency,
 
             ID = 0

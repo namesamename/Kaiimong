@@ -28,7 +28,7 @@ public class UIRecognitionBtn : MonoBehaviour, ISetPOPUp
             buttons[0].interactable = false;
         }
 
-        buttons[1].onClick.AddListener(ingiPOPUP.Destroy);
+        buttons[1].onClick.AddListener(TutorialDestroy);
     }
 
 
@@ -57,5 +57,15 @@ public class UIRecognitionBtn : MonoBehaviour, ISetPOPUp
 
         CharacterInfoHUDManager.Instance.Initialize();
 
+    }
+
+    public void TutorialDestroy()
+    {
+        if(!CurrencyManager.Instance.GetIsChartutorial())
+        {
+            TutorialManager.Instance.NextCharTutorialAsync();
+        }
+
+        ingiPOPUP.Destroy();
     }
 }

@@ -98,6 +98,7 @@ public enum AddreassablesType
     ItemIcon,
 
     Tutorial,
+    CharTutorial,
 
 
 
