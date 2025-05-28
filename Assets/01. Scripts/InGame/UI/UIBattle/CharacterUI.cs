@@ -29,6 +29,7 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private Button ultButton;
     //[SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
+    private List<Image> buttonIcon = new List<Image>();
 
     public Action OnConfirmButton;
     public Action ResetIconY;
@@ -51,6 +52,12 @@ public class CharacterUI : MonoBehaviour
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
         targetConfirmButton.enabled = false;
+        foreach(Button button in buttonList)
+        {
+            Image image = button.GetComponent<Image>();
+            image.material = new Material(image.material);
+            buttonIcon.Add(image);
+        }
     }
 
     public void UltEnable()
@@ -165,11 +172,37 @@ public class CharacterUI : MonoBehaviour
 
         Debug.Log(skillNum);
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
+        SkillSelectEffect(skillNum);
         battleSystem.SkillChanged?.Invoke();
         battleSystem.CharacterSelector.initialTarget = false;
         targetConfirmButton.enabled = false;
         uiSkill.SetBattleSkillUI(battleSystem.SelectedSkill.SkillSO);
         battleSystem.OnSkillSelected();
+    }
+
+    public void SkillSelectEffect(int skillNum)
+    {
+        foreach(Image icon in buttonIcon)
+        {
+            Material mat = icon.material;
+
+            mat.SetFloat("_OutlineEnabled", 0);
+        }
+
+        Image _image = buttonIcon[skillNum];
+        Material _material = _image.material;
+
+        _material.SetFloat("_OutlineEnabled", 1);
+
+        if(skillNum == 100)
+        {
+            foreach (Image icon in buttonIcon)
+            {
+                Material mat = icon.material;
+
+                mat.SetFloat("_OutlineEnabled", 0);
+            }
+        }
     }
 
     void OnClickTargetConfirmButton()
@@ -263,6 +296,8 @@ public class CharacterUI : MonoBehaviour
             buttonList[i].image.sprite = sprites[i];
         }
         ultCover.sprite = buttonList[2].image.sprite;
+
+        SkillSelectEffect(100);
     }
 
     void EnableUI()
