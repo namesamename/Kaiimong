@@ -54,6 +54,14 @@ public class GameManager : Singleton<GameManager>
 
         Tutorial();
     }
+    void Start()
+    {
+#if UNITY_STANDALONE || UNITY_WEBGL
+    Application.runInBackground = true;
+#else
+        Application.runInBackground = false;
+#endif
+    }
 
     private void Update()
     {
