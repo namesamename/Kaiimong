@@ -972,7 +972,7 @@ GameObject:
   m_Component:
   - component: {fileID: 63782405}
   m_Layer: 5
-  m_Name: tutorial9
+  m_Name: ChrTutorial9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2103,7 +2103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 229783114}
   m_Layer: 5
-  m_Name: tutorial6
+  m_Name: ChrTutorial6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3873,7 +3873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 420005645}
   m_Layer: 5
-  m_Name: tutorial8
+  m_Name: ChrTutorial8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4528,7 +4528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 508874227}
   m_Layer: 5
-  m_Name: tutorial14
+  m_Name: ChrTutorial14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4705,7 +4705,7 @@ GameObject:
   m_Component:
   - component: {fileID: 518990044}
   m_Layer: 5
-  m_Name: Tutorial1
+  m_Name: ChrTutorial1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4742,7 +4742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 529278640}
   m_Layer: 5
-  m_Name: tutorial5
+  m_Name: ChrTutorial5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7276,7 +7276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 875342625}
   m_Layer: 5
-  m_Name: tutorial4
+  m_Name: ChrTutorial4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8615,7 +8615,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1039938316}
   m_Layer: 5
-  m_Name: tutorial7
+  m_Name: ChrTutorial7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8656,7 +8656,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1043574650}
   m_Layer: 5
-  m_Name: tutorial3
+  m_Name: ChrTutorial3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9777,7 +9777,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1157663086}
   m_Layer: 5
-  m_Name: tutorial16
+  m_Name: ChrTutorial16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10635,7 +10635,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1309381358}
   m_Layer: 5
-  m_Name: Tutorial17
+  m_Name: ChrTutorial17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12507,7 +12507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1536001220}
   m_Layer: 5
-  m_Name: tutorial10
+  m_Name: ChrTutorial10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14441,7 +14441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1703411699}
   m_Layer: 5
-  m_Name: tutorial12
+  m_Name: ChrTutorial12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15200,7 +15200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1826368761}
   m_Layer: 5
-  m_Name: tutorial15
+  m_Name: ChrTutorial15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16036,7 +16036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1932922327}
   m_Layer: 5
-  m_Name: tutorial11
+  m_Name: ChrTutorial11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16556,7 +16556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1982000435}
   m_Layer: 5
-  m_Name: tutorial2
+  m_Name: ChrTutorial2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17066,7 +17066,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2012474944}
   m_Layer: 5
-  m_Name: tutorial13
+  m_Name: ChrTutorial13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
