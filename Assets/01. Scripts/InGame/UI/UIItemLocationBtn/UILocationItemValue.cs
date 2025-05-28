@@ -45,7 +45,7 @@ public class UILocationItemValue : MonoBehaviour
             Normal.gameObject.SetActive(true);
             Consum.gameObject.SetActive(false);
 
-            TextMeshProUGUI text = Consum.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI text = Normal.GetComponentInChildren<TextMeshProUGUI>();
             text.text = SaveDataBase.Instance.GetSaveDataToID<ItemSavaData>(SaveType.Item, ID).Value.ToString();
         }
       

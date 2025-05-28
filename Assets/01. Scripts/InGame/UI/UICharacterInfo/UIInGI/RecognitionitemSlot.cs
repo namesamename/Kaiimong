@@ -38,7 +38,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
                 }
                 else
                 {
-                    countText.color = Color.green;
+                    countText.color = Color.black;
                 }
             }
             else
@@ -71,7 +71,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            countText.color = Color.green;
+            countText.color = Color.black;
         }
     }
 
@@ -87,7 +87,7 @@ public class RecognitionitemSlot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            countText.color = Color.green;
+            countText.color = Color.black;
         }
     }
 
