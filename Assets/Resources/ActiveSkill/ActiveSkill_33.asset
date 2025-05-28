@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ActiveSkill_33
   m_EditorClassIdentifier: 
   ID: 33
-  Name: sad
-  Description: das
+  Name: "\uAD81\uADF9\uAE30"
+  Description: "\uBAA8\uB4E0 \uC801 \uB300\uC0C1 \uCE58\uBA85\uD0C0 \uD655\uB960
+    20% \uAC10\uC18C"
   Attack: 1
   isSingleAttack: 0
   UltimateGauge: 1

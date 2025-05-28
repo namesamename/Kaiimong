@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ActiveSkill_15
   m_EditorClassIdentifier: 
   ID: 15
-  Name: asd
-  Description: das
+  Name: "\uAD81\uADF9\uAE30"
+  Description: "\uB2E8\uC77C \uB300\uC0C1 \uACF5\uACA9\uB825 15% \uAC10\uC18C"
   Attack: 1
   isSingleAttack: 1
   UltimateGauge: 1

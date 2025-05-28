@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ActiveSkill_6
   m_EditorClassIdentifier: 
   ID: 6
-  Name: asd
-  Description: sad
+  Name: "\uAD81\uADF9\uAE30"
+  Description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825 \uB9CC\uD07C \uB2E8\uC77C
+    \uACF5\uACA9"
   Attack: 1
   isSingleAttack: 1
   UltimateGauge: 1

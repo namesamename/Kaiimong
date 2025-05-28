@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ActiveSkill_29
   m_EditorClassIdentifier: 
   ID: 29
-  Name: asd
-  Description: das
+  Name: "\uAD11\uC5ED \uACF5\uACA9"
+  Description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825 \uB9CC\uD07C \uBAA8\uB4E0
+    \uC801 \uB300\uC0C1 \uACF5\uACA9"
   Attack: 1
   isSingleAttack: 0
   UltimateGauge: 1

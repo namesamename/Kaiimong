@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ActiveSkill_14
   m_EditorClassIdentifier: 
   ID: 14
-  Name: d
-  Description: as
+  Name: "\uAD11\uC5ED \uD790"
+  Description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825 \uB9CC\uD07C \uBAA8\uB4E0
+    \uC544\uAD70 \uD68C\uBCF5"
   Attack: 1
   isSingleAttack: 0
   UltimateGauge: 1

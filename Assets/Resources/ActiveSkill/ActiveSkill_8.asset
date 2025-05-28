@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ActiveSkill_8
   m_EditorClassIdentifier: 
   ID: 8
-  Name: dsa
-  Description: sad
+  Name: "\uAD11\uC5ED \uBC84\uD504"
+  Description: "\uBAA8\uB4E0 \uC544\uAD70\uC758 \uBC29\uC5B4\uB825 5% \uC99D\uAC00"
   Attack: 1
   isSingleAttack: 0
   UltimateGauge: 1
