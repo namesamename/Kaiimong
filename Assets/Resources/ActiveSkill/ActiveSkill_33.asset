@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 33
   Name: "\uAD81\uADF9\uAE30"
-  Description: "\uBAA8\uB4E0 \uC801 \uB300\uC0C1 \uCE58\uBA85\uD0C0 \uD655\uB960
-    20% \uAC10\uC18C"
+  Description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825 \uB9CC\uD07C \uBAA8\uB4E0
+    \uC801 \uB300\uC0C1 \uACF5\uACA9"
   Attack: 1
   isSingleAttack: 0
   UltimateGauge: 1
-  Type: 1
+  Type: 0
   IsBuff: 0
   BuffID: 3
-  EffectType: 6
+  EffectType: 1
   EffectUpDownType: 0

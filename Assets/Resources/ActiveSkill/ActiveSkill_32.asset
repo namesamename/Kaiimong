@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: ActiveSkill_32
   m_EditorClassIdentifier: 
   ID: 32
-  Name: "\uC77C\uBC18 \uACF5\uACA9"
-  Description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825 \uB9CC\uD07C \uB2E8\uC77C
-    \uACF5\uACA9"
+  Name: "\uB2E8\uC77C \uB514\uBC84\uD504"
+  Description: "\uB2E8\uC77C \uC801 \uB300\uC0C1 \uBC29\uC5B4\uB825 15% \uAC10\uC18C"
   Attack: 1
   isSingleAttack: 1
   UltimateGauge: 1
-  Type: 0
+  Type: 1
   IsBuff: 0
-  BuffID: 0
+  BuffID: 2
   EffectType: 3
   EffectUpDownType: 1

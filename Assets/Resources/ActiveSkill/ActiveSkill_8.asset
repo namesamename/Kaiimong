@@ -20,6 +20,6 @@ MonoBehaviour:
   UltimateGauge: 1
   Type: 2
   IsBuff: 1
-  BuffID: 1
+  BuffID: 2
   EffectType: 2
   EffectUpDownType: 0
