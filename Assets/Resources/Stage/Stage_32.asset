@@ -17,7 +17,7 @@ MonoBehaviour:
   Rounds: 1
   BackgroundPath: Battle/BackGround/Three
   ActivityPoint: 13
-  ItemID: 010000000200000003000000
+  ItemID: 08000000
   Gold: 200
   Dia: 50
   UnlockStageID: 21000000
