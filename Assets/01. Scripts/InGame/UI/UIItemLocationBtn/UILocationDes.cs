@@ -36,22 +36,82 @@ public class UILocationDes : MonoBehaviour
             {
                 game.GetComponent<UILocationBtn>().SetBtn(item.FirstLocation, () => Goto(item.FirstLocation));
             }
-            
+            else
+            {
+                game.gameObject.SetActive(false);
+            }
+
         }
-        else if(Count > 1)
+        if(Count > 1)
         {
             GameObject game = Instantiate(BtnPrefab, transform.GetChild(2));
             if (GotoStage(item.SecondLocation))
             {
                 game.GetComponent<UILocationBtn>().SetBtn(item.SecondLocation, () => Goto(item.SecondLocation));
             }
+            else
+            {
+                game.gameObject.SetActive(false);
+            }
         }
-        else if (Count > 2)
+        if (Count > 2)
         {
             GameObject game = Instantiate(BtnPrefab, transform.GetChild(2));
-            if (GotoStage(item.ThridLocation))
+            if (GotoStage(item.ThirdLocation))
             {
-                game.GetComponent<UILocationBtn>().SetBtn(item.ThridLocation, () => Goto(item.ThridLocation));
+                game.GetComponent<UILocationBtn>().SetBtn(item.ThirdLocation, () => Goto(item.ThirdLocation));
+            }
+            else
+            {
+                game.gameObject.SetActive(false);
+            }
+        }
+        if (Count > 3)
+        {
+            GameObject game = Instantiate(BtnPrefab, transform.GetChild(2));
+            if (GotoStage(item.FourthLocation))
+            {
+                game.GetComponent<UILocationBtn>().SetBtn(item.FourthLocation, () => Goto(item.FourthLocation));
+            }
+            else
+            {
+                game.gameObject.SetActive(false);
+            }
+        }
+        if (Count > 4)
+        {
+            GameObject game = Instantiate(BtnPrefab, transform.GetChild(2));
+            if (GotoStage(item.FifthLocation))
+            {
+                game.GetComponent<UILocationBtn>().SetBtn(item.FifthLocation, () => Goto(item.FifthLocation));
+            }
+            else
+            {
+                game.gameObject.SetActive(false);
+            }
+        }
+        if (Count > 5)
+        {
+            GameObject game = Instantiate(BtnPrefab, transform.GetChild(2));
+            if (GotoStage(item.SixthLocation))
+            {
+                game.GetComponent<UILocationBtn>().SetBtn(item.SixthLocation, () => Goto(item.SixthLocation));
+            }
+            else
+            {
+                game.gameObject.SetActive(false);
+            }
+        }
+        if (Count > 6)
+        {
+            GameObject game = Instantiate(BtnPrefab, transform.GetChild(2));
+            if (GotoStage(item.SeventhLocation))
+            {
+                game.GetComponent<UILocationBtn>().SetBtn(item.SeventhLocation, () => Goto(item.SeventhLocation));
+            }
+            else
+            {
+                game.gameObject.SetActive(false);
             }
         }
 
@@ -62,11 +122,9 @@ public class UILocationDes : MonoBehaviour
 
     public bool GotoStage(string Location)
     {
-        Debug.Log(Location);
-        Debug.Log(Location.Substring(0));
-        Debug.Log(Location.Substring(2));
-        int ChapterID =int.Parse(Location.Substring(0, 1));
-        int StageID = int .Parse( Location.Substring(2));
+        string[] parts = Location.Split('-');
+        int ChapterID = int.Parse(parts[0]);
+        int StageID = int .Parse(parts[1]);
         
         Chapter chapter = GlobalDataTable.Instance.Chapter.ChapterDic[ChapterID];
         Stage stage = GlobalDataTable.Instance.Stage.StageDic[StageID];
@@ -93,9 +151,9 @@ public class UILocationDes : MonoBehaviour
 
     public void Goto(string Location)
     {
-
-        int ChapterID = int.Parse(Location.Substring(0,1));
-        int StageID = int.Parse(Location.Substring(2));
+        string[] parts = Location.Split('-');
+        int ChapterID = int.Parse(parts[0]);
+        int StageID = int.Parse(parts[1]);
         Chapter chapter = GlobalDataTable.Instance.Chapter.ChapterDic[ChapterID];
         Stage stage = GlobalDataTable.Instance.Stage.StageDic[StageID];
         ChapterManager.Instance.RegisterChapter(chapter);

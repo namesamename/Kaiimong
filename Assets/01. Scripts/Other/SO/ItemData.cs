@@ -22,7 +22,11 @@ public class ItemData : SO
     public int ObtainLocationCount;     // È¹µæ °æ·Î
     public string FirstLocation;
     public string SecondLocation;
-    public string ThridLocation;
+    public string ThirdLocation;
+    public string FourthLocation;
+    public string FifthLocation;
+    public string SixthLocation;
+    public string SeventhLocation;
     public float Probability;              // µå¶ø È®·ü
 
 
