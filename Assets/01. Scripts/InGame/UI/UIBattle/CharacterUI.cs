@@ -48,7 +48,7 @@ public class CharacterUI : MonoBehaviour
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
         targetConfirmButton.enabled = false;
-        foreach(Button button in buttonList)
+        foreach (Button button in buttonList)
         {
             Image image = button.GetComponent<Image>();
             image.material = new Material(image.material);
@@ -161,39 +161,34 @@ public class CharacterUI : MonoBehaviour
 
     void OnClickSkillButton(Button button)
     {
-     
 
- 
+
+
         int skillNum = buttonList.IndexOf(button);
-        if(!CurrencyManager.Instance.GetIsTutorial())
+        if (!CurrencyManager.Instance.GetIsTutorial())
         {
             TutorialManager.Instance.CurPreDelete();
             TutorialManager.Instance.TutorialAction();
         }
 
-        
+
 
         battleSystem.SelectedSkill = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum];
         SkillSelectEffect(skillNum);
         battleSystem.SkillChanged?.Invoke();
         battleSystem.CharacterSelector.initialTarget = false;
         targetConfirmButton.enabled = false;
-     
+
         battleSystem.OnSkillSelected();
         button.GetComponent<UILongPressButton>().SetBattleSystem(curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[skillNum]);
 
 
-    
-        
+
+
     }
 
     public void SkillSelectEffect(int skillNum)
     {
-        if (skillNum < 0 || skillNum >= buttonIcon.Count)
-        {
-           
-            return;
-        }
         foreach (Image icon in buttonIcon)
         {
             Material mat = icon.material;
@@ -201,12 +196,15 @@ public class CharacterUI : MonoBehaviour
             mat.SetFloat("_OutlineEnabled", 0);
         }
 
-        Image _image = buttonIcon[skillNum];
-        Material _material = _image.material;
+        if (skillNum < buttonIcon.Count)
+        {
+            Image _image = buttonIcon[skillNum];
+            Material _material = _image.material;
 
-        _material.SetFloat("_OutlineEnabled", 1);
+            _material.SetFloat("_OutlineEnabled", 1);
+        }
 
-        if(skillNum == 100)
+        if (skillNum == 100)
         {
             foreach (Image icon in buttonIcon)
             {
@@ -303,7 +301,7 @@ public class CharacterUI : MonoBehaviour
             //curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
         }
 
-        for(int i = 0; i < sprites.Length; i++)
+        for (int i = 0; i < sprites.Length; i++)
         {
             buttonList[i].image.sprite = sprites[i];
         }
