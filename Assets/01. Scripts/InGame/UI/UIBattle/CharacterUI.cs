@@ -36,14 +36,8 @@ public class CharacterUI : MonoBehaviour
     private BattleSystem battleSystem;
     public BattleSystem BattleSystem { get { return battleSystem; } set { battleSystem = value; } }
 
-    public UIBattleSkill uiSkill;
-    public UIBattleStatBoard uiboard;
 
-    private void Awake()
-    {
-        uiSkill =GetComponentInChildren<UIBattleSkill>();
-        uiboard = GetComponentInChildren<UIBattleStatBoard>();
-    }
+
 
     void Start()
     {
@@ -168,7 +162,7 @@ public class CharacterUI : MonoBehaviour
         battleSystem.SkillChanged?.Invoke();
         battleSystem.CharacterSelector.initialTarget = false;
         targetConfirmButton.enabled = false;
-        uiSkill.SetBattleSkillUI(battleSystem.SelectedSkill.SkillSO);
+     
         battleSystem.OnSkillSelected();
     }
 
@@ -271,15 +265,6 @@ public class CharacterUI : MonoBehaviour
         skills.GetComponent<CharacterUIEffect>().BounceEffect();
         icons.SetActive(true);
         icons.GetComponent<CharacterUIEffect>().BounceEffect();
-        stat.SetActive(true);
-        stat.GetComponent<CharacterUIEffect>().BounceEffect();
-        skillInfo.SetActive(true);
-        skillInfo.GetComponent <CharacterUIEffect>().BounceEffect();
-        CommandBtn.SetActive(true);
-        CommandBtn.GetComponent <CharacterUIEffect>().BounceEffect();
-
-        CommandBtnSet();
-
 
     }
 
@@ -309,48 +294,9 @@ public class CharacterUI : MonoBehaviour
         actionButton.gameObject.SetActive(false);
     }
 
-    public void CommandBtnSet()
-    {
-        Button[] buttons = CommandBtn.GetComponentsInChildren<Button>();
-
-        for (int i = 0; i < buttons.Length; i++) 
-        {
-            buttons[i].onClick.RemoveAllListeners();
-
-        }
-
-        buttons[0].onClick.AddListener(SpeedSet);
-        buttons[1].onClick.AddListener(StatSet);
-        buttons[2].onClick.AddListener(SkillSet);
 
 
-    }
 
-    public void SpeedSet()
-    {
-        icons.SetActive(true);
-        stat.GetComponent<UIBattleStatBoard>().IsUpdate = false;
-        stat.SetActive(false);
-        skillInfo.GetComponent<UIBattleSkill>().IsUpdate = false;
-        skillInfo.SetActive(false);
-    }
-    public void StatSet()
-    {
-        icons.SetActive(false);
-        stat.SetActive(true);
-        stat.GetComponent<UIBattleStatBoard>().IsOpen = true;
-        stat.GetComponent<UIBattleStatBoard>().IsUpdate = true;
-        skillInfo.SetActive(false);
-    }
-
-    public void SkillSet()
-    {
-        icons.SetActive(false);
-        stat.SetActive(false);
-        skillInfo.GetComponent<UIBattleSkill>().IsOpen = true;
-        skillInfo.GetComponent<UIBattleSkill>().IsUpdate = true;
-        skillInfo.SetActive(true);
-    }
 
 
 }

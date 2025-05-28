@@ -15,10 +15,10 @@ MonoBehaviour:
   ID: 4
   Name: "\uBAAC4"
   HP: 650
-  Att: 24
-  Def: 11
+  Att: 168
+  Def: 77
   Speed: 99
   Cri: 0.017
   SkillID: 4
   SecondSkillID: 4
-  CharacterType: 0
+  CharacterType: 1

@@ -15,10 +15,10 @@ MonoBehaviour:
   ID: 7
   Name: "\uBAAC7"
   HP: 800
-  Att: 23
-  Def: 12
+  Att: 161
+  Def: 84
   Speed: 97
   Cri: 0.028
   SkillID: 7
   SecondSkillID: 7
-  CharacterType: 0
+  CharacterType: 1

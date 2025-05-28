@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 5
   ShopID: 2
-  ItemCount: 0
+  ItemCount: 1
   ItemID: 0
   Gold: 50000
   Dia: 0

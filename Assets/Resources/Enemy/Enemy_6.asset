@@ -15,8 +15,8 @@ MonoBehaviour:
   ID: 6
   Name: "\uBAAC6"
   HP: 750
-  Att: 27
-  Def: 11
+  Att: 189
+  Def: 77
   Speed: 103
   Cri: 0.3
   SkillID: 6
