@@ -134,7 +134,7 @@ public class CharacterUI : MonoBehaviour
 
     public void PlayerTurnEnd()
     {
-        Debug.Log("½ÇÇà");
+    
         DisableActionButton();
         DIsableUI();
         battleSystem.TurnIndex = 0;

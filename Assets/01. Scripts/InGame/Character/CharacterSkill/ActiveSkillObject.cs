@@ -104,7 +104,7 @@ public class ActiveSkillObject : MonoBehaviour
         }
         else
         {
-            Debug.Log("TakeDamage");
+
 
             foreach (CharacterCarrier character in targetcharacter.ToList())
             {

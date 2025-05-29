@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 public class CharacterBookItem : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class CharacterBookItem : MonoBehaviour
     [SerializeField] private Image borderImage;
     [SerializeField] private TextMeshProUGUI nameText;
 
-    public async Task Setup(Character character)
+    public async void Setup(Character character)
     {
         nameText.text = character.Name;
 

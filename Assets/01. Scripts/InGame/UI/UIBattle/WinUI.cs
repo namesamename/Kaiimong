@@ -49,7 +49,7 @@ public class WinUI : MonoBehaviour
         }
     }
 
-    public void SetWinUI()
+    public async void SetWinUI()
     {
         if (!setComplete)
         {
@@ -60,7 +60,7 @@ public class WinUI : MonoBehaviour
             int RandomCharacterID = StageManager.Instance.Players[Random.Range(0, StageManager.Instance.Players.Count)].ID;
             //Sprite sprite = GlobalDataTable.Instance.Sprite.GetSpriteToID(RandomCharacterID, SpriteType.Illustration);
 
-            Sprite sp = AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, RandomCharacterID).Result;
+            Sprite sp = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.Illustration, RandomCharacterID);
 
             //Sprite sprite = Resources.Load<Sprite>($"CharacterSprite/{RandomCharacterID}");
 

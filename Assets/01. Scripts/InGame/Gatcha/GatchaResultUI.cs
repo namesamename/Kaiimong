@@ -120,16 +120,16 @@ public class GatchaResultUI : MonoBehaviour
 
         if (executor != null && session != null)
         {
-            var results = executor.DrawWithSession(session);
+            var results = await executor.DrawWithSession(session);
 
-            if (results == null || results.Result.Count == 0)
+            if (results == null || results.Count == 0)
             {
                 Debug.LogWarning("재화 부족 또는 뽑기 실패!");
                 await UIManager.Instance.ShowPopup<PopupCurrencyLack>();
                 return;
             }
 
-            GatchaResultHolder.results = results.Result;
+            GatchaResultHolder.results = results;
 
             foreach (Transform child in resultGrid)
             {

@@ -10,12 +10,12 @@ public class CharacterBookUI : MonoBehaviour
     [SerializeField] private Transform contentRoot;
     [SerializeField] private GameObject itemPrefab;
 
-    private async void Start()
+    private  void Start()
     {
-        await LoadCharacterBook();
+         LoadCharacterBook();
     }
 
-    private async Task LoadCharacterBook()
+    private void LoadCharacterBook()
     {
         // 기존 UI 아이템 제거
         foreach (Transform child in contentRoot)
@@ -47,7 +47,7 @@ public class CharacterBookUI : MonoBehaviour
         {
             GameObject go = Instantiate(itemPrefab, contentRoot);
             var ui = go.GetComponent<CharacterBookItem>();
-            await ui.Setup(character);
+            ui.Setup(character);
         }
     }
 

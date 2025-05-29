@@ -88,19 +88,10 @@ public class BattleSystem : MonoBehaviour
 
     void Update()
     {
-        if(SelectedSkill  != null)
-        {
-            Debug.Log(SelectedSkill);
-            if(SelectedSkill.SkillSO != null)
-            {
-                Debug.Log(SelectedSkill.SkillSO);
-            }
-        }
-    
 
         if (appearAnimComplete)
         {
-            Debug.Log("finish");
+
             appearAnimComplete = false;
             PlayerTurn = true;
             StartCoroutine(ChangePhase(PlayerTurnPhase));
@@ -182,7 +173,7 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            Debug.Log("들어감");
+
             if (settingBattle)
             {
                 SetBattle();
@@ -532,7 +523,7 @@ public class BattleSystem : MonoBehaviour
 
         if (TurnIndex == activePlayers.Count)
         {
-            Debug.Log("durl");
+  
             PlayerTurn = false;
             sortedOnce = false;
             BattleUI.CharacterUI.PlayerTurnEnd();

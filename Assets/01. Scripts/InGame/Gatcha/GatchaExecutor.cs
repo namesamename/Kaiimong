@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -172,7 +173,7 @@ public class GatchaExecutor : MonoBehaviour
         else return Grade.A;  // A 또는 S만 반환됨
     }
 
-    public async Task<List<Character>> DrawWithSession(GatchaSessionData session)
+    public async UniTask<List<Character>> DrawWithSession(GatchaSessionData session)
     {
         var mgr = GatchaManager.Instance;
         var curManager = CurrencyManager.Instance;

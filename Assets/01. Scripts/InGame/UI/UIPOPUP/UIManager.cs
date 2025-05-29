@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -113,13 +114,13 @@ public class UIManager : Singleton<UIManager>
         return characterID.IntroduceText;
     }
 
-    public async Task<T> ShowPopup<T>() where T : UIPOPUP
+    public async UniTask<T> ShowPopup<T>() where T : UIPOPUP
     {
         var popup = await ShowPopup(typeof(T).Name);
         return popup as T;
     }
 
-    public async Task<UIPOPUP> ShowPopup(string popupName)
+    public async UniTask<UIPOPUP> ShowPopup(string popupName)
     {
        
         
@@ -158,14 +159,14 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-    public async Task<GameObject> GetPOPUPPrefab(string popupName)
+    public async UniTask<GameObject> GetPOPUPPrefab(string popupName)
     {
          var obj = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.POPUP, popupName);
             
         return obj;
     }
 
-    public async Task<GameObject> CreatTransformPOPUPAsync(string popupName, Transform transform)
+    public async UniTask<GameObject> CreatTransformPOPUPAsync(string popupName, Transform transform)
     {
         var obj = await AddressableManager.Instance.LoadPrefabs(AddreassablesType.POPUP, popupName);
 

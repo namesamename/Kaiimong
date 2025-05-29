@@ -5,16 +5,21 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
+using Cysharp.Threading.Tasks;
+using System.Net;
 
 public class AddressableManager : Singleton<AddressableManager>
 {
     Dictionary<(AddreassablesType, int), AsyncOperationHandle> Tracer = new Dictionary<(AddreassablesType, int), AsyncOperationHandle>();
 
     List<AsyncOperationHandle> PrefabTracer=  new List<AsyncOperationHandle>();
-    public async Task<T> LoadAsset<T>(AddreassablesType type, int id) where T : class
+    public async UniTask<T> LoadAsset<T>(AddreassablesType type, int id) where T : class
     {
+        string addresss = TypeChanger(type) + id;
+        Debug.Log($"[AddressableManager] Loading asset at address: {addresss}");
         try
         {
+            
             string address = TypeChanger(type) + id;
             // 매번 새로운 로드를 시도
             var handle = Addressables.LoadAssetAsync<T>(address);
@@ -34,6 +39,7 @@ public class AddressableManager : Singleton<AddressableManager>
                 var result = handle.Result;
                 if (result == null)
                 {
+                    Debug.LogWarning($"[AddressableManager] Asset loaded but result is null: {addresss}");
                     return default;
                 }
 
@@ -57,6 +63,7 @@ public class AddressableManager : Singleton<AddressableManager>
                         }
                     }
                 }
+                Debug.Log($"[AddressableManager] Successfully loaded asset of type {typeof(T).Name} at address: {address}");
 
                 // 새로운 핸들을 트레이서에 저장
                 Tracer[key] = handle;
@@ -64,6 +71,7 @@ public class AddressableManager : Singleton<AddressableManager>
             }
             else
             {
+                Debug.LogError($"[AddressableManager] Failed to load asset at address: {addresss}");
                 // 사용 가능한 주소 목록 출력
                 var locations = Addressables.ResourceLocators;
                 foreach (var locator in locations)
@@ -72,15 +80,17 @@ public class AddressableManager : Singleton<AddressableManager>
                     {
                         if (addressKey.ToString().Contains(TypeChanger(type)))
                         {
-                            Debug.Log($"Found address: {addressKey}");
+                            Debug.Log($"[AddressableManager] Related key found: {addressKey}");
                         }
                     }
                 }
+                
                 return default;
             }
         }
         catch (Exception e)
         {
+            Debug.LogError($"[AddressableManager] Exception occurred while loading {addresss}: {e.Message}");
             return default;
         }
     }
@@ -100,18 +110,23 @@ public class AddressableManager : Singleton<AddressableManager>
         }
     }
 
-    public async Task<GameObject> LoadPrefabs(AddreassablesType type, string name)
+    public async UniTask<GameObject> LoadPrefabs(AddreassablesType type, string name)
     {
+        string address = TypeChanger(type) + name;
+        Debug.Log($"[AddressableManager] Loading prefab at address: {address}");
+
         var handle = Addressables.LoadAssetAsync<GameObject>(TypeChanger(type)+name);
        
         await handle.Task;
         if(handle.Status == AsyncOperationStatus.Succeeded) 
         {
+            Debug.Log($"[AddressableManager] Successfully loaded prefab: {handle.Result.name}");
             PrefabTracer.Add(handle);
             return handle.Result;
         }
         else
         {
+            Debug.LogError($"[AddressableManager] Failed to load prefab at address: {address}");
             return default;
         }
 
@@ -182,6 +197,8 @@ public class AddressableManager : Singleton<AddressableManager>
             Debug.Log($"Unloaded asset of type {type} with ID {ID}");
         }
     }
+
+
 
     public void UnLoad(string name)
     {
