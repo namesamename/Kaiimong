@@ -427,7 +427,7 @@ public class BattleSystem : MonoBehaviour
                     playerUnit.visual.SetSprite(SpriteType.BattleSprite);
                     playerUnit.Initialize(GlobalDataTable.Instance.DataCarrier.GetCharacterIDToIndex(i));
                     playerLocations[i].isOccupied = true;
-                    playerUnit.stat.OnDeath += () => gameObject.GetComponent<UIBattleHealthBar>().DestroyThis();
+                    playerUnit.stat.OnDeath += () => OnPlayerDeath(playerUnit, gameObject);
                     playerUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(playerUnit);
                     playerUnit.stat.OnDeath += () => RemoveTarget(playerUnit);
                     playerUnit.stat.OnDeath += () => CharacterDeath(playerUnit);
@@ -467,7 +467,7 @@ public class BattleSystem : MonoBehaviour
                     BattleHealthBars.Add(gameObject.GetComponent<UIBattleHealthBar>());
                     enemyLocations[i].isOccupied = true;
                     enemyUnit.transform.rotation = Quaternion.Euler(0, 180, 0);
-                    enemyUnit.stat.OnDeath += () => gameObject.GetComponent<UIBattleHealthBar>().DestroyThis();
+                    enemyUnit.stat.OnDeath += () => OnPlayerDeath(enemyUnit, gameObject);
                     enemyUnit.stat.OnDeath += () => EmptyPlateOnUnitDeath(enemyUnit);
                     enemyUnit.stat.OnDeath += () => RemoveTarget(enemyUnit);
                     enemyUnit.stat.OnDeath += () => EnemyDeath(enemyUnit);
@@ -715,4 +715,15 @@ public class BattleSystem : MonoBehaviour
             character.DestroyThis();
         }
     }
+
+    public void OnPlayerDeath(CharacterCarrier unit, GameObject hpBar)
+    {
+        if (hpBar != null)
+        {
+            hpBar.GetComponent<UIBattleHealthBar>().DestroyThis();
+        }
+
+    }
+
+
 }
