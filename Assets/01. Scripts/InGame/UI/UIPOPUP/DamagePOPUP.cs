@@ -21,7 +21,7 @@ public class DamagePOPUP : UIPOPUP
             damageText.text = 1f.ToString();
         }else
         {
-            damageText.text = Damage.ToString();
+            damageText.text = Damage.ToString("N2");
         }
 
         

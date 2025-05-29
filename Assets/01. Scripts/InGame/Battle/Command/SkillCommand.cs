@@ -16,9 +16,9 @@ public class SkillCommand
     }
     public IEnumerator Execute()
     {
-
-        unit.skillBook.ActiveSkillUsing(skillData, targets);
-        unit.skillBook.SetSkillGauge(skillData, targets);
+        List<CharacterCarrier> validTargets = FilterValidTargets();
+        unit.skillBook.ActiveSkillUsing(skillData, validTargets);
+        unit.skillBook.SetSkillGauge(skillData, validTargets);
 
         float waitTime = 0f;
 
@@ -30,7 +30,42 @@ public class SkillCommand
         yield return new WaitForSeconds(waitTime + 0.5f);
     }
 
-    public void Undo()
+    private List<CharacterCarrier> FilterValidTargets()
     {
+        List<CharacterCarrier> validTargets = new List<CharacterCarrier>();
+        BattleSystem battleSystem = StageManager.Instance.BattleSystem;
+
+        bool casterIsPlayer = battleSystem.GetActivePlayers().Contains(unit);
+
+        foreach (CharacterCarrier target in targets)
+        {
+       
+            if (target == null || target.stat.healthStat.CurHealth <= 0)
+                continue;
+
+            bool targetIsPlayer = battleSystem.GetActivePlayers().Contains(target);
+
+            if (skillData.SkillSO.IsBuff)
+            {
+
+                if (casterIsPlayer == targetIsPlayer)
+                {
+                    validTargets.Add(target);
+          
+                }
+     
+            }
+            else
+            {
+        
+                if (casterIsPlayer != targetIsPlayer)
+                {
+                    validTargets.Add(target);
+             
+                }
+            }
+        }
+
+        return validTargets;
     }
 }

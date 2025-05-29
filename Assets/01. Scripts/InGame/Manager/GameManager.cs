@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager>
     GameObject[] ManagersPrefabs;
 
 
-    AudioClip audioClip;
+   public  AudioClip audioClip;
 
 
     GameObject TutorialManager;
@@ -47,7 +47,7 @@ public class GameManager : Singleton<GameManager>
             }
         }
         ManagersPrefabs = Resources.LoadAll<GameObject>("Manager");
-        GetSFX();
+   
         GetCompo();
         LevelUpSystem.Init();
         Initialize();
@@ -205,9 +205,10 @@ public class GameManager : Singleton<GameManager>
         questManager.TimeCheck();
     }
 
-    public async void GetSFX()
+    public async void Audio()
     {
         audioClip = await AddressableManager.Instance.LoadAsset<AudioClip>(AddreassablesType.SoundEffectFx, 3);
     }
+
 
 }

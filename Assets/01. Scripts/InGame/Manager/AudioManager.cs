@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class AudioManager : Singleton<AudioManager>
 {
@@ -23,7 +24,7 @@ public class AudioManager : Singleton<AudioManager>
 
     [SerializeField][Range(0f, 1f)] private float sfxPitchVariance; // 효과음 피치 변동 범위
 
-    public AudioSource audioSourcePrefab; // 효과음 재생을 위한 사운드 소스 프리팹
+    public UnityEngine.AudioSource audioSourcePrefab; // 효과음 재생을 위한 사운드 소스 프리팹
 
     [SerializeField] private bool isMuted; // 음소거 설정 여부
 
@@ -118,17 +119,44 @@ public class AudioManager : Singleton<AudioManager>
 
     public static void PlaySFX(AudioClip clip)
     {
-        if (Instance.isMuted || !clip) return;
+        if (Instance.isMuted || clip == null) return;
 
-        AudioSource obj = Instantiate(Instance.audioSourcePrefab); // 새로운 사운드 소스 오브젝트 생성
+        // Addressable 로드 상태 더 엄격하게 체크
+        if (clip.loadState != AudioDataLoadState.Loaded)
+        {
+            Debug.LogWarning($"AudioClip '{clip.name}'이 아직 로드되지 않았습니다. LoadState: {clip.loadState}");
+            return;
+        }
 
+        // 클립 길이 체크 (0이면 로드가 완전히 안된 것)
+        if (clip.length <= 0)
+        {
+            Debug.LogWarning($"AudioClip '{clip.name}'의 길이가 0입니다. 로드가 완료되지 않았을 수 있습니다.");
+            return;
+        }
+
+        UnityEngine.AudioSource obj = Instantiate(Instance.audioSourcePrefab);
         DontDestroyOnLoad(obj);
+        UnityEngine.AudioSource soundSource = obj.GetComponent<UnityEngine.AudioSource>();
+        soundSource.clip = clip;
+        soundSource.volume = Instance.sfxVolume;
+        soundSource.pitch = 1f + Random.Range(-Instance.sfxPitchVariance, Instance.sfxPitchVariance);
+        soundSource.Play();
 
-        AudioSource soundSource = obj.GetComponent<AudioSource>(); // 사운드 소스 가져오기
-        soundSource.Play(clip, Instance.sfxVolume, Instance.sfxPitchVariance); // 효과음 재생
+        Instance.StartCoroutine(SFXDown(obj, soundSource, clip));
+    }
 
-        Instance.StartCoroutine(SFXDown(obj, clip.length));
-        
+    private static IEnumerator SFXDown(UnityEngine.AudioSource obj, UnityEngine.AudioSource source, AudioClip clip)
+    {
+        yield return new WaitWhile(() => source.isPlaying);
+
+  
+        if (clip != null)
+        {
+            //Addressables.Release(clip);
+        }
+
+        GameObject.Destroy(obj.gameObject);
     }
 
 
@@ -136,9 +164,9 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (Instance.isMuted || !clip) return;
 
-        AudioSource obj = Instantiate(Instance.audioSourcePrefab); // 새로운 사운드 소스 오브젝트 생성
+        UnityEngine.AudioSource obj = Instantiate(Instance.audioSourcePrefab); // 새로운 사운드 소스 오브젝트 생성
 
-        AudioSource soundSource = obj.GetComponent<AudioSource>(); // 사운드 소스 가져오기
+        AudioSource soundSource = obj.GetComponent< AudioSource>(); // 사운드 소스 가져오기
         soundSource.Play(clip, Instance.sfxVolume, Instance.sfxPitchVariance); // 효과음 재생
 
 
@@ -146,11 +174,7 @@ public class AudioManager : Singleton<AudioManager>
     }
 
 
-    public static IEnumerator SFXDown(AudioSource au, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(au.gameObject);
-    }
+
     public void SetMute(bool mute)
     {
         isMuted = mute;

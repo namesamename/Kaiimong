@@ -395,6 +395,12 @@ public class BattleSystem : MonoBehaviour
 
     private void SetPlayer()
     {
+        foreach (var bar in BattleHealthBars)
+        {
+            if (bar != null)
+                Destroy(bar.gameObject);
+        }
+        BattleHealthBars.Clear();
         List<Character> playerCopy = new List<Character>(Players);
         if (playerCopy.Count > 0)
         {
@@ -434,6 +440,7 @@ public class BattleSystem : MonoBehaviour
 
     private void SetEnemy()
     {
+     
         List<Enemy> enemiesCopy = new List<Enemy>(Enemies);
         if (enemiesCopy.Count > 0)
         {
@@ -587,17 +594,23 @@ public class BattleSystem : MonoBehaviour
 
     void EnemyRandomCommand()
     {
+   
         for (int i = 0; i < activeEnemies.Count; i++)
         {
             int randomSkill = UnityEngine.Random.Range(0, activeEnemies[i].skillBook.ActiveSkillList.Length);
             SelectedSkill = activeEnemies[i].skillBook.ActiveSkillList[randomSkill];
-       
+            Targets.Clear();
+  
             if (SelectedSkill.SkillSO.IsBuff)
             {
+           
                 if (SelectedSkill.SkillSO.isSingleAttack)
                 {
-                    int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
-                    Targets.Add(activeEnemies[randomTarget]);
+                    if (activeEnemies.Count > 0)
+                    {
+                        int randomTarget = UnityEngine.Random.Range(0, activeEnemies.Count);
+                        Targets.Add(activeEnemies[randomTarget]);
+                    }
                 }
                 else
                 {
@@ -609,6 +622,13 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
+          
+                if (activePlayers.Count == 0)
+                {
+               
+                    continue;
+                }
+
                 if (SelectedSkill.SkillSO.isSingleAttack)
                 {
                     int randomTarget = UnityEngine.Random.Range(0, activePlayers.Count);
@@ -619,12 +639,12 @@ public class BattleSystem : MonoBehaviour
                     foreach (CharacterCarrier units in activePlayers)
                     {
                         Targets.Add(units);
+               
                     }
                 }
             }
-
-            CommandController.AddCommand(new SkillCommand( activeEnemies[i], new List<CharacterCarrier>(Targets), SelectedSkill));
-            Targets.Clear();
+            List<CharacterCarrier> targetsCopy = new List<CharacterCarrier>(Targets);
+            CommandController.AddCommand(new SkillCommand(activeEnemies[i], targetsCopy, SelectedSkill));
         }
         UpdateHealthUI();
         CanAttack = true;
