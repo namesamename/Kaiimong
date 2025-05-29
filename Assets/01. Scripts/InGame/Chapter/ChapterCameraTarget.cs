@@ -139,7 +139,7 @@ public class ChapterCameraTarget : MonoBehaviour
 
         if (isStageClicked && clickedStage != null)
         {
-            Debug.Log("Stage 갱신");
+            //Debug.Log("Stage 갱신");
             if (!stageInfoUI.gameObject.activeSelf)
             {
                 stageInfoUI.gameObject.SetActive(true);

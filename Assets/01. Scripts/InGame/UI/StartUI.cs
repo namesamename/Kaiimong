@@ -30,7 +30,7 @@ public class StartUI : MonoBehaviour
 
 
         buttons[0].onClick.AddListener(() => StartCoroutine(StartAni()));
-        buttons[0].onClick.AddListener(() => Debug.Log("Å¬¸¯"));
+      
          buttons[1].onClick.AddListener(OnApplicationQuit);
 
 

@@ -51,7 +51,7 @@ public class AddressableManager : Singleton<AddressableManager>
                             {
                                 if (sprite.GetInstanceID() == prevSprite.GetInstanceID())
                                 {
-                                    Debug.LogWarning($"Warning: Same sprite instance loaded for ID: {id}");
+                                    //Debug.LogWarning($"Warning: Same sprite instance loaded for ID: {id}");
                                 }
                             }
                         }
@@ -103,7 +103,7 @@ public class AddressableManager : Singleton<AddressableManager>
     public async Task<GameObject> LoadPrefabs(AddreassablesType type, string name)
     {
         var handle = Addressables.LoadAssetAsync<GameObject>(TypeChanger(type)+name);
-        Debug.Log("프리펩 보냄");
+       
         await handle.Task;
         if(handle.Status == AsyncOperationStatus.Succeeded) 
         {
@@ -205,7 +205,7 @@ public class AddressableManager : Singleton<AddressableManager>
             {
                 Addressables.Release(kvp.Value);
                 keysToRemove.Add(kvp.Key);
-                Debug.Log($"Unloaded asset of type {type} with ID {kvp.Key.Item2}");
+                //Debug.Log($"Unloaded asset of type {type} with ID {kvp.Key.Item2}");
             }
         }
 

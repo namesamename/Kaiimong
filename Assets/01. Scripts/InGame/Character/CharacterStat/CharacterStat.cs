@@ -132,12 +132,12 @@ public class CharacterStat : MonoBehaviour
 
         if (Damage <= 0)
         {
-            Debug.Log("Damage");
+      
             healthStat.CurHealth -= 1f;
         }
         else
         {
-            Debug.Log(Damage);
+         
             healthStat.CurHealth -= Damage;
         }
         
