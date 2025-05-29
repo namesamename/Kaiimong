@@ -30,7 +30,7 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private Button ultButton;
     //[SerializeField] private Button cancelButton;
     [SerializeField] private Button actionButton;
-    private List<Image> buttonIcon = new List<Image>();
+    [SerializeField] private List<GameObject> buttonOutline = new List<GameObject>();
 
     public Action OnConfirmButton;
     public Action ResetIconY;
@@ -48,12 +48,6 @@ public class CharacterUI : MonoBehaviour
         //battleSystem.OnEnemyTurn += GetActiveEnemyUnit;
         AddListener();
         targetConfirmButton.enabled = false;
-        foreach (Button button in buttonList)
-        {
-            Image image = button.GetComponent<Image>();
-            image.material = new Material(image.material);
-            buttonIcon.Add(image);
-        }
     }
 
     public void UltEnable()
@@ -189,28 +183,21 @@ public class CharacterUI : MonoBehaviour
 
     public void SkillSelectEffect(int skillNum)
     {
-        foreach (Image icon in buttonIcon)
+        foreach (GameObject icon in buttonOutline)
         {
-            Material mat = icon.material;
-
-            mat.SetFloat("_OutlineEnabled", 0);
+            icon.SetActive(false);
         }
 
-        if (skillNum < buttonIcon.Count)
+        if (skillNum < buttonOutline.Count)
         {
-            Image _image = buttonIcon[skillNum];
-            Material _material = _image.material;
-
-            _material.SetFloat("_OutlineEnabled", 1);
+            buttonOutline[skillNum].SetActive(true);
         }
 
         if (skillNum == 100)
         {
-            foreach (Image icon in buttonIcon)
+            foreach (GameObject icon in buttonOutline)
             {
-                Material mat = icon.material;
-
-                mat.SetFloat("_OutlineEnabled", 0);
+                icon.SetActive(false);
             }
         }
     }
