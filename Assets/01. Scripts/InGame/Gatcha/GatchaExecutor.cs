@@ -142,8 +142,7 @@ public class GatchaExecutor : MonoBehaviour
         }
 
         curManager.Save();
-        PlayerPrefs.SetInt("GatchaDrawCount", mgr.gatchaDrawCount);
-        PlayerPrefs.Save();
+        mgr.SaveData();
 
         GatchaResultHolder.results = results;
 
@@ -238,8 +237,7 @@ public class GatchaExecutor : MonoBehaviour
         }
 
         curManager.Save();
-        PlayerPrefs.SetInt("GatchaDrawCount", mgr.gatchaDrawCount);
-        PlayerPrefs.Save();
+        mgr.SaveData();
 
         var currencyText = FindObjectOfType<GatchaCurrenyText>();
         if (currencyText != null)
