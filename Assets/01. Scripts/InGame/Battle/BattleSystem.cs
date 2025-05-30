@@ -650,6 +650,15 @@ public class BattleSystem : MonoBehaviour
         CanAttack = true;
     }
 
+
+    public void OnDestroy()
+    {
+        foreach (var bar in BattleHealthBars)
+        {
+            if (bar != null)
+                Destroy(bar.gameObject);
+        }
+    }
     public void OnSkillSelected()
     {
         SelectedTarget = false;
