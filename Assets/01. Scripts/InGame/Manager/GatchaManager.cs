@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GatchaManager : Singleton<GatchaManager>
 {
-    private const string LatestSIDKey = "GatchaLatestSID"; // PlayerPrefs 저장 키
-
     public int crystal;                     // 크리스탈 보유량
     public int ticket;                      // 티켓 보유량
     public int gatchaDrawCount = 0;         // 가챠 누적 횟수 (보정용)
