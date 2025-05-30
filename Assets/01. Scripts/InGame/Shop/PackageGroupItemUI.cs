@@ -47,6 +47,28 @@ public class PackageGroupItemUI : MonoBehaviour
 
     private async void OnClickBuy(PackageGroup group, Shop shop)
     {
+        var curManager = CurrencyManager.Instance;
+        int current = 0;
+        CurrencyType currencyType = CurrencyType.Gold;
+
+        // 구매 재화 타입 결정
+        if (shop.MoneyID == 1)
+        {
+            current = curManager.GetCurrency(CurrencyType.Gold);
+            currencyType = CurrencyType.Gold;
+        }
+        else if (shop.MoneyID == 3)
+        {
+            current = curManager.GetCurrency(CurrencyType.Dia);
+            currencyType = CurrencyType.Dia;
+        }
+
+        // 재화 부족 시
+        if (current < shop.Price)
+        {
+            await UIManager.Instance.ShowPopup("ShopCurrencyLackPopup");
+            return;
+        }
         var popup = await UIManager.Instance.ShowPopup("ShopBuyPopUp") as ShopBuyPopUp;
 
         if (popup != null)
@@ -74,13 +96,6 @@ public class PackageGroupItemUI : MonoBehaviour
         {
             current = curManager.GetCurrency(CurrencyType.Dia);
             currencyType = CurrencyType.Dia;
-        }
-
-        // 재화 부족 시
-        if (current < shop.Price)
-        {
-            await UIManager.Instance.ShowPopup("ShopCurrencyLackPopup");
-            return;
         }
 
         // 재화 차감 (음수 값으로 처리)
