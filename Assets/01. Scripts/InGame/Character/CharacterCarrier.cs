@@ -30,6 +30,43 @@ public abstract class CharacterCarrier : MonoBehaviour
 
     private  void Update()
     {
+#if UNITY_EDITOR || UNITY_WEBGL
+        if (Input.GetMouseButtonDown(0))
+        {
+            touchStartTime = Time.time;
+            longPressTriggered = false;
+     
+
+            if (IsTouchedMe(Input.mousePosition))
+            {
+                isTouchingThis = true;
+            }
+            else
+            {
+                isTouchingThis = false;
+            }
+        }
+        else if (Input.GetMouseButton(0) && !longPressTriggered && isTouchingThis)
+        {
+            if (Time.time - touchStartTime >= longPressThreshold)
+            {
+                longPressTriggered = true;
+
+                if (SceneLoader.Instance.GetCur() == SceneState.BattleScene && !popupShown)
+                {
+                    popupShown = true;
+                 
+                    GameObject game = Instantiate(StatPOPUP, FindAnyObjectByType<Canvas>().transform);
+                    game.GetComponent<UIBattleStatPOPUP>().Initialize(this);
+                }
+            }
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            touchStartTime = 0f;
+            longPressTriggered = false;
+        }
+#else
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -38,8 +75,8 @@ public abstract class CharacterCarrier : MonoBehaviour
             {
                 touchStartTime = Time.time;
                 longPressTriggered = false;
+    
 
-         
                 if (IsTouchedMe(touch))
                 {
                     isTouchingThis = true;
@@ -55,11 +92,11 @@ public abstract class CharacterCarrier : MonoBehaviour
                 {
              
                     longPressTriggered = true;
-
+                   
                     if(SceneLoader.Instance.GetCur() == SceneState.BattleScene && !popupShown)
                     {
                         popupShown  = true;
-
+               
                         GameObject game = Instantiate(StatPOPUP, FindAnyObjectByType<Canvas>().transform);
                         game.GetComponent<UIBattleStatPOPUP>().Initialize(this);
                     }
@@ -72,7 +109,9 @@ public abstract class CharacterCarrier : MonoBehaviour
                 longPressTriggered = false;
             }
         }
+#endif
     }
+
 
 
     public abstract void Initialize(int id, int level = -1);
@@ -105,6 +144,12 @@ public abstract class CharacterCarrier : MonoBehaviour
     private bool IsTouchedMe(Touch touch)
     {
         Vector2 worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
+        Collider2D col = Physics2D.OverlapPoint(worldPoint);
+        return col != null && col.gameObject == this.gameObject;
+    }
+    private bool IsTouchedMe(Vector3 screenPosition)
+    {
+        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(screenPosition);
         Collider2D col = Physics2D.OverlapPoint(worldPoint);
         return col != null && col.gameObject == this.gameObject;
     }

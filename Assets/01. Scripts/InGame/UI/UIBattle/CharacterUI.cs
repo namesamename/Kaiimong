@@ -281,9 +281,14 @@ public class CharacterUI : MonoBehaviour
 
         for (int i = 0; i < curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList.Length; i++)
         {
-            int id = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].SkillSO.ID;
-            sprites[i] = await AddressableManager.Instance.LoadAsset<Sprite>(AddreassablesType.SkillIcon, id);
-            skillTypeList[i].text = curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].SkillSO.Type.ToString().ToUpper();
+            int id = curUnits[battleSystem.TurnIndex].
+                skillBook.ActiveSkillList[i].SkillSO.ID;
+
+            sprites[i] = await AddressableManager.Instance.
+                LoadAsset<Sprite>(AddreassablesType.SkillIcon, id);
+
+            skillTypeList[i].text = curUnits[battleSystem.TurnIndex].
+                skillBook.ActiveSkillList[i].SkillSO.Type.ToString().ToUpper();
             //curUnits[battleSystem.TurnIndex].skillBook.ActiveSkillList[i].skillSO.icon;
         }
 
