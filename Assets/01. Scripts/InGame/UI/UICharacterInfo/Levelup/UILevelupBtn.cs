@@ -52,7 +52,7 @@ public class UILevelupBtn : BaseLevelupInfo,ISetPOPUp
 
         if (maxPossibleLevels > 0)
         {
-            bool canLevelUp = popUP.Effect.SetPlus(maxPossibleLevels);
+            bool canLevelUp = popUP.Effect.SetPlus(maxPossibleLevels -1);
 
             if (canLevelUp)
             {
