@@ -13,7 +13,7 @@ public class UIBattleHealthBar : MonoBehaviour
 
 
     Transform TargetTransform;
-
+    public CharacterCarrier carrier;
 
 
     private void Awake()
@@ -27,7 +27,7 @@ public class UIBattleHealthBar : MonoBehaviour
     {
         TargetTransform= character.transform;
         character.SetType(type);
-
+        SetCarrier(character);
         if (type == CharacterType.Friend)
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(character.transform.position + Vector3.up * 2f);
@@ -52,6 +52,11 @@ public class UIBattleHealthBar : MonoBehaviour
         }
     }
 
+
+    public void SetCarrier(CharacterCarrier character)
+    {
+        carrier = character;
+    }
 
     public void UpdataHealthBar()
     {

@@ -395,10 +395,20 @@ public class BattleSystem : MonoBehaviour
 
     private void SetPlayer()
     {
-        foreach (var bar in BattleHealthBars)
+        
+
+        for (int i = BattleHealthBars.Count - 1; i >= 0; i--)
         {
-            if (bar != null)
+            var bar = BattleHealthBars[i];
+            if (bar != null && bar.carrier != null && bar.carrier.stat.healthStat.CurHealth <= 0)
+            {
                 Destroy(bar.gameObject);
+                BattleHealthBars.RemoveAt(i);
+            }
+            else if (bar == null)
+            {
+                BattleHealthBars.RemoveAt(i);
+            }
         }
         BattleHealthBars.Clear();
         List<Character> playerCopy = new List<Character>(Players);
