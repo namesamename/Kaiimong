@@ -1,7 +1,11 @@
+using UnityEngine.UI;
+
 public class UIBreakPOPUP : UIPOPUP
 {
 
     ISetPOPUp[] setPOPUps;
+
+    public Button button;
 
     private void Awake()
     {
@@ -11,6 +15,8 @@ public class UIBreakPOPUP : UIPOPUP
     private void Start()
     {
         Initialize();
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(Destroy);
     }
 
     public void Initialize()

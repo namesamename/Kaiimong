@@ -192,7 +192,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public void ClearTutorial()
     {
         data.IsTutorial = true;
-        DicSet();
+        OtherSaveDic["IsTutorial"] = data.IsTutorial;
         Save();
     }
 
@@ -200,7 +200,7 @@ public class CurrencyManager : Singleton<CurrencyManager>, ISavable
     public void ClearCharTutorial()
     {
         data.IsCharTutorial = true;
-        DicSet();
+        OtherSaveDic["IsChartutorial"] = data.IsCharTutorial;
         Save();
     }
     public int GetCurrency(CurrencyType currency)
